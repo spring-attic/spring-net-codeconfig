@@ -1,0 +1,122 @@
+NAnt 0.91 (Build 0.91.3881.0; alpha2; 8/17/2010)
+Copyright (C) 2001-2010 Gerry Shaw
+http://nant.sourceforge.net
+
+Buildfile: file:///C:/_svn/spring-net-codeconfig/Spring.Config.build
+Target framework: Microsoft .NET Framework 4.0
+Target(s) specified: daily 
+
+
+clean:
+
+
+build:
+
+     [echo] Current .NET Framework = net-4.0
+
+update-common-assemblyinfo:
+
+
+clean:
+
+
+RebuildAllSolutions:
+
+
+RebuildSolution:
+
+     [echo] Rebuilding Solution C:\_svn\spring-net-codeconfig\Spring.Config.2008.sln
+     [exec] Build started 12/3/2010 2:34:16 PM.
+     [exec] Project "C:\_svn\spring-net-codeconfig\Spring.Config.2008.sln" on node 0 (default targets).
+     [exec]   Building solution configuration "Debug|Any CPU".
+     [exec] Done Building Project "C:\_svn\spring-net-codeconfig\Spring.Config.2008.sln" (default targets).
+     [exec] 
+     [exec] Build succeeded.
+     [exec]     0 Warning(s)
+     [exec]     0 Error(s)
+     [exec] 
+     [exec] Time Elapsed 00:00:00.01
+
+RebuildSolution:
+
+     [echo] Rebuilding Solution C:\_svn\spring-net-codeconfig\Spring.Config.2010.sln
+     [exec] Build started 12/3/2010 2:34:16 PM.
+     [exec] Project "C:\_svn\spring-net-codeconfig\Spring.Config.2010.sln" on node 0 (default targets).
+     [exec]   Building solution configuration "Debug|Any CPU".
+     [exec] Project "C:\_svn\spring-net-codeconfig\Spring.Config.2010.sln" (1) is building "C:\_svn\spring-net-codeconfig\src\Spring.Core.Configuration\Spring.Core.Configuration.2010.csproj" (2) on node 0 (default targets).
+     [exec] Project file contains ToolsVersion="4.0", which is not supported by this version of MSBuild. Treating the project as if it had ToolsVersion="3.5".
+     [exec] EntityDeploy:
+     [exec]   Processing 0 EDMX files.
+     [exec]   Finished processing 0 EDMX files.
+     [exec] CoreCompile:
+     [exec] Skipping target "CoreCompile" because all output files are up-to-date with respect to the input files.
+     [exec] CopyFilesToOutputDirectory:
+     [exec]   Spring.Core.Configuration.2010 -> C:\_svn\spring-net-codeconfig\src\Spring.Core.Configuration\bin\Debug\Spring.Core.Configuration.dll
+     [exec] Done Building Project "C:\_svn\spring-net-codeconfig\src\Spring.Core.Configuration\Spring.Core.Configuration.2010.csproj" (default targets).
+     [exec] Project "C:\_svn\spring-net-codeconfig\Spring.Config.2010.sln" (1) is building "C:\_svn\spring-net-codeconfig\test\Spring.Core.Configuration.Tests\Spring.Core.Configuration.Tests.2010.csproj" (3) on node 0 (default targets).
+     [exec] Project file contains ToolsVersion="4.0", which is not supported by this version of MSBuild. Treating the project as if it had ToolsVersion="3.5".
+     [exec] Project "C:\_svn\spring-net-codeconfig\test\Spring.Core.Configuration.Tests\Spring.Core.Configuration.Tests.2010.csproj" (3) is building "C:\_svn\spring-net-codeconfig\src\Spring.Core.Configuration\Spring.Core.Configuration.2010.csproj" (2:2) on node 0 (GetTargetPath target(s)).
+     [exec] Project file contains ToolsVersion="4.0", which is not supported by this version of MSBuild. Treating the project as if it had ToolsVersion="3.5".
+     [exec] Done Building Project "C:\_svn\spring-net-codeconfig\src\Spring.Core.Configuration\Spring.Core.Configuration.2010.csproj" (GetTargetPath target(s)).
+     [exec] Project "C:\_svn\spring-net-codeconfig\test\Spring.Core.Configuration.Tests\Spring.Core.Configuration.Tests.2010.csproj" (3) is building "C:\_svn\spring-net-codeconfig\src\Spring.Core.Configuration\Spring.Core.Configuration.2010.csproj" (2:3) on node 0 (GetNativeManifest target(s)).
+     [exec] Project file contains ToolsVersion="4.0", which is not supported by this version of MSBuild. Treating the project as if it had ToolsVersion="3.5".
+     [exec] Done Building Project "C:\_svn\spring-net-codeconfig\src\Spring.Core.Configuration\Spring.Core.Configuration.2010.csproj" (GetNativeManifest target(s)).
+     [exec] C:\Windows\Microsoft.NET\Framework\v3.5\Microsoft.Common.targets : warning MSB3088: Could not read state file "obj\Debug\ResolveAssemblyReference.cache". Unable to find assembly 'Microsoft.Build.Tasks.v4.0, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a'.
+     [exec]   Primary reference "Spring.Core.Tests".
+     [exec] C:\Windows\Microsoft.NET\Framework\v3.5\Microsoft.Common.targets : warning MSB3246: Resolved file has a bad image, no metadata, or is otherwise inaccessible. Could not load file or assembly 'C:\_svn\spring-net-codeconfig\lib\net\2.0\Spring.Core.Tests.dll' or one of its dependencies. This assembly is built by a runtime newer than the currently loaded runtime and cannot be loaded.
+     [exec]       Resolved file path is "..\..\lib\net\2.0\Spring.Core.Tests.dll".
+     [exec]       Reference found at search path location "{HintPathFromItem}".
+     [exec] CoreCompile:
+     [exec] Skipping target "CoreCompile" because all output files are up-to-date with respect to the input files.
+     [exec] Project "C:\_svn\spring-net-codeconfig\test\Spring.Core.Configuration.Tests\Spring.Core.Configuration.Tests.2010.csproj" (3) is building "C:\_svn\spring-net-codeconfig\src\Spring.Core.Configuration\Spring.Core.Configuration.2010.csproj" (2:4) on node 0 (GetCopyToOutputDirectoryItems target(s)).
+     [exec] Project file contains ToolsVersion="4.0", which is not supported by this version of MSBuild. Treating the project as if it had ToolsVersion="3.5".
+     [exec] Done Building Project "C:\_svn\spring-net-codeconfig\src\Spring.Core.Configuration\Spring.Core.Configuration.2010.csproj" (GetCopyToOutputDirectoryItems target(s)).
+     [exec] CopyFilesToOutputDirectory:
+     [exec]   Spring.Core.Configuration.Tests.2010 -> C:\_svn\spring-net-codeconfig\test\Spring.Core.Configuration.Tests\bin\Debug\Spring.Core.Configuration.Tests.dll
+     [exec] IncrementalClean:
+     [exec]   Deleting file "C:\_svn\spring-net-codeconfig\test\Spring.Core.Configuration.Tests\bin\Debug\nunit.framework.dll".
+     [exec]   Deleting file "C:\_svn\spring-net-codeconfig\test\Spring.Core.Configuration.Tests\bin\Debug\Spring.Aop.dll".
+     [exec]   Deleting file "C:\_svn\spring-net-codeconfig\test\Spring.Core.Configuration.Tests\bin\Debug\Spring.Core.Configuration.dll".
+     [exec]   Deleting file "C:\_svn\spring-net-codeconfig\test\Spring.Core.Configuration.Tests\bin\Debug\Spring.Core.dll".
+     [exec]   Deleting file "C:\_svn\spring-net-codeconfig\test\Spring.Core.Configuration.Tests\bin\Debug\Spring.Core.Tests.dll".
+     [exec]   Deleting file "C:\_svn\spring-net-codeconfig\test\Spring.Core.Configuration.Tests\bin\Debug\Common.Logging.dll".
+     [exec]   Deleting file "C:\_svn\spring-net-codeconfig\test\Spring.Core.Configuration.Tests\bin\Debug\Spring.Core.Configuration.pdb".
+     [exec]   Deleting file "C:\_svn\spring-net-codeconfig\test\Spring.Core.Configuration.Tests\bin\Debug\nunit.framework.xml".
+     [exec]   Deleting file "C:\_svn\spring-net-codeconfig\test\Spring.Core.Configuration.Tests\bin\Debug\Spring.Aop.pdb".
+     [exec]   Deleting file "C:\_svn\spring-net-codeconfig\test\Spring.Core.Configuration.Tests\bin\Debug\Spring.Aop.xml".
+     [exec]   Deleting file "C:\_svn\spring-net-codeconfig\test\Spring.Core.Configuration.Tests\bin\Debug\Spring.Core.pdb".
+     [exec]   Deleting file "C:\_svn\spring-net-codeconfig\test\Spring.Core.Configuration.Tests\bin\Debug\Spring.Core.xml".
+     [exec] Done Building Project "C:\_svn\spring-net-codeconfig\test\Spring.Core.Configuration.Tests\Spring.Core.Configuration.Tests.2010.csproj" (default targets).
+     [exec] Done Building Project "C:\_svn\spring-net-codeconfig\Spring.Config.2010.sln" (default targets).
+     [exec] 
+     [exec] Build succeeded.
+     [exec] 
+     [exec] "C:\_svn\spring-net-codeconfig\Spring.Config.2010.sln" (default target) (1) ->
+     [exec] "C:\_svn\spring-net-codeconfig\test\Spring.Core.Configuration.Tests\Spring.Core.Configuration.Tests.2010.csproj" (default target) (3) ->
+     [exec] (ResolveAssemblyReferences target) -> 
+     [exec]   C:\Windows\Microsoft.NET\Framework\v3.5\Microsoft.Common.targets : warning MSB3088: Could not read state file "obj\Debug\ResolveAssemblyReference.cache". Unable to find assembly 'Microsoft.Build.Tasks.v4.0, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a'.
+     [exec]   C:\Windows\Microsoft.NET\Framework\v3.5\Microsoft.Common.targets : warning MSB3246: Resolved file has a bad image, no metadata, or is otherwise inaccessible. Could not load file or assembly 'C:\_svn\spring-net-codeconfig\lib\net\2.0\Spring.Core.Tests.dll' or one of its dependencies. This assembly is built by a runtime newer than the currently loaded runtime and cannot be loaded.
+     [exec] 
+     [exec]     2 Warning(s)
+     [exec]     0 Error(s)
+     [exec] 
+     [exec] Time Elapsed 00:00:01.34
+
+test:
+
+ [property] Target framework changed to "Microsoft .NET Framework 3.5".
+
+TestAllAssemblies:
+
+ [property] Target framework changed to "Microsoft .NET Framework 4.0".
+
+TestAllAssemblies:
+
+
+daily:
+
+
+BUILD SUCCEEDED
+
+Total time: 2.2 seconds.
+
