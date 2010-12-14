@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
+using Spring.Collections;
+using Spring.Core.TypeResolution;
 using Spring.Objects.Factory.Support;
 using Spring.Objects.Factory.Parsing;
 using Spring.Collections.Generic;
@@ -8,6 +10,7 @@ using System.Reflection;
 using Spring.Objects.Factory.Config;
 using Common.Logging;
 using Spring.Objects;
+using Spring.Stereotype;
 using Spring.Util;
 
 namespace Spring.Context.Attributes
@@ -31,13 +34,16 @@ namespace Spring.Context.Attributes
             _problemReporter = problemReporter;
         }
 
-        public static bool CheckConfigurationClassCandidate(Type type)
+        private static bool HasAttributeOnMethods(Type objectType, Type attributeType)
         {
-            if (type != null)
+            ISet<MethodInfo> methods = ConfigurationClassParser.GetAllMethodsWithCustomAttributeForClass(objectType, attributeType);
+            foreach (MethodInfo method in methods)
             {
-                return (Attribute.GetCustomAttribute(type, typeof(ConfigurationAttribute)) != null);
+                if (Attribute.GetCustomAttribute(method, attributeType) != null)
+                {
+                    return true;
+                }
             }
-
             return false;
         }
 
@@ -60,6 +66,7 @@ namespace Spring.Context.Attributes
             // no Object definition exists yet -> this must be an imported configuration class (@Import).
             GenericObjectDefinition configObjectDef = new GenericObjectDefinition();
             String className = configClass.ConfigurationClassType.Name;
+            configObjectDef.ObjectTypeName = className;
             configObjectDef.ObjectType = configClass.ConfigurationClassType;
             if (CheckConfigurationClassCandidate(configClass.ConfigurationClassType))
             {
@@ -70,6 +77,49 @@ namespace Spring.Context.Attributes
                     _logger.Debug(String.Format("Registered object definition for imported [Configuration] class {0}", configObjectName));
                 }
             }
+        }
+
+        public static bool CheckConfigurationClassCandidate(IObjectDefinition objectDefinition)
+        {
+            Type objectType = null;
+            if (objectDefinition is AbstractObjectDefinition)
+            {
+                AbstractObjectDefinition definition = (AbstractObjectDefinition) objectDefinition;
+                if (definition.HasObjectType)
+                {
+                    objectType = definition.ObjectType;
+                }                
+                else
+                {
+                    if (definition.ObjectTypeName != null)
+                    {
+                        objectType = TypeResolutionUtils.ResolveType(definition.ObjectTypeName);
+                    }
+                }
+                if (objectType != null)
+                {
+                    if (Attribute.GetCustomAttribute(objectType, typeof (ConfigurationAttribute)) != null)
+                    {
+                        return true;
+                    }
+                    if (Attribute.GetCustomAttribute(objectType, typeof (ComponentAttribute)) != null ||
+                        HasAttributeOnMethods(objectType, typeof (DefinitionAttribute)))
+                    {
+                        return true;
+                    }
+                }
+            }
+            return false;
+        }
+
+        private bool CheckConfigurationClassCandidate(Type type)
+        {
+            if (type != null)
+            {
+                return (Attribute.GetCustomAttribute(type, typeof(ConfigurationAttribute)) != null);
+            }
+
+            return false;
         }
 
         private void LoadObjectDefinitionsForConfigurationClass(ConfigurationClass configClass)

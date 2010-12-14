@@ -82,6 +82,14 @@ namespace Spring.Objects.Factory.Support
         }
 
         [Test]
+        public void Scanner()
+        {
+            AssemblyObjectDefinitionScanner scanner = new AssemblyObjectDefinitionScanner();
+            scanner.AssemblyHavingType<TheConfigurationClass>();
+            
+        }
+
+        [Test]
         public void Can_Perform_Scan_With_No_Filtering()
         {
             _context.Scan();

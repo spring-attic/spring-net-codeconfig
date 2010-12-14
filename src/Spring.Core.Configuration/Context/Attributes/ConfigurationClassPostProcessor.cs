@@ -124,7 +124,7 @@ namespace Spring.Context.Attributes
             foreach (string objectName in registry.GetObjectDefinitionNames())
             {
                 IObjectDefinition objectDef = registry.GetObjectDefinition(objectName);
-                if (ConfigurationClassObjectDefinitionReader.CheckConfigurationClassCandidate(objectDef.ObjectType))
+                if (ConfigurationClassObjectDefinitionReader.CheckConfigurationClassCandidate(objectDef))
                 {
                     configCandidates.Add(new ObjectDefinitionHolder(objectDef, objectName));
                 }

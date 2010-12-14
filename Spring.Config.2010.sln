@@ -1,4 +1,3 @@
-﻿
 Microsoft Visual Studio Solution File, Format Version 11.00
 # Visual Studio 2010
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Spring.Core.Configuration.2010", "src\Spring.Core.Configuration\Spring.Core.Configuration.2010.csproj", "{7B65D538-E863-4F57-8DDC-2C38E4150045}"

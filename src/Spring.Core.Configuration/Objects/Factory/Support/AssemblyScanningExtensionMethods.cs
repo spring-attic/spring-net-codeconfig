@@ -18,7 +18,8 @@ namespace Spring.Objects.Factory.Support
             //if we have at least one config class, ensure the post-processor is registered
             if (configTypes.Count() > 0)
             {
-                EnsureConfigurationClassPostProcessorIsRegisteredFor(registry);
+                //TODO more fine grained registration of just
+                AttributeConfigUtils.RegisterAttributeConfigProcessors(registry);                
             }
 
             RegisiterDefintionsForTypes(configTypes, registry);
@@ -56,6 +57,7 @@ namespace Spring.Objects.Factory.Support
             Scan(registry, null, assemblyPredicate, t => true);
         }
 
+        #region Obsolete
         /// <summary>
         /// Ensures the configuration class post processor is registered for.
         /// </summary>
@@ -68,6 +70,7 @@ namespace Spring.Objects.Factory.Support
                 registry.RegisterObjectDefinition(postProcessorBuilder.ObjectDefinition.ObjectTypeName, postProcessorBuilder.ObjectDefinition);
             }
         }
+        #endregion
 
         /// <summary>
         /// Regisiters the defintions for types.

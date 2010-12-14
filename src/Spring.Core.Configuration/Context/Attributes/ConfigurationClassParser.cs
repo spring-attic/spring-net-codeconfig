@@ -88,7 +88,7 @@ namespace Spring.Context.Attributes
             }
         }
 
-        private ISet<MethodInfo> GetAllMethodsWithCustomAttributeForClass(Type theClass, Type customAttribute)
+        public static ISet<MethodInfo> GetAllMethodsWithCustomAttributeForClass(Type theClass, Type customAttribute)
         {
             ISet<MethodInfo> methods = new HashedSet<MethodInfo>();
 

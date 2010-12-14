@@ -49,6 +49,7 @@
     <Compile Include="Context\Advice\SpringObjectMethodInterceptor.cs" />
     <Compile Include="Context\Attributes\AssemblyObjectDefinitionScanner.cs" />
     <Compile Include="Context\Attributes\AssemblyTypeSource.cs" />
+    <Compile Include="Context\Attributes\AttributeConfigUtils.cs" />
     <Compile Include="Context\Attributes\ConfigurationAttribute.cs" />
     <Compile Include="Context\Attributes\ConfigurationClass.cs" />
     <Compile Include="Context\Attributes\ConfigurationClassMethod.cs" />
