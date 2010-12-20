@@ -33,11 +33,11 @@ namespace Spring.IocQuickStart.MovieFinder
     {
 
         [Definition]
-        public virtual MovieLister MovieLister()
+        public virtual MovieLister MyMovieLister()
         {
             MovieLister movieLister =  new MovieLister();
             movieLister.MovieFinder = FileBasedMovieFinder();
-            return 
+            return movieLister;
 
         }
 

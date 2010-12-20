@@ -120,8 +120,6 @@
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="MovieFinder\AppContext.xml" />
-    <EmbeddedResource Include="MovieFinder\AppContextContribution.xml" />
     <EmbeddedResource Include="MovieFinder\CodeConfigBootstrap.xml" />
     <Content Include="MovieFinder\movies.txt" />
   </ItemGroup>

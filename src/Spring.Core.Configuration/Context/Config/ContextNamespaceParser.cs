@@ -50,9 +50,7 @@ namespace Spring.Context.Config
         /// </summary>
         public override void Init()
         {
-            //RegisterObjectDefinitionParser("attribute-config", new AttributeConfigObjectDefinitionParser());
-            
-            RegisterObjectDefinitionParser("component-scan", new ComponentScanObjectDefinitionParser());
+            RegisterObjectDefinitionParser("code-config", new ComponentScanObjectDefinitionParser());
         }
     }
 }

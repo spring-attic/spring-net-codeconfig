@@ -19,7 +19,9 @@
 #endregion
 
 using System;
+using System.Collections;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Linq;
 using System.Reflection;
 using System.IO;
@@ -215,11 +217,27 @@ namespace Spring.Context.Attributes
 
         private IEnumerable<Assembly> GetAllAssembliesInPath(string folderPath)
         {
-            IList<Assembly> assemblies = new List<Assembly>();
-            IEnumerable<string> files = Directory.GetFiles(folderPath, "*.dll");
+            List<Assembly> assemblies = new List<Assembly>();
+            AddFilesForExtension(folderPath, "*.dll", assemblies);
+            //AddFilesForExtension(folderPath, "*.exe", assemblies);
+
+            if (_logger.IsDebugEnabled)
+            {
+                Assembly[] assemblyArray = assemblies.ToArray();                
+                _logger.Debug("Assemblies to be scanned: " + StringUtils.ArrayToCommaDelimitedString(assemblyArray));
+            }
+            return assemblies;
+        }
+
+
+
+        public void AddFilesForExtension(string folderPath, string extension, IList<Assembly> assemblies)
+        {
+            IEnumerable<string> files = Directory.GetFiles(folderPath, extension);
             foreach (string file in files)
                 try
                 {
+                    
                     assemblies.Add(Assembly.LoadFrom(file));
                 }
                 catch (Exception ex)
@@ -228,8 +246,10 @@ namespace Spring.Context.Attributes
                     if (_logger.IsDebugEnabled)
                         _logger.Debug("Failed to load type while scanning Assemblies for Defintions!", ex);
                 }
-            return assemblies;
         }
+
+
+         
 
         private IEnumerable<Assembly> GetAllMatchingAssemblies()
         {

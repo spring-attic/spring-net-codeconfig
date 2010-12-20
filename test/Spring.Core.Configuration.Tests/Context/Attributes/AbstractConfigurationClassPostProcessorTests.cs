@@ -27,7 +27,7 @@ using Spring.Objects.Factory.Xml;
 
 namespace Spring.Context.Attributes
 {
-    [TestFixture]
+
     public abstract class AbstractConfigurationClassPostProcessorTests
     {
         protected AbstractApplicationContext _ctx;
@@ -40,8 +40,6 @@ namespace Spring.Context.Attributes
 
 
         protected abstract void CreateApplicationContext();
-
-
 
 
         [Test]

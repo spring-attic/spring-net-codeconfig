@@ -30,7 +30,7 @@ using Spring.Objects.Factory.Xml;
 
 namespace Spring.Context.Attributes
 {
-    [TestFixture]
+
     public class SimpleScanTests
     {
         private IApplicationContext _applicationContext;
@@ -41,7 +41,8 @@ namespace Spring.Context.Attributes
             NamespaceParserRegistry.RegisterParser(typeof(ContextNamespaceParser));
             IApplicationContext _applicationContext = new XmlApplicationContext(ReadOnlyXmlTestResource.GetFilePath("SimpleScanTest.xml", GetType()));
         }
-        [Test]
+        
+        //[Test]
         public void FooService()
         {
 

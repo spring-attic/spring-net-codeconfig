@@ -2395,6 +2395,40 @@
             </summary>
             <value></value>
         </member>
+        <member name="T:Spring.Data.Common.DbProviderConfigurer">
+            <summary>
+             
+            </summary>
+            <author>Mark Pollack</author>
+        </member>
+        <member name="M:Spring.Data.Common.DbProviderConfigurer.#ctor">
+            <summary>
+            Initializes a new instance of the <see cref="T:System.Object"/> class.
+            </summary>
+        </member>
+        <member name="M:Spring.Data.Common.DbProviderConfigurer.PostProcessObjectFactory(Spring.Objects.Factory.Config.IConfigurableListableObjectFactory)">
+            <summary>
+            Modify the application context's internal object factory after its
+            standard initialization.
+            </summary>
+            <param name="factory">The object factory used by the application context.</param>
+            <remarks>
+            	<p>
+            All object definitions will have been loaded, but no objects will have
+            been instantiated yet. This allows for overriding or adding properties
+            even to eager-initializing objects.
+            </p>
+            </remarks>
+            <exception cref="T:Spring.Objects.ObjectsException">
+            In case of errors.
+            </exception>
+        </member>
+        <member name="P:Spring.Data.Common.DbProviderConfigurer.ProviderResource">
+            <summary>
+            Gets or sets the provider resource which contains additional IDbProvider definitions.
+            </summary>
+            <value>The provider resource.</value>
+        </member>
         <member name="T:Spring.Data.Common.DbProviderFactory">
              <summary>
              Create DbProviders based on configuration information in assembly resource
@@ -2891,6 +2925,43 @@
             <summary>
             Initializes a new instance of the <see cref="T:Spring.Data.Config.DatabaseNamespaceParser"/> class.
             </summary>
+        </member>
+        <member name="M:Spring.Data.Config.DatabaseNamespaceParser.ParseElement(System.Xml.XmlElement,Spring.Objects.Factory.Xml.ParserContext)">
+            <summary>
+            Parse the specified element and register any resulting
+            IObjectDefinitions with the IObjectDefinitionRegistry that is
+            embedded in the supplied ParserContext.
+            </summary>
+            <param name="element">The element to be parsed into one or more IObjectDefinitions</param>
+            <param name="parserContext">The object encapsulating the current state of the parsing
+            process.</param>
+            <returns>
+            The primary IObjectDefinition (can be null as explained above)
+            </returns>
+            <remarks>
+            Implementations should return the primary IObjectDefinition
+            that results from the parse phase if they wish to used nested
+            inside (for example) a <code>&lt;property&gt;</code> tag.
+            <para>Implementations may return null if they will not
+            be used in a nested scenario.
+            </para>
+            </remarks>
+        </member>
+        <member name="M:Spring.Data.Config.DatabaseNamespaceParser.ParseDbProviderDefinition(System.Xml.XmlElement,System.String,Spring.Objects.Factory.Xml.ParserContext)">
+            <summary>
+            Parses database provider definitions.
+            </summary>
+            <param name="element">Validator XML element.</param>
+            <param name="name">The name of the object definition.</param>
+            <param name="parserContext">The parser context.</param>
+            <returns>A database provider object definition.</returns>
+        </member>
+        <member name="M:Spring.Data.Config.DatabaseNamespaceParser.GetTypeName(System.Xml.XmlElement)">
+            <summary>
+            Gets the name of the object type for the specified element.
+            </summary>
+            <param name="element">The element.</param>
+            <returns>The name of the object type.</returns>
         </member>
         <member name="T:Spring.Data.Core.AdoAccessor">
             <summary>
@@ -7878,6 +7949,16 @@
             <param name="info">The <see cref="T:System.Runtime.Serialization.SerializationInfo"/> that holds the serialized object data about the exception being thrown.</param>
             <param name="context">The <see cref="T:System.Runtime.Serialization.StreamingContext"/> that contains contextual information about the source or destination.</param>
             <exception cref="T:System.ArgumentNullException">The <paramref name="info"/> parameter is a null reference (<see langword="Nothing"/> in Visual Basic).</exception>
+        </member>
+        <member name="P:Spring.Data.UncategorizedAdoException.ErrorCode">
+            <summary>
+            Return the underlying error code if available from the underlying provider.
+            </summary>
+        </member>
+        <member name="P:Spring.Data.UncategorizedAdoException.Sql">
+            <summary>
+            Return the SQL that resulted in this exception.
+            </summary>
         </member>
         <member name="T:Spring.Transaction.Config.AttributeDrivenObjectDefinitionParser">
             <summary>
