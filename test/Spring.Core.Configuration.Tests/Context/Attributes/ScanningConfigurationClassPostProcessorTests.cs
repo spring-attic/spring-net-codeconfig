@@ -2,9 +2,6 @@
 using NUnit.Framework;
 using Spring.Context.Config;
 using Spring.Context.Support;
-using Spring.Objects.Factory.Support;
-using Spring.Context.Attributes;
-using Spring.Objects.Factory.Config;
 using Spring.Objects.Factory.Xml;
 
 namespace Spring.Context.Attributes
