@@ -125,7 +125,7 @@ namespace Spring.Context.Attributes
             {
                 foreach (Type type in typeSource)
                 {
-                    if (IsIncludedType(type) && !IsExcludedType(type) && FinalVetoConstraintIsSatisfiedBy(type))
+                    if (IsIncludedType(type) && !IsExcludedType(type) && FinalRequiredConstraintIsSatisfiedBy(type))
                     {
                         types.Add(type);
                     }
@@ -201,7 +201,7 @@ namespace Spring.Context.Attributes
                 _assemblyPredicates.Add(a => true);
         }
 
-        protected virtual bool FinalVetoConstraintIsSatisfiedBy(Type type)
+        protected virtual bool FinalRequiredConstraintIsSatisfiedBy(Type type)
         {
             return true;
         }
@@ -286,11 +286,16 @@ namespace Spring.Context.Attributes
         //    return Attribute.GetCustomAttribute(type, typeof(ConfigurationAttribute), true) != null;
         //}
 
-        protected override void SetDefaultFilters()
-        {
-            _includePredicates.Add(t => Attribute.GetCustomAttribute(t, typeof(ConfigurationAttribute), true) != null);
+        //protected override void SetDefaultFilters()
+        //{
+        //    _includePredicates.Add(t => Attribute.GetCustomAttribute(t, typeof(ConfigurationAttribute), true) != null);
 
-            base.SetDefaultFilters();
+        //    base.SetDefaultFilters();
+        //}
+
+        protected override bool FinalRequiredConstraintIsSatisfiedBy(Type type)
+        {
+            return Attribute.GetCustomAttribute(type, typeof(ConfigurationAttribute), true) != null;
         }
 
     }

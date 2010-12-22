@@ -103,8 +103,10 @@ namespace Spring.Context.Attributes
             _scanner.IncludeType<TheImportedConfigurationClass>();
             _scanner.WithExcludeFilter(t => t.Name.StartsWith("TheImported"));
 
-            Assert.That(_scanner.Scan(), Contains.Item((typeof(TheConfigurationClass))));
-            Assert.False(_scanner.Scan().Contains(typeof(TheImportedConfigurationClass)));
+            IEnumerable<Type> types = _scanner.Scan();
+
+            Assert.That(types, Contains.Item((typeof(TheConfigurationClass))));
+            Assert.False(types.Contains(typeof(TheImportedConfigurationClass)));
         }
 
         [Test]
