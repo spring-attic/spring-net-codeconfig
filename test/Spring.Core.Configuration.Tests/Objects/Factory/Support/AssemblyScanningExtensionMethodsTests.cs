@@ -87,8 +87,8 @@ namespace Spring.Objects.Factory.Support
         public void Can_Filter_For_Specific_Types_With_Multiple_Include_Filters()
         {
             var scanner = new AssemblyObjectDefinitionScanner();
-            scanner.WithIncludeFilter(type => ((Type)type).FullName.Contains(typeof(TheImportedConfigurationClass).Name));
-            scanner.WithIncludeFilter(type => ((Type)type).FullName.Contains(typeof(TheConfigurationClass).Name));
+            scanner.WithIncludeFilter(type => type.FullName.Contains(typeof(TheImportedConfigurationClass).Name));
+            scanner.WithIncludeFilter(type => type.FullName.Contains(typeof(TheConfigurationClass).Name));
 
             _context.Scan(scanner);
             _context.Refresh();
@@ -113,9 +113,9 @@ namespace Spring.Objects.Factory.Support
             AssertExpectedObjectsAreRegisteredWith(_context);
         }
 
-        private void AssertExpectedObjectsAreRegisteredWith(GenericApplicationContext _context)
+        private void AssertExpectedObjectsAreRegisteredWith(GenericApplicationContext context)
         {
-            Assert.That(_context.DefaultListableObjectFactory.ObjectDefinitionCount, Is.EqualTo(13));
+            Assert.That(context.DefaultListableObjectFactory.ObjectDefinitionCount, Is.EqualTo(13));
         }
 
     }

@@ -35,10 +35,6 @@ namespace Spring.Context.Attributes
 {
     public class ConfigurationClassPostProcessor : IObjectDefinitionRegistryPostProcessor, IOrdered
     {
-        public ConfigurationClassPostProcessor()
-        {
-        }
-
         private ILog _logger = LogManager.GetLogger(typeof(ConfigurationClassPostProcessor));
 
         private bool _postProcessObjectDefinitionRegistryCalled = false;
@@ -93,9 +89,9 @@ namespace Spring.Context.Attributes
         {
             string[] objectNames = objectFactory.GetObjectDefinitionNames();
 
-            for (int i = 0; i < objectNames.Length; i++)
+            foreach (string t in objectNames)
             {
-                IObjectDefinition objDef = objectFactory.GetObjectDefinition(objectNames[i]);
+                IObjectDefinition objDef = objectFactory.GetObjectDefinition(t);
 
                 if (((AbstractObjectDefinition)objDef).HasObjectType)
                 {
@@ -105,7 +101,7 @@ namespace Spring.Context.Attributes
                         ProxyFactory proxyFactory = new ProxyFactory();
                         proxyFactory.ProxyTargetAttributes = true;
                         proxyFactory.Interfaces = Type.EmptyTypes;
-                        proxyFactory.TargetSource = new ObjectFactoryTargetSource(objectNames[i], objectFactory);
+                        proxyFactory.TargetSource = new ObjectFactoryTargetSource(t, objectFactory);
                         SpringObjectMethodInterceptor methodInterceptor = new SpringObjectMethodInterceptor(objectFactory);
                         proxyFactory.AddAdvice(methodInterceptor);
 
@@ -119,9 +115,7 @@ namespace Spring.Context.Attributes
 
                     }
                 }
-
             }
-
         }
 
         private Type GenerateProxyType(string objectName, IConfigurableListableObjectFactory objectFactory)

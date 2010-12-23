@@ -39,7 +39,7 @@ namespace Spring.Context.Attributes
         public void Setup()
         {
             NamespaceParserRegistry.RegisterParser(typeof(ContextNamespaceParser));
-            IApplicationContext _applicationContext = new XmlApplicationContext(ReadOnlyXmlTestResource.GetFilePath("SimpleScanTest.xml", GetType()));
+            _applicationContext = new XmlApplicationContext(ReadOnlyXmlTestResource.GetFilePath("SimpleScanTest.xml", GetType()));
         }
         
         //[Test]

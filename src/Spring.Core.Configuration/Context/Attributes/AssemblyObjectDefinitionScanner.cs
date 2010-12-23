@@ -39,18 +39,6 @@ namespace Spring.Context.Attributes
             : base(null)
         { }
 
-        //protected override bool RequiredConstraintIsSatisfiedBy(Type type)
-        //{
-        //    return Attribute.GetCustomAttribute(type, typeof(ConfigurationAttribute), true) != null;
-        //}
-
-        //protected override void SetDefaultFilters()
-        //{
-        //    _includePredicates.Add(t => Attribute.GetCustomAttribute(t, typeof(ConfigurationAttribute), true) != null);
-
-        //    base.SetDefaultFilters();
-        //}
-
         protected override bool FinalRequiredConstraintIsSatisfiedBy(Type type)
         {
             return Attribute.GetCustomAttribute(type, typeof(ConfigurationAttribute), true) != null;

@@ -52,14 +52,13 @@ namespace Spring.Context.Attributes
 
             try
             {
-                attrib.DefinitionReader = typeof(Object);// <--need to use *anything* ensured *not* to implement IObjectDefinitionReader
+                attrib.DefinitionReader = typeof(Object);// <--need to pass *anything* ensured *not* to implement IObjectDefinitionReader
                 Assert.Fail("Expected Exception of type ArgumentException not thrown!");
             }
             catch (ArgumentException)
             {
                 //swallow the expected exception
             }
-            
            
         }
     }

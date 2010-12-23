@@ -142,7 +142,7 @@ namespace Spring.Context.Attributes
     }
 
     [Configuration]
-    [Import(new Type[] { typeof(TheImportedConfigurationClass) })]
+    [Import(new [] { typeof(TheImportedConfigurationClass) })]
     public class TheConfigurationClass
     {
         [Definition(Names = "TheName")]

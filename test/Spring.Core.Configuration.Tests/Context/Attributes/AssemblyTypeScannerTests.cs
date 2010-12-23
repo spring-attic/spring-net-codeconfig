@@ -43,33 +43,33 @@ namespace Spring.Context.Attributes
 
         private Scanner _scanner;
 
-        private List<Predicate<Type>> _excludePredicates
+        private List<Predicate<Type>> ExcludePredicates
         {
             get
             {
                 //get at the collection of excludePredicates from the private field
                 //(yuck!-- test smell, but at least its wrapped up in a neat private property getter!)
-                return (List<Predicate<Type>>)(ReflectionUtils.GetInstanceFieldValue(_scanner, "_excludePredicates"));
+                return (List<Predicate<Type>>)(ReflectionUtils.GetInstanceFieldValue(_scanner, "ExcludePredicates"));
             }
         }
 
-        private List<Predicate<Type>> _includePredicates
+        private List<Predicate<Type>> IncludePredicates
         {
             get
             {
                 //get at the collection of includePredicates from the private field
                 //(yuck!-- test smell, but at least its wrapped up in a neat private property getter!)
-                return (List<Predicate<Type>>)(ReflectionUtils.GetInstanceFieldValue(_scanner, "_includePredicates"));
+                return (List<Predicate<Type>>)(ReflectionUtils.GetInstanceFieldValue(_scanner, "IncludePredicates"));
             }
         }
 
-        private List<IEnumerable<Type>> _typeSources
+        private List<IEnumerable<Type>> TypeSources
         {
             get
             {
                 //get at the collection of typeSources from the private field
                 //(yuck!-- test smell, but at least its wrapped up in a neat private property getter!)
-                return (List<IEnumerable<Type>>)(ReflectionUtils.GetInstanceFieldValue(_scanner, "_typeSources"));
+                return (List<IEnumerable<Type>>)(ReflectionUtils.GetInstanceFieldValue(_scanner, "TypeSources"));
             }
         }
 
@@ -83,7 +83,7 @@ namespace Spring.Context.Attributes
         public void AssemblyHavingType_T_Adds_Assembly()
         {
             _scanner.AssemblyHavingType<Spring.Core.IOrdered>();
-            Assert.That(_typeSources.Any(t => t.Contains(typeof(Spring.Core.IOrdered))));
+            Assert.That(TypeSources.Any(t => t.Contains(typeof(Spring.Core.IOrdered))));
         }
 
         [Test]
@@ -92,8 +92,8 @@ namespace Spring.Context.Attributes
             _scanner.IncludeType<Spring.Core.IOrdered>();
             _scanner.IncludeType<Spring.Core.IPriorityOrdered>();
 
-            _includePredicates.Any(p => p(typeof(Spring.Core.IOrdered)));
-            _includePredicates.Any(p => p(typeof(Spring.Core.IPriorityOrdered)));
+            IncludePredicates.Any(p => p(typeof(Spring.Core.IOrdered)));
+            IncludePredicates.Any(p => p(typeof(Spring.Core.IPriorityOrdered)));
         }
 
         [Test]

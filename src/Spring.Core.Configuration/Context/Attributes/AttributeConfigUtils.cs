@@ -59,7 +59,7 @@ namespace Spring.Context.Attributes
 
         }
 
-        private static void RegisterPostProcessor(IObjectDefinitionRegistry registry, RootObjectDefinition objectDefinition, string objectName)
+        private static void RegisterPostProcessor(IObjectDefinitionRegistry registry, IConfigurableObjectDefinition objectDefinition, string objectName)
         {
             objectDefinition.Role = ObjectRole.ROLE_INFRASTRUCTURE;
             registry.RegisterObjectDefinition(objectName, objectDefinition);

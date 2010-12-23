@@ -37,12 +37,7 @@ namespace Spring.Context.Config
 
         private static readonly Type ConfigurationClassPostProcessorType = typeof(ConfigurationClassPostProcessor);
 
-        public AttributeConfigObjectDefinitionParser()
-        {
-
-        }
-
-        public Objects.Factory.Config.IObjectDefinition ParseElement(System.Xml.XmlElement element, ParserContext parserContext)
+        public IObjectDefinition ParseElement(System.Xml.XmlElement element, ParserContext parserContext)
         {
             IObjectDefinitionRegistry registry = parserContext.ReaderContext.Registry;
             

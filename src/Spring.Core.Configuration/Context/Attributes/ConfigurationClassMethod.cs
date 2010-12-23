@@ -77,7 +77,7 @@ namespace Spring.Context.Attributes
 
         public override string ToString()
         {
-            return string.Format("{0}:name={1},declaringClass={2}", this.GetType().Name, _methodInfo.Name, _methodInfo.DeclaringType.FullName);
+            return string.Format("{0}:name={1},declaringClass={2}", GetType().Name, _methodInfo.Name, _methodInfo.DeclaringType.FullName);
         }
 
         public void Validate(IProblemReporter problemReporter)

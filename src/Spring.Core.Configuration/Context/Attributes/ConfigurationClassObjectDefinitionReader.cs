@@ -178,9 +178,9 @@ namespace Spring.Context.Attributes
             //Dictionary<String, Object> ObjectAttributes = metadata.getAnnotationAttributes(Object.class.getName());
             object[] objectAttributes = metadata.GetCustomAttributes(typeof (DefinitionAttribute), true);
             List<string> names = new List<string>();
-            for (int i = 0; i < objectAttributes.Length; i++)
+            foreach (object t in objectAttributes)
             {
-                string[] namesAndAliases = ((DefinitionAttribute) objectAttributes[i]).NamesToArray;
+                string[] namesAndAliases = ((DefinitionAttribute) t).NamesToArray;
 
                 if (namesAndAliases != null)
                 {
@@ -191,10 +191,7 @@ namespace Spring.Context.Attributes
                     namesAndAliases = new[] {metadata.Name};
                 }
 
-                for (int j = 0; j < namesAndAliases.Length; j++)
-                {
-                    names.Add(namesAndAliases[j]);
-                }
+                names.AddRange(namesAndAliases);
             }
 
             string objectName = (names.Count > 0 ? names[0] : method.MethodMetadata.Name);
@@ -274,7 +271,7 @@ namespace Spring.Context.Attributes
             _registry.RegisterObjectDefinition(objectName, objDef);
         }
 
-        private void LoadObjectDefinitionsFromImportedResources(IDictionary<string, Type> importedResources)
+        private void LoadObjectDefinitionsFromImportedResources(IEnumerable<KeyValuePair<string, Type>> importedResources)
         {
             IDictionary<Type, IObjectDefinitionReader> readerInstanceCache =
                 new Dictionary<Type, IObjectDefinitionReader>();

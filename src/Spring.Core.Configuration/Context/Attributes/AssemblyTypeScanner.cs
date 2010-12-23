@@ -137,38 +137,17 @@ namespace Spring.Context.Attributes
 
         protected virtual bool IsExcludedType(Type type)
         {
-            foreach (var exclude in ExcludePredicates)
-            {
-                if (exclude(type))
-                {
-                    return true;
-                }
-            }
-            return false;
+            return ExcludePredicates.Any(exclude => exclude(type));
         }
 
         protected virtual bool IsIncludedAssembly(Assembly assembly)
         {
-            foreach (var include in AssemblyPredicates)
-            {
-                if (include(assembly))
-                {
-                    return true;
-                }
-            }
-            return false;
+            return AssemblyPredicates.Any(include => include(assembly));
         }
 
         protected virtual bool IsIncludedType(Type type)
         {
-            foreach (var include in IncludePredicates)
-            {
-                if (include(type))
-                {
-                    return true;
-                }
-            }
-            return false;
+            return IncludePredicates.Any(include => include(type));
         }
 
         protected virtual void SetDefaultFilters()

@@ -36,6 +36,11 @@ namespace Spring.Context.Attributes
 
         private string _objectName;
 
+        //TODO: determine how (and to what value!) this should be set during parsing
+        // the *only* place this value is ultimately later used is in the ProblemReporter to help construct meaningful
+        // error messages from the .Location property
+        // (in JAVA impl its set to the location on the classpath the config class was found but we've no similar
+        // setting in .NET worth capturing...unless maybe we want to just capture the Assembly name itself?)
         private IResource _resource;
 
         /// <summary>
@@ -45,8 +50,8 @@ namespace Spring.Context.Attributes
         /// <param name="type"></param>
         public ConfigurationClass(string objectName, Type type)
         {
-            this._objectName = objectName;
-            this._configurationClassType = type;
+            _objectName = objectName;
+            _configurationClassType = type;
         }
 
         public Type ConfigurationClassType
@@ -117,7 +122,7 @@ namespace Spring.Context.Attributes
         {
             // A [Definition] method may only be overloaded through inheritance. No single
             // [Configuration] class may declare two [Definition] methods with the same name.
-            char hashDelim = '#';
+            const char hashDelim = '#';
             Dictionary<String, int> methodNameCounts = new Dictionary<String, int>();
             foreach (ConfigurationClassMethod method in _methods)
             {

@@ -121,7 +121,7 @@ namespace Spring.Context.Attributes
             return methods;
         }
 
-        private void ProcessImport(ConfigurationClass configClass, Type[] classesToImport)
+        private void ProcessImport(ConfigurationClass configClass, IEnumerable<Type> classesToImport)
         {
             if (_importStack.Contains(configClass))
             {
