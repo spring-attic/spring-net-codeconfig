@@ -48,6 +48,7 @@
   <ItemGroup>
     <Compile Include="Context\Advice\SpringObjectMethodInterceptor.cs" />
     <Compile Include="Context\Attributes\AssemblyObjectDefinitionScanner.cs" />
+    <Compile Include="Context\Attributes\AssemblyTypeScanner.cs" />
     <Compile Include="Context\Attributes\AssemblyTypeSource.cs" />
     <Compile Include="Context\Attributes\AttributeConfigUtils.cs" />
     <Compile Include="Context\Attributes\ConfigurationAttribute.cs" />
@@ -58,6 +59,7 @@
     <Compile Include="Context\Attributes\ConfigurationClassPostProcessor.cs" />
     <Compile Include="Context\Attributes\DefinitionAttribute.cs" />
     <Compile Include="Context\Attributes\DependsOnAttribute.cs" />
+    <Compile Include="Context\Attributes\IAssemblyTypeScanner.cs" />
     <Compile Include="Context\Attributes\ImportAttribute.cs" />
     <Compile Include="Context\Attributes\ImportResourceAttribute.cs" />
     <Compile Include="Context\Attributes\LazyAttribute.cs" />
