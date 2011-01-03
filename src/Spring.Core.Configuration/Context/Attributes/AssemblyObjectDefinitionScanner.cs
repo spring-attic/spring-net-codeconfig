@@ -22,7 +22,7 @@ using System;
 
 namespace Spring.Context.Attributes
 {
-    public class AssemblyObjectDefinitionScanner : AssemblyTypeScanner
+    public class AssemblyObjectDefinitionScanner : RequiredConstraintAssemblyTypeScanner
     {
         /// <summary>
         /// Initializes a new instance of the AssemblyObjectDefinitionScanner class.
@@ -39,7 +39,7 @@ namespace Spring.Context.Attributes
             : base(null)
         { }
 
-        protected override bool FinalRequiredConstraintIsSatisfiedBy(Type type)
+        protected override bool RequiredConstraintIsSatisfiedBy(Type type)
         {
             return Attribute.GetCustomAttribute(type, typeof(ConfigurationAttribute), true) != null;
         }

@@ -30,7 +30,7 @@ namespace Spring.Context.Attributes
     public class AssemblyTypeScannerTests
     {
 
-        private class Scanner : AssemblyTypeScanner
+        private class Scanner : RequiredConstraintAssemblyTypeScanner
         {
             public Scanner(string folderScanPath)
                 : base(folderScanPath)

@@ -28,23 +28,25 @@ using Spring.Util;
 
 namespace Spring.Context.Attributes
 {
-    public abstract class AssemblyTypeScanner : IAssemblyTypeScanner
+    public abstract class RequiredContraintAssemblyTypeScanner : IAssemblyTypeScanner
     {
-        protected static ILog Logger = LogManager.GetLogger(typeof (AssemblyTypeScanner));
         protected readonly List<Predicate<Assembly>> AssemblyPredicates = new List<Predicate<Assembly>>();
 
         protected readonly List<Predicate<Type>> ExcludePredicates = new List<Predicate<Type>>();
 
-        protected readonly List<Predicate<Type>> IncludePredicates = new List<Predicate<Type>>();
-
-        protected readonly List<IEnumerable<Type>> TypeSources = new List<IEnumerable<Type>>();
         protected string FolderScanPath;
 
+        protected readonly List<Predicate<Type>> IncludePredicates = new List<Predicate<Type>>();
+
+        protected static ILog Logger = LogManager.GetLogger(typeof(RequiredContraintAssemblyTypeScanner));
+
+        protected readonly List<IEnumerable<Type>> TypeSources = new List<IEnumerable<Type>>();
+
         /// <summary>
-        /// Initializes a new instance of the AssemblyTypeScanner class.
+        /// Initializes a new instance of the RequiredContraintAssemblyTypeScanner class.
         /// </summary>
         /// <param name="folderScanPath"></param>
-        protected AssemblyTypeScanner(string folderScanPath)
+        protected RequiredContraintAssemblyTypeScanner(string folderScanPath)
         {
             if (!string.IsNullOrEmpty(folderScanPath))
             {
@@ -57,29 +59,28 @@ namespace Spring.Context.Attributes
         }
 
         /// <summary>
-        /// Initializes a new instance of the AssemblyTypeScanner class.
+        /// Initializes a new instance of the RequiredContraintAssemblyTypeScanner class.
         /// </summary>
-        protected AssemblyTypeScanner()
+        protected RequiredContraintAssemblyTypeScanner()
         {
-        }
 
-        #region IAssemblyTypeScanner Members
+        }
 
         public IAssemblyTypeScanner AssemblyHavingType<T>()
         {
-            TypeSources.Add(new AssemblyTypeSource((typeof (T).Assembly)));
+            TypeSources.Add(new AssemblyTypeSource((typeof(T).Assembly)));
             return this;
         }
 
         public IAssemblyTypeScanner ExcludeType<T>()
         {
-            ExcludePredicates.Add(t => t == typeof (T));
+            ExcludePredicates.Add(t => t == typeof(T));
             return this;
         }
 
         public IAssemblyTypeScanner IncludeType<T>()
         {
-            IncludePredicates.Add(t => t == typeof (T));
+            IncludePredicates.Add(t => t == typeof(T));
             return this;
         }
 
@@ -106,7 +107,7 @@ namespace Spring.Context.Attributes
             {
                 foreach (Type type in typeSource)
                 {
-                    if (PredicateIsSatisfiedBy(type))
+                    if (IsIncludedType(type) && !IsExcludedType(type) && RequiredConstraintIsSatisfiedBy(type))
                     {
                         types.Add(type);
                     }
@@ -133,10 +134,6 @@ namespace Spring.Context.Attributes
             IncludePredicates.Add(predicate);
             return this;
         }
-
-        #endregion
-
-        protected abstract bool PredicateIsSatisfiedBy(Type type);
 
         protected virtual bool IsExcludedType(Type type)
         {
@@ -165,6 +162,10 @@ namespace Spring.Context.Attributes
                 AssemblyPredicates.Add(a => true);
         }
 
+        protected virtual bool RequiredConstraintIsSatisfiedBy(Type type)
+        {
+            return true;
+        }
 
         private IEnumerable<Assembly> ApplyAssemblyFiltersTo(IEnumerable<Assembly> assemblyCandidates)
         {
@@ -177,17 +178,18 @@ namespace Spring.Context.Attributes
 
         private IEnumerable<Assembly> GetAllAssembliesInPath(string folderPath)
         {
-            var assemblies = new List<Assembly>();
+            List<Assembly> assemblies = new List<Assembly>();
             AddFilesForExtension(folderPath, "*.dll", assemblies);
             //AddFilesForExtension(folderPath, "*.exe", assemblies);
 
             if (Logger.IsDebugEnabled)
             {
-                Assembly[] assemblyArray = assemblies.ToArray();
+                Assembly[] assemblyArray = assemblies.ToArray();                
                 Logger.Debug("Assemblies to be scanned: " + StringUtils.ArrayToCommaDelimitedString(assemblyArray));
             }
             return assemblies;
         }
+
 
 
         public void AddFilesForExtension(string folderPath, string extension, IList<Assembly> assemblies)
@@ -196,6 +198,7 @@ namespace Spring.Context.Attributes
             foreach (string file in files)
                 try
                 {
+                    
                     assemblies.Add(Assembly.LoadFrom(file));
                 }
                 catch (Exception ex)
@@ -207,6 +210,8 @@ namespace Spring.Context.Attributes
         }
 
 
+         
+
         private IEnumerable<Assembly> GetAllMatchingAssemblies()
         {
             IEnumerable<Assembly> assemblyCandidates = GetAllAssembliesInPath(FolderScanPath);
@@ -217,5 +222,7 @@ namespace Spring.Context.Attributes
         {
             return Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location);
         }
+
     }
+
 }
