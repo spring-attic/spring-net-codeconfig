@@ -39,7 +39,7 @@ namespace Spring.Context.Attributes
             : base(null)
         { }
 
-        protected override bool RequiredConstraintIsSatisfiedBy(Type type)
+        protected override bool IsRequiredConstraintSatisfiedBy(Type type)
         {
             return Attribute.GetCustomAttribute(type, typeof(ConfigurationAttribute), true) != null;
         }

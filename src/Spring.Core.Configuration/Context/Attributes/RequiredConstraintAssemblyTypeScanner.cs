@@ -12,11 +12,11 @@ namespace Spring.Context.Attributes
         {
         }
 
-        protected override bool PredicateIsSatisfiedBy(Type type)
+        protected override bool IsPredicateSatisfiedBy(Type type)
         {
-            return IsIncludedType(type) && !IsExcludedType(type) && RequiredConstraintIsSatisfiedBy(type);
+            return IsIncludedType(type) && !IsExcludedType(type) && IsRequiredConstraintSatisfiedBy(type);
         }
 
-        protected abstract bool RequiredConstraintIsSatisfiedBy(Type type);
+        protected abstract bool IsRequiredConstraintSatisfiedBy(Type type);
     }
 }

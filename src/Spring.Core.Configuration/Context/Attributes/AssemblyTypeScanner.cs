@@ -106,7 +106,7 @@ namespace Spring.Context.Attributes
             {
                 foreach (Type type in typeSource)
                 {
-                    if (PredicateIsSatisfiedBy(type))
+                    if (IsPredicateSatisfiedBy(type))
                     {
                         types.Add(type);
                     }
@@ -136,7 +136,7 @@ namespace Spring.Context.Attributes
 
         #endregion
 
-        protected abstract bool PredicateIsSatisfiedBy(Type type);
+        protected abstract bool IsPredicateSatisfiedBy(Type type);
 
         protected virtual bool IsExcludedType(Type type)
         {
