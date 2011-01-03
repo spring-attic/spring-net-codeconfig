@@ -40,7 +40,7 @@ namespace Spring.Context.Attributes
                 : base(null)
             { }
 
-            protected override bool IsPredicateSatisfiedBy(Type type)
+            protected override bool IsCompoundPredicateSatisfiedBy(Type type)
             {
                 return IsIncludedType(type) && !IsExcludedType(type);
 
