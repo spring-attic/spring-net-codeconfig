@@ -2,7 +2,7 @@
 
 namespace Spring.Context.Attributes
 {
-    public class RequiredConstraintAssemblyTypeScanner : AssemblyTypeScanner
+    public abstract class RequiredConstraintAssemblyTypeScanner : AssemblyTypeScanner
     {
         public RequiredConstraintAssemblyTypeScanner(string folderScanPath) : base(folderScanPath)
         {
@@ -17,10 +17,6 @@ namespace Spring.Context.Attributes
             return IsIncludedType(type) && !IsExcludedType(type) && RequiredConstraintIsSatisfiedBy(type);
         }
 
-        protected virtual bool RequiredConstraintIsSatisfiedBy(Type type)
-        {
-            return true;
-        }
-
+        protected abstract bool RequiredConstraintIsSatisfiedBy(Type type);
     }
 }

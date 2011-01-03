@@ -30,7 +30,7 @@ namespace Spring.Context.Attributes
     public class AssemblyTypeScannerTests
     {
 
-        private class Scanner : RequiredConstraintAssemblyTypeScanner
+        private class Scanner : AssemblyTypeScanner
         {
             public Scanner(string folderScanPath)
                 : base(folderScanPath)
@@ -39,6 +39,12 @@ namespace Spring.Context.Attributes
             public Scanner()
                 : base(null)
             { }
+
+            protected override bool PredicateIsSatisfiedBy(Type type)
+            {
+                return IsIncludedType(type) && !IsExcludedType(type);
+
+            }
         }
 
         private Scanner _scanner;
