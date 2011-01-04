@@ -29,12 +29,12 @@ namespace Spring.Objects.Factory.Support
     [TestFixture]
     public class AssemblyScanningExtensionMethodsTests
     {
-        private GenericApplicationContext _context;
+        private ScanningApplicationContext _context;
 
         [SetUp]
         public void _TestSetup()
         {
-            _context = new GenericApplicationContext();
+            _context = new ScanningApplicationContext();
         }
 
         [Test]

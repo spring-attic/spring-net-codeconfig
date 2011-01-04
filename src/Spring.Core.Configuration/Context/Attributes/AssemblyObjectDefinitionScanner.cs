@@ -19,6 +19,9 @@
 #endregion
 
 using System;
+using System.Collections.Generic;
+using System.Linq;
+using Spring.Objects.Factory.Support;
 
 namespace Spring.Context.Attributes
 {
@@ -42,6 +45,36 @@ namespace Spring.Context.Attributes
         protected override bool IsRequiredConstraintSatisfiedBy(Type type)
         {
             return Attribute.GetCustomAttribute(type, typeof(ConfigurationAttribute), true) != null;
+        }
+
+
+        public void ScanAndRegisterTypes(IObjectDefinitionRegistry registry)
+        {
+            IEnumerable<Type> configTypes = base.Scan();
+
+            //if we have at least one config class, ensure the post-processor is registered
+            if (configTypes.Count() > 0)
+            {
+                AttributeConfigUtils.RegisterAttributeConfigProcessors(registry);
+            }
+
+            RegisiterDefintionsForTypes(registry, configTypes);
+
+        }
+
+
+        /// <summary>
+        /// Regisiters the defintions for types.
+        /// </summary>
+        /// <param name="registry">The registry.</param>
+        /// <param name="typesToRegister">The types to register.</param>
+        private void RegisiterDefintionsForTypes(IObjectDefinitionRegistry registry, IEnumerable<Type> typesToRegister)
+        {
+            foreach (Type type in typesToRegister)
+            {
+                ObjectDefinitionBuilder definition = ObjectDefinitionBuilder.GenericObjectDefinition(type);
+                registry.RegisterObjectDefinition(definition.ObjectDefinition.ObjectTypeName, definition.ObjectDefinition);
+            }
         }
 
     }

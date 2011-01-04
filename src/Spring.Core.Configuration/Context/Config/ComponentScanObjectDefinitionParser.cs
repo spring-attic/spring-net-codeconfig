@@ -26,71 +26,71 @@ using Spring.Objects.Factory.Xml;
 
 namespace Spring.Context.Config
 {
-    public class ComponentScanObjectDefinitionParser : IObjectDefinitionParser
-    {
-        public IObjectDefinition ParseElement(XmlElement element, ParserContext parserContext)
-        {
-            AssemblyObjectDefinitionScanner scanner = ConfigureScanner(parserContext, element);
-            IObjectDefinitionRegistry registry = parserContext.Registry;
-            
-            // Actually scan for objects definitions and register them.
-            registry.Scan(scanner);
+	public class ComponentScanObjectDefinitionParser : IObjectDefinitionParser
+	{
+		public IObjectDefinition ParseElement(XmlElement element, ParserContext parserContext)
+		{
+			AssemblyObjectDefinitionScanner scanner = ConfigureScanner(parserContext, element);
+			IObjectDefinitionRegistry registry = parserContext.Registry;
+			
+			// Actually scan for objects definitions and register them.
+			scanner.ScanAndRegisterTypes(registry);
 
-            // Register attribute config processors, if necessary.
-            bool attributeConfig = true;
-            if (element.HasAttribute("attribute-config"))
-            {
-                attributeConfig = bool.Parse(element.GetAttribute("attribute-config"));
-            }
-            if (attributeConfig)
-            {
-                AttributeConfigUtils.RegisterAttributeConfigProcessors(registry);
-            }
-            return null;
-        }
+			// Register attribute config processors, if necessary.
+			bool attributeConfig = true;
+			if (element.HasAttribute("attribute-config"))
+			{
+				attributeConfig = bool.Parse(element.GetAttribute("attribute-config"));
+			}
+			if (attributeConfig)
+			{
+				AttributeConfigUtils.RegisterAttributeConfigProcessors(registry);
+			}
+			return null;
+		}
 
-        protected virtual AssemblyObjectDefinitionScanner ConfigureScanner(ParserContext parserContext, XmlElement element)
-        {
-            XmlReaderContext readerContext = parserContext.ReaderContext;
-            bool useDefaultFilters = true;
-            if (element.HasAttribute("use-default-filters")) 
-            {
-                useDefaultFilters = bool.Parse(element.GetAttribute("use-default-filters"));
-            }
+		protected virtual AssemblyObjectDefinitionScanner ConfigureScanner(ParserContext parserContext, XmlElement element)
+		{
+			XmlReaderContext readerContext = parserContext.ReaderContext;
+			bool useDefaultFilters = true;
+			if (element.HasAttribute("use-default-filters")) 
+			{
+				useDefaultFilters = bool.Parse(element.GetAttribute("use-default-filters"));
+			}
 
-            //String assemblies = element.GetAttribute("assembly");
+			//String assemblies = element.GetAttribute("assembly");
 
-            //foldersPath
-            AssemblyObjectDefinitionScanner scanner = new AssemblyObjectDefinitionScanner();
-            //setBeanDefinitionDefaults
-            //setAutowireCandidatePatterns
-            
-            /*
-            	if (element.hasAttribute(RESOURCE_PATTERN_ATTRIBUTE)) {
-			        scanner.setResourcePattern(element.getAttribute(RESOURCE_PATTERN_ATTRIBUTE));
-		        }
+			//foldersPath
+			AssemblyObjectDefinitionScanner scanner = new AssemblyObjectDefinitionScanner();
+			//setBeanDefinitionDefaults
+			//setAutowireCandidatePatterns
+			
+			/*
+				if (element.hasAttribute(RESOURCE_PATTERN_ATTRIBUTE)) {
+					scanner.setResourcePattern(element.getAttribute(RESOURCE_PATTERN_ATTRIBUTE));
+				}
 
-		        try {
-			        parseBeanNameGenerator(element, scanner);
-		        }
-		        catch (Exception ex) {
-			        readerContext.error(ex.getMessage(), readerContext.extractSource(element), ex.getCause());
-		        }
+				try {
+					parseBeanNameGenerator(element, scanner);
+				}
+				catch (Exception ex) {
+					readerContext.error(ex.getMessage(), readerContext.extractSource(element), ex.getCause());
+				}
 
-		        try {
-			        parseScope(element, scanner);
-		        }
-		        catch (Exception ex) {
-			        readerContext.error(ex.getMessage(), readerContext.extractSource(element), ex.getCause());
-		        }
+				try {
+					parseScope(element, scanner);
+				}
+				catch (Exception ex) {
+					readerContext.error(ex.getMessage(), readerContext.extractSource(element), ex.getCause());
+				}
 
-		        parseTypeFilters(element, scanner, readerContext, parserContext);
-            */
-
-
-            return scanner;
-        }
+				parseTypeFilters(element, scanner, readerContext, parserContext);
+			*/
 
 
-    }
+			return scanner;
+		}
+
+
+	}
 }
