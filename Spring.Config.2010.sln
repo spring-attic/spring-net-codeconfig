@@ -4,6 +4,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Spring.Core.Configuration.2
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Spring.Core.Configuration.Tests.2010", "test\Spring.Core.Configuration.Tests\Spring.Core.Configuration.Tests.2010.csproj", "{4F1A206C-09A8-43FF-B791-FE956E99A120}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Spring.Core.Configuration.Invalid.Tests", "test\Spring.Core.Configuration.Invalid.Tests\Spring.Core.Configuration.Invalid.Tests.csproj", "{4BEF1570-0816-4C79-90CE-13B644668204}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -18,6 +20,10 @@ Global
 		{4F1A206C-09A8-43FF-B791-FE956E99A120}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{4F1A206C-09A8-43FF-B791-FE956E99A120}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{4F1A206C-09A8-43FF-B791-FE956E99A120}.Release|Any CPU.Build.0 = Release|Any CPU
+		{4BEF1570-0816-4C79-90CE-13B644668204}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{4BEF1570-0816-4C79-90CE-13B644668204}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{4BEF1570-0816-4C79-90CE-13B644668204}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{4BEF1570-0816-4C79-90CE-13B644668204}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

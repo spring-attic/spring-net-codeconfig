@@ -30,18 +30,13 @@ namespace Spring.Context.Attributes
     {
         private Type _configurationClassType;
 
-        private IDictionary<string, Type> _importedResources = new Dictionary<string, Type>();
+        private readonly IDictionary<string, Type> _importedResources = new Dictionary<string, Type>();
 
-        private ISet<ConfigurationClassMethod> _methods = new HashedSet<ConfigurationClassMethod>();
+        private readonly ISet<ConfigurationClassMethod> _methods = new HashedSet<ConfigurationClassMethod>();
 
         private string _objectName;
 
-        //TODO: determine how (and to what value!) this should be set during parsing
-        // the *only* place this value is ultimately later used is in the ProblemReporter to help construct meaningful
-        // error messages from the .Location property
-        // (in JAVA impl its set to the location on the classpath the config class was found but we've no similar
-        // setting in .NET worth capturing...unless maybe we want to just capture the Assembly name itself?)
-        private IResource _resource;
+        private readonly IResource _resource;
 
         /// <summary>
         /// Initializes a new instance of the ConfigurationClass class.
@@ -52,6 +47,8 @@ namespace Spring.Context.Attributes
         {
             _objectName = objectName;
             _configurationClassType = type;
+            _resource = new ConfigurationClassAssemblyResource(type);
+
         }
 
         public Type ConfigurationClassType

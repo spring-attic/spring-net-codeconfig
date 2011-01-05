@@ -53,6 +53,7 @@
     <Compile Include="Context\Attributes\AttributeConfigUtils.cs" />
     <Compile Include="Context\Attributes\ConfigurationAttribute.cs" />
     <Compile Include="Context\Attributes\ConfigurationClass.cs" />
+    <Compile Include="Context\Attributes\ConfigurationClassAssemblyResource.cs" />
     <Compile Include="Context\Attributes\ConfigurationClassMethod.cs" />
     <Compile Include="Context\Attributes\ConfigurationClassObjectDefinitionReader.cs" />
     <Compile Include="Context\Attributes\ConfigurationClassParser.cs" />
