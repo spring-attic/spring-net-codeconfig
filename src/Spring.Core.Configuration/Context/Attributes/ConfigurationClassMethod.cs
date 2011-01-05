@@ -89,21 +89,32 @@ namespace Spring.Context.Attributes
                 {
                     problemReporter.Error(new NonVirtualMethodError(MethodMetadata.Name, ResourceLocation));
                 }
-            }
 
-            else
-            {
                 if (MethodMetadata.IsStatic)
                 {
                     problemReporter.Error(new StaticMethodError(MethodMetadata.Name, ResourceLocation));
                 }
+
+                if (MethodMetadata.GetParameters().Length != 0)
+                {
+                    problemReporter.Error(new MethodWithParametersError(MethodMetadata.Name, ResourceLocation));
+                }
             }
         }
+
+        private class MethodWithParametersError : Problem
+        {
+            public MethodWithParametersError(string methodName, Location location)
+                : base(String.Format("Method '{0}' must not accept parameters; remove the method's parameters to continue.",
+                methodName), location)
+            { }
+        }
+
 
         private class StaticMethodError : Problem
         {
             public StaticMethodError(string methodName, Location location)
-                : base(String.Format("Method '{0}' must not be static; remove the method's static modifier to continue",
+                : base(String.Format("Method '{0}' must not be static; remove the method's static modifier to continue.",
                 methodName), location)
             { }
         }
@@ -111,7 +122,7 @@ namespace Spring.Context.Attributes
         private class NonVirtualMethodError : Problem
         {
             public NonVirtualMethodError(string methodName, Location location)
-                : base(String.Format("Method '{0}' must be public virtual; change the method's modifiers to continue",
+                : base(String.Format("Method '{0}' must be public virtual; change the method's modifiers to continue.",
                 methodName), location)
             { }
         }

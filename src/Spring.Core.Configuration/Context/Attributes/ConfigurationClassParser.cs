@@ -141,7 +141,7 @@ namespace Spring.Context.Attributes
         private class CircularImportProblem : Problem
         {
             public CircularImportProblem(ConfigurationClass configClass, Stack<ConfigurationClass> importStack, Type configurationClassType)
-                : base(String.Format("A circular @Import has been detected: " +
+                : base(String.Format("A circular [Import] has been detected: " +
                              "Illegal attempt by [Configuration] class '{0}' to import class '{1}' as '{2}' is " +
                              "already present in the current import stack [{3}]",
                              importStack.Peek().SimpleName, configClass.SimpleName,

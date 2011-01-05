@@ -70,6 +70,13 @@ namespace Spring.Context.Attributes
             Assert.Throws<ObjectDefinitionParsingException>(_context.Refresh);
         }
 
+        [Test]
+        public void Can_Prevent_Methods_With_Parameters()
+        {
+            ScanForAndRegisterSingleType(typeof(ConfigurationClassWithMethodHavingParameters));
+            Assert.Throws<ObjectDefinitionParsingException>(_context.Refresh);
+        }
+
     }
 
     public class SomeType
@@ -82,6 +89,16 @@ namespace Spring.Context.Attributes
     {
         [Definition]
         public SomeType MethodThatRegistersSomeType()
+        {
+            return new SomeType();
+        }
+    }
+
+    [Configuration]
+    public class ConfigurationClassWithMethodHavingParameters
+    {
+        [Definition]
+        public virtual SomeType MethodThatRegistersSomeType(int i)
         {
             return new SomeType();
         }

@@ -37,7 +37,7 @@ namespace Spring.Context.Attributes
 {
     public class ConfigurationClassObjectDefinitionReader
     {
-        private readonly ILog _logger = LogManager.GetLogger(typeof (ConfigurationClassObjectDefinitionReader));
+        private readonly ILog _logger = LogManager.GetLogger(typeof(ConfigurationClassObjectDefinitionReader));
 
         private IProblemReporter _problemReporter;
 
@@ -85,7 +85,7 @@ namespace Spring.Context.Attributes
                 return;
             }
 
-            // no Object definition exists yet -> this must be an imported configuration class (@Import).
+            // no Object definition exists yet -> this must be an imported configuration class ([Import]).
             GenericObjectDefinition configObjectDef = new GenericObjectDefinition();
             String className = configClass.ConfigurationClassType.Name;
             configObjectDef.ObjectTypeName = className;
@@ -108,7 +108,7 @@ namespace Spring.Context.Attributes
             Type objectType = null;
             if (objectDefinition is AbstractObjectDefinition)
             {
-                AbstractObjectDefinition definition = (AbstractObjectDefinition) objectDefinition;
+                AbstractObjectDefinition definition = (AbstractObjectDefinition)objectDefinition;
                 if (definition.HasObjectType)
                 {
                     objectType = definition.ObjectType;
@@ -122,12 +122,12 @@ namespace Spring.Context.Attributes
                 }
                 if (objectType != null)
                 {
-                    if (Attribute.GetCustomAttribute(objectType, typeof (ConfigurationAttribute)) != null)
+                    if (Attribute.GetCustomAttribute(objectType, typeof(ConfigurationAttribute)) != null)
                     {
                         return true;
                     }
-                    if (Attribute.GetCustomAttribute(objectType, typeof (ComponentAttribute)) != null ||
-                        HasAttributeOnMethods(objectType, typeof (DefinitionAttribute)))
+                    if (Attribute.GetCustomAttribute(objectType, typeof(ComponentAttribute)) != null ||
+                        HasAttributeOnMethods(objectType, typeof(DefinitionAttribute)))
                     {
                         return true;
                     }
@@ -140,7 +140,7 @@ namespace Spring.Context.Attributes
         {
             if (type != null)
             {
-                return (Attribute.GetCustomAttribute(type, typeof (ConfigurationAttribute)) != null);
+                return (Attribute.GetCustomAttribute(type, typeof(ConfigurationAttribute)) != null);
             }
 
             return false;
@@ -176,11 +176,11 @@ namespace Spring.Context.Attributes
 
             // consider name and any aliases
             //Dictionary<String, Object> ObjectAttributes = metadata.getAnnotationAttributes(Object.class.getName());
-            object[] objectAttributes = metadata.GetCustomAttributes(typeof (DefinitionAttribute), true);
+            object[] objectAttributes = metadata.GetCustomAttributes(typeof(DefinitionAttribute), true);
             List<string> names = new List<string>();
             foreach (object t in objectAttributes)
             {
-                string[] namesAndAliases = ((DefinitionAttribute) t).NamesToArray;
+                string[] namesAndAliases = ((DefinitionAttribute)t).NamesToArray;
 
                 if (namesAndAliases != null)
                 {
@@ -188,7 +188,7 @@ namespace Spring.Context.Attributes
                 }
                 else
                 {
-                    namesAndAliases = new[] {metadata.Name};
+                    namesAndAliases = new[] { metadata.Name };
                 }
 
                 names.AddRange(namesAndAliases);
@@ -220,23 +220,23 @@ namespace Spring.Context.Attributes
                 }
             }
 
-            if (Attribute.GetCustomAttribute(metadata, typeof (PrimaryAttribute)) != null)
+            if (Attribute.GetCustomAttribute(metadata, typeof(PrimaryAttribute)) != null)
             {
                 //TODO: determine how to respond to this attribute's presence
                 //ObjectDef.isPrimary = true;
             }
 
             // is this Object to be instantiated lazily?
-            if (Attribute.GetCustomAttribute(metadata, typeof (LazyAttribute)) != null)
+            if (Attribute.GetCustomAttribute(metadata, typeof(LazyAttribute)) != null)
             {
                 objDef.IsLazyInit =
-                    (Attribute.GetCustomAttribute(metadata, typeof (LazyAttribute)) as LazyAttribute).LazyInitialize;
+                    (Attribute.GetCustomAttribute(metadata, typeof(LazyAttribute)) as LazyAttribute).LazyInitialize;
             }
 
-            if (Attribute.GetCustomAttribute(metadata, typeof (DependsOnAttribute)) != null)
+            if (Attribute.GetCustomAttribute(metadata, typeof(DependsOnAttribute)) != null)
             {
                 objDef.DependsOn =
-                    (Attribute.GetCustomAttribute(metadata, typeof (DependsOnAttribute)) as DependsOnAttribute).Name;
+                    (Attribute.GetCustomAttribute(metadata, typeof(DependsOnAttribute)) as DependsOnAttribute).Name;
             }
 
             //Autowire autowire = (Autowire) ObjectAttributes.get("autowire");
@@ -244,21 +244,21 @@ namespace Spring.Context.Attributes
             //	ObjectDef.setAutowireMode(autowire.value());
             //}
 
-            if (Attribute.GetCustomAttribute(metadata, typeof (DefinitionAttribute)) != null)
+            if (Attribute.GetCustomAttribute(metadata, typeof(DefinitionAttribute)) != null)
             {
                 objDef.InitMethodName =
-                    (Attribute.GetCustomAttribute(metadata, typeof (DefinitionAttribute)) as DefinitionAttribute).
+                    (Attribute.GetCustomAttribute(metadata, typeof(DefinitionAttribute)) as DefinitionAttribute).
                         InitMethod;
                 objDef.DestroyMethodName =
-                    (Attribute.GetCustomAttribute(metadata, typeof (DefinitionAttribute)) as DefinitionAttribute).
+                    (Attribute.GetCustomAttribute(metadata, typeof(DefinitionAttribute)) as DefinitionAttribute).
                         DestroyMethod;
             }
 
             // consider scoping
-            if (Attribute.GetCustomAttribute(metadata, typeof (ScopeAttribute)) != null)
+            if (Attribute.GetCustomAttribute(metadata, typeof(ScopeAttribute)) != null)
             {
                 objDef.Scope =
-                    (Attribute.GetCustomAttribute(metadata, typeof (ScopeAttribute)) as ScopeAttribute).ObjectScope.
+                    (Attribute.GetCustomAttribute(metadata, typeof(ScopeAttribute)) as ScopeAttribute).ObjectScope.
                         ToString();
             }
 
@@ -285,7 +285,7 @@ namespace Spring.Context.Attributes
                     try
                     {
                         IObjectDefinitionReader readerInstance =
-                            (IObjectDefinitionReader) Activator.CreateInstance(readerClass, _registry);
+                            (IObjectDefinitionReader)Activator.CreateInstance(readerClass, _registry);
 
                         readerInstanceCache.Add(readerClass, readerInstance);
                     }
