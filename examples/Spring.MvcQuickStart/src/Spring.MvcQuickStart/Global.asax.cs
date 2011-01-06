@@ -1,7 +1,10 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
+using System.Reflection;
 using System.Web;
+using System.Web.Compilation;
 using System.Web.Mvc;
 using System.Web.Routing;
 using Spring.Web.Mvc;
@@ -14,6 +17,12 @@ namespace Spring.MvcQuickStart
 
     public class MvcApplication : SpringMvcApplication
     {
-        
+        protected override void ConfigureApplicationContext()
+        {
+            ScanningApplicationContext scanningApplicationContext = new ScanningApplicationContext();
+            scanningApplicationContext.Scan();
+
+            ContextRegistry.RegisterContext(scanningApplicationContext);
+        }
     }
 }
