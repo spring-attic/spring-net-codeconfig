@@ -155,6 +155,7 @@ namespace Spring.Context.Attributes
 
         protected virtual void SetDefaultFilters()
         {
+
             if (IncludePredicates.Count == 0)
                 IncludePredicates.Add(t => true);
 
@@ -179,7 +180,7 @@ namespace Spring.Context.Attributes
         {
             var assemblies = new List<Assembly>();
             AddFilesForExtension(folderPath, "*.dll", assemblies);
-            //AddFilesForExtension(folderPath, "*.exe", assemblies);
+            AddFilesForExtension(folderPath, "*.exe", assemblies);
 
             if (Logger.IsDebugEnabled)
             {
