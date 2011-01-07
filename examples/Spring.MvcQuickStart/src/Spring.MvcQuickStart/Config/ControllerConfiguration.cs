@@ -7,7 +7,7 @@ namespace Spring.MvcQuickStart.Config
     public class ControllerConfiguration
     {
         [Definition]
-        public virtual HomeController Home()
+        public virtual HomeController HomeController()
         {
             HomeController controller = new HomeController();
             controller.Message = "Welcome to ASP.NET MVC powered by Spring.NET (Code-Config)!";

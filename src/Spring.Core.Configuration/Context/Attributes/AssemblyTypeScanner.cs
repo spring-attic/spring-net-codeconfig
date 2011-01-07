@@ -30,7 +30,7 @@ namespace Spring.Context.Attributes
 {
     public abstract class AssemblyTypeScanner : IAssemblyTypeScanner
     {
-        protected static ILog Logger = LogManager.GetLogger(typeof (AssemblyTypeScanner));
+        protected static ILog Logger = LogManager.GetLogger(typeof(AssemblyTypeScanner));
         protected readonly List<Predicate<Assembly>> AssemblyPredicates = new List<Predicate<Assembly>>();
 
         protected readonly List<Predicate<Type>> ExcludePredicates = new List<Predicate<Type>>();
@@ -67,19 +67,19 @@ namespace Spring.Context.Attributes
 
         public IAssemblyTypeScanner AssemblyHavingType<T>()
         {
-            TypeSources.Add(new AssemblyTypeSource((typeof (T).Assembly)));
+            TypeSources.Add(new AssemblyTypeSource((typeof(T).Assembly)));
             return this;
         }
 
         public IAssemblyTypeScanner ExcludeType<T>()
         {
-            ExcludePredicates.Add(t => t == typeof (T));
+            ExcludePredicates.Add(t => t == typeof(T));
             return this;
         }
 
         public IAssemblyTypeScanner IncludeType<T>()
         {
-            IncludePredicates.Add(t => t == typeof (T));
+            IncludePredicates.Add(t => t == typeof(T));
             return this;
         }
 
@@ -192,7 +192,7 @@ namespace Spring.Context.Attributes
 
         public void AddFilesForExtension(string folderPath, string extension, IList<Assembly> assemblies)
         {
-            IEnumerable<string> files = Directory.GetFiles(folderPath, extension);
+            IEnumerable<string> files = Directory.GetFiles(folderPath, extension, SearchOption.AllDirectories);
             foreach (string file in files)
                 try
                 {
@@ -215,7 +215,9 @@ namespace Spring.Context.Attributes
 
         private string GetCurrentBinDirectoryPath()
         {
-            return Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location);
+            return !string.IsNullOrEmpty(AppDomain.CurrentDomain.DynamicDirectory)
+                       ? AppDomain.CurrentDomain.DynamicDirectory
+                       : AppDomain.CurrentDomain.BaseDirectory;
         }
     }
 }

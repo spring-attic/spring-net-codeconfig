@@ -21,7 +21,7 @@ namespace Spring.MvcQuickStart
         {
             ScanningApplicationContext scanningApplicationContext = new ScanningApplicationContext();
             scanningApplicationContext.Scan();
-
+            scanningApplicationContext.Refresh();
             ContextRegistry.RegisterContext(scanningApplicationContext);
         }
     }
