@@ -1,14 +1,16 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.Reflection;
 
 namespace Spring.Context.Attributes
 {
     public abstract class RequiredConstraintAssemblyTypeScanner : AssemblyTypeScanner
     {
-        public RequiredConstraintAssemblyTypeScanner(string folderScanPath) : base(folderScanPath)
+        protected RequiredConstraintAssemblyTypeScanner(string folderScanPath) : base(folderScanPath)
         {
         }
 
-        public RequiredConstraintAssemblyTypeScanner()
+        protected RequiredConstraintAssemblyTypeScanner()
         {
         }
 

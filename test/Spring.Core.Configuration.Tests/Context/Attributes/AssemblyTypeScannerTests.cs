@@ -21,6 +21,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Reflection;
 using NUnit.Framework;
 using Spring.Util;
 
@@ -55,7 +56,7 @@ namespace Spring.Context.Attributes
             {
                 //get at the collection of excludePredicates from the private field
                 //(yuck!-- test smell, but at least its wrapped up in a neat private property getter!)
-                return (List<Predicate<Type>>)(ReflectionUtils.GetInstanceFieldValue(_scanner, "ExcludePredicates"));
+                return (List<Predicate<Type>>)(ReflectionUtils.GetInstanceFieldValue(_scanner, "TypeExclusionPredicates"));
             }
         }
 
@@ -65,7 +66,7 @@ namespace Spring.Context.Attributes
             {
                 //get at the collection of includePredicates from the private field
                 //(yuck!-- test smell, but at least its wrapped up in a neat private property getter!)
-                return (List<Predicate<Type>>)(ReflectionUtils.GetInstanceFieldValue(_scanner, "IncludePredicates"));
+                return (List<Predicate<Type>>)(ReflectionUtils.GetInstanceFieldValue(_scanner, "TypeInclusionPredicates"));
             }
         }
 

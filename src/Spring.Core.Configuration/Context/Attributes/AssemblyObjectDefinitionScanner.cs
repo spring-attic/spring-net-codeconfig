@@ -21,12 +21,23 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Reflection;
 using Spring.Objects.Factory.Support;
 
 namespace Spring.Context.Attributes
 {
     public class AssemblyObjectDefinitionScanner : RequiredConstraintAssemblyTypeScanner
     {
+        private readonly List<Predicate<Assembly>> _assemblyExclusionPredicates = new List<Predicate<Assembly>>();
+
+        //TODO: add comprehensive list of Spring Framework Assemblies to ignore to this list
+        private readonly IEnumerable<string> _springAssemblies = new List<string>()
+                                                                    {
+                                                                        "Spring.Core",
+                                                                        "Spring.Data",
+                                                                        "Spring.Services"
+                                                                    };
+
         /// <summary>
         /// Initializes a new instance of the AssemblyObjectDefinitionScanner class.
         /// </summary>
@@ -44,7 +55,7 @@ namespace Spring.Context.Attributes
 
         protected override bool IsRequiredConstraintSatisfiedBy(Type type)
         {
-            return Attribute.GetCustomAttribute(type, typeof (ConfigurationAttribute), true) != null && !type.IsAbstract;
+            return Attribute.GetCustomAttribute(type, typeof(ConfigurationAttribute), true) != null && !type.IsAbstract;
         }
 
 
@@ -61,6 +72,30 @@ namespace Spring.Context.Attributes
             RegisiterDefintionsForTypes(registry, configTypes);
 
         }
+
+        protected override IEnumerable<Assembly> ApplyAssemblyFiltersTo(IEnumerable<Assembly> assemblyCandidates)
+        {
+            return assemblyCandidates.Where(candidate => IsIncludedAssembly(candidate) && !IsExcludedAssembly(candidate));
+        }
+
+        protected virtual bool IsExcludedAssembly(Assembly candidate)
+        {
+            return _assemblyExclusionPredicates.Any(exclude => exclude(candidate));
+        }
+
+        protected override void SetDefaultFilters()
+        {
+            //set the built-in defaults
+            base.SetDefaultFilters();
+
+            //add the desired assembly exclusions to the list
+            _assemblyExclusionPredicates.Add(a => _springAssemblies.Contains(a.GetName().Name));
+            _assemblyExclusionPredicates.Add(a => a.GetName().Name.StartsWith("System."));
+            _assemblyExclusionPredicates.Add(a => a.GetName().Name.StartsWith("Microsoft."));
+            _assemblyExclusionPredicates.Add(a => a.GetName().Name == "mscorlib");
+            _assemblyExclusionPredicates.Add(a => a.GetName().Name == "System");
+        }
+
 
 
         /// <summary>

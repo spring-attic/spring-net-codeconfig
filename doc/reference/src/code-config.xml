@@ -1,12 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<chapter id="wpf">
-  <title>Using Spring WPF</title>
+<chapter id="code-config">
+  <title>Using Spring Code-Config</title>
 
   <para>In this chapter, we will explore interface and classes that are the
   essential components for developing applications with Spring WPF.</para>
 
   <sect1>
-    <title>Spring WPF</title>
+    <title>Spring Code-Config</title>
 
     <para>The Spring WPF project consists of .... 
     </para>

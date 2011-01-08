@@ -2,7 +2,7 @@
 <!DOCTYPE book  [
   <!ENTITY preface              SYSTEM "preface.xml">
   <!ENTITY quick-tour           SYSTEM "quick-tour.xml">
-  <!ENTITY wpf                  SYSTEM "wpf.xml">
+  <!ENTITY code-config          SYSTEM "code-config.xml">
   <!ENTITY sample-apps          SYSTEM "sample-apps.xml">
   <!ENTITY further-reading      SYSTEM "further-reading.xml">
   <!ENTITY bibliography         SYSTEM "bibliography.xml">
@@ -57,7 +57,7 @@
 		a chapter for the <link linkend="sample-apps">sample applications</link>.
             </para>
         </partintro>
-	&wpf;
+	&code-config;
 	&sample-apps;
     </part>
     <part id="resources">
