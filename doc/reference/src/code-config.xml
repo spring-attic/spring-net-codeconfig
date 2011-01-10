@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<chapter id="code-config">
+<chapter id="code-config"  xmlns="http://docbook.org/ns/docbook" version="5">
   <title>Using Spring Code-Config</title>
 
   <para>In this chapter, we will explore interface and classes that are the

@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<preface id="preface">
+<chapter xml:id="preface" xmlns="http://docbook.org/ns/docbook" version="5">
   <title>Preface</title>
 
-  <para>The Spring WPF project applies core Spring concepts to the development of WPF-based UI solutions. 
-  </para>
-</preface>
+  <para>The Spring Code Config project provides a code-based API for creating
+  and registering Object Defintions with the Spring Appication Context.</para>
+</chapter>

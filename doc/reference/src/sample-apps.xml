@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<chapter id="sample-apps">
+<chapter id="sample-apps" xmlns="http://docbook.org/ns/docbook" version="5" >
   <title>Sample Applications</title>
 
   <section>
