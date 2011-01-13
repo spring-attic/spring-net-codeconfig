@@ -2,7 +2,8 @@
 <!DOCTYPE book [
 <!ENTITY preface SYSTEM "preface.xml">
 <!ENTITY quick-tour SYSTEM "quick-tour.xml">
-<!ENTITY code-config SYSTEM "code-config.xml">
+<!ENTITY scanning-context SYSTEM "scanning-context.xml">
+<!ENTITY attribute-reference SYSTEM "attribute-reference.xml">
 <!ENTITY sample-apps SYSTEM "sample-apps.xml">
 <!ENTITY further-reading SYSTEM "further-reading.xml">
 <!ENTITY bibliography SYSTEM "bibliography.xml">
@@ -15,7 +16,7 @@
       xmlns:ns3="http://www.w3.org/1999/xhtml"
       xmlns:ns="http://docbook.org/ns/docbook">
   <bookinfo>
-    <title>Spring Code Config - Reference Documentation</title>
+    <title>Spring CodeConfig - Reference Documentation</title>
 
     <releaseinfo>1.0.0</releaseinfo>
 
@@ -43,10 +44,22 @@
     <title>Introduction</title>
 
     <partintro>
-      <para>This first part of the reference documentation <link
-      linkend="what-is-spring-wpf">is an overview</link> of Spring WPF and the
-      underlying concepts.</para>
+      <para>This first part of the reference documentation is an overview of
+      Spring CodeConfig and the underlying concepts.</para>
     </partintro>
+
+    <chapter id="code-config" version="5">
+      <title>Concepts</title>
+
+      <para>The goal of Spring CodeConfig is to provide an rich code
+      configuration capability rooted in code rather than the more common
+      XML.</para>
+
+      <sect1><title>Object Definitions are Code</title>The simplest way to
+      understand CodeConfig is to investigate a working sample.</sect1>
+
+      <paragraph />
+    </chapter>
   </part>
 
   <part>
@@ -54,13 +67,12 @@
 
     <partintro>
       <para>This part of the reference documentation details the various
-      components that comprise Spring WPF. The <link linkend="wpf">main
-      chapter</link> covers the core classes to develop an WPF application.
-      There is also a chapter for the <link linkend="sample-apps">sample
-      applications</link>.</para>
+      components that comprise Spring CodeConfig.</para>
     </partintro>
 
-    &code-config;
+    &scanning-context;
+	
+	&attribute-reference;
 
     &sample-apps;
   </part>

@@ -1,7 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<chapter xml:id="preface" xmlns="http://docbook.org/ns/docbook" version="5">
+<preface version="5" xml:id="preface" xmlns="http://docbook.org/ns/docbook"
+         xmlns:ns5="http://www.w3.org/1998/Math/MathML"
+         xmlns:ns42="http://www.w3.org/2000/svg"
+         xmlns:ns4="http://www.w3.org/1999/xlink"
+         xmlns:ns3="http://www.w3.org/1999/xhtml"
+         xmlns:ns="http://docbook.org/ns/docbook">
   <title>Preface</title>
 
-  <para>The Spring Code Config project provides a code-based API for creating
+  <para>The Spring CodeConfig project provides a code-based API for creating
   and registering Object Defintions with the Spring Appication Context.</para>
-</chapter>
+</preface>
