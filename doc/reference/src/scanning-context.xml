@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<chapter version="5" xmlns="http://docbook.org/ns/docbook"
+<chapter version="5" xml:id="scanning-context"
+         xmlns="http://docbook.org/ns/docbook"
          xmlns:ns5="http://www.w3.org/1998/Math/MathML"
          xmlns:ns42="http://www.w3.org/2000/svg"
          xmlns:ns4="http://www.w3.org/1999/xlink"
@@ -67,8 +68,8 @@
       <literal>bool</literal>.</para>
 
       <para>Note that as with any <literal>Predicate&lt;T&gt;</literal>
-      construct, the <literal>Prediate&lt;Assembly&gt;</literal> and
-      <literal>Prediate&lt;Type&gt;</literal> constraints may be of arbitrary
+      construct, the <literal>Predicate&lt;Assembly&gt;</literal> and
+      <literal>Predicate&lt;Type&gt;</literal> constraints may be of arbitrary
       complexity, formulated using any combination of standard C# AND
       (<literal>&amp;&amp;</literal>), OR (<literal>||</literal>), and NOT
       (<literal>!</literal>) operators as in the following example which
@@ -135,13 +136,6 @@ ctx.Scan(IsOneOfOurConfigAssemblies);</programlisting>
         <emphasis>Assembly Inclusion Constraint</emphasis> will be scanned;
         defaults to 'all types'.</para>
       </listitem>
-
-      <listitem>
-        <para><emphasis>Type Exclusion Constraint</emphasis></para>
-
-        <para>No types matching this contraint will be scanned; defaults to
-        'no types' (e.g., no exclusions).</para>
-      </listitem>
     </itemizedlist>
 
     <sect2>
@@ -183,65 +177,155 @@ ctx.Scan(a =&gt; a.GetTypes().Any(assy =&gt; assy.GetTypes().Any(type =&gt; type
     </sect2>
 
     <sect2>
-      <title>Type Constraints</title>
+      <title>Type Inclusion Constraints</title>
 
-      <para>There are two different categories of Type Constraints:</para>
+      <para>To limit the scope of scanning of types within assemblies, the
+      <literal>ScanningApplicationContext</literal> provides several
+      <literal>.Scan()</literal> method signatures that accept a constraint to
+      be applied to include types within assemblies at scan time. The format
+      of this contraint matches
+      <literal>Predicate&lt;System.Type&gt;</literal> (e.g. any delegate
+      method that accepts a single <literal>System.Type</literal> param and
+      returns a <literal>bool</literal>).</para>
 
-      <orderedlist>
-        <listitem>
-          <para>Type Inclusion Constraints</para>
-        </listitem>
+      <para>As an example, the following snippet demonstrates the invocation
+      of the scanning operation such that it will only scan types whose names
+      contain the string "Config" and so would match types named
+      "<literal>MyConfiguration</literal>",
+      "<literal>ServicesConfiguration</literal>", and
+      "<literal>ConfigurationSettings</literal>" but not
+      "<literal>MyClass</literal>".</para>
 
-        <listitem>
-          <para>Type Exclusion Constraints</para>
-        </listitem>
-      </orderedlist>
-
-      <sect3>
-        <title>Type Inclusion Constraints</title>
-
-        <para>To limit the scope of scanning of types within assemblies, the
-        <literal>ScanningApplicationContext</literal> provides several
-        <literal>.Scan()</literal> method signatures that accept a constraint
-        to be applied to types within assemblies at scan time. The format of
-        this contraint matches <literal>Predicate&lt;System.Type&gt;</literal>
-        (e.g. any delegate method that accepts a single
-        <literal>System.Type</literal> param and returns a
-        <literal>bool</literal>).</para>
-
-        <para>As an example, the following snippet demonstrates the invocation
-        of the scanning operation such that it will only scan types whose
-        names contain the string "Config" and so would match types named
-        "<literal>MyConfiguration</literal>",
-        "<literal>ServicesConfiguration</literal>", and
-        "<literal>ConfigurationSettings</literal>" but not
-        "<literal>MyClass</literal>".</para>
-
-        <programlisting language="csharp">var ctx = new ScanningApplicationContext();
+      <programlisting language="csharp">var ctx = new ScanningApplicationContext();
 ctx.Scan(type =&gt; type.FullName.Contains("Config");</programlisting>
 
-        <para>Note that the <emphasis>Type Inclusion Constraints</emphasis>
-        are applied only to assemblies that already satisfy the
-        <emphasis>Assembly Inclusion Constraints</emphasis> and that </para>
-      </sect3>
+      <para>There are two important aspects to take note of in re: the
+      behavior of the <literal>ScanningApplicationContext</literal> with
+      regards to <emphasis>Type Inclusion
+      Constraints</emphasis><emphasis></emphasis></para>
 
-      <sect3>
-        <title>Type Exclusion Contraints</title>
+      <itemizedlist>
+        <listitem>
+          <para><emphasis>Type Inclusion Constraints</emphasis> are applied
+          only to types defined in assemblies that also satisfy the
+          <emphasis>Assembly Inclusion Constraint</emphasis></para>
 
-        <para></para>
-      </sect3>
+          <para>No matter whether any given <literal>Type</literal> satisfies
+          the <emphasis>Type Inclusion Contstraint</emphasis>, if the
+          <literal>Type</literal> is defined in an assembly that fails to
+          satisfy the <emphasis>Assembly Inclusion Constraint</emphasis>, the
+          <literal>Type</literal> will not be scanned for Object
+          Defintions.</para>
+        </listitem>
+
+        <listitem>
+          <para>There is always an implicit additional <emphasis>Type
+          Inclusion Constraint</emphasis> of "...and the
+          <literal>Type</literal> must have the
+          <literal>[Configuration]</literal> attribute applied to it"</para>
+
+          <para>No Type that does not have the
+          <literal>[Configuration]</literal> attribute applied to its
+          declaration will ever be scanned regardless of any <emphasis>Type
+          Inclusion Constraint</emphasis>.</para>
+        </listitem>
+      </itemizedlist>
     </sect2>
   </sect1>
 
   <sect1>
-    <title>Compound Scanning Constraints</title>
+    <title>Advanced Scanning Behavior</title>
 
-    <para></para>
+    <para>In some cases, you may want more fine-grained control of the
+    <literal>.Scan(...)</literal> behavior of the
+    <literal>ScanningApplicationContext</literal>. In this section, we explore
+    the various methods of achieving this level of control.</para>
+
+    <sect2>
+      <title>Combining Root Path, Assembly Constraints, and Type
+      Constraints</title>
+
+      <para>The <literal>ScanningApplicationContext</literal> provides several
+      .Scan(...) method overloads that accept both an Assembly Constraint and
+      a Type Constraint. These may be combined as in the following
+      example:</para>
+
+      <programlisting language="csharp">var ctx = new ScanningApplicationContext();
+ctx.Scan(assy =&gt; assy.FullName.Name.BeginsWith("Config"), type =&gt; type.Name.Contains("Infrastructure"));</programlisting>
+
+      <para>For even more control over the scanning, you can provide a root
+      scan path to the .Scan(...) method as well as shown in the following
+      sample:<programlisting language="csharp">var ctx = new ScanningApplicationContext();
+ctx.Scan("c:\\MySpecialFolder\\MyConfigAssemblies", assy =&gt; assy.FullName.Name.BeginsWith("Config"), type =&gt; type.Name.Contains("Infrastructure"));</programlisting>Note
+      that it is not possible to exclude specific types from the scanning
+      process using these overloads of the <literal>.Scan(...)</literal>
+      method. To get type-exclusion control, you must instantiate and pass in
+      your own instance of the
+      <literal>AssemblyObjectDefinitionScanner</literal> as described in the
+      following section(s).</para>
+    </sect2>
 
     <sect2>
       <title>Using your own AssemblyObjectDefintionScanner Instance</title>
 
-      <para></para>
+      <para>If you need more fine-grained control of the
+      <literal>.Scan(...)</literal> behavior of the
+      <literal>ScanningApplicationContext</literal>, you can instantiate and
+      configure your own instance of the
+      <literal>AssemblyObjectDefinitionScanner</literal> and pass it to the
+      <literal>.Scan(...)</literal> method directly. The
+      <literal>AssemblyObjectDefinitonScanner</literal> provides many methods
+      for defining the contraints that will control the scanning
+      process.</para>
+
+      <sect3>
+        <title>Controlling the Root of the Scanning Path</title>
+
+        <para>The contructor for the
+        <literal>AssmblyObjectDefinitionScanner</literal> provides an overload
+        that accepts the fully-qualified path at which the scan will begin the
+        search for assemblies and types. As mentioned elsewhere, if this path
+        is not provided it will default to the root of the currently-executing
+        AppDomain.</para>
+
+        <programlisting language="csharp">//start the scan at special location for the assemblies containing [Configuration]-attributed types
+var scanner = new AssemblyObjectDefinitionScanner("c:\\MySpecialConfigurationLocation\\MyFavoriteConfigAssemblies");
+var ctx = new ScanningApplicationContext();
+ctx.Scan(scanner);</programlisting>
+      </sect3>
+
+      <sect3>
+        <title>Scanning Specific Assemblies and Types</title>
+
+        <para>The <literal>AssmblyObjectDefinitionScanner</literal> provides
+        methods that permit specific assemblies or types to be included or
+        excluded.</para>
+
+        <programlisting language="csharp">var scanner = new AssemblyObjectDefinitionScanner();
+
+scanner.AssemblyHavingType&lt;MyConfigurations&gt;(); //add the assembly containing this type to the list of assemblies to be scanned
+scanner.IncludeType&lt;MySpecialConfiguration&gt;(); //add this specific type the list of types to be scanned
+scanner.ExcludeType&lt;MyConfigurationToBeIgnored&gt;(); //exclude this specific type from the list of types to be scanned
+
+var ctx = new ScanningApplicationContext();
+ctx.Scan(scanner);</programlisting>
+
+        <para>For those that prefer a more fluent feel to the
+        <literal>AssemblyObjectDefinitionScanner</literal> API, there are
+        methods that permit successive filter criteria to be strung together
+        in a sequence as in the following example:</para>
+
+        <programlisting language="csharp">var scanner = new AssemblyObjectDefinitionScanner();
+
+scanner
+  .WithAssemblyFilter(assy =&gt; assy.FullName.Name.StartsWith("Config"))
+  .WithIncludeFilter(type =&gt; type.Name.Contains("MyApplication"))
+  .WithExcludeFilter(type =&gt; type.Name.EndsWith("Service"))
+  .WithExcludeFilter(type =&gt; type.Name.StartsWith("Microsoft"));
+
+var ctx = new ScanningApplicationContext();
+ctx.Scan(scanner);</programlisting>
+      </sect3>
     </sect2>
   </sect1>
 </chapter>
