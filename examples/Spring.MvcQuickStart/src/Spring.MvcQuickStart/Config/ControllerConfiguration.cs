@@ -1,5 +1,6 @@
 using Spring.Context.Attributes;
 using Spring.MvcQuickStart.Controllers;
+using Spring.Objects.Factory.Support;
 
 namespace Spring.MvcQuickStart.Config
 {
@@ -7,6 +8,7 @@ namespace Spring.MvcQuickStart.Config
     public class ControllerConfiguration
     {
         [Definition]
+        [Scope(ObjectScope.Prototype)]
         public virtual HomeController HomeController()
         {
             HomeController controller = new HomeController();

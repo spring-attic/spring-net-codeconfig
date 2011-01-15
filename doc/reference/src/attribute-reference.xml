@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<chapter xml:id="attribute-reference" version="5" xmlns="http://docbook.org/ns/docbook"
+<chapter version="5" xml:id="attribute-reference"
+         xmlns="http://docbook.org/ns/docbook"
          xmlns:ns5="http://www.w3.org/1998/Math/MathML"
          xmlns:ns42="http://www.w3.org/2000/svg"
          xmlns:ns4="http://www.w3.org/1999/xlink"
@@ -7,50 +8,595 @@
          xmlns:ns="http://docbook.org/ns/docbook">
   <title>Attribute Reference</title>
 
-  <para>In this chapter, we will explore interface and classes that are the
-  essential components for developing applications with Spring
-  CodeConfig.</para>
+  <para>In this chapter, we will explore the attributes that are the essential
+  components for declaring Object Definitions with Spring CodeConfig.</para>
 
   <sect1>
     <title>[Configuration] Attribute</title>
 
-    <para>The [Configuration] attribute is applied to classes that contain one
-    or more [Definition] attributed-menthods.</para>
+    <para>The <literal>[Configuration]</literal> attribute is applied to
+    classes that contain one or more <literal>[Definition]</literal>
+    attributed-menthods. During scanning by the
+    <literal>ScanningApplicationContext</literal>, only types having the
+    <literal>[Configuration]</literal> attribute will be considered candidates
+    to contain Object Definition configurations.</para>
+
+    <sect2>
+      <title>Using the Configuration Attribute</title>
+
+      <para></para>
+
+      <sect3>
+        <title>Simple Usage</title>
+
+        <para>The first usage of the <literal>[Configuration]</literal>
+        attribute simply applies the attribute to a class. The name of the of
+        the type, once registered with the
+        <literal>ScanningApplicationContext</literal>, will be the name of the
+        class itself.<programlisting language="csharp">[Configuration]
+public class MyConfigurationClass
+{
+  //[Definition] methods here
+}</programlisting></para>
+      </sect3>
+
+      <sect3>
+        <title>Controlling the Name of the Configuration Class</title>
+
+        <para>While not a common use-case, if you need fine-grained control
+        over the name of the type registered with the
+        <literal>ScanningApplicationContext</literal>, the
+        <literal>[Configuration]</literal> attribute accepts a
+        <literal>Name</literal> parameter which will be applied to the
+        registered Object Definition in the
+        <literal>ScanningApplicationContext</literal>.<programlisting
+        language="csharp">[Configuration("MySpecialConfigurationClass")]
+public class MyConfigurationClass
+{
+  //[Definition] methods here
+}</programlisting></para>
+      </sect3>
+    </sect2>
   </sect1>
 
   <sect1>
     <title>[Definition] Attribute</title>
 
-    <para></para>
+    <para>The <literal>[Definition]</literal> attribute is applied to one or
+    more methods within any class to which the
+    <literal>[Configuration]</literal> attribute has been applied. During
+    scanning, any <literal>public virutal</literal> method having the
+    <literal>[Definition]</literal> attribute is considered to contain Object
+    Definition metadata.</para>
+
+    <sect2>
+      <title>Using the Definition Attribute</title>
+
+      <para></para>
+
+      <sect3>
+        <title>Simple Usage</title>
+
+        <para>The first usage of the <literal>[Defintion]</literal> attribute
+        simply applies the attribute to the method. The name of the of the
+        Object to be registered with the
+        <literal>ScanningApplicationContext</literal>, will be the name of the
+        method itself.<programlisting language="csharp">[Configuration]
+public class MyConfigurationClass
+{
+  [Definition]
+  public virtual HomeController HomeController()
+  {
+    return new HomeController();
+  }
+}</programlisting></para>
+      </sect3>
+
+      <sect3>
+        <title>Controlling the Name and Aliases of the Defined Object</title>
+
+        <para>If you need to control the name of the Object registered with
+        the <literal>ScanningApplicationContext</literal>, the
+        <literal>[Definition]</literal> attribute accepts one or more
+        comma-deliminted names as aliases for the Object when
+        registered.</para>
+
+        <programlisting language="csharp">[Configuration]
+public class MyConfigurationClass
+{
+  [Definition(Names="TheHomeController")]
+  public virtual HomeController HomeController()
+  {
+    return new HomeController();
+  }
+
+  [Definition(Names="TheSpecialNameForAboutController,AliasForAboutController")]
+  public virtual AboutController AboutController()
+  {
+    return new AboutController();
+  }
+}</programlisting>
+      </sect3>
+
+      <sect3>
+        <title>Setting an Init Method for the Object</title>
+
+        <para>If you need to declare an Initialization Method for the object
+        definition, the <literal>[Definition]</literal> attribute accepts a
+        method name to be invoked at the appropriate stage in the object's
+        creation by the <literal>ScanningApplicationContext</literal>.</para>
+
+        <programlisting language="csharp">[Configuration]
+public class MyConfigurationClass
+{
+  [Definition(InitMethod="AfterCreation")] //assumes a public method on the HomeController type named 'AfterCreation()'
+  public virtual HomeController HomeController()
+  {
+    return new HomeController();
+  }
+}</programlisting>
+      </sect3>
+
+      <sect3>
+        <title>Setting a Destroy Method for the Object</title>
+
+        <para>If you need to declare a Destroy Method for the object
+        definition, the <literal>[Definition]</literal> attribute accepts a
+        method name to be invoked at the appropriate stage in the object's
+        destruction by the
+        <literal>ScanningApplicationContext</literal>.</para>
+
+        <programlisting language="csharp">[Configuration]
+public class MyConfigurationClass
+{
+  [Definition(DestroyMethod="CleanupResources")] //assumes a public method on the HomeController type named 'CleanupResources()'
+  public virtual HomeController HomeController()
+  {
+    return new HomeController();
+  }
+}</programlisting>
+      </sect3>
+
+      <sect3>
+        <title>Setting AutoWiring for the Object</title>
+
+        <para>If you need to declare an AutoWiring style for the object
+        definition, the <literal>[Definition]</literal> attribute accepts the
+        <literal>AutoWiringMode</literal> enum. If you do not provide this
+        value, the default value is <literal>AutoWiringMode.No</literal> (no
+        autowiring is performed by the
+        <literal>ScanningApplicationContext</literal> during object
+        construction).</para>
+
+        <programlisting language="csharp">[Configuration]
+public class MyConfigurationClass
+{
+  [Definition(AutoWire=AutoWiringMode.Constructor)]
+  public virtual HomeController HomeController()
+  {
+    return new HomeController();
+  }
+}</programlisting>
+      </sect3>
+    </sect2>
   </sect1>
 
   <sect1>
     <title>[DependsOn] Attribute</title>
 
-    <para></para>
+    <para>The <literal>[DependsOn]</literal> attribute can be applied to any
+    <literal>[Definition]</literal>-attributed method to declare a
+    construction sequence dependency upon one or more objects that the
+    <literal>ScanningApplicationContext</literal> will ensure are created
+    prior to the creation of the current object.</para>
+
+    <sect2>
+      <title>Using the DependsOn Attribute</title>
+
+      <para></para>
+
+      <sect3>
+        <title>Controlling Creation Dependencies</title>
+
+        <para>The <literal>[DependsOn]</literal> attribute accepts an array of
+        strings representing the names of the objects upon which the current
+        object will depend.</para>
+
+        <programlisting language="csharp">[Configuration]
+public class MyConfigurationClass
+{
+  [Definition]
+  [DependsOn(new string[] { "Dependency1" })] //HomeController requires "Dependency1" to be created first
+  public virtual HomeController HomeController()
+  {
+    return new HomeController();
+  }
+
+  [Definition]
+  [DependsOn(new string[] { "Dependency1", "Dependency2" })] //AboutController requires "Dependency1" and "Dependency2" to be created first
+  public virtual AboutController AboutController()
+  {
+    return new AboutController();
+  }
+
+}</programlisting>
+      </sect3>
+    </sect2>
   </sect1>
 
   <sect1>
     <title>[Import] Attribute</title>
 
-    <para></para>
+    <para>The <literal>[Import]</literal> attribute allows you to identify one
+    or more additional types that will also be scanned when the current type
+    is scanned.</para>
+
+    <sect2>
+      <title>Using the Import Attribute</title>
+
+      <para></para>
+
+      <sect3>
+        <title>Specifying Additional Types to Scan</title>
+
+        <para>To support your specifying additional types to scan, the
+        <literal>[Import]</literal> attribute accepts an array of one or more
+        Types to scan as well. To be candidates for scanning, the types listed
+        in this array must also have the <literal>[Configuration]</literal>
+        attribute applied to them. Note that no error is reported if these
+        types lack the<literal>[Configuration</literal>] attribute, but
+        without it they will not satisfy the scanner's requirements for
+        Configuration candidates.</para>
+
+        <programlisting language="csharp">[Configuration]
+[Import(new Type[] = { typeof(MySecondConfiguration), typeof(MyThirdConfiguration) })]
+public class MyConfigurationClass
+{
+  [Definition]
+  public virtual HomeController HomeController()
+  {
+    return new HomeController();
+  }
+}
+
+[Configuration]
+public class MySecondConfiguration
+{
+  [Definition]
+  public virtual AboutController AboutController()
+  {
+    return new AboutController();
+  }
+}
+
+[Configuration]
+public class MyThirdConfiguration
+{
+  [Definition]
+  public virtual SomeOtherController SomeOtherController()
+  {
+    return new SomeOtherController();
+  }
+}</programlisting>
+      </sect3>
+
+      <sect3>
+        <title>Chaining [Import] Directives</title>
+
+        <para>Types pointed to by one <literal>[Import]</literal> attribute
+        may in turn have their own <literal>[Import]</literal> attributes
+        pointing to yet more types to scan. Using this approach, its possible
+        to specify perhaps only a single 'root' class from which to 'begin'
+        the scan and leverage the <literal>[Import]</literal> attribute to
+        'chain' successive types into the scanning scope, transitively
+        pointing from one <literal>[Configuration]</literal>-attributed type
+        to the next as in the following example where
+        <literal>MyConfigurationClass</literal> has an
+        <literal>[Import]</literal> attribute pointing to the
+        <literal>MySecondConfiguration</literal> class which in turn has an
+        <literal>[Import</literal>] attribute pointing to the
+        <literal>MyThirdConfiguration</literal> class.</para>
+
+        <programlisting language="csharp">[Configuration]
+[Import(new Type[] = { typeof(MySecondConfiguration) })]
+public class MyConfigurationClass
+{
+  [Definition]
+  public virtual HomeController HomeController()
+  {
+    return new HomeController();
+  }
+}
+
+[Configuration]
+[Import(new Type[] = { typeof(MyThirdConfiguration) })]
+public class MySecondConfiguration
+{
+  [Definition]
+  public virtual AboutController AboutController()
+  {
+    return new AboutController();
+  }
+}
+
+[Configuration]
+public class MyThirdConfiguration
+{
+  [Definition]
+  public virtual SomeOtherController SomeOtherController()
+  {
+    return new SomeOtherController();
+  }
+}</programlisting>
+
+        <para>Given this series of transitive or 'chained'
+        <literal>[Import]</literal>attributes, the
+        <literal>ScanningApplicationContext</literal> would only need to be
+        told to scan the single <literal>MyConfigurationClass</literal> type
+        in order to effectively scan and discover the
+        <literal>[Definition]</literal> methods contained all three
+        <literal>[Configuration]</literal> types. Using this approach, its
+        possible to use a compositional approach to segregate
+        <literal>[Definition]</literal> methods into multiple<literal>
+        [Configuration]</literal> classes and then chain them together just as
+        one might do with XML based configuration files for many of the other
+        <literal>IApplicationContext</literal> implementations.</para>
+      </sect3>
+    </sect2>
   </sect1>
 
   <sect1>
     <title>[ImportResource] Attribute</title>
 
-    <para></para>
+    <para>Just as the <literal>[Import]</literal> attribute provides the
+    ability to reference and import additional types attributed with the
+    <literal>[Configuration] </literal>attribute, the
+    <literal>[ImportResrource]</literal> attribute permits referencing and
+    importing Object Defintions from any <literal>IResource</literal>
+    implementation including those defined natively in Spring.NET
+    ("<literal>file://</literal>", "<literal>assembly://</literal>",
+    etc.).</para>
+
+    <sect2>
+      <title>Using the ImportResourceAttribute</title>
+
+      <para></para>
+
+      <sect3>
+        <title>Specifying an IResource</title>
+
+        <para>To import an <literal>IResource</literal>, simply reference its
+        path in the <literal>[ImportResource]</literal> attribute. In the
+        following example, the embedded assembly resource
+        <literal>ObjectDefinitions.xml</literal> is being imported into the
+        process of scanning and parsing the
+        <literal>MyConfigurationClass</literal> type. This makes all of the
+        object definitions present in the embedded
+        <literal>ObjectDefinitions.xml</literal> file available to the
+        <literal>ScanningApplicationContext</literal> as it builds its Object
+        Defintions.</para>
+
+        <programlisting language="csharp">[Configuration]
+[ImportResource("assembly://MyApplication.Config/MyCompany.MyApplication.Config/ObjectDefinitions.xml")]
+public class MyConfigurationClass
+{
+  [Definition]
+  public virtual HomeController HomeController()
+  {
+    return new HomeController();
+  }
+}</programlisting>
+      </sect3>
+
+      <sect3>
+        <title>Specifying Multiple IResources</title>
+
+        <para>To import multiple <literal>IResource</literal>s, simply provide
+        multiple <literal>[ImportResource] </literal>attributes, each with the
+        single resource to import. The following example demonstrates
+        importing an embedded assembly resource as well as two XML files on
+        disk.</para>
+
+        <programlisting language="csharp">[Configuration]
+[ImportResource("assembly://MyApplication.Config/MyCompany.MyApplication.Config/ObjectDefinitions.xml")]
+[ImportResource("file://ServiceObjectDefinitions.xml")]
+[ImportResource("file://c:/MySpecialConfigLocation/Deployment/SiteB/RepositoryObjectDefinitions.xml")]
+public class MyConfigurationClass
+{
+  [Definition]
+  public virtual HomeController HomeController()
+  {
+    return new HomeController();
+  }
+}</programlisting>
+      </sect3>
+
+      <sect3>
+        <title>Specifying a specific IObjectDefintionReader to Parse the
+        IResource</title>
+
+        <para>By default, the<literal> [ImportResource]</literal> attribute
+        will use the Spring.NET provided
+        <literal>XmlObjectDefinitionReader</literal> to parse the imported
+        <literal>IResource</literal>. If your imported resource cannot be
+        parsed with the <literal>XmlObjectDefinitionReader</literal> then you
+        can provide the type of the specific implementation of
+        <literal>IObjectDefinitionReader</literal> that the<literal>
+        [ImportResource]</literal> process should use. Note that this provided
+        type must implement the <literal>IObjectDefinitionReader</literal>
+        interface or an Exception will be thrown when the
+        <literal>[ImportResource]</literal> attribute is evaluated.</para>
+
+        <programlisting language="csharp">[Configuration]
+[ImportResource("assembly://MyApplication.Config/MyCompany.MyApplication.Config/ObjectDefinitions.CSV", DefinitionReader = typeof(MyCommaSeparatedValueObjectDefinitionReader))]
+public class MyConfigurationClass
+{
+  [Definition]
+  public virtual HomeController HomeController()
+  {
+    return new HomeController();
+  }
+}</programlisting>
+      </sect3>
+    </sect2>
   </sect1>
 
   <sect1>
     <title>[Lazy] Attribute</title>
 
-    <para></para>
+    <para>The <literal>[Lazy]</literal> attribute allows you to specify that
+    the object described by the <literal>[Definition]</literal> should either
+    be be lazily or eagerly instantiated.</para>
+
+    <sect2>
+      <title>Using the Lazy Attribute</title>
+
+      <para></para>
+
+      <sect3>
+        <title>Specifying Lazy Instantiation</title>
+
+        <para>To specify Lazy Instantiation of the object by the
+        <literal>ScanningApplicationContext</literal>, apply the<literal>
+        [Lazy] </literal>attribute to any
+        <literal>[Definition]</literal>-attributed method as in the following
+        example. Note that the default usage of the<literal>[Lazy]</literal>
+        attribute sets Lazy = true and so <literal>[Lazy]</literal> and
+        <literal>[Lazy(true)]</literal> are considered functionally
+        equivalent.</para>
+
+        <programlisting language="csharp">[Configuration]
+public class MyConfigurationClass
+{
+  [Definition]
+  [Lazy] //functionally equivalent to [Lazy(true)]
+  public virtual HomeController HomeController()
+  {
+    return new HomeController();
+  }
+}</programlisting>
+      </sect3>
+
+      <sect3>
+        <title>Specifying Non-Lazy (eager) Instantiation</title>
+
+        <para>As the default instantiation behavior for the
+        <literal>ScanningApplicationContext</literal> is to perform eager
+        instantiation, no special attribute needs to be applied to achieve
+        eager instantiation of the object. However, the
+        <literal>[Lazy]</literal> attribute will accept a
+        <literal>bool</literal> value of <literal>false</literal> if you
+        desire to be explicit about the <literal>[Lazy]</literal> setting for
+        the <literal>[Definition] </literal>as shown in the following code
+        snippet.</para>
+
+        <programlisting language="csharp">[Configuration]
+public class MyConfigurationClass
+{
+  [Definition]
+  [Lazy(false)] //functionally equivalent to simply not applying the [Lazy] attribute at all
+  public virtual HomeController HomeController()
+  {
+    return new HomeController();
+  }
+}</programlisting>
+      </sect3>
+    </sect2>
+  </sect1>
+
+  <sect1>
+    <title>[Primary] Attribute</title>
+
+    <para>The<literal> [Primary]</literal> attribute permits you to identify
+    the object as being the primary object returned for the resolution of a
+    given type by the <literal>ScanningApplicationContext</literal>.</para>
+
+    <sect2>
+      <title>Using the Primary Attribute</title>
+
+      <para>The<literal> [Primary]</literal> attribute can be applied to any
+      <literal>[Definition]</literal>-attributed method.</para>
+
+      <programlisting language="csharp">[Configuration]
+public class MyConfigurationClass
+{
+  [Definition]
+  [Primary]
+  public virtual HomeController HomeController()
+  {
+    return new HomeController();
+  }
+}</programlisting>
+
+      <para>Note that it is invalid to apply the <literal>[Primary]</literal>
+      attribute to more than a single <literal>[Definition]</literal> method
+      that returns a given type since there can be only one
+      <literal>Primary</literal> object for each type registered with the
+      <literal>ScanningApplicationContext</literal>. As an example, the
+      following code is invalid and will result in an exception when the
+      <literal>ScanningApplicationContext</literal> encounters it during the
+      scanning process:</para>
+
+      <programlisting language="csharp">[Configuration]
+public class MyConfigurationClass
+{
+  [Definition]
+  [Primary]
+  public virtual HomeController HomeController()
+  {
+    return new HomeController();
+  }
+
+  [Definition]
+  [Primary] //invalid because there is another [Defintion] method marked as [Primary] that defines the 'HomeController' type
+  public virtual HomeController OtherHomeController()
+  {
+    return new HomeController();
+  }
+
+}</programlisting>
+    </sect2>
   </sect1>
 
   <sect1>
     <title>[Scope] Attribute</title>
 
-    <para></para>
+    <para>The [Scope] attribute permits you to declare the lifetime of the
+    object managed by the <literal>ScanningApplicationContext</literal> for
+    each <literal>[Definition]</literal>-attributed method.</para>
+
+    <sect2>
+      <title>Scope Attribute Usage</title>
+
+      <para>The <literal>[Scope]</literal> attribute accepts a single
+      <literal>ObjectScope</literal> <literal>enum</literal> argument as
+      defined by Spring.NET and demonstrated in the following snippet:</para>
+
+      <programlisting language="csharp">[Configuration]
+public class MyConfigurationClass
+{
+  [Definition]
+  [Scope(ObjectScope.Prototype)]
+  public virtual HomeController HomeController()
+  {
+    return new HomeController();
+  }
+
+  [Definition]
+  [Scope(ObjectScope.Singleton)] //technically redundant since all types default to Singleton ObjectScope
+  public virtual CustomerRepository CustomerRepository()
+  {
+    return new CustomerRepository();
+  }
+
+  [Definition]
+  [Scope(ObjectScope.Session)]
+  public virtual UserSettings UserSettings()
+  {
+    return new UserSettings();
+  }
+
+}</programlisting>
+    </sect2>
   </sect1>
 </chapter>
