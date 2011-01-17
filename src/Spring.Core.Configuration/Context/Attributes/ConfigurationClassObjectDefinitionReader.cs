@@ -220,11 +220,11 @@ namespace Spring.Context.Attributes
                 }
             }
 
-            if (Attribute.GetCustomAttribute(metadata, typeof(PrimaryAttribute)) != null)
-            {
-                //TODO: determine how to respond to this attribute's presence
-                //ObjectDef.isPrimary = true;
-            }
+            //TODO: container does not presently support the concept of Primary object defintion for type resolution
+            //if (Attribute.GetCustomAttribute(metadata, typeof(PrimaryAttribute)) != null)
+            //{
+            //    ObjectDef.isPrimary = true;
+            //}
 
             // is this Object to be instantiated lazily?
             if (Attribute.GetCustomAttribute(metadata, typeof(LazyAttribute)) != null)

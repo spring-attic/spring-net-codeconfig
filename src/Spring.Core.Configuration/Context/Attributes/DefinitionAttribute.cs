@@ -27,7 +27,7 @@ namespace Spring.Context.Attributes
     [AttributeUsage(AttributeTargets.Method)]
     public class DefinitionAttribute : Attribute
     {
-        private AutoWiringMode _autoWire = AutoWiringMode.No;
+        //private AutoWiringMode _autoWire = AutoWiringMode.No;
 
         private string _destroyMethod;
 
@@ -35,18 +35,19 @@ namespace Spring.Context.Attributes
 
         private string _names;
 
+        //TODO: constructor injection via factory methods is not presently supported by the container
         /// <summary>
         /// Are dependencies to be injected via autowiring?
         /// </summary>
         /// <value>The auto wire.</value>
-        public AutoWiringMode AutoWire
-        {
-            get { return _autoWire; }
-            set
-            {
-                _autoWire = value;
-            }
-        }
+        //public AutoWiringMode AutoWire
+        //{
+        //    get { return _autoWire; }
+        //    set
+        //    {
+        //        _autoWire = value;
+        //    }
+        //}
 
         /// <summary>
         /// The optional name of a method to call on the Object instance upon closing the
