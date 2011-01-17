@@ -156,28 +156,6 @@ public class MyConfigurationClass
   }
 }</programlisting>
       </sect3>
-
-      <sect3>
-        <title>Setting AutoWiring for the Object</title>
-
-        <para>If you need to declare an AutoWiring style for the object
-        definition, the <literal>[Definition]</literal> attribute accepts the
-        <literal>AutoWiringMode</literal> enum. If you do not provide this
-        value, the default value is <literal>AutoWiringMode.No</literal> (no
-        autowiring is performed by the
-        <literal>ScanningApplicationContext</literal> during object
-        construction).</para>
-
-        <programlisting language="csharp">[Configuration]
-public class MyConfigurationClass
-{
-  [Definition(AutoWire=AutoWiringMode.Constructor)]
-  public virtual HomeController HomeController()
-  {
-    return new HomeController();
-  }
-}</programlisting>
-      </sect3>
     </sect2>
   </sect1>
 
@@ -501,60 +479,6 @@ public class MyConfigurationClass
   }
 }</programlisting>
       </sect3>
-    </sect2>
-  </sect1>
-
-  <sect1>
-    <title>[Primary] Attribute</title>
-
-    <para>The<literal> [Primary]</literal> attribute permits you to identify
-    the object as being the primary object returned for the resolution of a
-    given type by the <literal>ScanningApplicationContext</literal>.</para>
-
-    <sect2>
-      <title>Using the Primary Attribute</title>
-
-      <para>The<literal> [Primary]</literal> attribute can be applied to any
-      <literal>[Definition]</literal>-attributed method.</para>
-
-      <programlisting language="csharp">[Configuration]
-public class MyConfigurationClass
-{
-  [Definition]
-  [Primary]
-  public virtual HomeController HomeController()
-  {
-    return new HomeController();
-  }
-}</programlisting>
-
-      <para>Note that it is invalid to apply the <literal>[Primary]</literal>
-      attribute to more than a single <literal>[Definition]</literal> method
-      that returns a given type since there can be only one
-      <literal>Primary</literal> object for each type registered with the
-      <literal>ScanningApplicationContext</literal>. As an example, the
-      following code is invalid and will result in an exception when the
-      <literal>ScanningApplicationContext</literal> encounters it during the
-      scanning process:</para>
-
-      <programlisting language="csharp">[Configuration]
-public class MyConfigurationClass
-{
-  [Definition]
-  [Primary]
-  public virtual HomeController HomeController()
-  {
-    return new HomeController();
-  }
-
-  [Definition]
-  [Primary] //invalid because there is another [Defintion] method marked as [Primary] that defines the 'HomeController' type
-  public virtual HomeController OtherHomeController()
-  {
-    return new HomeController();
-  }
-
-}</programlisting>
     </sect2>
   </sect1>
 
