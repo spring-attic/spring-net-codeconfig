@@ -17,7 +17,7 @@
     <para>The <literal>[Configuration]</literal> attribute is applied to
     classes that contain one or more <literal>[Definition]</literal>
     attributed-menthods. During scanning by the
-    <literal>ScanningApplicationContext</literal>, only types having the
+    <literal>CodeConfigApplicationContext</literal>, only types having the
     <literal>[Configuration]</literal> attribute will be considered candidates
     to contain Object Definition configurations.</para>
 
@@ -32,7 +32,7 @@
         <para>The first usage of the <literal>[Configuration]</literal>
         attribute simply applies the attribute to a class. The name of the of
         the type, once registered with the
-        <literal>ScanningApplicationContext</literal>, will be the name of the
+        <literal>CodeConfigApplicationContext</literal>, will be the name of the
         class itself.<programlisting language="csharp">[Configuration]
 public class MyConfigurationClass
 {
@@ -45,11 +45,11 @@ public class MyConfigurationClass
 
         <para>While not a common use-case, if you need fine-grained control
         over the name of the type registered with the
-        <literal>ScanningApplicationContext</literal>, the
+        <literal>CodeConfigApplicationContext</literal>, the
         <literal>[Configuration]</literal> attribute accepts a
         <literal>Name</literal> parameter which will be applied to the
         registered Object Definition in the
-        <literal>ScanningApplicationContext</literal>.<programlisting
+        <literal>CodeConfigApplicationContext</literal>.<programlisting
         language="csharp">[Configuration("MySpecialConfigurationClass")]
 public class MyConfigurationClass
 {
@@ -80,7 +80,7 @@ public class MyConfigurationClass
         <para>The first usage of the <literal>[Defintion]</literal> attribute
         simply applies the attribute to the method. The name of the of the
         Object to be registered with the
-        <literal>ScanningApplicationContext</literal>, will be the name of the
+        <literal>CodeConfigApplicationContext</literal>, will be the name of the
         method itself.<programlisting language="csharp">[Configuration]
 public class MyConfigurationClass
 {
@@ -96,7 +96,7 @@ public class MyConfigurationClass
         <title>Controlling the Name and Aliases of the Defined Object</title>
 
         <para>If you need to control the name of the Object registered with
-        the <literal>ScanningApplicationContext</literal>, the
+        the <literal>CodeConfigApplicationContext</literal>, the
         <literal>[Definition]</literal> attribute accepts one or more
         comma-deliminted names as aliases for the Object when
         registered.</para>
@@ -124,7 +124,7 @@ public class MyConfigurationClass
         <para>If you need to declare an Initialization Method for the object
         definition, the <literal>[Definition]</literal> attribute accepts a
         method name to be invoked at the appropriate stage in the object's
-        creation by the <literal>ScanningApplicationContext</literal>.</para>
+        creation by the <literal>CodeConfigApplicationContext</literal>.</para>
 
         <programlisting language="csharp">[Configuration]
 public class MyConfigurationClass
@@ -144,7 +144,7 @@ public class MyConfigurationClass
         definition, the <literal>[Definition]</literal> attribute accepts a
         method name to be invoked at the appropriate stage in the object's
         destruction by the
-        <literal>ScanningApplicationContext</literal>.</para>
+        <literal>CodeConfigApplicationContext</literal>.</para>
 
         <programlisting language="csharp">[Configuration]
 public class MyConfigurationClass
@@ -165,7 +165,7 @@ public class MyConfigurationClass
     <para>The <literal>[DependsOn]</literal> attribute can be applied to any
     <literal>[Definition]</literal>-attributed method to declare a
     construction sequence dependency upon one or more objects that the
-    <literal>ScanningApplicationContext</literal> will ensure are created
+    <literal>CodeConfigApplicationContext</literal> will ensure are created
     prior to the creation of the current object.</para>
 
     <sect2>
@@ -309,7 +309,7 @@ public class MyThirdConfiguration
 
         <para>Given this series of transitive or 'chained'
         <literal>[Import]</literal>attributes, the
-        <literal>ScanningApplicationContext</literal> would only need to be
+        <literal>CodeConfigApplicationContext</literal> would only need to be
         told to scan the single <literal>MyConfigurationClass</literal> type
         in order to effectively scan and discover the
         <literal>[Definition]</literal> methods contained all three
@@ -351,7 +351,7 @@ public class MyThirdConfiguration
         <literal>MyConfigurationClass</literal> type. This makes all of the
         object definitions present in the embedded
         <literal>ObjectDefinitions.xml</literal> file available to the
-        <literal>ScanningApplicationContext</literal> as it builds its Object
+        <literal>CodeConfigApplicationContext</literal> as it builds its Object
         Defintions.</para>
 
         <programlisting language="csharp">[Configuration]
@@ -435,7 +435,7 @@ public class MyConfigurationClass
         <title>Specifying Lazy Instantiation</title>
 
         <para>To specify Lazy Instantiation of the object by the
-        <literal>ScanningApplicationContext</literal>, apply the<literal>
+        <literal>CodeConfigApplicationContext</literal>, apply the<literal>
         [Lazy] </literal>attribute to any
         <literal>[Definition]</literal>-attributed method as in the following
         example. Note that the default usage of the<literal>[Lazy]</literal>
@@ -459,7 +459,7 @@ public class MyConfigurationClass
         <title>Specifying Non-Lazy (eager) Instantiation</title>
 
         <para>As the default instantiation behavior for the
-        <literal>ScanningApplicationContext</literal> is to perform eager
+        <literal>CodeConfigApplicationContext</literal> is to perform eager
         instantiation, no special attribute needs to be applied to achieve
         eager instantiation of the object. However, the
         <literal>[Lazy]</literal> attribute will accept a
@@ -486,7 +486,7 @@ public class MyConfigurationClass
     <title>[Scope] Attribute</title>
 
     <para>The [Scope] attribute permits you to declare the lifetime of the
-    object managed by the <literal>ScanningApplicationContext</literal> for
+    object managed by the <literal>CodeConfigApplicationContext</literal> for
     each <literal>[Definition]</literal>-attributed method.</para>
 
     <sect2>

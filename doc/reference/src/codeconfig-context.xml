@@ -1,19 +1,19 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<chapter version="5" xml:id="scanning-context"
+<chapter version="5" xml:id="codeconfig-context"
          xmlns="http://docbook.org/ns/docbook"
          xmlns:ns5="http://www.w3.org/1998/Math/MathML"
          xmlns:ns42="http://www.w3.org/2000/svg"
          xmlns:ns4="http://www.w3.org/1999/xlink"
          xmlns:ns3="http://www.w3.org/1999/xhtml"
          xmlns:ns="http://docbook.org/ns/docbook">
-  <title>ScanningApplicationContext Reference</title>
+  <title>CodeConfigApplicationContext Reference</title>
 
-  <para>The <literal>ScanningApplicationContext</literal> is an implementation
+  <para>The <literal>CodeConfigApplicationContext</literal> is an implementation
   of <literal>IApplicationContext</literal> designed to gather its
   configuration primarily from code-based sources as opposed to XML-based
   sources as is the common case with most other
   <literal>IApplicationContext</literal> implementations provided natively by
-  Spring.NET. The <literal>ScanningApplicationContext</literal> scans one or
+  Spring.NET. The <literal>CodeConfigApplicationContext</literal> scans one or
   more folders for assemblies containing one or more types attributed with the
   <literal>[Configuration]</literal> attribute, parses them to construct
   appropriate <literal>ObjectDefinition</literal> instances, and registers
@@ -24,15 +24,15 @@
     <title>Concepts</title>
 
     <sect2>
-      <title>Using the ScanningApplicationContext</title>
+      <title>Using the CodeConfigApplicationContext</title>
 
-      <para>The <literal>ScanningApplicationContext</literal> usage pattern
+      <para>The <literal>CodeConfigApplicationContext</literal> usage pattern
       consists of the following high-level steps:</para>
 
       <orderedlist>
         <listitem>
           <para>Instantiate an instance of the
-          <literal>ScanningApplicationContext</literal></para>
+          <literal>CodeConfigApplicationContext</literal></para>
         </listitem>
 
         <listitem>
@@ -47,7 +47,7 @@
 
         <listitem>
           <para>Initialize (refresh) the
-          <literal>ScanningApplicationContext</literal></para>
+          <literal>CodeConfigApplicationContext</literal></para>
         </listitem>
       </orderedlist>
     </sect2>
@@ -56,7 +56,7 @@
       <title>Expressing Constraints</title>
 
       <para>To facilitate control of the scope of the scanning operation, the
-      <literal>ScanningApplicationContext</literal> provides several
+      <literal>CodeConfigApplicationContext</literal> provides several
       <literal>.Scan()</literal> method signatures that accept constraints to
       be applied to the assemblies and types during the scanning process. The
       format of these constraints is that of
@@ -76,7 +76,7 @@
       matches assemblies with names containing "Config" but NOT containing
       "Configuration" OR containing "Services":</para>
 
-      <programlisting language="csharp">var ctx = new ScanningApplicationContext();
+      <programlisting language="csharp">var ctx = new CodeConfigApplicationContext();
 ctx.Scan(assy =&gt; (assy.Name.FullName.Contains("Config") &amp;&amp; !assy.Name.FullName.Contains("Configuration")) || assy.Name.FullName.Contains("Services");</programlisting>
 
       <para>Because its merely a .NET delegate, note that it is also possible
@@ -93,7 +93,7 @@ ctx.Scan(assy =&gt; (assy.Name.FullName.Contains("Config") &amp;&amp; !assy.Name
       <para>...its possible to express the constraint in the call to
       .Scan(...) much more succinctly as follows:</para>
 
-      <programlisting language="csharp">var ctx = new ScanningApplicationContext();
+      <programlisting language="csharp">var ctx = new CodeConfigApplicationContext();
 ctx.Scan(IsOneOfOurConfigAssemblies);</programlisting>
 
       <para>None of this is anything other than simple .NET Delegate handling,
@@ -106,7 +106,7 @@ ctx.Scan(IsOneOfOurConfigAssemblies);</programlisting>
   <sect1>
     <title>Scanning Basics</title>
 
-    <para>The behavior of the <literal>ScanningApplicationContext</literal>
+    <para>The behavior of the <literal>CodeConfigApplicationContext</literal>
     scanning operation can be controlled by the following constraints:</para>
 
     <itemizedlist>
@@ -142,7 +142,7 @@ ctx.Scan(IsOneOfOurConfigAssemblies);</programlisting>
       <title>Assembly Inclusion Constraints</title>
 
       <para>To facilitate limiting the scope of scanning at the Assembly
-      level, the <literal>ScanningApplicationContext</literal> provides
+      level, the <literal>CodeConfigApplicationContext</literal> provides
       several <literal>.Scan()</literal> method signatures that accept a
       constraint to be applied to the assemblies at scan time. The format of
       this constraint matches
@@ -160,7 +160,7 @@ ctx.Scan(IsOneOfOurConfigAssemblies);</programlisting>
       <literal>MyCompany.MyApplication.Config.Infrastructure.dll</literal> but
       would not match an assembly named
       <literal>MyCompany.MyApplication.Core.dll</literal>.<programlisting
-      language="csharp">var ctx = new ScanningApplicationContext();
+      language="csharp">var ctx = new CodeConfigApplicationContext();
 ctx.Scan(assy =&gt; assy.Name.FullName.StartsWith("MyCompany.MyApplication.Config.");</programlisting>Because
       the <literal>Predicate&lt;System.Reflection.Assembly&gt;</literal> has
       access to the full reflection metadata of each assembly, it is also
@@ -172,7 +172,7 @@ ctx.Scan(assy =&gt; assy.Name.FullName.StartsWith("MyCompany.MyApplication.Confi
       still a functional <literal>Assembly</literal> contraint, resulting in
       filtering only at the Assembly level.</para>
 
-      <programlisting language="csharp">var ctx = new ScanningApplicationContext();
+      <programlisting language="csharp">var ctx = new CodeConfigApplicationContext();
 ctx.Scan(a =&gt; a.GetTypes().Any(assy =&gt; assy.GetTypes().Any(type =&gt; type.FullName.EndsWith("Config"))));</programlisting>
     </sect2>
 
@@ -180,7 +180,7 @@ ctx.Scan(a =&gt; a.GetTypes().Any(assy =&gt; assy.GetTypes().Any(type =&gt; type
       <title>Type Inclusion Constraints</title>
 
       <para>To limit the scope of scanning of types within assemblies, the
-      <literal>ScanningApplicationContext</literal> provides several
+      <literal>CodeConfigApplicationContext</literal> provides several
       <literal>.Scan()</literal> method signatures that accept a constraint to
       be applied to include types within assemblies at scan time. The format
       of this contraint matches
@@ -196,11 +196,11 @@ ctx.Scan(a =&gt; a.GetTypes().Any(assy =&gt; assy.GetTypes().Any(type =&gt; type
       "<literal>ConfigurationSettings</literal>" but not
       "<literal>MyClass</literal>".</para>
 
-      <programlisting language="csharp">var ctx = new ScanningApplicationContext();
+      <programlisting language="csharp">var ctx = new CodeConfigApplicationContext();
 ctx.Scan(type =&gt; type.FullName.Contains("Config");</programlisting>
 
       <para>There are two important aspects to take note of in re: the
-      behavior of the <literal>ScanningApplicationContext</literal> with
+      behavior of the <literal>CodeConfigApplicationContext</literal> with
       regards to <emphasis>Type Inclusion
       Constraints</emphasis><emphasis></emphasis></para>
 
@@ -238,24 +238,24 @@ ctx.Scan(type =&gt; type.FullName.Contains("Config");</programlisting>
 
     <para>In some cases, you may want more fine-grained control of the
     <literal>.Scan(...)</literal> behavior of the
-    <literal>ScanningApplicationContext</literal>. In this section, we explore
+    <literal>CodeConfigApplicationContext</literal>. In this section, we explore
     the various methods of achieving this level of control.</para>
 
     <sect2>
       <title>Combining Root Path, Assembly Constraints, and Type
       Constraints</title>
 
-      <para>The <literal>ScanningApplicationContext</literal> provides several
+      <para>The <literal>CodeConfigApplicationContext</literal> provides several
       .Scan(...) method overloads that accept both an Assembly Constraint and
       a Type Constraint. These may be combined as in the following
       example:</para>
 
-      <programlisting language="csharp">var ctx = new ScanningApplicationContext();
+      <programlisting language="csharp">var ctx = new CodeConfigApplicationContext();
 ctx.Scan(assy =&gt; assy.FullName.Name.BeginsWith("Config"), type =&gt; type.Name.Contains("Infrastructure"));</programlisting>
 
       <para>For even more control over the scanning, you can provide a root
       scan path to the .Scan(...) method as well as shown in the following
-      sample:<programlisting language="csharp">var ctx = new ScanningApplicationContext();
+      sample:<programlisting language="csharp">var ctx = new CodeConfigApplicationContext();
 ctx.Scan("c:\\MySpecialFolder\\MyConfigAssemblies", assy =&gt; assy.FullName.Name.BeginsWith("Config"), type =&gt; type.Name.Contains("Infrastructure"));</programlisting>Note
       that it is not possible to exclude specific types from the scanning
       process using these overloads of the <literal>.Scan(...)</literal>
@@ -270,7 +270,7 @@ ctx.Scan("c:\\MySpecialFolder\\MyConfigAssemblies", assy =&gt; assy.FullName.Nam
 
       <para>If you need more fine-grained control of the
       <literal>.Scan(...)</literal> behavior of the
-      <literal>ScanningApplicationContext</literal>, you can instantiate and
+      <literal>CodeConfigApplicationContext</literal>, you can instantiate and
       configure your own instance of the
       <literal>AssemblyObjectDefinitionScanner</literal> and pass it to the
       <literal>.Scan(...)</literal> method directly. The
@@ -282,7 +282,7 @@ ctx.Scan("c:\\MySpecialFolder\\MyConfigAssemblies", assy =&gt; assy.FullName.Nam
         <title>Controlling the Root of the Scanning Path</title>
 
         <para>The contructor for the
-        <literal>AssmblyObjectDefinitionScanner</literal> provides an overload
+        <literal>AssemblyObjectDefinitionScanner</literal> provides an overload
         that accepts the fully-qualified path at which the scan will begin the
         search for assemblies and types. As mentioned elsewhere, if this path
         is not provided it will default to the root of the currently-executing
@@ -290,14 +290,14 @@ ctx.Scan("c:\\MySpecialFolder\\MyConfigAssemblies", assy =&gt; assy.FullName.Nam
 
         <programlisting language="csharp">//start the scan at special location for the assemblies containing [Configuration]-attributed types
 var scanner = new AssemblyObjectDefinitionScanner("c:\\MySpecialConfigurationLocation\\MyFavoriteConfigAssemblies");
-var ctx = new ScanningApplicationContext();
+var ctx = new CodeConfigApplicationContext();
 ctx.Scan(scanner);</programlisting>
       </sect3>
 
       <sect3>
         <title>Scanning Specific Assemblies and Types</title>
 
-        <para>The <literal>AssmblyObjectDefinitionScanner</literal> provides
+        <para>The <literal>AssemblyObjectDefinitionScanner</literal> provides
         methods that permit specific assemblies or types to be included or
         excluded.</para>
 
@@ -307,7 +307,7 @@ scanner.AssemblyHavingType&lt;MyConfigurations&gt;(); //add the assembly contain
 scanner.IncludeType&lt;MySpecialConfiguration&gt;(); //add this specific type the list of types to be scanned
 scanner.ExcludeType&lt;MyConfigurationToBeIgnored&gt;(); //exclude this specific type from the list of types to be scanned
 
-var ctx = new ScanningApplicationContext();
+var ctx = new CodeConfigApplicationContext();
 ctx.Scan(scanner);</programlisting>
 
         <para>For those that prefer a more fluent feel to the
@@ -323,7 +323,7 @@ scanner
   .WithExcludeFilter(type =&gt; type.Name.EndsWith("Service"))
   .WithExcludeFilter(type =&gt; type.Name.StartsWith("Microsoft"));
 
-var ctx = new ScanningApplicationContext();
+var ctx = new CodeConfigApplicationContext();
 ctx.Scan(scanner);</programlisting>
       </sect3>
     </sect2>
