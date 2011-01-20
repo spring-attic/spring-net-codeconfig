@@ -62,7 +62,7 @@
     <Compile Include="Example\Scannable\FooService.cs" />
     <Compile Include="Example\Scannable\IFooDao.cs" />
     <Compile Include="Example\Scannable\IFooService.cs" />
-    <Compile Include="Context\Support\ScanningApplicationContextTests.cs" />
+    <Compile Include="Context\Support\CodeConfigApplicationContextTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

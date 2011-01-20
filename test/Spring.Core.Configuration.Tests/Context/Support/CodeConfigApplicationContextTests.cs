@@ -27,20 +27,20 @@ using Spring.Context.Attributes;
 namespace Spring.Objects.Factory.Support
 {
     [TestFixture]
-    public class ScanningApplicationContextTests
+    public class CodeConfigApplicationContextTests
     {
-        private ScanningApplicationContext _context;
+        private CodeConfigApplicationContext _context;
 
         [SetUp]
         public void _TestSetup()
         {
-            _context = new ScanningApplicationContext();
+            _context = new CodeConfigApplicationContext();
         }
 
         [Test]
         public void Can_Filter_For_Assembly_Based_On_Assembly_Metadata()
         {
-            _context.Scan(a => a.GetName().Name.StartsWith("Spring.Core.Configuration."));
+            _context.ScanWithAssemblyFilter(a => a.GetName().Name.StartsWith("Spring.Core.Configuration."));
             _context.Refresh();
 
             AssertExpectedObjectsAreRegisteredWith(_context);
@@ -50,7 +50,7 @@ namespace Spring.Objects.Factory.Support
         public void Can_Filter_For_Assembly_Containing_Specific_Type_But_Having_NO_Definitions()
         {
             //specifically filter assemblies for one that we *know* will result in NO [Configuration] types in it
-            _context.Scan(assy => assy.GetTypes().Any(type => type.FullName.Contains(typeof(Spring.Core.IOrdered).Name)));
+            _context.ScanWithAssemblyFilter(assy => assy.GetTypes().Any(type => type.FullName.Contains(typeof(Spring.Core.IOrdered).Name)));
             _context.Refresh();
 
             Assert.That(_context.DefaultListableObjectFactory.ObjectDefinitionCount, Is.EqualTo(0));
@@ -59,7 +59,7 @@ namespace Spring.Objects.Factory.Support
         [Test]
         public void Can_Filter_For_Assembly_Containing_Specific_Type()
         {
-            _context.Scan(assy => assy.GetTypes().Any(type => type.FullName.Contains(typeof(MarkerTypeForScannerToFind).Name)));
+            _context.ScanWithAssemblyFilter(assy => assy.GetTypes().Any(type => type.FullName.Contains(typeof(MarkerTypeForScannerToFind).Name)));
             _context.Refresh();
 
             AssertExpectedObjectsAreRegisteredWith(_context);
@@ -68,7 +68,7 @@ namespace Spring.Objects.Factory.Support
         [Test]
         public void Can_Filter_For_Specific_Type()
         {
-            _context.Scan(type => ((Type)type).FullName.Contains(typeof(TheImportedConfigurationClass).Name));
+            _context.ScanWithTypeFilter(type => ((Type)type).FullName.Contains(typeof(TheImportedConfigurationClass).Name));
             _context.Refresh();
 
             Assert.That(_context.DefaultListableObjectFactory.ObjectDefinitionCount, Is.EqualTo(4));
@@ -77,7 +77,7 @@ namespace Spring.Objects.Factory.Support
         [Test]
         public void Can_Filter_For_Specific_Types_With_Compound_Predicate()
         {
-            _context.Scan(type => ((Type)type).FullName.Contains(typeof(TheImportedConfigurationClass).Name) || ((Type)type).FullName.Contains(typeof(TheConfigurationClass).Name));
+            _context.ScanWithTypeFilter(type => ((Type)type).FullName.Contains(typeof(TheImportedConfigurationClass).Name) || ((Type)type).FullName.Contains(typeof(TheConfigurationClass).Name));
             _context.Refresh();
 
             AssertExpectedObjectsAreRegisteredWith(_context);
@@ -101,13 +101,13 @@ namespace Spring.Objects.Factory.Support
         {
             AssemblyObjectDefinitionScanner scanner = new AssemblyObjectDefinitionScanner();
             scanner.AssemblyHavingType<TheConfigurationClass>();
-            
+
         }
 
         [Test]
         public void Can_Perform_Scan_With_No_Filtering()
         {
-            _context.Scan();
+            _context.ScanAllAssemblies();
             _context.Refresh();
 
             AssertExpectedObjectsAreRegisteredWith(_context);

@@ -34,7 +34,7 @@ namespace Spring.Context.Attributes
         public void _SetUp()
         {
             _scanner = new AssemblyObjectDefinitionScanner();
-            _context = new ScanningApplicationContext();
+            _context = new CodeConfigApplicationContext();
         }
 
         #endregion
@@ -45,7 +45,7 @@ namespace Spring.Context.Attributes
             _scanner.ScanAndRegisterTypes(_context.DefaultListableObjectFactory);
         }
 
-        private ScanningApplicationContext _context;
+        private CodeConfigApplicationContext _context;
         private AssemblyObjectDefinitionScanner _scanner;
 
         [Test]

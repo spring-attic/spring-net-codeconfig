@@ -28,12 +28,12 @@ namespace Spring.Context.Support
     /// <summary>
     /// ApplicationContext that can scan to identify object definitions
     /// </summary>
-    public class ScanningApplicationContext : GenericApplicationContext
+    public class CodeConfigApplicationContext : GenericApplicationContext
     {
         /// <summary>
         /// Initializes a new instance of the <see cref="T:Spring.Context.Support.GenericApplicationContext"/> class.
         /// </summary>
-        public ScanningApplicationContext()
+        public CodeConfigApplicationContext()
         {
         }
 
@@ -41,7 +41,8 @@ namespace Spring.Context.Support
         /// Initializes a new instance of the <see cref="T:Spring.Context.Support.GenericApplicationContext"/> class.
         /// </summary>
         /// <param name="caseSensitive">if set to <c>true</c> names in the context are case sensitive.</param>
-        public ScanningApplicationContext(bool caseSensitive) : base(caseSensitive)
+        public CodeConfigApplicationContext(bool caseSensitive)
+            : base(caseSensitive)
         {
         }
 
@@ -49,7 +50,8 @@ namespace Spring.Context.Support
         /// Initializes a new instance of the <see cref="T:Spring.Context.Support.GenericApplicationContext"/> class.
         /// </summary>
         /// <param name="objectFactory">The object factory instance to use for this context.</param>
-        public ScanningApplicationContext(DefaultListableObjectFactory objectFactory) : base(objectFactory)
+        public CodeConfigApplicationContext(DefaultListableObjectFactory objectFactory)
+            : base(objectFactory)
         {
         }
 
@@ -57,7 +59,8 @@ namespace Spring.Context.Support
         /// Initializes a new instance of the <see cref="T:Spring.Context.Support.GenericApplicationContext"/> class.
         /// </summary>
         /// <param name="parent">The parent application context.</param>
-        public ScanningApplicationContext(IApplicationContext parent) : base(parent)
+        public CodeConfigApplicationContext(IApplicationContext parent)
+            : base(parent)
         {
         }
 
@@ -65,7 +68,7 @@ namespace Spring.Context.Support
         /// Initializes a new instance of the <see cref="T:Spring.Context.Support.GenericApplicationContext"/> class.
         /// </summary>
         /// <param name="name">The name of the application context.</param><param name="caseSensitive">if set to <c>true</c> names in the context are case sensitive.</param><param name="parent">The parent application context.</param>
-        public ScanningApplicationContext(string name, bool caseSensitive, IApplicationContext parent)
+        public CodeConfigApplicationContext(string name, bool caseSensitive, IApplicationContext parent)
             : base(name, caseSensitive, parent)
         {
         }
@@ -74,7 +77,7 @@ namespace Spring.Context.Support
         /// Initializes a new instance of the <see cref="T:Spring.Context.Support.GenericApplicationContext"/> class.
         /// </summary>
         /// <param name="objectFactory">The object factory to use for this context</param><param name="parent">The parent applicaiton context.</param>
-        public ScanningApplicationContext(DefaultListableObjectFactory objectFactory, IApplicationContext parent)
+        public CodeConfigApplicationContext(DefaultListableObjectFactory objectFactory, IApplicationContext parent)
             : base(objectFactory, parent)
         {
         }
@@ -83,7 +86,7 @@ namespace Spring.Context.Support
         /// Initializes a new instance of the <see cref="T:Spring.Context.Support.GenericApplicationContext"/> class.
         /// </summary>
         /// <param name="name">The name of the application context.</param><param name="caseSensitive">if set to <c>true</c> names in the context are case sensitive.</param><param name="parent">The parent application context.</param><param name="objectFactory">The object factory to use for this context</param>
-        public ScanningApplicationContext(string name, bool caseSensitive, IApplicationContext parent,
+        public CodeConfigApplicationContext(string name, bool caseSensitive, IApplicationContext parent,
                                           DefaultListableObjectFactory objectFactory)
             : base(name, caseSensitive, parent, objectFactory)
         {
@@ -101,16 +104,17 @@ namespace Spring.Context.Support
         /// <summary>
         /// Scans for types using the default scanner.
         /// </summary>
-        public void Scan()
+        public void ScanAllAssemblies()
         {
             Scan(new AssemblyObjectDefinitionScanner());
         }
 
+
         /// <summary>
-        /// Scans for types that satisfy specified predicate.
+        /// Scans the with type filter.
         /// </summary>
         /// <param name="typePredicate">The type predicate.</param>
-        public void Scan(Predicate<Type> typePredicate)
+        public void ScanWithTypeFilter(Predicate<Type> typePredicate)
         {
             Scan(null, ta => true, typePredicate);
         }
@@ -143,11 +147,12 @@ namespace Spring.Context.Support
             Scan(null, assemblyPredicate, typePredicate);
         }
 
+
         /// <summary>
-        /// Scans for types that satisfy specified predicate.
+        /// Scans the with assembly filter.
         /// </summary>
         /// <param name="assemblyPredicate">The assembly predicate.</param>
-        public void Scan(Predicate<Assembly> assemblyPredicate)
+        public void ScanWithAssemblyFilter(Predicate<Assembly> assemblyPredicate)
         {
             Scan(null, assemblyPredicate, t => true);
         }

@@ -19,10 +19,10 @@ namespace Spring.MvcQuickStart
     {
         protected override void ConfigureApplicationContext()
         {
-            ScanningApplicationContext scanningApplicationContext = new ScanningApplicationContext();
-            scanningApplicationContext.Scan();
-            scanningApplicationContext.Refresh();
-            ContextRegistry.RegisterContext(scanningApplicationContext);
+            CodeConfigApplicationContext codeConfigApplicationContext = new CodeConfigApplicationContext();
+            codeConfigApplicationContext.ScanAllAssemblies();
+            codeConfigApplicationContext.Refresh();
+            ContextRegistry.RegisterContext(codeConfigApplicationContext);
         }
     }
 }
