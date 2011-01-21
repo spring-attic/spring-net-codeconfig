@@ -41,7 +41,7 @@
           <fo:table-row>
             <fo:table-cell text-align="center">
               <fo:block font-family="Helvetica" font-size="12pt" padding="10mm">
-                <xsl:text>Copyright &#xA9; 2004-2008 </xsl:text>
+                <xsl:text>Copyright &#xA9; 2011 </xsl:text>
                 <xsl:for-each select="bookinfo/authorgroup/author">
                   <xsl:if test="position() > 1">
                     <xsl:text>, </xsl:text>
@@ -284,7 +284,6 @@
   <!-- Verbatim text formatting (programlistings) -->
   <xsl:attribute-set name="monospace.verbatim.properties">
   <xsl:attribute name="wrap-option">wrap</xsl:attribute>
-
     <xsl:attribute name="font-size">
       <xsl:value-of select="$body.font.small * 0.9"/>
       <xsl:text>pt</xsl:text>
