@@ -7,6 +7,8 @@ namespace Spring.Context.Attributes
     {
         public static int Count<TSource>(this IEnumerable<TSource> source)
         {
+            if (source == null) throw new ArgumentNullException("source");
+
             int counter = 0;
             foreach (TSource obj in source)
             {
@@ -18,6 +20,8 @@ namespace Spring.Context.Attributes
 
         internal static bool Contains<TSource>(this IEnumerable<TSource> source, TSource value) where TSource : class
         {
+            if (source == null) throw new ArgumentNullException("source");
+            
             foreach (TSource obj in source)
             {
                 if (obj == value)
@@ -31,13 +35,25 @@ namespace Spring.Context.Attributes
 
         internal static IEnumerable<TSource> AsEnumerable<TSource>(this IEnumerable<TSource> source)
         {
-            return source.Where(delegate { return true; });
+            if (source == null) throw new ArgumentNullException("source");
+
+            IList<TSource> results = new List<TSource>();
+
+            foreach (TSource obj in source)
+            {
+                results.Add(obj);
+            }
+
+            return results;
         }
 
 
         internal static IEnumerable<TSource> Where<TSource>(this IEnumerable<TSource> source,
                                                             Predicate<TSource> predicate)
         {
+            if (source == null) throw new ArgumentNullException("source");
+            if (predicate == null) throw new ArgumentNullException("predicate");
+
             IList<TSource> matching = new List<TSource>();
 
             foreach (TSource obj in source)
@@ -54,6 +70,9 @@ namespace Spring.Context.Attributes
 
         internal static bool Any<TSource>(this IEnumerable<TSource> source, Predicate<TSource> predicate)
         {
+            if (source == null) throw new ArgumentNullException("source");
+            if (predicate == null) throw new ArgumentNullException("predicate");
+
             foreach (TSource obj in source)
             {
                 if (predicate(obj))
