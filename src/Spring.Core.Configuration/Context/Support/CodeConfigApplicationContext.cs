@@ -116,7 +116,7 @@ namespace Spring.Context.Support
         /// <param name="typePredicate">The type predicate.</param>
         public void ScanWithTypeFilter(Predicate<Type> typePredicate)
         {
-            Scan(null, t => true, typePredicate);
+            Scan(null, delegate { return true; }, typePredicate);
         }
 
         /// <summary>
@@ -154,7 +154,7 @@ namespace Spring.Context.Support
         /// <param name="assemblyPredicate">The assembly predicate.</param>
         public void ScanWithAssemblyFilter(Predicate<Assembly> assemblyPredicate)
         {
-            Scan(null, assemblyPredicate, t => true);
+            Scan(null, assemblyPredicate, delegate { return true; });
         }
     }
 }

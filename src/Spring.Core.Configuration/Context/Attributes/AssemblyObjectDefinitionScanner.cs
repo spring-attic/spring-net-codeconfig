@@ -75,12 +75,13 @@ namespace Spring.Context.Attributes
 
         protected override IEnumerable<Assembly> ApplyAssemblyFiltersTo(IEnumerable<Assembly> assemblyCandidates)
         {
-            return assemblyCandidates.Where(candidate => IsIncludedAssembly(candidate) && !IsExcludedAssembly(candidate));
+            return assemblyCandidates.Where(
+                delegate(Assembly candidate) { return IsIncludedAssembly(candidate) && !IsExcludedAssembly(candidate); });
         }
 
         protected virtual bool IsExcludedAssembly(Assembly candidate)
         {
-            return _assemblyExclusionPredicates.Any(exclude => exclude(candidate));
+            return _assemblyExclusionPredicates.Any(delegate(Predicate<Assembly> exclude) { return exclude(candidate); });
         }
 
         protected override void SetDefaultFilters()
@@ -89,11 +90,11 @@ namespace Spring.Context.Attributes
             base.SetDefaultFilters();
 
             //add the desired assembly exclusions to the list
-            _assemblyExclusionPredicates.Add(a => _springAssemblies.Contains(a.GetName().Name));
-            _assemblyExclusionPredicates.Add(a => a.GetName().Name.StartsWith("System."));
-            _assemblyExclusionPredicates.Add(a => a.GetName().Name.StartsWith("Microsoft."));
-            _assemblyExclusionPredicates.Add(a => a.GetName().Name == "mscorlib");
-            _assemblyExclusionPredicates.Add(a => a.GetName().Name == "System");
+            _assemblyExclusionPredicates.Add(delegate(Assembly a) { return _springAssemblies.Contains(a.GetName().Name); });
+            _assemblyExclusionPredicates.Add(delegate(Assembly a) { return a.GetName().Name.StartsWith("System."); });
+            _assemblyExclusionPredicates.Add(delegate(Assembly a) { return a.GetName().Name.StartsWith("Microsoft."); });
+            _assemblyExclusionPredicates.Add(delegate(Assembly a) { return a.GetName().Name == "mscorlib"; });
+            _assemblyExclusionPredicates.Add(delegate(Assembly a) { return a.GetName().Name == "System"; });
         }
 
 

@@ -73,13 +73,13 @@ namespace Spring.Context.Attributes
 
         public IAssemblyTypeScanner ExcludeType<T>()
         {
-            TypeExclusionPredicates.Add(t => t == typeof(T));
+            TypeExclusionPredicates.Add(delegate(Type t) { return t == typeof (T); });
             return this;
         }
 
         public IAssemblyTypeScanner IncludeType<T>()
         {
-            TypeInclusionPredicates.Add(t => t == typeof(T));
+            TypeInclusionPredicates.Add(delegate(Type t) { return t == typeof (T); });
             return this;
         }
 
@@ -87,7 +87,7 @@ namespace Spring.Context.Attributes
         {
             AssertUtils.ArgumentNotNull(typeSource, "typeSource");
             TypeSources.Add(typeSource);
-            TypeInclusionPredicates.Add(t => typeSource.Any(t1 => t1 == t));
+            TypeInclusionPredicates.Add(delegate(Type t) { return typeSource.Any(delegate(Type t1) { return t1 == t; }); });
             return this;
         }
 
@@ -140,36 +140,36 @@ namespace Spring.Context.Attributes
 
         protected virtual bool IsExcludedType(Type type)
         {
-            return TypeExclusionPredicates.Any(exclude => exclude(type));
+            return TypeExclusionPredicates.Any(delegate(Predicate<Type> exclude) { return exclude(type); });
         }
 
         protected virtual bool IsIncludedAssembly(Assembly assembly)
         {
-            return AssemblyInclusionPredicates.Any(include => include(assembly));
+            return AssemblyInclusionPredicates.Any(delegate(Predicate<Assembly> include) { return include(assembly); });
         }
 
         protected virtual bool IsIncludedType(Type type)
         {
-            return TypeInclusionPredicates.Any(include => include(type));
+            return TypeInclusionPredicates.Any(delegate(Predicate<Type> include) { return include(type); });
         }
 
         protected virtual void SetDefaultFilters()
         {
 
             if (TypeInclusionPredicates.Count == 0)
-                TypeInclusionPredicates.Add(t => true);
+                TypeInclusionPredicates.Add(delegate { return true; });
 
             if (TypeExclusionPredicates.Count == 0)
-                TypeExclusionPredicates.Add(t => false);
+                TypeExclusionPredicates.Add(delegate { return false; });
 
             if (AssemblyInclusionPredicates.Count == 0)
-                AssemblyInclusionPredicates.Add(a => true);
+                AssemblyInclusionPredicates.Add(delegate { return true; });
         }
 
 
         protected virtual IEnumerable<Assembly> ApplyAssemblyFiltersTo(IEnumerable<Assembly> assemblyCandidates)
         {
-            return assemblyCandidates.Where(assembly => IsIncludedAssembly(assembly)).AsEnumerable();
+            return assemblyCandidates.Where(delegate(Assembly assembly) { return IsIncludedAssembly(assembly); }).AsEnumerable();
         }
 
         private IEnumerable<Assembly> GetAllAssembliesInPath(string folderPath)
