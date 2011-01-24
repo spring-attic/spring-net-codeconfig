@@ -21,7 +21,8 @@
   ns4:href="http://www.springframework.net/doc-latest/reference/html/objects.html#objects-basics">container
   overview</link>. The distribution includes two sample applications, a
   console application MovieFinder and a ASP.NET MVC web application. Refer to
-  the examples section for more information.</para>
+  the <link linkend="sample-apps">examples section</link> for more
+  information.</para>
 
   <note>
     <para>The code-based configuration support requires .NET 2.0 or
@@ -74,7 +75,7 @@
         </listitem>
       </orderedlist>
 
-      <para> </para>
+      <para></para>
     </sect2>
 
     <sect2>
@@ -101,7 +102,7 @@
 </programlisting>
 
       <para>The current XML namespace does not yet allow you to express
-      contraints to limit the scope of the scanning. </para>
+      contraints to limit the scope of the scanning.</para>
 
       <para>You will also need to configure the context namespace parser in
       the main .NET application configuraiton file as shown below</para>
@@ -123,7 +124,7 @@
 
 &lt;/configuration&gt;</programlisting>
 
-      <para> </para>
+      <para></para>
     </sect2>
   </sect1>
 
@@ -272,7 +273,7 @@ ctx.Refresh();</programlisting>
       </table>
 
       <para>Other sections below provide a more detailed description and usage
-      examples for the scan methods. </para>
+      examples for the scan methods.</para>
 
       <para>Note that as with any <literal>Predicate&lt;T&gt;</literal>
       construct, the <literal>Predicate&lt;Assembly&gt;</literal> and
@@ -322,7 +323,7 @@ ctx.ScanWithAssemblyFilter(IsOneOfOurConfigAssemblies);</programlisting>
       <literal>Predicate&lt;System.Reflection.Assembly&gt;</literal> (e.g. any
       delegate method that accepts a single
       <literal>System.Reflection.Assembly</literal> param and returns a
-      <literal>bool</literal>). </para>
+      <literal>bool</literal>).</para>
 
       <para>As an example, the following snippet demonstrates the invocation
       of the scanning operation such that it will only scan assemblies whose
