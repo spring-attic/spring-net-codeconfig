@@ -20,6 +20,19 @@
 
 using Spring.Objects.Factory;
 
+
+namespace System.Runtime.CompilerServices
+{
+    [AttributeUsage(AttributeTargets.Method, AllowMultiple = false, Inherited = false)]
+    public class ExtensionAttribute : Attribute
+    {
+    }
+}
+
+
+
+
+
 namespace Spring.Context
 {
     public static class ApplcaitionContextExtensions

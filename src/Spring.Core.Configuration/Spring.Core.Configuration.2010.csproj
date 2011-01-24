@@ -10,7 +10,7 @@
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>Spring</RootNamespace>
     <AssemblyName>Spring.Core.Configuration</AssemblyName>
-    <TargetFrameworkVersion>v3.5</TargetFrameworkVersion>
+    <TargetFrameworkVersion>v2.0</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <TargetFrameworkProfile />
   </PropertyGroup>
@@ -19,7 +19,7 @@
     <DebugType>full</DebugType>
     <Optimize>false</Optimize>
     <OutputPath>bin\Debug\</OutputPath>
-    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <DefineConstants>TRACE;DEBUG</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
@@ -64,6 +64,7 @@
     <Compile Include="Context\Attributes\ImportAttribute.cs" />
     <Compile Include="Context\Attributes\ImportResourceAttribute.cs" />
     <Compile Include="Context\Attributes\LazyAttribute.cs" />
+    <Compile Include="Context\Attributes\LinqExtensionMethods.cs" />
     <Compile Include="Context\Attributes\RequiredConstraintAssemblyTypeScanner.cs" />
     <Compile Include="Context\Attributes\ScopeAttribute.cs" />
     <Compile Include="Context\Config\AttributeConfigObjectDefinitionParser.cs" />
