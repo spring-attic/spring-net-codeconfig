@@ -59,7 +59,7 @@ namespace Spring.IocQuickStart.MovieFinder
                 NamespaceParserRegistry.RegisterParser(typeof(ContextNamespaceParser));
                 IApplicationContext ctx = ContextRegistry.GetContext();
 
-                MovieLister lister = (MovieLister) ctx.GetObject("MyMovieLister");
+                MovieLister lister = ctx.GetObject<MovieLister>();
                 Movie[] movies = lister.MoviesDirectedBy("Roberto Benigni");
                 LOG.Debug("Searching for movie...");
                 foreach (Movie movie in movies)

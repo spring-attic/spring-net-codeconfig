@@ -9,7 +9,9 @@
   <title>Attribute Reference</title>
 
   <para>In this chapter, we will explore the attributes that are the essential
-  components for declaring Object Definitions with Spring CodeConfig.</para>
+  components for declaring Object Definitions with Spring CodeConfig. These
+  attributes have a correponding representation in Spring XML so should be
+  very familiar to current Spring.NET users.</para>
 
   <sect1>
     <title>[Configuration] Attribute</title>
@@ -128,7 +130,7 @@ public class MyConfigurationClass
         <literal>CodeConfigApplicationContext</literal>.</para>
 
         <programlisting language="csharp">[Configuration]
-public class MyConfigurationClass
+public class MyConfigurationClass 
 {
   [Definition(InitMethod="AfterCreation")] //assumes a public method on the HomeController type named 'AfterCreation()'
   public virtual HomeController HomeController()
@@ -136,6 +138,11 @@ public class MyConfigurationClass
     return new HomeController();
   }
 }</programlisting>
+
+        <para><note>
+            <para> You can just also call the method 'AfterCreation' inside
+            the body of the HomeController implementation itself.</para>
+          </note></para>
       </sect3>
 
       <sect3>
