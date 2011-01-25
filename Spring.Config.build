@@ -82,7 +82,7 @@
         <call target="IntegrationTestAllAssemblies" />
     </target>
 
-    <target name="daily" depends="test">
+    <target name="daily" depends="test,doc-reference">
     </target>
 
     <target name="clean">
