@@ -7,7 +7,7 @@ REM 'test-integration'
 cls
 @ECHO building...
 
-tools\nant\bin\nant.exe daily -f:Spring.Config.build > buildlog.txt
+tools\nant\bin\nant.exe test -f:Spring.Config.build > buildlog.txt
 
 @ECHO displaying log file...
 start "ignored but required placeholder window title argument" buildlog.txt

@@ -5,7 +5,9 @@
     <_SolutionProjectCacheVersion>3.5</_SolutionProjectCacheVersion>
   </PropertyGroup>
   <ItemGroup>
+    <_SolutionProjectProjects Include="examples\Spring.MvcQuickStart\src\Spring.MvcQuickStart\Spring.MvcQuickStart.2010.csproj" />
     <_SolutionProjectProjects Include="src\Spring.Core.Configuration\Spring.Core.Configuration.2010.csproj" />
+    <_SolutionProjectProjects Include="test\Spring.Core.Configuration.Invalid.Tests\Spring.Core.Configuration.Invalid.Tests.csproj" />
     <_SolutionProjectProjects Include="test\Spring.Core.Configuration.Tests\Spring.Core.Configuration.Tests.2010.csproj" />
   </ItemGroup>
   <ItemGroup Condition=" ('$(Configuration)' == 'Debug') and ('$(Platform)' == 'Any CPU') ">
@@ -13,6 +15,14 @@
       <Configuration>Debug</Configuration>
       <Platform>AnyCPU</Platform>
     </BuildLevel0>
+    <BuildLevel1 Include="examples\Spring.MvcQuickStart\src\Spring.MvcQuickStart\Spring.MvcQuickStart.2010.csproj">
+      <Configuration>Debug</Configuration>
+      <Platform>AnyCPU</Platform>
+    </BuildLevel1>
+    <BuildLevel1 Include="test\Spring.Core.Configuration.Invalid.Tests\Spring.Core.Configuration.Invalid.Tests.csproj">
+      <Configuration>Debug</Configuration>
+      <Platform>AnyCPU</Platform>
+    </BuildLevel1>
     <BuildLevel1 Include="test\Spring.Core.Configuration.Tests\Spring.Core.Configuration.Tests.2010.csproj">
       <Configuration>Debug</Configuration>
       <Platform>AnyCPU</Platform>
@@ -23,6 +33,14 @@
       <Configuration>Release</Configuration>
       <Platform>AnyCPU</Platform>
     </BuildLevel0>
+    <BuildLevel1 Include="examples\Spring.MvcQuickStart\src\Spring.MvcQuickStart\Spring.MvcQuickStart.2010.csproj">
+      <Configuration>Release</Configuration>
+      <Platform>AnyCPU</Platform>
+    </BuildLevel1>
+    <BuildLevel1 Include="test\Spring.Core.Configuration.Invalid.Tests\Spring.Core.Configuration.Invalid.Tests.csproj">
+      <Configuration>Release</Configuration>
+      <Platform>AnyCPU</Platform>
+    </BuildLevel1>
     <BuildLevel1 Include="test\Spring.Core.Configuration.Tests\Spring.Core.Configuration.Tests.2010.csproj">
       <Configuration>Release</Configuration>
       <Platform>AnyCPU</Platform>
@@ -55,6 +73,8 @@
       <SolutionConfiguration xmlns="">
         <ProjectConfiguration Project="{7B65D538-E863-4F57-8DDC-2C38E4150045}">Debug|AnyCPU</ProjectConfiguration>
         <ProjectConfiguration Project="{4F1A206C-09A8-43FF-B791-FE956E99A120}">Debug|AnyCPU</ProjectConfiguration>
+        <ProjectConfiguration Project="{4BEF1570-0816-4C79-90CE-13B644668204}">Debug|AnyCPU</ProjectConfiguration>
+        <ProjectConfiguration Project="{387BB0C9-C90D-4E9C-866A-DC7B40F9C9EB}">Debug|AnyCPU</ProjectConfiguration>
       </SolutionConfiguration>
     </CurrentSolutionConfigurationContents>
   </PropertyGroup>
@@ -63,6 +83,8 @@
       <SolutionConfiguration xmlns="">
         <ProjectConfiguration Project="{7B65D538-E863-4F57-8DDC-2C38E4150045}">Release|AnyCPU</ProjectConfiguration>
         <ProjectConfiguration Project="{4F1A206C-09A8-43FF-B791-FE956E99A120}">Release|AnyCPU</ProjectConfiguration>
+        <ProjectConfiguration Project="{4BEF1570-0816-4C79-90CE-13B644668204}">Release|AnyCPU</ProjectConfiguration>
+        <ProjectConfiguration Project="{387BB0C9-C90D-4E9C-866A-DC7B40F9C9EB}">Release|AnyCPU</ProjectConfiguration>
       </SolutionConfiguration>
     </CurrentSolutionConfigurationContents>
   </PropertyGroup>
@@ -121,6 +143,54 @@
   <Target Name="Spring_Core_Configuration_Tests_2010:Publish" DependsOnTargets="Spring_Core_Configuration_2010:Publish" Condition="'$(CurrentSolutionConfigurationContents)' != ''">
     <MSBuild Projects="test\Spring.Core.Configuration.Tests\Spring.Core.Configuration.Tests.2010.csproj" Targets="Publish" Properties="Configuration=Debug; Platform=AnyCPU; BuildingSolutionFile=true; CurrentSolutionConfigurationContents=$(CurrentSolutionConfigurationContents); SolutionDir=$(SolutionDir); SolutionExt=$(SolutionExt); SolutionFileName=$(SolutionFileName); SolutionName=$(SolutionName); SolutionPath=$(SolutionPath)" ToolsVersion="$(ProjectToolsVersion)" UnloadProjectsOnCompletion="$(UnloadProjectsOnCompletion)" UseResultsCache="$(UseResultsCache)" Condition=" ('$(Configuration)' == 'Debug') and ('$(Platform)' == 'Any CPU') " />
     <MSBuild Projects="test\Spring.Core.Configuration.Tests\Spring.Core.Configuration.Tests.2010.csproj" Targets="Publish" Properties="Configuration=Release; Platform=AnyCPU; BuildingSolutionFile=true; CurrentSolutionConfigurationContents=$(CurrentSolutionConfigurationContents); SolutionDir=$(SolutionDir); SolutionExt=$(SolutionExt); SolutionFileName=$(SolutionFileName); SolutionName=$(SolutionName); SolutionPath=$(SolutionPath)" ToolsVersion="$(ProjectToolsVersion)" UnloadProjectsOnCompletion="$(UnloadProjectsOnCompletion)" UseResultsCache="$(UseResultsCache)" Condition=" ('$(Configuration)' == 'Release') and ('$(Platform)' == 'Any CPU') " />
+  </Target>
+  <Target Name="Spring_Core_Configuration_Invalid_Tests" DependsOnTargets="Spring_Core_Configuration_2010" Condition="'$(CurrentSolutionConfigurationContents)' != ''" Outputs="@(Spring_Core_Configuration_Invalid_TestsBuildOutput)">
+    <MSBuild Projects="test\Spring.Core.Configuration.Invalid.Tests\Spring.Core.Configuration.Invalid.Tests.csproj" Properties="Configuration=Debug; Platform=AnyCPU; BuildingSolutionFile=true; CurrentSolutionConfigurationContents=$(CurrentSolutionConfigurationContents); SolutionDir=$(SolutionDir); SolutionExt=$(SolutionExt); SolutionFileName=$(SolutionFileName); SolutionName=$(SolutionName); SolutionPath=$(SolutionPath)" ToolsVersion="$(ProjectToolsVersion)" UnloadProjectsOnCompletion="$(UnloadProjectsOnCompletion)" UseResultsCache="$(UseResultsCache)" Condition=" ('$(Configuration)' == 'Debug') and ('$(Platform)' == 'Any CPU') ">
+      <Output TaskParameter="TargetOutputs" ItemName="Spring_Core_Configuration_Invalid_TestsBuildOutput" />
+    </MSBuild>
+    <MSBuild Projects="test\Spring.Core.Configuration.Invalid.Tests\Spring.Core.Configuration.Invalid.Tests.csproj" Properties="Configuration=Release; Platform=AnyCPU; BuildingSolutionFile=true; CurrentSolutionConfigurationContents=$(CurrentSolutionConfigurationContents); SolutionDir=$(SolutionDir); SolutionExt=$(SolutionExt); SolutionFileName=$(SolutionFileName); SolutionName=$(SolutionName); SolutionPath=$(SolutionPath)" ToolsVersion="$(ProjectToolsVersion)" UnloadProjectsOnCompletion="$(UnloadProjectsOnCompletion)" UseResultsCache="$(UseResultsCache)" Condition=" ('$(Configuration)' == 'Release') and ('$(Platform)' == 'Any CPU') ">
+      <Output TaskParameter="TargetOutputs" ItemName="Spring_Core_Configuration_Invalid_TestsBuildOutput" />
+    </MSBuild>
+  </Target>
+  <Target Name="Spring_Core_Configuration_Invalid_Tests:Clean" DependsOnTargets="Spring_Core_Configuration_2010:Clean" Condition="'$(CurrentSolutionConfigurationContents)' != ''">
+    <MSBuild Projects="test\Spring.Core.Configuration.Invalid.Tests\Spring.Core.Configuration.Invalid.Tests.csproj" Targets="Clean" Properties="Configuration=Debug; Platform=AnyCPU; BuildingSolutionFile=true; CurrentSolutionConfigurationContents=$(CurrentSolutionConfigurationContents); SolutionDir=$(SolutionDir); SolutionExt=$(SolutionExt); SolutionFileName=$(SolutionFileName); SolutionName=$(SolutionName); SolutionPath=$(SolutionPath)" ToolsVersion="$(ProjectToolsVersion)" UnloadProjectsOnCompletion="$(UnloadProjectsOnCompletion)" UseResultsCache="$(UseResultsCache)" Condition=" ('$(Configuration)' == 'Debug') and ('$(Platform)' == 'Any CPU') " />
+    <MSBuild Projects="test\Spring.Core.Configuration.Invalid.Tests\Spring.Core.Configuration.Invalid.Tests.csproj" Targets="Clean" Properties="Configuration=Release; Platform=AnyCPU; BuildingSolutionFile=true; CurrentSolutionConfigurationContents=$(CurrentSolutionConfigurationContents); SolutionDir=$(SolutionDir); SolutionExt=$(SolutionExt); SolutionFileName=$(SolutionFileName); SolutionName=$(SolutionName); SolutionPath=$(SolutionPath)" ToolsVersion="$(ProjectToolsVersion)" UnloadProjectsOnCompletion="$(UnloadProjectsOnCompletion)" UseResultsCache="$(UseResultsCache)" Condition=" ('$(Configuration)' == 'Release') and ('$(Platform)' == 'Any CPU') " />
+  </Target>
+  <Target Name="Spring_Core_Configuration_Invalid_Tests:Rebuild" DependsOnTargets="Spring_Core_Configuration_2010:Rebuild" Condition="'$(CurrentSolutionConfigurationContents)' != ''" Outputs="@(Spring_Core_Configuration_Invalid_TestsBuildOutput)">
+    <MSBuild Projects="test\Spring.Core.Configuration.Invalid.Tests\Spring.Core.Configuration.Invalid.Tests.csproj" Targets="Rebuild" Properties="Configuration=Debug; Platform=AnyCPU; BuildingSolutionFile=true; CurrentSolutionConfigurationContents=$(CurrentSolutionConfigurationContents); SolutionDir=$(SolutionDir); SolutionExt=$(SolutionExt); SolutionFileName=$(SolutionFileName); SolutionName=$(SolutionName); SolutionPath=$(SolutionPath)" ToolsVersion="$(ProjectToolsVersion)" UnloadProjectsOnCompletion="$(UnloadProjectsOnCompletion)" UseResultsCache="$(UseResultsCache)" Condition=" ('$(Configuration)' == 'Debug') and ('$(Platform)' == 'Any CPU') ">
+      <Output TaskParameter="TargetOutputs" ItemName="Spring_Core_Configuration_Invalid_TestsBuildOutput" />
+    </MSBuild>
+    <MSBuild Projects="test\Spring.Core.Configuration.Invalid.Tests\Spring.Core.Configuration.Invalid.Tests.csproj" Targets="Rebuild" Properties="Configuration=Release; Platform=AnyCPU; BuildingSolutionFile=true; CurrentSolutionConfigurationContents=$(CurrentSolutionConfigurationContents); SolutionDir=$(SolutionDir); SolutionExt=$(SolutionExt); SolutionFileName=$(SolutionFileName); SolutionName=$(SolutionName); SolutionPath=$(SolutionPath)" ToolsVersion="$(ProjectToolsVersion)" UnloadProjectsOnCompletion="$(UnloadProjectsOnCompletion)" UseResultsCache="$(UseResultsCache)" Condition=" ('$(Configuration)' == 'Release') and ('$(Platform)' == 'Any CPU') ">
+      <Output TaskParameter="TargetOutputs" ItemName="Spring_Core_Configuration_Invalid_TestsBuildOutput" />
+    </MSBuild>
+  </Target>
+  <Target Name="Spring_Core_Configuration_Invalid_Tests:Publish" DependsOnTargets="Spring_Core_Configuration_2010:Publish" Condition="'$(CurrentSolutionConfigurationContents)' != ''">
+    <MSBuild Projects="test\Spring.Core.Configuration.Invalid.Tests\Spring.Core.Configuration.Invalid.Tests.csproj" Targets="Publish" Properties="Configuration=Debug; Platform=AnyCPU; BuildingSolutionFile=true; CurrentSolutionConfigurationContents=$(CurrentSolutionConfigurationContents); SolutionDir=$(SolutionDir); SolutionExt=$(SolutionExt); SolutionFileName=$(SolutionFileName); SolutionName=$(SolutionName); SolutionPath=$(SolutionPath)" ToolsVersion="$(ProjectToolsVersion)" UnloadProjectsOnCompletion="$(UnloadProjectsOnCompletion)" UseResultsCache="$(UseResultsCache)" Condition=" ('$(Configuration)' == 'Debug') and ('$(Platform)' == 'Any CPU') " />
+    <MSBuild Projects="test\Spring.Core.Configuration.Invalid.Tests\Spring.Core.Configuration.Invalid.Tests.csproj" Targets="Publish" Properties="Configuration=Release; Platform=AnyCPU; BuildingSolutionFile=true; CurrentSolutionConfigurationContents=$(CurrentSolutionConfigurationContents); SolutionDir=$(SolutionDir); SolutionExt=$(SolutionExt); SolutionFileName=$(SolutionFileName); SolutionName=$(SolutionName); SolutionPath=$(SolutionPath)" ToolsVersion="$(ProjectToolsVersion)" UnloadProjectsOnCompletion="$(UnloadProjectsOnCompletion)" UseResultsCache="$(UseResultsCache)" Condition=" ('$(Configuration)' == 'Release') and ('$(Platform)' == 'Any CPU') " />
+  </Target>
+  <Target Name="Spring_MvcQuickStart_2010" DependsOnTargets="Spring_Core_Configuration_2010" Condition="'$(CurrentSolutionConfigurationContents)' != ''" Outputs="@(Spring_MvcQuickStart_2010BuildOutput)">
+    <MSBuild Projects="examples\Spring.MvcQuickStart\src\Spring.MvcQuickStart\Spring.MvcQuickStart.2010.csproj" Properties="Configuration=Debug; Platform=AnyCPU; BuildingSolutionFile=true; CurrentSolutionConfigurationContents=$(CurrentSolutionConfigurationContents); SolutionDir=$(SolutionDir); SolutionExt=$(SolutionExt); SolutionFileName=$(SolutionFileName); SolutionName=$(SolutionName); SolutionPath=$(SolutionPath)" ToolsVersion="$(ProjectToolsVersion)" UnloadProjectsOnCompletion="$(UnloadProjectsOnCompletion)" UseResultsCache="$(UseResultsCache)" Condition=" ('$(Configuration)' == 'Debug') and ('$(Platform)' == 'Any CPU') ">
+      <Output TaskParameter="TargetOutputs" ItemName="Spring_MvcQuickStart_2010BuildOutput" />
+    </MSBuild>
+    <MSBuild Projects="examples\Spring.MvcQuickStart\src\Spring.MvcQuickStart\Spring.MvcQuickStart.2010.csproj" Properties="Configuration=Release; Platform=AnyCPU; BuildingSolutionFile=true; CurrentSolutionConfigurationContents=$(CurrentSolutionConfigurationContents); SolutionDir=$(SolutionDir); SolutionExt=$(SolutionExt); SolutionFileName=$(SolutionFileName); SolutionName=$(SolutionName); SolutionPath=$(SolutionPath)" ToolsVersion="$(ProjectToolsVersion)" UnloadProjectsOnCompletion="$(UnloadProjectsOnCompletion)" UseResultsCache="$(UseResultsCache)" Condition=" ('$(Configuration)' == 'Release') and ('$(Platform)' == 'Any CPU') ">
+      <Output TaskParameter="TargetOutputs" ItemName="Spring_MvcQuickStart_2010BuildOutput" />
+    </MSBuild>
+  </Target>
+  <Target Name="Spring_MvcQuickStart_2010:Clean" DependsOnTargets="Spring_Core_Configuration_2010:Clean" Condition="'$(CurrentSolutionConfigurationContents)' != ''">
+    <MSBuild Projects="examples\Spring.MvcQuickStart\src\Spring.MvcQuickStart\Spring.MvcQuickStart.2010.csproj" Targets="Clean" Properties="Configuration=Debug; Platform=AnyCPU; BuildingSolutionFile=true; CurrentSolutionConfigurationContents=$(CurrentSolutionConfigurationContents); SolutionDir=$(SolutionDir); SolutionExt=$(SolutionExt); SolutionFileName=$(SolutionFileName); SolutionName=$(SolutionName); SolutionPath=$(SolutionPath)" ToolsVersion="$(ProjectToolsVersion)" UnloadProjectsOnCompletion="$(UnloadProjectsOnCompletion)" UseResultsCache="$(UseResultsCache)" Condition=" ('$(Configuration)' == 'Debug') and ('$(Platform)' == 'Any CPU') " />
+    <MSBuild Projects="examples\Spring.MvcQuickStart\src\Spring.MvcQuickStart\Spring.MvcQuickStart.2010.csproj" Targets="Clean" Properties="Configuration=Release; Platform=AnyCPU; BuildingSolutionFile=true; CurrentSolutionConfigurationContents=$(CurrentSolutionConfigurationContents); SolutionDir=$(SolutionDir); SolutionExt=$(SolutionExt); SolutionFileName=$(SolutionFileName); SolutionName=$(SolutionName); SolutionPath=$(SolutionPath)" ToolsVersion="$(ProjectToolsVersion)" UnloadProjectsOnCompletion="$(UnloadProjectsOnCompletion)" UseResultsCache="$(UseResultsCache)" Condition=" ('$(Configuration)' == 'Release') and ('$(Platform)' == 'Any CPU') " />
+  </Target>
+  <Target Name="Spring_MvcQuickStart_2010:Rebuild" DependsOnTargets="Spring_Core_Configuration_2010:Rebuild" Condition="'$(CurrentSolutionConfigurationContents)' != ''" Outputs="@(Spring_MvcQuickStart_2010BuildOutput)">
+    <MSBuild Projects="examples\Spring.MvcQuickStart\src\Spring.MvcQuickStart\Spring.MvcQuickStart.2010.csproj" Targets="Rebuild" Properties="Configuration=Debug; Platform=AnyCPU; BuildingSolutionFile=true; CurrentSolutionConfigurationContents=$(CurrentSolutionConfigurationContents); SolutionDir=$(SolutionDir); SolutionExt=$(SolutionExt); SolutionFileName=$(SolutionFileName); SolutionName=$(SolutionName); SolutionPath=$(SolutionPath)" ToolsVersion="$(ProjectToolsVersion)" UnloadProjectsOnCompletion="$(UnloadProjectsOnCompletion)" UseResultsCache="$(UseResultsCache)" Condition=" ('$(Configuration)' == 'Debug') and ('$(Platform)' == 'Any CPU') ">
+      <Output TaskParameter="TargetOutputs" ItemName="Spring_MvcQuickStart_2010BuildOutput" />
+    </MSBuild>
+    <MSBuild Projects="examples\Spring.MvcQuickStart\src\Spring.MvcQuickStart\Spring.MvcQuickStart.2010.csproj" Targets="Rebuild" Properties="Configuration=Release; Platform=AnyCPU; BuildingSolutionFile=true; CurrentSolutionConfigurationContents=$(CurrentSolutionConfigurationContents); SolutionDir=$(SolutionDir); SolutionExt=$(SolutionExt); SolutionFileName=$(SolutionFileName); SolutionName=$(SolutionName); SolutionPath=$(SolutionPath)" ToolsVersion="$(ProjectToolsVersion)" UnloadProjectsOnCompletion="$(UnloadProjectsOnCompletion)" UseResultsCache="$(UseResultsCache)" Condition=" ('$(Configuration)' == 'Release') and ('$(Platform)' == 'Any CPU') ">
+      <Output TaskParameter="TargetOutputs" ItemName="Spring_MvcQuickStart_2010BuildOutput" />
+    </MSBuild>
+  </Target>
+  <Target Name="Spring_MvcQuickStart_2010:Publish" DependsOnTargets="Spring_Core_Configuration_2010:Publish" Condition="'$(CurrentSolutionConfigurationContents)' != ''">
+    <MSBuild Projects="examples\Spring.MvcQuickStart\src\Spring.MvcQuickStart\Spring.MvcQuickStart.2010.csproj" Targets="Publish" Properties="Configuration=Debug; Platform=AnyCPU; BuildingSolutionFile=true; CurrentSolutionConfigurationContents=$(CurrentSolutionConfigurationContents); SolutionDir=$(SolutionDir); SolutionExt=$(SolutionExt); SolutionFileName=$(SolutionFileName); SolutionName=$(SolutionName); SolutionPath=$(SolutionPath)" ToolsVersion="$(ProjectToolsVersion)" UnloadProjectsOnCompletion="$(UnloadProjectsOnCompletion)" UseResultsCache="$(UseResultsCache)" Condition=" ('$(Configuration)' == 'Debug') and ('$(Platform)' == 'Any CPU') " />
+    <MSBuild Projects="examples\Spring.MvcQuickStart\src\Spring.MvcQuickStart\Spring.MvcQuickStart.2010.csproj" Targets="Publish" Properties="Configuration=Release; Platform=AnyCPU; BuildingSolutionFile=true; CurrentSolutionConfigurationContents=$(CurrentSolutionConfigurationContents); SolutionDir=$(SolutionDir); SolutionExt=$(SolutionExt); SolutionFileName=$(SolutionFileName); SolutionName=$(SolutionName); SolutionPath=$(SolutionPath)" ToolsVersion="$(ProjectToolsVersion)" UnloadProjectsOnCompletion="$(UnloadProjectsOnCompletion)" UseResultsCache="$(UseResultsCache)" Condition=" ('$(Configuration)' == 'Release') and ('$(Platform)' == 'Any CPU') " />
   </Target>
   <Target Name="Build" Condition="'$(CurrentSolutionConfigurationContents)' != ''" Outputs="@(CollectedBuildOutput)">
     <MSBuild Condition="@(BuildLevel0) != ''" Projects="@(BuildLevel0)" Properties="Configuration=%(Configuration); Platform=%(Platform); BuildingSolutionFile=true; CurrentSolutionConfigurationContents=$(CurrentSolutionConfigurationContents); SolutionDir=$(SolutionDir); SolutionExt=$(SolutionExt); SolutionFileName=$(SolutionFileName); SolutionName=$(SolutionName); SolutionPath=$(SolutionPath)" ToolsVersion="$(ProjectToolsVersion)" BuildInParallel="true" UnloadProjectsOnCompletion="$(UnloadProjectsOnCompletion)" UseResultsCache="$(UseResultsCache)">

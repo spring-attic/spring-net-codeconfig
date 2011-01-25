@@ -66,9 +66,11 @@
         <property name="nant.settings.currentframework" value="net-3.5"/>
         <property name="test.bin.dir" value="${build.dir}\${nant.settings.currentframework}" />
         <call target="TestAllAssemblies" />
-        <property name="nant.settings.currentframework" value="net-4.0"/>
+        <!--
+		<property name="nant.settings.currentframework" value="net-4.0"/>
         <property name="test.bin.dir" value="${build.dir}\${nant.settings.currentframework}" />
         <call target="TestAllAssemblies" />
+		-->
     </target>
 
     <target name="test-integration" depends="test">
@@ -291,14 +293,26 @@ ${tool.dir}       : dir for tools
     </target>
 
     <target name="TestAllAssemblies">
+
+		<!-- have to delete the INVALID test ass'y otherwise the VALID tests will find the INVALID config types that support the INVALID tests -->
+		<delete>
+            <fileset basedir="${build.dir}">
+                <include name="**\*Invalid*.*" />
+            </fileset>
+        </delete>
+	
         <foreach item="File" property="filename">
             <in>
                 <items basedir="${build.dir}">
                     <include name="**\*.Tests.dll" />
+					<exclude name="**\Spring.Core.Tests.dll" /> <!--have to exclude this b/c it contains all the CORE tests (that we don't want to run here! -->
                 </items>
             </in>
             <do>
                 <property name="test.assemblyname" value="${path::get-file-name-without-extension(filename)}" />
+				
+				
+				
 		<property name="test.bin.dir" value="${build.dir}\${nant.settings.currentframework}"/>
                 <call target="common.run-tests" />
             </do>
@@ -347,6 +361,10 @@ ${tool.dir}       : dir for tools
             <in>
                 <items basedir="${root.dir}">
                     <exclude name="tools/**" />
+
+					<!-- TODO: update this 2008 sln so it actually *builds* then remove this EXCLUDE -->
+					<exclude name="examples/**/Spring.IocQuickStart.MovieFinder.2008.sln" />
+
                     <include name="**/*.sln" />
                 </items>
             </in>
