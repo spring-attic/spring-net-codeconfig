@@ -1,7 +1,7 @@
 ﻿<Project DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003" ToolsVersion="3.5">
   <PropertyGroup>
     <ProjectType>Local</ProjectType>
-    <ProductVersion>8.0.50727</ProductVersion>
+    <ProductVersion>9.0.30729</ProductVersion>
     <SchemaVersion>2.0</SchemaVersion>
     <ProjectGuid>{C261D9ED-85C3-4B35-BE48-7156F5B17430}</ProjectGuid>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
@@ -86,9 +86,17 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\lib\net\2.0\log4net.dll</HintPath>
     </Reference>
-    <Reference Include="Spring.Core, Version=1.1.0.2, Culture=neutral, processorArchitecture=MSIL">
+    <Reference Include="Spring.Aop, Version=1.3.1.20711, Culture=neutral, PublicKeyToken=65e474d141e25e07, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\..\..\bin\net\2.0\debug\Spring.Core.dll</HintPath>
+      <HintPath>..\..\..\lib\net\2.0\Spring.Aop.dll</HintPath>
+    </Reference>
+    <Reference Include="Spring.Core, Version=1.3.1.20711, Culture=neutral, PublicKeyToken=65e474d141e25e07, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\..\lib\net\2.0\Spring.Core.dll</HintPath>
+    </Reference>
+    <Reference Include="Spring.Core.Configuration, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\..\bin\net\2.0\Spring.Core.Configuration.dll</HintPath>
     </Reference>
     <Reference Include="System">
       <Name>System</Name>
@@ -98,14 +106,14 @@
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="MovieFinder\AppContext.xml" />
-    <EmbeddedResource Include="MovieFinder\AppContextContribution.xml" />
+    <EmbeddedResource Include="MovieFinder\CodeConfigBootstrap.xml" />
     <Content Include="MovieFinder\movies.txt" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="MovieFinder\ColonDelimitedMovieFinder.cs" />
     <Compile Include="MovieFinder\IMovieFinder.cs" />
     <Compile Include="MovieFinder\Movie.cs" />
+    <Compile Include="MovieFinder\MovieFinderConfiguration.cs" />
     <Compile Include="MovieFinder\Program.cs" />
     <Compile Include="MovieFinder\MovieLister.cs" />
     <Compile Include="MovieFinder\SimpleMovieFinder.cs" />
