@@ -45,6 +45,7 @@
       <HintPath>..\..\lib\net\2.0\Spring.Core.Tests.dll</HintPath>
     </Reference>
     <Reference Include="System" />
+    <Reference Include="System.Core" />
     <Reference Include="System.Data" />
     <Reference Include="System.Xml" />
   </ItemGroup>

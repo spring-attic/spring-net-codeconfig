@@ -29,6 +29,7 @@
         <echo message="Current .NET Framework = ${nant.settings.currentframework}"/>
         <call target="update-common-assemblyinfo" />
         <call target="RebuildAllSolutions" />
+		<call target="RebuildExampleSolutions" />
     </target>
 
     <target name="update-common-assemblyinfo">
@@ -137,18 +138,20 @@
   </target>
 
   <target name="package.binaries" depends1="build">
-      <echo message="Processing ${build.dir}\net-3.5"/>
-      <copy todir="${package.dir}/bin/net/3.5/debug" flatten="true" verbose="true">
+      <echo message="Processing ${build.dir}\net-2.0"/>
+      <copy todir="${package.dir}/bin/net/2.0/debug" flatten="true" verbose="true">
         <fileset>
-          <include name="${build.dir}\net-3.5\Spring.Config*.???"/>
+          <include name="${build.dir}\net-2.0\Spring.Config*.???"/>
         </fileset>
       </copy>
-      <echo message="Processing ${build.dir}\net-4.0"/>
+      <!--
+	  <echo message="Processing ${build.dir}\net-4.0"/>
       <copy todir="${package.dir}/bin/net/4.0/debug" flatten="true" verbose="true">
         <fileset>
           <include name="${build.dir}\net-4.0\Spring.Config*.???"/>
         </fileset>
       </copy>
+	  -->
   </target>
 
   <target name="package.sources">
@@ -360,12 +363,24 @@ ${tool.dir}       : dir for tools
         <foreach item="File" property="filename">
             <in>
                 <items basedir="${root.dir}">
-                    <exclude name="tools/**" />
-
-					<!-- TODO: update this 2008 sln so it actually *builds* then remove this EXCLUDE -->
-					<exclude name="examples/**/Spring.IocQuickStart.MovieFinder.2008.sln" />
-
+                    <exclude name="**/tools/**" />
+					<exclude name="**/examples/**" />
                     <include name="**/*.sln" />
+                </items>
+            </in>
+            <do>
+                <property name="solutionfile" value="${filename}" />
+                <property name="solutionconfiguration" value="${buildconfiguration}" />
+                <call target="RebuildSolution" />
+            </do>
+        </foreach>
+    </target>
+	
+	<target name="RebuildExampleSolutions" depends="RebuildAllSolutions">
+        <foreach item="File" property="filename">
+            <in>
+                <items basedir="${root.dir}/examples">
+					<include name="**/*.sln" />
                 </items>
             </in>
             <do>
