@@ -27,7 +27,7 @@ RebuildAllSolutions:
 RebuildSolution:
 
      [echo] Rebuilding Solution C:\_svn\temp\Spring.Config.2008.sln
-     [exec] Build started 1/26/2011 2:50:58 PM.
+     [exec] Build started 1/27/2011 1:25:07 PM.
      [exec] Project "C:\_svn\temp\Spring.Config.2008.sln" on node 0 (default targets).
      [exec]   Building solution configuration "Debug|Any CPU".
      [exec] Done Building Project "C:\_svn\temp\Spring.Config.2008.sln" (default targets).
@@ -36,12 +36,12 @@ RebuildSolution:
      [exec]     0 Warning(s)
      [exec]     0 Error(s)
      [exec] 
-     [exec] Time Elapsed 00:00:00.01
+     [exec] Time Elapsed 00:00:00.00
 
 RebuildSolution:
 
      [echo] Rebuilding Solution C:\_svn\temp\Spring.Config.2010.sln
-     [exec] Build started 1/26/2011 2:50:58 PM.
+     [exec] Build started 1/27/2011 1:25:07 PM.
      [exec] Project "C:\_svn\temp\Spring.Config.2010.sln" on node 0 (default targets).
      [exec]   Building solution configuration "Debug|Any CPU".
      [exec] Project "C:\_svn\temp\Spring.Config.2010.sln" (1) is building "C:\_svn\temp\src\Spring.Core.Configuration\Spring.Core.Configuration.2010.csproj" (2) on node 0 (default targets).
@@ -68,14 +68,27 @@ RebuildSolution:
      [exec] EntityDeploy:
      [exec]   Processing 0 EDMX files.
      [exec]   Finished processing 0 EDMX files.
-     [exec] PrepareForBuild:
-     [exec]   Creating directory "..\..\build\net-3.5\".
      [exec] Project "C:\_svn\temp\test\Spring.Core.Configuration.Invalid.Tests\Spring.Core.Configuration.Invalid.Tests.csproj" (3) is building "C:\_svn\temp\src\Spring.Core.Configuration\Spring.Core.Configuration.2010.csproj" (2:2) on node 0 (GetTargetPath target(s)).
      [exec] Project file contains ToolsVersion="4.0", which is not supported by this version of MSBuild. Treating the project as if it had ToolsVersion="3.5".
      [exec] Done Building Project "C:\_svn\temp\src\Spring.Core.Configuration\Spring.Core.Configuration.2010.csproj" (GetTargetPath target(s)).
      [exec] Project "C:\_svn\temp\test\Spring.Core.Configuration.Invalid.Tests\Spring.Core.Configuration.Invalid.Tests.csproj" (3) is building "C:\_svn\temp\src\Spring.Core.Configuration\Spring.Core.Configuration.2010.csproj" (2:3) on node 0 (GetNativeManifest target(s)).
      [exec] Project file contains ToolsVersion="4.0", which is not supported by this version of MSBuild. Treating the project as if it had ToolsVersion="3.5".
      [exec] Done Building Project "C:\_svn\temp\src\Spring.Core.Configuration\Spring.Core.Configuration.2010.csproj" (GetNativeManifest target(s)).
+     [exec] CoreCompile:
+     [exec] Skipping target "CoreCompile" because all output files are up-to-date with respect to the input files.
+     [exec] Project "C:\_svn\temp\test\Spring.Core.Configuration.Invalid.Tests\Spring.Core.Configuration.Invalid.Tests.csproj" (3) is building "C:\_svn\temp\src\Spring.Core.Configuration\Spring.Core.Configuration.2010.csproj" (2:4) on node 0 (GetCopyToOutputDirectoryItems target(s)).
+     [exec] Project file contains ToolsVersion="4.0", which is not supported by this version of MSBuild. Treating the project as if it had ToolsVersion="3.5".
+     [exec] Done Building Project "C:\_svn\temp\src\Spring.Core.Configuration\Spring.Core.Configuration.2010.csproj" (GetCopyToOutputDirectoryItems target(s)).
+     [exec] CopyFilesToOutputDirectory:
+     [exec]   Spring.Core.Configuration.Invalid.Tests -> C:\_svn\temp\test\Spring.Core.Configuration.Invalid.Tests\bin\Debug\Spring.Core.Configuration.Invalid.Tests.dll
+     [exec] Done Building Project "C:\_svn\temp\test\Spring.Core.Configuration.Invalid.Tests\Spring.Core.Configuration.Invalid.Tests.csproj" (default targets).
+     [exec] Project "C:\_svn\temp\Spring.Config.2010.sln" (1) is building "C:\_svn\temp\test\Spring.Core.Configuration.Tests\Spring.Core.Configuration.Tests.2010.csproj" (4) on node 0 (default targets).
+     [exec] Project file contains ToolsVersion="4.0", which is not supported by this version of MSBuild. Treating the project as if it had ToolsVersion="3.5".
+     [exec] EntityDeploy:
+     [exec]   Processing 0 EDMX files.
+     [exec]   Finished processing 0 EDMX files.
+     [exec] PrepareForBuild:
+     [exec]   Creating directory "..\..\build\net-3.5\".
      [exec] CoreCompile:
      [exec] Skipping target "CoreCompile" because all output files are up-to-date with respect to the input files.
      [exec] _CopyFilesMarkedCopyLocal:
@@ -91,21 +104,6 @@ RebuildSolution:
      [exec]   Copying file from "C:\_svn\temp\build\net-2.0\Spring.Core.Configuration.pdb" to "..\..\build\net-3.5\Spring.Core.Configuration.pdb".
      [exec]   Copying file from "..\..\lib\net\2.0\Spring.Aop.pdb" to "..\..\build\net-3.5\Spring.Aop.pdb".
      [exec]   Copying file from "..\..\lib\net\2.0\Spring.Aop.xml" to "..\..\build\net-3.5\Spring.Aop.xml".
-     [exec] Project "C:\_svn\temp\test\Spring.Core.Configuration.Invalid.Tests\Spring.Core.Configuration.Invalid.Tests.csproj" (3) is building "C:\_svn\temp\src\Spring.Core.Configuration\Spring.Core.Configuration.2010.csproj" (2:4) on node 0 (GetCopyToOutputDirectoryItems target(s)).
-     [exec] Project file contains ToolsVersion="4.0", which is not supported by this version of MSBuild. Treating the project as if it had ToolsVersion="3.5".
-     [exec] Done Building Project "C:\_svn\temp\src\Spring.Core.Configuration\Spring.Core.Configuration.2010.csproj" (GetCopyToOutputDirectoryItems target(s)).
-     [exec] CopyFilesToOutputDirectory:
-     [exec]   Copying file from "obj\Debug\Spring.Core.Configuration.Invalid.Tests.dll" to "..\..\build\net-3.5\Spring.Core.Configuration.Invalid.Tests.dll".
-     [exec]   Spring.Core.Configuration.Invalid.Tests -> C:\_svn\temp\build\net-3.5\Spring.Core.Configuration.Invalid.Tests.dll
-     [exec]   Copying file from "obj\Debug\Spring.Core.Configuration.Invalid.Tests.pdb" to "..\..\build\net-3.5\Spring.Core.Configuration.Invalid.Tests.pdb".
-     [exec] Done Building Project "C:\_svn\temp\test\Spring.Core.Configuration.Invalid.Tests\Spring.Core.Configuration.Invalid.Tests.csproj" (default targets).
-     [exec] Project "C:\_svn\temp\Spring.Config.2010.sln" (1) is building "C:\_svn\temp\test\Spring.Core.Configuration.Tests\Spring.Core.Configuration.Tests.2010.csproj" (4) on node 0 (default targets).
-     [exec] Project file contains ToolsVersion="4.0", which is not supported by this version of MSBuild. Treating the project as if it had ToolsVersion="3.5".
-     [exec] EntityDeploy:
-     [exec]   Processing 0 EDMX files.
-     [exec]   Finished processing 0 EDMX files.
-     [exec] CoreCompile:
-     [exec] Skipping target "CoreCompile" because all output files are up-to-date with respect to the input files.
      [exec] CopyFilesToOutputDirectory:
      [exec]   Copying file from "obj\Debug\Spring.Core.Configuration.Tests.dll" to "..\..\build\net-3.5\Spring.Core.Configuration.Tests.dll".
      [exec]   Spring.Core.Configuration.Tests.2010 -> C:\_svn\temp\build\net-3.5\Spring.Core.Configuration.Tests.dll
@@ -117,7 +115,7 @@ RebuildSolution:
      [exec]     0 Warning(s)
      [exec]     0 Error(s)
      [exec] 
-     [exec] Time Elapsed 00:00:00.83
+     [exec] Time Elapsed 00:00:00.71
 
 clean:
 
@@ -129,7 +127,7 @@ RebuildAllSolutions:
 RebuildSolution:
 
      [echo] Rebuilding Solution C:\_svn\temp\Spring.Config.2008.sln
-     [exec] Build started 1/26/2011 2:50:59 PM.
+     [exec] Build started 1/27/2011 1:25:08 PM.
      [exec] Project "C:\_svn\temp\Spring.Config.2008.sln" on node 0 (default targets).
      [exec]   Building solution configuration "Debug|Any CPU".
      [exec] Done Building Project "C:\_svn\temp\Spring.Config.2008.sln" (default targets).
@@ -138,12 +136,12 @@ RebuildSolution:
      [exec]     0 Warning(s)
      [exec]     0 Error(s)
      [exec] 
-     [exec] Time Elapsed 00:00:00.01
+     [exec] Time Elapsed 00:00:00.00
 
 RebuildSolution:
 
      [echo] Rebuilding Solution C:\_svn\temp\Spring.Config.2010.sln
-     [exec] Build started 1/26/2011 2:50:59 PM.
+     [exec] Build started 1/27/2011 1:25:08 PM.
      [exec] Project "C:\_svn\temp\Spring.Config.2010.sln" on node 0 (default targets).
      [exec]   Building solution configuration "Debug|Any CPU".
      [exec] Project "C:\_svn\temp\Spring.Config.2010.sln" (1) is building "C:\_svn\temp\src\Spring.Core.Configuration\Spring.Core.Configuration.2010.csproj" (2) on node 0 (default targets).
@@ -170,14 +168,27 @@ RebuildSolution:
      [exec] EntityDeploy:
      [exec]   Processing 0 EDMX files.
      [exec]   Finished processing 0 EDMX files.
-     [exec] PrepareForBuild:
-     [exec]   Creating directory "..\..\build\net-3.5\".
      [exec] Project "C:\_svn\temp\test\Spring.Core.Configuration.Invalid.Tests\Spring.Core.Configuration.Invalid.Tests.csproj" (3) is building "C:\_svn\temp\src\Spring.Core.Configuration\Spring.Core.Configuration.2010.csproj" (2:2) on node 0 (GetTargetPath target(s)).
      [exec] Project file contains ToolsVersion="4.0", which is not supported by this version of MSBuild. Treating the project as if it had ToolsVersion="3.5".
      [exec] Done Building Project "C:\_svn\temp\src\Spring.Core.Configuration\Spring.Core.Configuration.2010.csproj" (GetTargetPath target(s)).
      [exec] Project "C:\_svn\temp\test\Spring.Core.Configuration.Invalid.Tests\Spring.Core.Configuration.Invalid.Tests.csproj" (3) is building "C:\_svn\temp\src\Spring.Core.Configuration\Spring.Core.Configuration.2010.csproj" (2:3) on node 0 (GetNativeManifest target(s)).
      [exec] Project file contains ToolsVersion="4.0", which is not supported by this version of MSBuild. Treating the project as if it had ToolsVersion="3.5".
      [exec] Done Building Project "C:\_svn\temp\src\Spring.Core.Configuration\Spring.Core.Configuration.2010.csproj" (GetNativeManifest target(s)).
+     [exec] CoreCompile:
+     [exec] Skipping target "CoreCompile" because all output files are up-to-date with respect to the input files.
+     [exec] Project "C:\_svn\temp\test\Spring.Core.Configuration.Invalid.Tests\Spring.Core.Configuration.Invalid.Tests.csproj" (3) is building "C:\_svn\temp\src\Spring.Core.Configuration\Spring.Core.Configuration.2010.csproj" (2:4) on node 0 (GetCopyToOutputDirectoryItems target(s)).
+     [exec] Project file contains ToolsVersion="4.0", which is not supported by this version of MSBuild. Treating the project as if it had ToolsVersion="3.5".
+     [exec] Done Building Project "C:\_svn\temp\src\Spring.Core.Configuration\Spring.Core.Configuration.2010.csproj" (GetCopyToOutputDirectoryItems target(s)).
+     [exec] CopyFilesToOutputDirectory:
+     [exec]   Spring.Core.Configuration.Invalid.Tests -> C:\_svn\temp\test\Spring.Core.Configuration.Invalid.Tests\bin\Debug\Spring.Core.Configuration.Invalid.Tests.dll
+     [exec] Done Building Project "C:\_svn\temp\test\Spring.Core.Configuration.Invalid.Tests\Spring.Core.Configuration.Invalid.Tests.csproj" (default targets).
+     [exec] Project "C:\_svn\temp\Spring.Config.2010.sln" (1) is building "C:\_svn\temp\test\Spring.Core.Configuration.Tests\Spring.Core.Configuration.Tests.2010.csproj" (4) on node 0 (default targets).
+     [exec] Project file contains ToolsVersion="4.0", which is not supported by this version of MSBuild. Treating the project as if it had ToolsVersion="3.5".
+     [exec] EntityDeploy:
+     [exec]   Processing 0 EDMX files.
+     [exec]   Finished processing 0 EDMX files.
+     [exec] PrepareForBuild:
+     [exec]   Creating directory "..\..\build\net-3.5\".
      [exec] CoreCompile:
      [exec] Skipping target "CoreCompile" because all output files are up-to-date with respect to the input files.
      [exec] _CopyFilesMarkedCopyLocal:
@@ -193,21 +204,6 @@ RebuildSolution:
      [exec]   Copying file from "C:\_svn\temp\build\net-2.0\Spring.Core.Configuration.pdb" to "..\..\build\net-3.5\Spring.Core.Configuration.pdb".
      [exec]   Copying file from "..\..\lib\net\2.0\Spring.Aop.pdb" to "..\..\build\net-3.5\Spring.Aop.pdb".
      [exec]   Copying file from "..\..\lib\net\2.0\Spring.Aop.xml" to "..\..\build\net-3.5\Spring.Aop.xml".
-     [exec] Project "C:\_svn\temp\test\Spring.Core.Configuration.Invalid.Tests\Spring.Core.Configuration.Invalid.Tests.csproj" (3) is building "C:\_svn\temp\src\Spring.Core.Configuration\Spring.Core.Configuration.2010.csproj" (2:4) on node 0 (GetCopyToOutputDirectoryItems target(s)).
-     [exec] Project file contains ToolsVersion="4.0", which is not supported by this version of MSBuild. Treating the project as if it had ToolsVersion="3.5".
-     [exec] Done Building Project "C:\_svn\temp\src\Spring.Core.Configuration\Spring.Core.Configuration.2010.csproj" (GetCopyToOutputDirectoryItems target(s)).
-     [exec] CopyFilesToOutputDirectory:
-     [exec]   Copying file from "obj\Debug\Spring.Core.Configuration.Invalid.Tests.dll" to "..\..\build\net-3.5\Spring.Core.Configuration.Invalid.Tests.dll".
-     [exec]   Spring.Core.Configuration.Invalid.Tests -> C:\_svn\temp\build\net-3.5\Spring.Core.Configuration.Invalid.Tests.dll
-     [exec]   Copying file from "obj\Debug\Spring.Core.Configuration.Invalid.Tests.pdb" to "..\..\build\net-3.5\Spring.Core.Configuration.Invalid.Tests.pdb".
-     [exec] Done Building Project "C:\_svn\temp\test\Spring.Core.Configuration.Invalid.Tests\Spring.Core.Configuration.Invalid.Tests.csproj" (default targets).
-     [exec] Project "C:\_svn\temp\Spring.Config.2010.sln" (1) is building "C:\_svn\temp\test\Spring.Core.Configuration.Tests\Spring.Core.Configuration.Tests.2010.csproj" (4) on node 0 (default targets).
-     [exec] Project file contains ToolsVersion="4.0", which is not supported by this version of MSBuild. Treating the project as if it had ToolsVersion="3.5".
-     [exec] EntityDeploy:
-     [exec]   Processing 0 EDMX files.
-     [exec]   Finished processing 0 EDMX files.
-     [exec] CoreCompile:
-     [exec] Skipping target "CoreCompile" because all output files are up-to-date with respect to the input files.
      [exec] CopyFilesToOutputDirectory:
      [exec]   Copying file from "obj\Debug\Spring.Core.Configuration.Tests.dll" to "..\..\build\net-3.5\Spring.Core.Configuration.Tests.dll".
      [exec]   Spring.Core.Configuration.Tests.2010 -> C:\_svn\temp\build\net-3.5\Spring.Core.Configuration.Tests.dll
@@ -219,7 +215,7 @@ RebuildSolution:
      [exec]     0 Warning(s)
      [exec]     0 Error(s)
      [exec] 
-     [exec] Time Elapsed 00:00:00.80
+     [exec] Time Elapsed 00:00:00.68
 
 RebuildExampleSolutions:
 
@@ -227,15 +223,27 @@ RebuildExampleSolutions:
 RebuildSolution:
 
      [echo] Rebuilding Solution C:\_svn\temp\examples\Spring.IoCQuickStart.MovieFinder\Spring.IocQuickStart.MovieFinder.2008.sln
-     [exec] Build started 1/26/2011 2:51:00 PM.
+     [exec] Build started 1/27/2011 1:25:09 PM.
      [exec] Project "C:\_svn\temp\examples\Spring.IoCQuickStart.MovieFinder\Spring.IocQuickStart.MovieFinder.2008.sln" on node 0 (default targets).
      [exec]   Building solution configuration "Debug|Any CPU".
      [exec] Project "C:\_svn\temp\examples\Spring.IoCQuickStart.MovieFinder\Spring.IocQuickStart.MovieFinder.2008.sln" (1) is building "C:\_svn\temp\examples\Spring.IoCQuickStart.MovieFinder\src\Spring.IocQuickStart.MovieFinder.2008.csproj" (2) on node 0 (default targets).
-     [exec] Skipping target "CoreCompile" because all output files are up-to-date with respect to the input files.
+     [exec]   Copying file from "..\..\..\lib\net\2.0\Common.Logging.dll" to "bin\Debug\Common.Logging.dll".
+     [exec]   Copying file from "..\lib\net\2.0\Common.Logging.Log4Net.dll" to "bin\Debug\Common.Logging.Log4Net.dll".
+     [exec]   Copying file from "..\lib\net\2.0\log4net.dll" to "bin\Debug\log4net.dll".
+     [exec]   Copying file from "..\..\..\lib\net\2.0\Spring.Aop.dll" to "bin\Debug\Spring.Aop.dll".
+     [exec]   Copying file from "..\..\..\build\net-2.0\Spring.Core.Configuration.dll" to "bin\Debug\Spring.Core.Configuration.dll".
+     [exec]   Copying file from "..\..\..\lib\net\2.0\Spring.Core.dll" to "bin\Debug\Spring.Core.dll".
+     [exec]   Copying file from "..\..\..\build\net-2.0\Spring.Core.Configuration.pdb" to "bin\Debug\Spring.Core.Configuration.pdb".
+     [exec]   Copying file from "..\..\..\lib\net\2.0\Spring.Core.pdb" to "bin\Debug\Spring.Core.pdb".
+     [exec]   Copying file from "..\..\..\lib\net\2.0\Spring.Core.xml" to "bin\Debug\Spring.Core.xml".
+     [exec]   Copying file from "..\..\..\lib\net\2.0\Spring.Aop.pdb" to "bin\Debug\Spring.Aop.pdb".
+     [exec]   Copying file from "..\..\..\lib\net\2.0\Spring.Aop.xml" to "bin\Debug\Spring.Aop.xml".
      [exec] _CopyAppConfigFile:
      [exec] Skipping target "_CopyAppConfigFile" because all output files are up-to-date with respect to the input files.
      [exec] CopyFilesToOutputDirectory:
+     [exec]   Copying file from "obj\Debug\Spring.IocQuickStart.MovieFinder.exe" to "bin\Debug\Spring.IocQuickStart.MovieFinder.exe".
      [exec]   Spring.IocQuickStart.MovieFinder.2008 -> C:\_svn\temp\examples\Spring.IoCQuickStart.MovieFinder\src\bin\Debug\Spring.IocQuickStart.MovieFinder.exe
+     [exec]   Copying file from "obj\Debug\Spring.IocQuickStart.MovieFinder.pdb" to "bin\Debug\Spring.IocQuickStart.MovieFinder.pdb".
      [exec] PostBuildEvent:
      [exec]   "Copying movies.txt file for MovieFinder"
      [exec]           1 file(s) copied.
@@ -246,12 +254,12 @@ RebuildSolution:
      [exec]     0 Warning(s)
      [exec]     0 Error(s)
      [exec] 
-     [exec] Time Elapsed 00:00:00.17
+     [exec] Time Elapsed 00:00:00.52
 
 RebuildSolution:
 
      [echo] Rebuilding Solution C:\_svn\temp\examples\Spring.IoCQuickStart.MovieFinder\Spring.IocQuickStart.MovieFinder.2010.sln
-     [exec] Build started 1/26/2011 2:51:01 PM.
+     [exec] Build started 1/27/2011 1:25:09 PM.
      [exec] Project "C:\_svn\temp\examples\Spring.IoCQuickStart.MovieFinder\Spring.IocQuickStart.MovieFinder.2010.sln" on node 0 (default targets).
      [exec]   Building solution configuration "Debug|Any CPU".
      [exec] Project "C:\_svn\temp\examples\Spring.IoCQuickStart.MovieFinder\Spring.IocQuickStart.MovieFinder.2010.sln" (1) is building "C:\_svn\temp\src\Spring.Core.Configuration\Spring.Core.Configuration.2010.csproj" (2) on node 0 (default targets).
@@ -291,12 +299,12 @@ RebuildSolution:
      [exec]     0 Warning(s)
      [exec]     0 Error(s)
      [exec] 
-     [exec] Time Elapsed 00:00:00.30
+     [exec] Time Elapsed 00:00:00.31
 
 RebuildSolution:
 
      [echo] Rebuilding Solution C:\_svn\temp\examples\Spring.MvcQuickStart\Spring.MvcQuickStart.2010.sln
-     [exec] Build started 1/26/2011 2:51:01 PM.
+     [exec] Build started 1/27/2011 1:25:10 PM.
      [exec] Project "C:\_svn\temp\examples\Spring.MvcQuickStart\Spring.MvcQuickStart.2010.sln" on node 0 (default targets).
      [exec]   Building solution configuration "Debug|Any CPU".
      [exec] Project "C:\_svn\temp\examples\Spring.MvcQuickStart\Spring.MvcQuickStart.2010.sln" (1) is building "C:\_svn\temp\examples\Spring.MvcQuickStart\src\Spring.MvcQuickStart\Spring.MvcQuickStart.2010.csproj" (2) on node 0 (default targets).
@@ -304,18 +312,42 @@ RebuildSolution:
      [exec] EntityDeploy:
      [exec]   Processing 0 EDMX files.
      [exec]   Finished processing 0 EDMX files.
-     [exec] CoreCompile:
-     [exec] Skipping target "CoreCompile" because all output files are up-to-date with respect to the input files.
+     [exec] PrepareForBuild:
+     [exec]   Creating directory "bin\".
+     [exec]   Creating directory "obj\Debug\".
+     [exec] CSC : warning CS1685: The predefined type 'System.Runtime.CompilerServices.ExtensionAttribute' is defined in multiple assemblies in the global alias; using definition from 'c:\_svn\temp\build\net-2.0\Spring.Core.Configuration.dll'
+     [exec] _CopyFilesMarkedCopyLocal:
+     [exec]   Copying file from "..\..\..\..\build\net-2.0\Spring.Core.Configuration.dll" to "bin\Spring.Core.Configuration.dll".
+     [exec]   Copying file from "..\..\..\..\lib\net\2.0\Spring.Core.dll" to "bin\Spring.Core.dll".
+     [exec]   Copying file from "..\..\..\..\lib\net\2.0\Spring.Data.dll" to "bin\Spring.Data.dll".
+     [exec]   Copying file from "..\..\..\..\lib\net\3.5\Spring.Web.Mvc.dll" to "bin\Spring.Web.Mvc.dll".
+     [exec]   Copying file from "..\..\..\..\build\net-2.0\Spring.Aop.dll" to "bin\Spring.Aop.dll".
+     [exec]   Copying file from "..\..\..\..\lib\net\2.0\Common.Logging.dll" to "bin\Common.Logging.dll".
+     [exec]   Copying file from "..\..\..\..\build\net-2.0\Spring.Aop.pdb" to "bin\Spring.Aop.pdb".
+     [exec]   Copying file from "..\..\..\..\build\net-2.0\Spring.Aop.xml" to "bin\Spring.Aop.xml".
+     [exec]   Copying file from "..\..\..\..\lib\net\2.0\Spring.Core.pdb" to "bin\Spring.Core.pdb".
+     [exec]   Copying file from "..\..\..\..\lib\net\2.0\Spring.Core.xml" to "bin\Spring.Core.xml".
+     [exec]   Copying file from "..\..\..\..\build\net-2.0\Spring.Core.Configuration.pdb" to "bin\Spring.Core.Configuration.pdb".
+     [exec]   Copying file from "..\..\..\..\lib\net\2.0\Spring.Data.pdb" to "bin\Spring.Data.pdb".
+     [exec]   Copying file from "..\..\..\..\lib\net\2.0\Spring.Data.xml" to "bin\Spring.Data.xml".
      [exec] CopyFilesToOutputDirectory:
+     [exec]   Copying file from "obj\Debug\Spring.MvcQuickStart.dll" to "bin\Spring.MvcQuickStart.dll".
      [exec]   Spring.MvcQuickStart.2010 -> C:\_svn\temp\examples\Spring.MvcQuickStart\src\Spring.MvcQuickStart\bin\Spring.MvcQuickStart.dll
+     [exec]   Copying file from "obj\Debug\Spring.MvcQuickStart.pdb" to "bin\Spring.MvcQuickStart.pdb".
      [exec] Done Building Project "C:\_svn\temp\examples\Spring.MvcQuickStart\src\Spring.MvcQuickStart\Spring.MvcQuickStart.2010.csproj" (default targets).
      [exec] Done Building Project "C:\_svn\temp\examples\Spring.MvcQuickStart\Spring.MvcQuickStart.2010.sln" (default targets).
      [exec] 
      [exec] Build succeeded.
-     [exec]     0 Warning(s)
+     [exec] 
+     [exec] "C:\_svn\temp\examples\Spring.MvcQuickStart\Spring.MvcQuickStart.2010.sln" (default target) (1) ->
+     [exec] "C:\_svn\temp\examples\Spring.MvcQuickStart\src\Spring.MvcQuickStart\Spring.MvcQuickStart.2010.csproj" (default target) (2) ->
+     [exec] (CoreCompile target) -> 
+     [exec]   CSC : warning CS1685: The predefined type 'System.Runtime.CompilerServices.ExtensionAttribute' is defined in multiple assemblies in the global alias; using definition from 'c:\_svn\temp\build\net-2.0\Spring.Core.Configuration.dll'
+     [exec] 
+     [exec]     1 Warning(s)
      [exec]     0 Error(s)
      [exec] 
-     [exec] Time Elapsed 00:00:00.15
+     [exec] Time Elapsed 00:00:00.64
 
 test:
 
@@ -323,7 +355,6 @@ test:
 
 TestAllAssemblies:
 
-   [delete] Deleting 2 files.
 
 common.run-tests:
 
@@ -335,11 +366,11 @@ common.run-tests.nunit:
      [exec] ProcessModel: Default    DomainUsage: Single
      [exec] Execution Runtime: net-3.5
      [exec] .......................................
-     [exec] Tests run: 39, Errors: 0, Failures: 0, Inconclusive: 0, Time: 1.5990914 seconds
+     [exec] Tests run: 39, Errors: 0, Failures: 0, Inconclusive: 0, Time: 1.6340935 seconds
      [exec]   Not run: 0, Invalid: 0, Ignored: 0, Skipped: 0
      [exec] 
 
 BUILD SUCCEEDED
 
-Total time: 6.4 seconds.
+Total time: 6.9 seconds.
 
