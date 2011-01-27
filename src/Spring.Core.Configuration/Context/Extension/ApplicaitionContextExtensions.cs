@@ -35,7 +35,7 @@ namespace System.Runtime.CompilerServices
 
 namespace Spring.Context
 {
-    public static class ApplcaitionContextExtensions
+    public static class ApplicaitionContextExtensions
     {
         public static T GetObject<T>(this IApplicationContext context, string name)
         {
