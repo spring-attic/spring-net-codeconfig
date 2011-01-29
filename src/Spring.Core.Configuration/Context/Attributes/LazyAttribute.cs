@@ -25,7 +25,7 @@ namespace Spring.Context.Attributes
     /// <summary>
     /// Indicates whether a object is to be lazily initialized.
     /// 
-    /// <para>If this annotation is not present on a Component or object definition, eager
+    /// <para>If this attribute is not present on a Component or object definition, eager
     /// initialization will occur. If present and set to true, the
     /// object/Component will not be initialized until referenced by another object or
     /// explicitly retrieved from the enclosing <see cref="Spring.Objects.Factory.IObjectFactory"/>.
