@@ -18,14 +18,12 @@
 
 #endregion
 
-#region
+#region Imports
 
 using System;
 using Common.Logging;
 using Spring.Context;
-using Spring.Context.Config;
 using Spring.Context.Support;
-using Spring.Objects.Factory.Xml;
 
 #endregion
 
@@ -56,7 +54,6 @@ namespace Spring.IocQuickStart.MovieFinder
         {
             try
             {
-                NamespaceParserRegistry.RegisterParser(typeof(ContextNamespaceParser));
                 IApplicationContext ctx = ContextRegistry.GetContext();
 
                 MovieLister lister = ctx.GetObject<MovieLister>();

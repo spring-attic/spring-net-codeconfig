@@ -10,7 +10,7 @@
 
   <para>In this chapter, we will explore the attributes that are the essential
   components for declaring Object Definitions with Spring CodeConfig. These
-  attributes have a correponding representation in Spring XML so should be
+  attributes have a corresponding representation in Spring XML so should be
   very familiar to current Spring.NET users.</para>
 
   <sect1>
@@ -67,7 +67,7 @@ public class MyConfigurationClass
     <para>The <literal>[Definition]</literal> attribute is applied to one or
     more methods within any class to which the
     <literal>[Configuration]</literal> attribute has been applied. During
-    scanning, any <literal>public virutal</literal> method having the
+    scanning, any <literal>public virtual</literal> method having the
     <literal>[Definition]</literal> attribute is considered to contain Object
     Definition metadata.</para>
 
@@ -79,7 +79,7 @@ public class MyConfigurationClass
       <sect3>
         <title>Simple Usage</title>
 
-        <para>The first usage of the <literal>[Defintion]</literal> attribute
+        <para>The first usage of the <literal>[Definition]</literal> attribute
         simply applies the attribute to the method. The name of the of the
         Object to be registered with the
         <literal>CodeConfigApplicationContext</literal>, will be the name of
@@ -100,7 +100,7 @@ public class MyConfigurationClass
         <para>If you need to control the name of the Object registered with
         the <literal>CodeConfigApplicationContext</literal>, the
         <literal>[Definition]</literal> attribute accepts one or more
-        comma-deliminted names as aliases for the Object when
+        comma-delimited names as aliases for the Object when
         registered.</para>
 
         <programlisting language="csharp">[Configuration]
@@ -204,7 +204,6 @@ public class MyConfigurationClass
   {
     return new AboutController();
   }
-
 }</programlisting>
       </sect3>
     </sect2>
@@ -472,7 +471,6 @@ public class MyConfigurationClass
   {
     return new InvalidController();
   }
-
 }</programlisting>
       </sect3>
 
@@ -540,7 +538,6 @@ public class MyConfigurationClass
   {
     return new UserSettings();
   }
-
 }</programlisting>
     </sect2>
   </sect1>
