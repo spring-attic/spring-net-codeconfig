@@ -312,7 +312,7 @@ namespace Spring.Context.Attributes
 
         private IEnumerable<Type> EnsureAllTypesLoadedInAppDomain(IEnumerable<Type> potentialReflectionOnlyTypes)
         {
-            List<Type> realTypes = new List<Type>();
+            List<Type> actualAppDomainTypes = new List<Type>();
 
             foreach (Type type in potentialReflectionOnlyTypes)
             {
@@ -329,10 +329,10 @@ namespace Spring.Context.Attributes
                     
                 }
                 
-                realTypes.Add(Type.GetType(type.FullName + "," + type.Assembly.FullName));
+                actualAppDomainTypes.Add(Type.GetType(type.FullName + "," + type.Assembly.FullName));
             }
 
-            return realTypes;
+            return actualAppDomainTypes;
         }
     }
 }

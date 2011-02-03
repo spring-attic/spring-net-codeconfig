@@ -80,59 +80,6 @@ namespace Spring.Context.Attributes
 
             return false;
         }
-
-        public static T ReflectionOnlyTypeGetValueFromAttributeConstructor<T>(Type hostType, Type attributeType, int argIndex) where T: class
-        {
-            foreach (CustomAttributeData customAttributeData in CustomAttributeData.GetCustomAttributes(hostType))
-            {
-                if (customAttributeData.Constructor.DeclaringType.FullName == attributeType.FullName)
-                {
-                    CustomAttributeTypedArgument cata = customAttributeData.ConstructorArguments[argIndex];
-
-                    return cata.Value as T;
-
-                    //foreach (CustomAttributeTypedArgument arg in customAttributeData.ConstructorArguments)
-                    //{
-
-                    //    if (arg.Value.GetType() == typeof(ReadOnlyCollection<CustomAttributeTypedArgument>))
-                    //    {
-                    //        var args = (ReadOnlyCollection<CustomAttributeTypedArgument>) arg.Value;
-                    //        return args[argIndex].Value as T;
-                    //    }
-                    //    else
-                    //    {
-                    //        return arg.Value as T;
-                    //    }
-
-
-
-                    //}
-                    //if (argIndex < customAttributeData.ConstructorArguments.Count)
-                    //{
-                    //    object value = customAttributeData.ConstructorArguments[argIndex].Value;
-                    //    return value as T;
-                    //}
-                }
-            }
-
-            return default(T);
-            
-        }
-
-      
-
-        public static bool ReflectionOnlyMethodHasAttribute(MethodInfo method, Type attributeType)
-        {
-            foreach (CustomAttributeData customAttributeData in CustomAttributeData.GetCustomAttributes(method))
-            {
-                if (customAttributeData.Constructor.DeclaringType.FullName == attributeType.FullName)
-                {
-                    return true;
-                }
-            }
-
-            return false;
-        }
     }
 
 }

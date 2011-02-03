@@ -19,6 +19,7 @@
 #endregion
 
 using System;
+using System.Diagnostics;
 using System.Linq;
 using NUnit.Framework;
 using Spring.Context.Support;
@@ -115,6 +116,16 @@ namespace Spring.Objects.Factory.Support
 
         private void AssertExpectedObjectsAreRegisteredWith(GenericApplicationContext context)
         {
+            if (context.DefaultListableObjectFactory.ObjectDefinitionCount != 13)
+            {
+                Console.WriteLine("Actual types registered with the container:");
+                foreach (var name in context.DefaultListableObjectFactory.GetObjectDefinitionNames())
+                {
+                    Console.WriteLine(name);
+                }
+            }
+
+
             Assert.That(context.DefaultListableObjectFactory.ObjectDefinitionCount, Is.EqualTo(13));
         }
 
