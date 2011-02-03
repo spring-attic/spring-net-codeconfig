@@ -19,6 +19,8 @@
 #endregion
 
 using System;
+using System.Collections.ObjectModel;
+using System.Reflection;
 using Spring.Objects.Factory.Attributes;
 using Spring.Objects.Factory.Config;
 using Spring.Objects.Factory.Support;
@@ -63,6 +65,73 @@ namespace Spring.Context.Attributes
         {
             objectDefinition.Role = ObjectRole.ROLE_INFRASTRUCTURE;
             registry.RegisterObjectDefinition(objectName, objectDefinition);
+        }
+
+
+        public static bool ReflectionOnlyTypeHasAttribute(Type candidateType, Type attributeType)
+        {
+            foreach (CustomAttributeData customAttributeData in CustomAttributeData.GetCustomAttributes(candidateType))
+            {
+                if (customAttributeData.Constructor.DeclaringType.FullName == attributeType.FullName)
+                {
+                    return true;
+                }
+            }
+
+            return false;
+        }
+
+        public static T ReflectionOnlyTypeGetValueFromAttributeConstructor<T>(Type hostType, Type attributeType, int argIndex) where T: class
+        {
+            foreach (CustomAttributeData customAttributeData in CustomAttributeData.GetCustomAttributes(hostType))
+            {
+                if (customAttributeData.Constructor.DeclaringType.FullName == attributeType.FullName)
+                {
+                    CustomAttributeTypedArgument cata = customAttributeData.ConstructorArguments[argIndex];
+
+                    return cata.Value as T;
+
+                    //foreach (CustomAttributeTypedArgument arg in customAttributeData.ConstructorArguments)
+                    //{
+
+                    //    if (arg.Value.GetType() == typeof(ReadOnlyCollection<CustomAttributeTypedArgument>))
+                    //    {
+                    //        var args = (ReadOnlyCollection<CustomAttributeTypedArgument>) arg.Value;
+                    //        return args[argIndex].Value as T;
+                    //    }
+                    //    else
+                    //    {
+                    //        return arg.Value as T;
+                    //    }
+
+
+
+                    //}
+                    //if (argIndex < customAttributeData.ConstructorArguments.Count)
+                    //{
+                    //    object value = customAttributeData.ConstructorArguments[argIndex].Value;
+                    //    return value as T;
+                    //}
+                }
+            }
+
+            return default(T);
+            
+        }
+
+      
+
+        public static bool ReflectionOnlyMethodHasAttribute(MethodInfo method, Type attributeType)
+        {
+            foreach (CustomAttributeData customAttributeData in CustomAttributeData.GetCustomAttributes(method))
+            {
+                if (customAttributeData.Constructor.DeclaringType.FullName == attributeType.FullName)
+                {
+                    return true;
+                }
+            }
+
+            return false;
         }
     }
 

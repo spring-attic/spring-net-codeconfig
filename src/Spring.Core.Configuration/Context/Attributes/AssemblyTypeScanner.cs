@@ -22,7 +22,10 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Reflection;
+using System.Security.Permissions;
+using System.Security.Policy;
 using Common.Logging;
+using Spring.Core;
 using Spring.Util;
 
 namespace Spring.Context.Attributes
@@ -53,12 +56,15 @@ namespace Spring.Context.Attributes
             {
                 FolderScanPath = GetCurrentBinDirectoryPath();
             }
+
+            AppDomain.CurrentDomain.ReflectionOnlyAssemblyResolve += MyReflectionOnlyResolveEventHandler;
         }
 
         /// <summary>
         /// Initializes a new instance of the AssemblyTypeScanner class.
         /// </summary>
         protected AssemblyTypeScanner()
+            : this(string.Empty)
         {
         }
 
@@ -72,13 +78,15 @@ namespace Spring.Context.Attributes
 
         public IAssemblyTypeScanner ExcludeType<T>()
         {
-            TypeExclusionPredicates.Add(delegate(Type t) { return t == typeof (T); });
+            //TypeExclusionPredicates.Add(delegate(Type t) { return t == typeof(T); });
+            TypeExclusionPredicates.Add(delegate(Type t) { return t.FullName == typeof(T).FullName; });
             return this;
         }
 
         public IAssemblyTypeScanner IncludeType<T>()
         {
-            TypeInclusionPredicates.Add(delegate(Type t) { return t == typeof (T); });
+            //TypeInclusionPredicates.Add(delegate(Type t) { return t == typeof(T); });
+            TypeInclusionPredicates.Add(delegate(Type t) { return t.FullName == typeof(T).FullName; });
             return this;
         }
 
@@ -86,7 +94,7 @@ namespace Spring.Context.Attributes
         {
             AssertUtils.ArgumentNotNull(typeSource, "typeSource");
             TypeSources.Add(typeSource);
-            TypeInclusionPredicates.Add(delegate(Type t) { return typeSource.Any(delegate(Type t1) { return t1 == t; }); });
+            TypeInclusionPredicates.Add(delegate(Type t) { return typeSource.Any(delegate(Type t1) { return t1.FullName == t.FullName; }); });
             return this;
         }
 
@@ -112,7 +120,7 @@ namespace Spring.Context.Attributes
                 }
             }
 
-            return types;
+            return EnsureAllTypesLoadedInAppDomain(types);
         }
 
         public IAssemblyTypeScanner WithAssemblyFilter(Predicate<Assembly> assemblyPredicate)
@@ -186,13 +194,99 @@ namespace Spring.Context.Attributes
         }
 
 
+
+        private Assembly MyReflectionOnlyResolveEventHandler(object sender, ResolveEventArgs args)
+        {
+            AssemblyName name = new AssemblyName(args.Name);
+
+            String asmToCheck = Path.GetDirectoryName(FolderScanPath) + "\\" + name.Name + ".dll";
+
+            if (File.Exists(asmToCheck))
+            {
+                return Assembly.ReflectionOnlyLoadFrom(asmToCheck);
+            }
+            return ReflectionOnlyLoadWithPartialName(name.Name);
+        }
+
+        #region ReflectionLoad
+        private Assembly ReflectionOnlyLoadWithPartialName(string partialName)
+        {
+            return ReflectionOnlyLoadWithPartialName(partialName, null);
+        }
+
+        private Assembly ReflectionOnlyLoadWithPartialName(string partialName, Evidence securityEvidence)
+        {
+            if (securityEvidence != null)
+                new SecurityPermission(SecurityPermissionFlag.ControlEvidence).Demand();
+
+            AssemblyName fileName = new AssemblyName(partialName);
+
+            var assembly = nLoad(fileName, null, securityEvidence, null, null, false, true);
+
+            if (assembly != null)
+                return assembly;
+
+            var assemblyRef = EnumerateCache(fileName);
+
+            if (assemblyRef != null)
+                return InternalLoad(assemblyRef, securityEvidence, null, true);
+
+            return assembly;
+        }
+
+        private Assembly nLoad(params object[] args)
+        {
+            return (Assembly)typeof(Assembly)
+                .GetMethod("nLoad", BindingFlags.NonPublic | BindingFlags.Static)
+                .Invoke(null, args);
+        }
+
+        private AssemblyName EnumerateCache(params object[] args)
+        {
+            return (AssemblyName)typeof(Assembly)
+                .GetMethod("EnumerateCache", BindingFlags.NonPublic | BindingFlags.Static)
+                .Invoke(null, args);
+        }
+
+        private Assembly InternalLoad(params object[] args)
+        {
+            // Easiest to query because the StackCrawlMark type is internal
+            /*
+            return (Assembly)
+                typeof(Assembly).GetMethods(BindingFlags.NonPublic | BindingFlags.Static)
+                .First(m => m.Name == "InternalLoad" &&
+                            m.GetParameters()[0].ParameterType == typeof (AssemblyName))
+                .Invoke(null, args);
+             */
+            IEnumerable<MethodInfo> methods =
+                typeof(Assembly).GetMethods(BindingFlags.NonPublic | BindingFlags.Static).Where(
+                    delegate(MethodInfo m)
+                    {
+                        return m.Name == "InternalLoad" &&
+                               m.GetParameters()[0].ParameterType == typeof(AssemblyName);
+                    });
+
+            foreach (MethodInfo methodInfo in methods)
+            {
+                return (Assembly)methodInfo.Invoke(null, args);
+            }
+
+            return null;
+        }
+
+        #endregion
+
+
+
+
+
         public void AddFilesForExtension(string folderPath, string extension, IList<Assembly> assemblies)
         {
             IEnumerable<string> files = Directory.GetFiles(folderPath, extension, SearchOption.AllDirectories);
             foreach (string file in files)
                 try
                 {
-                    assemblies.Add(Assembly.LoadFrom(file));
+                    assemblies.Add(Assembly.ReflectionOnlyLoadFrom(file));
                 }
                 catch (Exception ex)
                 {
@@ -214,6 +308,31 @@ namespace Spring.Context.Attributes
             return string.IsNullOrEmpty(AppDomain.CurrentDomain.DynamicDirectory)
                        ? AppDomain.CurrentDomain.BaseDirectory
                        : AppDomain.CurrentDomain.DynamicDirectory;
+        }
+
+        private IEnumerable<Type> EnsureAllTypesLoadedInAppDomain(IEnumerable<Type> potentialReflectionOnlyTypes)
+        {
+            List<Type> realTypes = new List<Type>();
+
+            foreach (Type type in potentialReflectionOnlyTypes)
+            {
+                if (type.Assembly.ReflectionOnly)
+                {
+                    try
+                    {
+                        Assembly.LoadFrom(type.Assembly.Location);    
+                    }
+                    catch (Exception)
+                    {
+                        throw new CannotLoadObjectTypeException(string.Format("Unable to load type {0} from assembly {1}", type.FullName, type.Assembly.Location));
+                    }
+                    
+                }
+                
+                realTypes.Add(Type.GetType(type.FullName + "," + type.Assembly.FullName));
+            }
+
+            return realTypes;
         }
     }
 }

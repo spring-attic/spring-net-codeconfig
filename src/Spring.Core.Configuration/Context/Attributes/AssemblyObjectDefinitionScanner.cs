@@ -21,6 +21,7 @@
 using System;
 using System.Collections.Generic;
 using System.Reflection;
+using Spring.Core;
 using Spring.Objects.Factory.Support;
 
 namespace Spring.Context.Attributes
@@ -54,7 +55,23 @@ namespace Spring.Context.Attributes
 
         protected override bool IsRequiredConstraintSatisfiedBy(Type type)
         {
-            return Attribute.GetCustomAttribute(type, typeof(ConfigurationAttribute), true) != null && !type.IsAbstract;
+            if (!type.Assembly.ReflectionOnly)
+            {
+                return Attribute.GetCustomAttribute(type, typeof(ConfigurationAttribute), true) != null && !type.IsAbstract;
+            }
+
+            bool satisfied = false;
+
+            foreach (CustomAttributeData customAttributeData in CustomAttributeData.GetCustomAttributes(type))
+            {
+                if (customAttributeData.Constructor.DeclaringType.FullName == typeof(ConfigurationAttribute).FullName)
+                {
+                    satisfied = true;
+                    break;
+                }
+            }
+
+            return satisfied;
         }
 
 

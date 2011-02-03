@@ -106,14 +106,20 @@ namespace Spring.Context.Attributes
         [Test]
         public void WithExcludeFilter_Excludes_Type()
         {
-            _scanner.IncludeType<TheConfigurationClass>();
-            _scanner.IncludeType<TheImportedConfigurationClass>();
-            _scanner.WithExcludeFilter(t => t.Name.StartsWith("TheImported"));
+            var scanner1 = new AssemblyObjectDefinitionScanner();
 
-            IEnumerable<Type> types = _scanner.Scan();
+            scanner1.IncludeType<TheConfigurationClass>();
+            scanner1.IncludeType<TheImportedConfigurationClass>();
+            scanner1.WithExcludeFilter(t => t.Name.StartsWith("TheImported"));
+
+            IEnumerable<Type> types = scanner1.Scan();
+
+            //Assert.That(types.Any(t => t.Name == "TheConfigurationClass"));
+            //Assert.False(types.Any(t => t.Name == "TheImportedConfigurationClass"));
 
             Assert.That(types, Contains.Item((typeof(TheConfigurationClass))));
             Assert.False(types.Contains(typeof(TheImportedConfigurationClass)));
+            
         }
 
         [Test]
