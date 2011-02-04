@@ -64,7 +64,7 @@ namespace Spring.Context.Attributes
 
             foreach (CustomAttributeData customAttributeData in CustomAttributeData.GetCustomAttributes(type))
             {
-                if (customAttributeData.Constructor.DeclaringType.FullName == typeof(ConfigurationAttribute).FullName)
+                if (customAttributeData.Constructor.DeclaringType.FullName == typeof(ConfigurationAttribute).FullName && !type.IsAbstract)
                 {
                     satisfied = true;
                     break;
