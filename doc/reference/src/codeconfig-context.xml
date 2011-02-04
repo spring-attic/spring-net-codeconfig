@@ -107,7 +107,7 @@
       <para>You will also need to configure the context namespace parser in
       the main .NET application configuraiton file as shown below</para>
 
-      <programlisting>&lt;configuration&gt;
+      <programlisting language="myxml">&lt;configuration&gt;
 
   &lt;configSections&gt;
     &lt;sectionGroup name="spring"&gt;
@@ -169,7 +169,7 @@
       <para>The simplest way to get started using code-based configuration is
       to instruct the context to scan all assemblies, as shown below</para>
 
-      <programlisting>var ctx = new CodeConfigApplicationContext();
+      <programlisting language="csharp">var ctx = new CodeConfigApplicationContext();
 ctx.ScanAllAssemblies();
 ctx.Refresh();</programlisting>
 

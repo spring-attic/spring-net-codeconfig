@@ -85,7 +85,7 @@ namespace Spring.Context.Attributes
                 AttributeConfigUtils.RegisterAttributeConfigProcessors(registry);
             }
 
-            RegisiterDefintionsForTypes(registry, configTypes);
+            RegisterDefinitionsForTypes(registry, configTypes);
 
         }
 
@@ -116,11 +116,11 @@ namespace Spring.Context.Attributes
 
 
         /// <summary>
-        /// Regisiters the defintions for types.
+        /// Registers the defintions for types.
         /// </summary>
         /// <param name="registry">The registry.</param>
         /// <param name="typesToRegister">The types to register.</param>
-        private void RegisiterDefintionsForTypes(IObjectDefinitionRegistry registry, IEnumerable<Type> typesToRegister)
+        private void RegisterDefinitionsForTypes(IObjectDefinitionRegistry registry, IEnumerable<Type> typesToRegister)
         {
             foreach (Type type in typesToRegister)
             {
