@@ -78,15 +78,13 @@ namespace Spring.Context.Attributes
 
         public IAssemblyTypeScanner ExcludeType<T>()
         {
-            TypeExclusionPredicates.Add(delegate(Type t) { return t == typeof(T); });
-            //TypeExclusionPredicates.Add(delegate(Type t) { return t.FullName == typeof(T).FullName; });
+            TypeExclusionPredicates.Add(delegate(Type t) { return t.FullName == typeof(T).FullName; });
             return this;
         }
 
         public IAssemblyTypeScanner IncludeType<T>()
         {
-            TypeInclusionPredicates.Add(delegate(Type t) { return t == typeof(T); });
-            //TypeInclusionPredicates.Add(delegate(Type t) { return t.FullName == typeof(T).FullName; });
+            TypeInclusionPredicates.Add(delegate(Type t) { return t.FullName == typeof(T).FullName; });
             return this;
         }
 
@@ -94,8 +92,7 @@ namespace Spring.Context.Attributes
         {
             AssertUtils.ArgumentNotNull(typeSource, "typeSource");
             TypeSources.Add(typeSource);
-            TypeInclusionPredicates.Add(delegate(Type t) { return typeSource.Any(delegate(Type t1) { return t1 == t; }); });
-            //TypeInclusionPredicates.Add(delegate(Type t) { return typeSource.Any(delegate(Type t1) { return t1.FullName == t.FullName; }); });
+            TypeInclusionPredicates.Add(delegate(Type t) { return typeSource.Any(delegate(Type t1) { return t1.FullName == t.FullName; }); });
             return this;
         }
 
