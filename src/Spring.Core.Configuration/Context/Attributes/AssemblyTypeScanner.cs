@@ -78,15 +78,15 @@ namespace Spring.Context.Attributes
 
         public IAssemblyTypeScanner ExcludeType<T>()
         {
-            //TypeExclusionPredicates.Add(delegate(Type t) { return t == typeof(T); });
-            TypeExclusionPredicates.Add(delegate(Type t) { return t.FullName == typeof(T).FullName; });
+            TypeExclusionPredicates.Add(delegate(Type t) { return t == typeof(T); });
+            //TypeExclusionPredicates.Add(delegate(Type t) { return t.FullName == typeof(T).FullName; });
             return this;
         }
 
         public IAssemblyTypeScanner IncludeType<T>()
         {
-            //TypeInclusionPredicates.Add(delegate(Type t) { return t == typeof(T); });
-            TypeInclusionPredicates.Add(delegate(Type t) { return t.FullName == typeof(T).FullName; });
+            TypeInclusionPredicates.Add(delegate(Type t) { return t == typeof(T); });
+            //TypeInclusionPredicates.Add(delegate(Type t) { return t.FullName == typeof(T).FullName; });
             return this;
         }
 
@@ -94,7 +94,8 @@ namespace Spring.Context.Attributes
         {
             AssertUtils.ArgumentNotNull(typeSource, "typeSource");
             TypeSources.Add(typeSource);
-            TypeInclusionPredicates.Add(delegate(Type t) { return typeSource.Any(delegate(Type t1) { return t1.FullName == t.FullName; }); });
+            TypeInclusionPredicates.Add(delegate(Type t) { return typeSource.Any(delegate(Type t1) { return t1 == t; }); });
+            //TypeInclusionPredicates.Add(delegate(Type t) { return typeSource.Any(delegate(Type t1) { return t1.FullName == t.FullName; }); });
             return this;
         }
 
@@ -205,77 +206,9 @@ namespace Spring.Context.Attributes
             {
                 return Assembly.ReflectionOnlyLoadFrom(asmToCheck);
             }
-            return ReflectionOnlyLoadWithPartialName(name.Name);
+
+            return ReflectionOnlyUtils.ReflectionOnlyLoadWithPartialName(name.Name);
         }
-
-        #region ReflectionLoad
-        private Assembly ReflectionOnlyLoadWithPartialName(string partialName)
-        {
-            return ReflectionOnlyLoadWithPartialName(partialName, null);
-        }
-
-        private Assembly ReflectionOnlyLoadWithPartialName(string partialName, Evidence securityEvidence)
-        {
-            if (securityEvidence != null)
-                new SecurityPermission(SecurityPermissionFlag.ControlEvidence).Demand();
-
-            AssemblyName fileName = new AssemblyName(partialName);
-
-            var assembly = nLoad(fileName, null, securityEvidence, null, null, false, true);
-
-            if (assembly != null)
-                return assembly;
-
-            var assemblyRef = EnumerateCache(fileName);
-
-            if (assemblyRef != null)
-                return InternalLoad(assemblyRef, securityEvidence, null, true);
-
-            return assembly;
-        }
-
-        private Assembly nLoad(params object[] args)
-        {
-            return (Assembly)typeof(Assembly)
-                .GetMethod("nLoad", BindingFlags.NonPublic | BindingFlags.Static)
-                .Invoke(null, args);
-        }
-
-        private AssemblyName EnumerateCache(params object[] args)
-        {
-            return (AssemblyName)typeof(Assembly)
-                .GetMethod("EnumerateCache", BindingFlags.NonPublic | BindingFlags.Static)
-                .Invoke(null, args);
-        }
-
-        private Assembly InternalLoad(params object[] args)
-        {
-            // Easiest to query because the StackCrawlMark type is internal
-            /*
-            return (Assembly)
-                typeof(Assembly).GetMethods(BindingFlags.NonPublic | BindingFlags.Static)
-                .First(m => m.Name == "InternalLoad" &&
-                            m.GetParameters()[0].ParameterType == typeof (AssemblyName))
-                .Invoke(null, args);
-             */
-            IEnumerable<MethodInfo> methods =
-                typeof(Assembly).GetMethods(BindingFlags.NonPublic | BindingFlags.Static).Where(
-                    delegate(MethodInfo m)
-                    {
-                        return m.Name == "InternalLoad" &&
-                               m.GetParameters()[0].ParameterType == typeof(AssemblyName);
-                    });
-
-            foreach (MethodInfo methodInfo in methods)
-            {
-                return (Assembly)methodInfo.Invoke(null, args);
-            }
-
-            return null;
-        }
-
-        #endregion
-
 
 
 
@@ -292,7 +225,7 @@ namespace Spring.Context.Attributes
                 {
                     //log and swallow everything that might go wrong here...
                     if (Logger.IsDebugEnabled)
-                        Logger.Debug("Failed to load type while scanning Assemblies for Defintions!", ex);
+                        Logger.Debug(string.Format("Failed to load assembly {0} to inspect for [Configuration] types!", file), ex);
                 }
         }
 
@@ -320,15 +253,15 @@ namespace Spring.Context.Attributes
                 {
                     try
                     {
-                        Assembly.LoadFrom(type.Assembly.Location);    
+                        Assembly.LoadFrom(type.Assembly.Location);
                     }
                     catch (Exception)
                     {
                         throw new CannotLoadObjectTypeException(string.Format("Unable to load type {0} from assembly {1}", type.FullName, type.Assembly.Location));
                     }
-                    
+
                 }
-                
+
                 actualAppDomainTypes.Add(Type.GetType(type.FullName + "," + type.Assembly.FullName));
             }
 

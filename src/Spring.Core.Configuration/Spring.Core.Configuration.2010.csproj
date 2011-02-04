@@ -65,6 +65,7 @@
     <Compile Include="Context\Attributes\ImportResourceAttribute.cs" />
     <Compile Include="Context\Attributes\LazyAttribute.cs" />
     <Compile Include="Context\Attributes\LinqExtensionMethods.cs" />
+    <Compile Include="Context\Attributes\ReflectionOnlyUtils.cs" />
     <Compile Include="Context\Attributes\RequiredConstraintAssemblyTypeScanner.cs" />
     <Compile Include="Context\Attributes\ScopeAttribute.cs" />
     <Compile Include="Context\Config\AttributeConfigObjectDefinitionParser.cs" />

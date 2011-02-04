@@ -48,7 +48,7 @@ namespace Spring.Context.Attributes
             }
         }
 
-        private Scanner _scanner;
+        private AssemblyObjectDefinitionScanner _scanner;
 
         private List<Predicate<Type>> ExcludePredicates
         {
@@ -83,7 +83,7 @@ namespace Spring.Context.Attributes
         [SetUp]
         public void _TestSetup()
         {
-            _scanner = new Scanner();
+            _scanner = new AssemblyObjectDefinitionScanner();
         }
 
         [Test]
@@ -106,13 +106,13 @@ namespace Spring.Context.Attributes
         [Test]
         public void WithExcludeFilter_Excludes_Type()
         {
-            var scanner1 = new AssemblyObjectDefinitionScanner();
+            //var scanner1 = new AssemblyObjectDefinitionScanner();
 
-            scanner1.IncludeType<TheConfigurationClass>();
-            scanner1.IncludeType<TheImportedConfigurationClass>();
-            scanner1.WithExcludeFilter(t => t.Name.StartsWith("TheImported"));
+            _scanner.IncludeType<TheConfigurationClass>();
+            _scanner.IncludeType<TheImportedConfigurationClass>();
+            _scanner.WithExcludeFilter(t => t.Name.StartsWith("TheImported"));
 
-            IEnumerable<Type> types = scanner1.Scan();
+            IEnumerable<Type> types = _scanner.Scan();
 
             //Assert.That(types.Any(t => t.Name == "TheConfigurationClass"));
             //Assert.False(types.Any(t => t.Name == "TheImportedConfigurationClass"));
