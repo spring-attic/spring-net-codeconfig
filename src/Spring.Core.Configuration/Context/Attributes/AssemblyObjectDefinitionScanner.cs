@@ -21,7 +21,6 @@
 using System;
 using System.Collections.Generic;
 using System.Reflection;
-using Spring.Core;
 using Spring.Objects.Factory.Support;
 
 namespace Spring.Context.Attributes
@@ -30,13 +29,27 @@ namespace Spring.Context.Attributes
     {
         private readonly List<Predicate<Assembly>> _assemblyExclusionPredicates = new List<Predicate<Assembly>>();
 
-        //TODO: add comprehensive list of Spring Framework Assemblies to ignore to this list
-        private readonly IEnumerable<string> _springAssemblies = new List<string>()
-                                                                    {
-                                                                        "Spring.Core",
-                                                                        "Spring.Data",
-                                                                        "Spring.Services"
-                                                                    };
+        private readonly IEnumerable<string> _springAssemblies = new List<string>
+                                                                     {
+                                                                         "Spring.Core",
+                                                                         "Spring.Aop",
+                                                                         "Spring.Data",
+                                                                         "Spring.Services",
+                                                                         "Spring.Messaging",
+                                                                         "Spring.Messaging.Ems",
+                                                                         "Spring.Messaging.Nms",
+                                                                         "Spring.Template.Velocity",
+                                                                         "Spring.Messaging.Quartz",
+                                                                         "Spring.Testing.Microsoft",
+                                                                         "Spring.Testing.Nunit",
+                                                                         "Spring.Data.NHibernate12",
+                                                                         "Spring.Data.NHibernate21",
+                                                                         "Spring.Data.NHibernate20",
+                                                                         "Spring.Data.NHibernate30",
+                                                                         "Spring.Web",
+                                                                         "Spring.Web.Extensions",
+                                                                         "Spring.Web.Mvc",
+                                                                     };
 
         /// <summary>
         /// Initializes a new instance of the AssemblyObjectDefinitionScanner class.
@@ -44,50 +57,32 @@ namespace Spring.Context.Attributes
         /// <param name="folderScanPath">The folder scan path.</param>
         public AssemblyObjectDefinitionScanner(string folderScanPath)
             : base(folderScanPath)
-        { }
+        {
+        }
 
         /// <summary>
         /// Initializes a new instance of the AssemblyObjectDefinitionScanner class.
         /// </summary>
         public AssemblyObjectDefinitionScanner()
             : base(null)
-        { }
-
-        protected override bool IsRequiredConstraintSatisfiedBy(Type type)
         {
-            if (!type.Assembly.ReflectionOnly)
-            {
-                return Attribute.GetCustomAttribute(type, typeof(ConfigurationAttribute), true) != null && !type.IsAbstract;
-            }
-
-            bool satisfied = false;
-
-            foreach (CustomAttributeData customAttributeData in CustomAttributeData.GetCustomAttributes(type))
-            {
-                if (customAttributeData.Constructor.DeclaringType.FullName == typeof(ConfigurationAttribute).FullName && !type.IsAbstract)
-                {
-                    satisfied = true;
-                    break;
-                }
-            }
-
-            return satisfied;
         }
 
-
-        public void ScanAndRegisterTypes(IObjectDefinitionRegistry registry)
+        /// <summary>
+        /// Registers the defintions for types.
+        /// </summary>
+        /// <param name="registry">The registry.</param>
+        /// <param name="typesToRegister">The types to register.</param>
+        private void RegisterDefinitionsForTypes(IObjectDefinitionRegistry registry, IEnumerable<Type> typesToRegister)
         {
-            IEnumerable<Type> configTypes = base.Scan();
-
-            //if we have at least one config class, ensure the post-processor is registered
-            if (configTypes.Count() > 0)
+            foreach (Type type in typesToRegister)
             {
-                AttributeConfigUtils.RegisterAttributeConfigProcessors(registry);
+                ObjectDefinitionBuilder definition = ObjectDefinitionBuilder.GenericObjectDefinition(type);
+                registry.RegisterObjectDefinition(definition.ObjectDefinition.ObjectTypeName,
+                                                  definition.ObjectDefinition);
             }
-
-            RegisterDefinitionsForTypes(registry, configTypes);
-
         }
+
 
         protected override IEnumerable<Assembly> ApplyAssemblyFiltersTo(IEnumerable<Assembly> assemblyCandidates)
         {
@@ -100,34 +95,54 @@ namespace Spring.Context.Attributes
             return _assemblyExclusionPredicates.Any(delegate(Predicate<Assembly> exclude) { return exclude(candidate); });
         }
 
+        protected override bool IsRequiredConstraintSatisfiedBy(Type type)
+        {
+            if (!type.Assembly.ReflectionOnly)
+            {
+                return Attribute.GetCustomAttribute(type, typeof (ConfigurationAttribute), true) != null &&
+                       !type.IsAbstract;
+            }
+
+            bool satisfied = false;
+
+            foreach (CustomAttributeData customAttributeData in CustomAttributeData.GetCustomAttributes(type))
+            {
+                if (customAttributeData.Constructor.DeclaringType.FullName == typeof (ConfigurationAttribute).FullName &&
+                    !type.IsAbstract)
+                {
+                    satisfied = true;
+                    break;
+                }
+            }
+
+            return satisfied;
+        }
+
         protected override void SetDefaultFilters()
         {
             //set the built-in defaults
             base.SetDefaultFilters();
 
             //add the desired assembly exclusions to the list
-            _assemblyExclusionPredicates.Add(delegate(Assembly a) { return _springAssemblies.Contains(a.GetName().Name); });
+            _assemblyExclusionPredicates.Add(
+                delegate(Assembly a) { return _springAssemblies.Contains(a.GetName().Name); });
             _assemblyExclusionPredicates.Add(delegate(Assembly a) { return a.GetName().Name.StartsWith("System."); });
             _assemblyExclusionPredicates.Add(delegate(Assembly a) { return a.GetName().Name.StartsWith("Microsoft."); });
             _assemblyExclusionPredicates.Add(delegate(Assembly a) { return a.GetName().Name == "mscorlib"; });
             _assemblyExclusionPredicates.Add(delegate(Assembly a) { return a.GetName().Name == "System"; });
         }
 
-
-
-        /// <summary>
-        /// Registers the defintions for types.
-        /// </summary>
-        /// <param name="registry">The registry.</param>
-        /// <param name="typesToRegister">The types to register.</param>
-        private void RegisterDefinitionsForTypes(IObjectDefinitionRegistry registry, IEnumerable<Type> typesToRegister)
+        public virtual void ScanAndRegisterTypes(IObjectDefinitionRegistry registry)
         {
-            foreach (Type type in typesToRegister)
-            {
-                ObjectDefinitionBuilder definition = ObjectDefinitionBuilder.GenericObjectDefinition(type);
-                registry.RegisterObjectDefinition(definition.ObjectDefinition.ObjectTypeName, definition.ObjectDefinition);
-            }
-        }
+            IEnumerable<Type> configTypes = base.Scan();
 
+            //if we have at least one config class, ensure the post-processor is registered
+            if (configTypes.Count() > 0)
+            {
+                AttributeConfigUtils.RegisterAttributeConfigProcessors(registry);
+            }
+
+            RegisterDefinitionsForTypes(registry, configTypes);
+        }
     }
 }

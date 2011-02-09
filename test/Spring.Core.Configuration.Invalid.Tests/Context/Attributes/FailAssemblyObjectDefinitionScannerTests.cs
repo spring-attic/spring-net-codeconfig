@@ -51,32 +51,31 @@ namespace Spring.Context.Attributes
         [Test]
         public void Can_Ignore_Abstract_Configuration_Types()
         {
-            ScanForAndRegisterSingleType(typeof(ConfigurationClassThatIsAbstract));
-            Assert.That(_context.GetObjectNamesForType(typeof(ConfigurationClassThatIsAbstract)).Length, Is.EqualTo(0),
+            ScanForAndRegisterSingleType(typeof (ConfigurationClassThatIsAbstract));
+            Assert.That(_context.GetObjectNamesForType(typeof (ConfigurationClassThatIsAbstract)).Length, Is.EqualTo(0),
                         "Abstract Type erroneously registered with the Context.");
+        }
+
+        [Test]
+        public void Can_Prevent_Methods_With_Parameters()
+        {
+            ScanForAndRegisterSingleType(typeof (ConfigurationClassWithMethodHavingParameters));
+            Assert.Throws<ObjectDefinitionParsingException>(_context.Refresh);
         }
 
         [Test]
         public void Can_Prevent_Non_Virtual_Methods()
         {
-            ScanForAndRegisterSingleType(typeof(ConfigurationClassWithNonVirtualMethod));
+            ScanForAndRegisterSingleType(typeof (ConfigurationClassWithNonVirtualMethod));
             Assert.Throws<ObjectDefinitionParsingException>(_context.Refresh);
         }
 
         [Test]
         public void Can_Prevent_Sealed_Configuration_Types()
         {
-            ScanForAndRegisterSingleType(typeof(ConfigurationClassThatIsSealed));
+            ScanForAndRegisterSingleType(typeof (ConfigurationClassThatIsSealed));
             Assert.Throws<ObjectDefinitionParsingException>(_context.Refresh);
         }
-
-        [Test]
-        public void Can_Prevent_Methods_With_Parameters()
-        {
-            ScanForAndRegisterSingleType(typeof(ConfigurationClassWithMethodHavingParameters));
-            Assert.Throws<ObjectDefinitionParsingException>(_context.Refresh);
-        }
-
     }
 
     public class SomeType

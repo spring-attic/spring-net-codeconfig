@@ -24,23 +24,14 @@ using Spring.Objects.Factory.Parsing;
 
 namespace Spring.Context.Attributes
 {
-
-    /**
- * Represents a {@link Configuration} class method marked with the {@link Object} annotation.
- *
- * @author Chris Beams
- * @author Juergen Hoeller
- * @since 3.0
- * @see ConfigurationClass
- * @see ConfigurationClassParser
- * @see ConfigurationClassObjectDefinitionReader
- */
-
+    /// <summary>
+    /// Represents a [Configuration] class method marked with the [Definition] attribute.
+    /// </summary>
     public class ConfigurationClassMethod
     {
-        private ConfigurationClass _configurationClass;
+        private readonly ConfigurationClass _configurationClass;
 
-        private MethodInfo _methodInfo;
+        private readonly MethodInfo _methodInfo;
 
         /// <summary>
         /// Initializes a new instance of the ConfigurationClassMethod class.
@@ -55,35 +46,31 @@ namespace Spring.Context.Attributes
 
         public ConfigurationClass ConfigurationClass
         {
-            get
-            {
-                return _configurationClass;
-            }
+            get { return _configurationClass; }
         }
 
         public MethodInfo MethodMetadata
         {
-            get
-            {
-                return _methodInfo;
-            }
+            get { return _methodInfo; }
         }
 
         public Location ResourceLocation
         {
             get { return new Location(_configurationClass.Resource, _methodInfo); }
-
         }
 
         public override string ToString()
         {
-            return string.Format("{0}:name={1},declaringClass={2}", GetType().Name, _methodInfo.Name, _methodInfo.DeclaringType.FullName);
+            return string.Format("{0}:name={1},declaringClass={2}", GetType().Name, _methodInfo.Name,
+                                 _methodInfo.DeclaringType.FullName);
         }
 
         public void Validate(IProblemReporter problemReporter)
         {
             //TODO: shouldn't this be "if method has Definition attribute" instead of "if class has Configuration attribute" --????
-            if (Attribute.GetCustomAttribute(ConfigurationClass.ConfigurationClassType, typeof(ConfigurationAttribute)) != null)
+            if (
+                Attribute.GetCustomAttribute(ConfigurationClass.ConfigurationClassType, typeof (ConfigurationAttribute)) !=
+                null)
             {
                 if (!MethodMetadata.IsVirtual)
                 {
@@ -102,30 +89,46 @@ namespace Spring.Context.Attributes
             }
         }
 
+        #region Nested type: MethodWithParametersError
+
         private class MethodWithParametersError : Problem
         {
             public MethodWithParametersError(string methodName, Location location)
-                : base(String.Format("Method '{0}' must not accept parameters; remove the method's parameters to continue.",
-                methodName), location)
-            { }
+                : base(
+                    String.Format(
+                        "Method '{0}' must not accept parameters; remove the method's parameters to continue.",
+                        methodName), location)
+            {
+            }
         }
 
+        #endregion
 
-        private class StaticMethodError : Problem
-        {
-            public StaticMethodError(string methodName, Location location)
-                : base(String.Format("Method '{0}' must not be static; remove the method's static modifier to continue.",
-                methodName), location)
-            { }
-        }
+        #region Nested type: NonVirtualMethodError
 
         private class NonVirtualMethodError : Problem
         {
             public NonVirtualMethodError(string methodName, Location location)
                 : base(String.Format("Method '{0}' must be public virtual; change the method's modifiers to continue.",
-                methodName), location)
-            { }
+                                     methodName), location)
+            {
+            }
         }
 
+        #endregion
+
+        #region Nested type: StaticMethodError
+
+        private class StaticMethodError : Problem
+        {
+            public StaticMethodError(string methodName, Location location)
+                : base(
+                    String.Format("Method '{0}' must not be static; remove the method's static modifier to continue.",
+                                  methodName), location)
+            {
+            }
+        }
+
+        #endregion
     }
 }

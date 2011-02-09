@@ -22,8 +22,8 @@ using System.Security.Permissions;
 [assembly: AssemblyCopyrightAttribute("Copyright 2010 SpringSource.")]
 [assembly: AssemblyTrademarkAttribute("Apache License, Version 2.0")]
 [assembly: AssemblyCultureAttribute("")]
-[assembly: AssemblyVersionAttribute("1.0.0.4044")]
+[assembly: AssemblyVersionAttribute("1.0.0.4057")]
 [assembly: AssemblyConfigurationAttribute("net-4.0.win32; dev")]
-[assembly: AssemblyInformationalVersionAttribute("1.0.0.4044; net-4.0.win32; dev")]
+[assembly: AssemblyInformationalVersionAttribute("1.0.0.4057; net-4.0.win32; dev")]
 [assembly: AssemblyDelaySignAttribute(false)]
 
