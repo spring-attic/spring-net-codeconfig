@@ -20,12 +20,17 @@
 
 using System;
 using System.Collections.Generic;
+using System.Reflection;
+using System.Text;
 using Spring.Core.IO;
 using Spring.Collections.Generic;
 using Spring.Objects.Factory.Parsing;
 
 namespace Spring.Context.Attributes
 {
+    /// <summary>
+    /// Represents an instance of the metadata that has been parsed from a class with the <see cref="ConfigurationAttribute"/> applied to it.
+    /// </summary>
     public class ConfigurationClass
     {
         private Type _configurationClassType;
@@ -51,6 +56,10 @@ namespace Spring.Context.Attributes
 
         }
 
+        /// <summary>
+        /// Gets the type of the configuration class.
+        /// </summary>
+        /// <value>The type of the configuration class.</value>
         public Type ConfigurationClassType
         {
             get
@@ -59,6 +68,10 @@ namespace Spring.Context.Attributes
             }
         }
 
+        /// <summary>
+        /// Gets the imported resources.
+        /// </summary>
+        /// <value>The imported resources.</value>
         public IDictionary<string, Type> ImportedResources
         {
             get
@@ -67,6 +80,10 @@ namespace Spring.Context.Attributes
             }
         }
 
+        /// <summary>
+        /// Gets the methods.
+        /// </summary>
+        /// <value>The methods.</value>
         public ISet<ConfigurationClassMethod> Methods
         {
             get
@@ -75,6 +92,10 @@ namespace Spring.Context.Attributes
             }
         }
 
+        /// <summary>
+        /// Gets or sets the name of the object.
+        /// </summary>
+        /// <value>The name of the object.</value>
         public string ObjectName
         {
             get
@@ -87,6 +108,10 @@ namespace Spring.Context.Attributes
             }
         }
 
+        /// <summary>
+        /// Gets the resource.
+        /// </summary>
+        /// <value>The resource.</value>
         public IResource Resource
         {
             get
@@ -95,26 +120,52 @@ namespace Spring.Context.Attributes
             }
         }
 
+        /// <summary>
+        /// Gets the SimpleName of the object.
+        /// </summary>
+        /// <value>The simple name.</value>
         public string SimpleName
         {
             get { return ConfigurationClassType.Name; }
         }
 
+        /// <summary>
+        /// Adds the imported resource.
+        /// </summary>
+        /// <param name="importedResource">The imported resource.</param>
+        /// <param name="readerClass">The reader class capable of interpreting the imported resource.</param>
         public void AddImportedResource(string importedResource, Type readerClass)
         {
             _importedResources.Add(importedResource, readerClass);
         }
 
+        /// <summary>
+        /// Determines whether the specified <see cref="System.Object"/> is equal to this instance.
+        /// </summary>
+        /// <param name="other">The <see cref="System.Object"/> to compare with this instance.</param>
+        /// <returns>
+        /// 	<c>true</c> if the specified <see cref="System.Object"/> is equal to this instance; otherwise, <c>false</c>.
+        /// </returns>
         public override bool Equals(object other)
         {
             return this == other || (other is ConfigurationClass && ConfigurationClassType.Name.Equals(((ConfigurationClass)other).ConfigurationClassType.Name));
         }
 
+        /// <summary>
+        /// Returns a hash code for this instance.
+        /// </summary>
+        /// <returns>
+        /// A hash code for this instance, suitable for use in hashing algorithms and data structures like a hash table. 
+        /// </returns>
         public override int GetHashCode()
         {
             return ConfigurationClassType.Name.GetHashCode() * 14;
         }
 
+        /// <summary>
+        /// Validates the specified <see cref="ConfigurationClass"/> and reports all discovered violations to the provided problem reporter for appropriate action.
+        /// </summary>
+        /// <param name="problemReporter">The problem reporter.</param>
         public void Validate(IProblemReporter problemReporter)
         {
             // A [Definition] method may only be overloaded through inheritance. No single
@@ -125,7 +176,10 @@ namespace Spring.Context.Attributes
             {
                 String dClassName = method.MethodMetadata.DeclaringType.FullName;
                 String methodName = method.MethodMetadata.Name;
-                String fqMethodName = dClassName + hashDelim + methodName;
+
+                string paramTypes = ParamTypesToString(method.MethodMetadata);
+
+                String fqMethodName = dClassName + hashDelim + methodName + paramTypes;
                 if (!methodNameCounts.ContainsKey(fqMethodName))
                 {
                     methodNameCounts.Add(fqMethodName, 1);
@@ -163,6 +217,18 @@ namespace Spring.Context.Attributes
             }
         }
 
+        private string ParamTypesToString(MethodInfo methodMetadata)
+        {
+            var result = new StringBuilder();
+
+            foreach (var parameter in methodMetadata.GetParameters())
+            {
+                result.Append(parameter.ParameterType.ToString());
+            }
+
+            return result.ToString();
+        }
+
         private class SealedConfigurationProblem : Problem
         {
             public SealedConfigurationProblem(string name, IResource resource, Type configurationClassType)
@@ -171,6 +237,8 @@ namespace Spring.Context.Attributes
 
         }
 
+        //This class is for future use when parameterized [Definition] methods are supported in the future.
+        //Until then, the test for only permitting zero-param [Definition] methods would fail first, previnting this error from ever being reported
         private class ObjectMethodOverloadingProblem : Problem
         {
             public ObjectMethodOverloadingProblem(string methodName, int count, IResource resource, Type configurationClassType)

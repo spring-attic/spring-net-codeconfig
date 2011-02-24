@@ -35,6 +35,9 @@ using Spring.Stereotype;
 
 namespace Spring.Context.Attributes
 {
+    /// <summary>
+    /// Reads the class with the <see cref="ConfigurationAttribute"/> applied and converts it into an <see cref="Spring.Objects.Factory.Config.IObjectDefinition"/> instance.
+    /// </summary>
     public class ConfigurationClassObjectDefinitionReader
     {
         private readonly ILog _logger = LogManager.GetLogger(typeof(ConfigurationClassObjectDefinitionReader));
@@ -69,6 +72,10 @@ namespace Spring.Context.Attributes
             return false;
         }
 
+        /// <summary>
+        /// Loads the object definitions.
+        /// </summary>
+        /// <param name="configurationModel">The configuration model.</param>
         public void LoadObjectDefinitions(ISet<ConfigurationClass> configurationModel)
         {
             foreach (ConfigurationClass configClass in configurationModel)
@@ -103,6 +110,11 @@ namespace Spring.Context.Attributes
             }
         }
 
+        /// <summary>
+        /// Checks the class to see if it is a candidate to be a <see cref="ConfigurationAttribute"/> source.
+        /// </summary>
+        /// <param name="objectDefinition">The object definition.</param>
+        /// <returns></returns>
         public static bool CheckConfigurationClassCandidate(IObjectDefinition objectDefinition)
         {
             Type objectType = null;
@@ -164,15 +176,10 @@ namespace Spring.Context.Attributes
             MethodInfo metadata = method.MethodMetadata;
 
             RootObjectDefinition objDef = new ConfigurationClassObjectDefinition();
-            //ObjectDef.Resource = configClass.Resource;
-            //ObjectDef.setSource(this.sourceExtractor.extractSource(metadata, configClass.getResource()));
-
 
             objDef.FactoryObjectName = configClass.ObjectName;
             objDef.FactoryMethodName = metadata.Name;
             objDef.AutowireMode = Objects.Factory.Config.AutoWiringMode.Constructor;
-
-            //ObjectDef.setAttribute(RequiredAnnotationObjectPostProcessor.SKIP_REQUIRED_CHECK_ATTRIBUTE, Boolean.TRUE);
 
             // consider name and any aliases
             //Dictionary<String, Object> ObjectAttributes = metadata.getAnnotationAttributes(Object.class.getName());
@@ -239,6 +246,7 @@ namespace Spring.Context.Attributes
                     (Attribute.GetCustomAttribute(metadata, typeof(DependsOnAttribute)) as DependsOnAttribute).Name;
             }
 
+            //TODO: container does not presently support autowiring to the degree needed to support this feature as of yet
             //Autowire autowire = (Autowire) ObjectAttributes.get("autowire");
             //if (autowire.isAutowire()) {
             //	ObjectDef.setAutowireMode(autowire.value());
@@ -258,8 +266,7 @@ namespace Spring.Context.Attributes
             if (Attribute.GetCustomAttribute(metadata, typeof(ScopeAttribute)) != null)
             {
                 objDef.Scope =
-                    (Attribute.GetCustomAttribute(metadata, typeof(ScopeAttribute)) as ScopeAttribute).ObjectScope.
-                        ToString();
+                    (Attribute.GetCustomAttribute(metadata, typeof(ScopeAttribute)) as ScopeAttribute).ObjectScope.ToString();
             }
 
             if (_logger.IsDebugEnabled)

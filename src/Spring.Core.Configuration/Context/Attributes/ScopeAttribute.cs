@@ -28,7 +28,7 @@ namespace Spring.Context.Attributes
     /// for instances of the attributed type.
     /// 
     /// <para>When used as a method-level attribute in conjunction with the
-    /// <see cref="Definition"/> attribute, indicates the name of a scope to use for
+    /// <see cref="DefinitionAttribute"/> attribute, indicates the name of a scope to use for
     /// the instance returned from the method.
     /// </para>
     /// <para>In this context, scope means the lifecycle of an instance, such as

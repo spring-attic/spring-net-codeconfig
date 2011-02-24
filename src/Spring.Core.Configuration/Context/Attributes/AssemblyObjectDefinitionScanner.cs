@@ -25,6 +25,9 @@ using Spring.Objects.Factory.Support;
 
 namespace Spring.Context.Attributes
 {
+    /// <summary>
+    /// AssemblyTypeScanner that only accepts types that also meet the requirements of being ObjectDefintions.
+    /// </summary>
     public class AssemblyObjectDefinitionScanner : RequiredConstraintAssemblyTypeScanner
     {
         private readonly List<Predicate<Assembly>> _assemblyExclusionPredicates = new List<Predicate<Assembly>>();
@@ -84,17 +87,36 @@ namespace Spring.Context.Attributes
         }
 
 
+        /// <summary>
+        /// Applies the assembly filters to the assembly candidates.
+        /// </summary>
+        /// <param name="assemblyCandidates">The assembly candidates.</param>
+        /// <returns></returns>
         protected override IEnumerable<Assembly> ApplyAssemblyFiltersTo(IEnumerable<Assembly> assemblyCandidates)
         {
             return assemblyCandidates.Where(
                 delegate(Assembly candidate) { return IsIncludedAssembly(candidate) && !IsExcludedAssembly(candidate); });
         }
 
+        /// <summary>
+        /// Determines whether the specified candidate is and excluded assembly.
+        /// </summary>
+        /// <param name="candidate">The candidate.</param>
+        /// <returns>
+        /// 	<c>true</c> if the specified candidate is an excluded assembly ; otherwise, <c>false</c>.
+        /// </returns>
         protected virtual bool IsExcludedAssembly(Assembly candidate)
         {
             return _assemblyExclusionPredicates.Any(delegate(Predicate<Assembly> exclude) { return exclude(candidate); });
         }
 
+        /// <summary>
+        /// Determines whether the required constraint is satisfied by the specified type.
+        /// </summary>
+        /// <param name="type">The type.</param>
+        /// <returns>
+        /// 	<c>true</c> if the required constraint is satisfied by the specified type; otherwise, <c>false</c>.
+        /// </returns>
         protected override bool IsRequiredConstraintSatisfiedBy(Type type)
         {
             if (!type.Assembly.ReflectionOnly)
@@ -118,6 +140,9 @@ namespace Spring.Context.Attributes
             return satisfied;
         }
 
+        /// <summary>
+        /// Sets the default filters.
+        /// </summary>
         protected override void SetDefaultFilters()
         {
             //set the built-in defaults
@@ -132,6 +157,10 @@ namespace Spring.Context.Attributes
             _assemblyExclusionPredicates.Add(delegate(Assembly a) { return a.GetName().Name == "System"; });
         }
 
+        /// <summary>
+        /// Scans the and register types.
+        /// </summary>
+        /// <param name="registry">The registry within which to register the types.</param>
         public virtual void ScanAndRegisterTypes(IObjectDefinitionRegistry registry)
         {
             IEnumerable<Type> configTypes = base.Scan();

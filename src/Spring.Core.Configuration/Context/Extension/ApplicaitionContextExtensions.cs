@@ -23,6 +23,9 @@ using Spring.Objects.Factory;
 
 namespace System.Runtime.CompilerServices
 {
+    /// <summary>
+    /// Manufactured Extension Attribute to permit .NET 2.0 to support extension methods
+    /// </summary>
     [AttributeUsage(AttributeTargets.Method, AllowMultiple = false, Inherited = false)]
     internal class ExtensionAttribute : Attribute
     {
@@ -35,13 +38,29 @@ namespace System.Runtime.CompilerServices
 
 namespace Spring.Context
 {
+    /// <summary>
+    /// Generic extensions for IApplicationContext
+    /// </summary>
     public static class ApplicaitionContextExtensions
     {
+        /// <summary>
+        /// Gets the object.
+        /// </summary>
+        /// <typeparam name="T">Type of Object to return.</typeparam>
+        /// <param name="context">The context.</param>
+        /// <param name="name">The name.</param>
+        /// <returns></returns>
         public static T GetObject<T>(this IApplicationContext context, string name)
         {
             return (T)context.GetObject(name, typeof(T));
         }
 
+        /// <summary>
+        /// Gets the object.
+        /// </summary>
+        /// <typeparam name="T">Type of Object to return.</typeparam>
+        /// <param name="context">The context.</param>
+        /// <returns></returns>
         public static T GetObject<T>(this IApplicationContext context)
         {
             string[] objectNamesForType = context.GetObjectNamesForType(typeof(T));

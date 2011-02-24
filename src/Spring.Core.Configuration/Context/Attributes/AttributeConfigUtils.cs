@@ -47,6 +47,10 @@ namespace Spring.Context.Attributes
         public static readonly string CONFIGURATION_ATTRIBUTE_PROCESSOR_OBJECT_NAME = "Spring.Context.Attributes.InternalConfigurationClassPostProcessor";
 
 
+        /// <summary>
+        /// Registers the attribute config processors.
+        /// </summary>
+        /// <param name="registry">The registry.</param>
         public static void RegisterAttributeConfigProcessors(IObjectDefinitionRegistry registry)
         {
             if (!registry.ContainsObjectDefinition(CONFIGURATION_ATTRIBUTE_PROCESSOR_OBJECT_NAME))
@@ -65,20 +69,6 @@ namespace Spring.Context.Attributes
         {
             objectDefinition.Role = ObjectRole.ROLE_INFRASTRUCTURE;
             registry.RegisterObjectDefinition(objectName, objectDefinition);
-        }
-
-
-        public static bool ReflectionOnlyTypeHasAttribute(Type candidateType, Type attributeType)
-        {
-            foreach (CustomAttributeData customAttributeData in CustomAttributeData.GetCustomAttributes(candidateType))
-            {
-                if (customAttributeData.Constructor.DeclaringType.FullName == attributeType.FullName)
-                {
-                    return true;
-                }
-            }
-
-            return false;
         }
     }
 

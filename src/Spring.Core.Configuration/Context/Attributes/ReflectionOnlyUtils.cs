@@ -18,6 +18,7 @@
 
 #endregion
 
+using System;
 using System.Collections.Generic;
 using System.Reflection;
 using System.Security.Permissions;
@@ -25,8 +26,16 @@ using System.Security.Policy;
 
 namespace Spring.Context.Attributes
 {
+    /// <summary>
+    /// Utilities to provide support for manipulating ReflectionOnly types in the <see cref="AppDomain"/>.
+    /// </summary>
     public static class ReflectionOnlyUtils
     {
+        /// <summary>
+        /// Load the <see cref="Assembly"/> into the ReflectionsOnly context based on its partial name.
+        /// </summary>
+        /// <param name="partialName">The partial name.</param>
+        /// <returns>The matching <see cref="Assembly"/></returns>
         public static Assembly ReflectionOnlyLoadWithPartialName(string partialName)
         {
             return ReflectionOnlyLoadWithPartialName(partialName, null);

@@ -30,9 +30,9 @@ namespace Spring.Context.Attributes
     /// <para>Note: This attribute will not be inherited by child object definitions,
     /// hence it needs to be specified per concrete object definition.
     /// </para>
-    /// <para>Using <see cref="DependsOn"/> at the class level has no effect unless component-scanning
-    /// is being used. If a <see cref="DependsOn"/>-attributed class is declared via XML,
-    /// <see cref="DependsOn"/> attribute metadata is ignored, and
+    /// <para>Using <see cref="DependsOnAttribute"/> at the class level has no effect unless component-scanning
+    /// is being used. If a <see cref="DependsOnAttribute"/>-attributed class is declared via XML,
+    /// <see cref="DependsOnAttribute"/> attribute metadata is ignored, and
     /// &lt;object depends-on="..."/&gt; is respected instead.
     /// </para>
     /// </summary>
@@ -50,6 +50,10 @@ namespace Spring.Context.Attributes
             _name = name;
         }
 
+        /// <summary>
+        /// Gets or sets the name.
+        /// </summary>
+        /// <value>The name.</value>
         public string[] Name
         {
             get { return _name; }

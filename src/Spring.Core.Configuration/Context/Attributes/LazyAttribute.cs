@@ -33,8 +33,8 @@ namespace Spring.Context.Attributes
     /// that perform eager initialization of singletons.
     /// </para>
     /// <para>
-    /// If Lazy is present on a <see cref="Configuration"/> class, this indicates that all
-    /// <see cref="Definition"/> methods within that <see cref="Configuration"/> should be lazily
+    /// If Lazy is present on a <see cref="ConfigurationAttribute"/> class, this indicates that all
+    /// <see cref="DefinitionAttribute"/> methods within that <see cref="ConfigurationAttribute"/> should be lazily
     /// initialized. If Lazy is present and false on a object method within a
     /// Lazy-annotated Configuration class, this indicates overriding the 'default
     /// lazy' behavior and that the object should be eagerly initialized.

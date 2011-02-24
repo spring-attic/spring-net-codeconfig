@@ -19,6 +19,7 @@
 #endregion
 
 using System;
+using Spring.Core.IO;
 using Spring.Objects.Factory.Support;
 using Spring.Objects.Factory.Xml;
 using Spring.Util;
@@ -26,7 +27,7 @@ using Spring.Util;
 namespace Spring.Context.Attributes
 {
     /// <summary>
-    /// 
+    /// Supports providing one or more <see cref="IResource"/> implementations to import when creating <see cref="RootObjectDefinition"/>s.
     /// </summary>
     [AttributeUsage(AttributeTargets.Class)]
     public class ImportResourceAttribute : Attribute

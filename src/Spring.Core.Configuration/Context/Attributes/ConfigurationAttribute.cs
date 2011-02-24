@@ -29,18 +29,15 @@ namespace Spring.Context.Attributes
     /// at runtime.
     ///
     /// <para>Configuration is meta-annotated as a <see cref="ComponentAttribute"/>, therefore Configuration
-    /// classes are candidates for component-scanning and may also take advantage of
-    /// <see cref="AutoWiredAttribute"/> at the field and method but not at the constructor level.
+    /// classes are candidates for component-scanning.
     /// </para>
     /// <para>May be used in conjunction with the <see cref="LazyAttribute"/> attribute to indicate that all object
     /// methods declared within this class are by default lazily initialized.
     ///</para>
     /// <h3>Constraints</h3>
     /// <ul>
-    ///    <li>Configuration classes must be non-final</li>
-    ///    <li>Configuration classes must be non-local (may not be declared within a method)</li>
-    ///    <li>Configuration classes must have a default/no-arg constructor and may not use
-    ///        <see cref="AutoWiredAttribute"/> constructor parameters</li>
+    ///    <li>Configuration classes must be non-sealed</li>
+    ///    <li>Configuration classes must have a default/no-arg constructor</li>
     /// </ul>
     /// </summary>
     [AttributeUsage(AttributeTargets.Class)]

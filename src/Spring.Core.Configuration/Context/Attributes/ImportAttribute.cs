@@ -23,21 +23,14 @@ using System;
 namespace Spring.Context.Attributes
 {
     /// <summary>
-    /// Indicates one or more <see cref="Configuration"/> classes to import.
+    /// Indicates one or more <see cref="ConfigurationAttribute"/> classes to import.
     ///
-    /// <para>Provides functionality equivalent to the :lt;import/&gt; element in Spring XML.
-    /// Only supported for actual <see cref="Configuration"/>-attributed classes.
+    /// <para>Provides functionality equivalent to the &lt;import/&gt; element in Spring XML.
+    /// Only supported for actual <see cref="ConfigurationAttribute"/>-attributed classes.
     /// </para>
     ///
-    /// <para><see cref="Definition"/> definitions declared in imported <see cref="Configuration"/> classes
-    /// should be accessed by using <see cref="AutoWired"/> injection.  Either the object
-    /// itself can be autowired, or the configuration class instance declaring the object can be
-    /// autowired.  The latter approach allows for explicit, IDE-friendly navigation between
-    /// <see cref="Configuration"/> class methods.
-    /// </para>
-    ///
-    /// <para>If XML or other non-<see cref="Configuration"/> object definition resources need to be
-    /// imported, use <see cref="ImportResource"/>
+    /// <para>If XML or other non-<see cref="ConfigurationAttribute"/> object definition resources need to be
+    /// imported, use <see cref="ImportResourceAttribute"/>
     /// </para>
     /// </summary>
     [AttributeUsage(AttributeTargets.Class)]
@@ -55,7 +48,16 @@ namespace Spring.Context.Attributes
         }
 
         /// <summary>
-        /// The <see cref="Configuration"/> class or classes to import.
+        /// Initializes a new instance of the <see cref="ImportAttribute"/> class.
+        /// </summary>
+        /// <param name="type">The type.</param>
+        public ImportAttribute(Type type)
+        {
+            _types = new[] { type };
+        }
+
+        /// <summary>
+        /// The <see cref="ConfigurationAttribute"/> class or classes to import.
         /// </summary>
         /// <value>The type.</value>
         public Type[] Types

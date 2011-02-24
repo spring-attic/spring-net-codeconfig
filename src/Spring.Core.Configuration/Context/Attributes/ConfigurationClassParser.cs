@@ -27,6 +27,9 @@ using System.Reflection;
 namespace Spring.Context.Attributes
 {
 
+    /// <summary>
+    /// Parses classes with the <see cref="ConfigurationAttribute"/> applied to them.
+    /// </summary>
     public class ConfigurationClassParser
     {
         private ISet<ConfigurationClass> _configurationClasses = new HashedSet<ConfigurationClass>();
@@ -44,21 +47,28 @@ namespace Spring.Context.Attributes
             _problemReporter = problemReporter;
         }
 
+        /// <summary>
+        /// Gets the configuration classes.
+        /// </summary>
+        /// <value>The configuration classes.</value>
         public ISet<ConfigurationClass> ConfigurationClasses
         {
             get { return _configurationClasses; }
         }
 
-        //public void Parse(String className, String ObjectName)
-        //{
-        //    ProcessConfigurationClass(new ConfigurationClass(className, ObjectName));
-        //}
-
+        /// <summary>
+        /// Parses the specified type.
+        /// </summary>
+        /// <param name="type">The type.</param>
+        /// <param name="objectName">Name of the object.</param>
         public void Parse(Type type, string objectName)
         {
             ProcessConfigurationClass(new ConfigurationClass(objectName, type));
         }
 
+        /// <summary>
+        /// Validates this instance.
+        /// </summary>
         public void Validate()
         {
             foreach (ConfigurationClass configClass in ConfigurationClasses)
@@ -67,6 +77,10 @@ namespace Spring.Context.Attributes
             }
         }
 
+        /// <summary>
+        /// Processes the configuration class.
+        /// </summary>
+        /// <param name="configurationClass">The configuration class.</param>
         protected void ProcessConfigurationClass(ConfigurationClass configurationClass)
         {
             DoProcessConfigurationClass(configurationClass);
@@ -106,6 +120,12 @@ namespace Spring.Context.Attributes
             }
         }
 
+        /// <summary>
+        /// Gets all methods with custom attribute for class.
+        /// </summary>
+        /// <param name="theClass">The class.</param>
+        /// <param name="customAttribute">The custom attribute.</param>
+        /// <returns></returns>
         public static ISet<MethodInfo> GetAllMethodsWithCustomAttributeForClass(Type theClass, Type customAttribute)
         {
             ISet<MethodInfo> methods = new HashedSet<MethodInfo>();

@@ -52,7 +52,6 @@
   <ItemGroup>
     <Compile Include="Context\Attributes\AssemblyObjectDefinitionScannerTests.cs" />
     <Compile Include="Context\Attributes\AssemblyTypeScannerTests.cs" />
-    <Compile Include="Context\Attributes\AttributeConfigUtilsTests.cs" />
     <Compile Include="Context\Attributes\ScanningConfigurationClassPostProcessorTests.cs" />
     <Compile Include="Context\Attributes\AbstractConfigurationClassPostProcessorTests.cs" />
     <Compile Include="Context\Attributes\ConfigurationClassPostProcessorTests.cs" />

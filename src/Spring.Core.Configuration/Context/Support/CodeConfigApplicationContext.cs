@@ -21,6 +21,7 @@
 using System;
 using System.Reflection;
 using Spring.Context.Attributes;
+using Spring.Objects.Factory.Config;
 using Spring.Objects.Factory.Support;
 
 namespace Spring.Context.Support
@@ -156,5 +157,6 @@ namespace Spring.Context.Support
         {
             Scan(null, delegate { return true; }, typePredicate);
         }
+
     }
 }
