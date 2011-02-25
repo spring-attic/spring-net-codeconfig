@@ -72,3 +72,7 @@ namespace Spring.Context
         }
     }
 }
+
+namespace Spring.Context.Support
+{
+}
