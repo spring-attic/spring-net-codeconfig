@@ -6,7 +6,7 @@
 <!ENTITY attribute-reference SYSTEM "attribute-reference.xml">
 <!ENTITY sample-apps SYSTEM "sample-apps.xml">
 <!ENTITY further-reading SYSTEM "further-reading.xml">
-<!ENTITY bibliography SYSTEM "bibliography.xml">
+<!ENTITY migration-example SYSTEM "migration-example.xml">
 ]>
 <book version="5.0" xml:lang="en" xmlns="http://docbook.org/ns/docbook"
       xmlns:xlink="http://www.w3.org/1999/xlink"
@@ -40,29 +40,37 @@
 
   &preface;
 
-  <part>
+  <part xml:id="introduction">
     <title>Introduction</title>
 
     <partintro>
-      <para>This first part of the reference documentation is an overview of
-      Spring CodeConfig and the underlying concepts.</para>
+      <para>At the core of Spring.NET is a powerful and flexible dependency
+      injection container, offering object assembly and construction services
+      atop which the remainder of the Spring.NET Framework is based.
+      Historically, the primary manner of configuring this dependency
+      injection container has been XML configuration files. Object
+      definitions, essentially recipes to be used by the container when
+      constructing objects of various types, are expressed in XML and then
+      parsed and interpreted by the container as it is initialized at
+      run-time.</para>
+
+      <para>While there are several positive aspects to expressing
+      configuration metadata in XML files, there are also many problems with
+      this approach including the verbosity of XML and its heavy dependence on
+      string-literals which are both prone to typing errors and unusually
+      resistant to most modern refactoring tools in use today.</para>
+
+      <para>In this reference document, we’ll explore the newest addition to
+      the configuration story for the Spring.NET Dependency Injection
+      container: code-based configuration, or simply CodeConfig, intended to
+      begin to address many of the shortcomings of the XML-based configuration
+      approach.</para>
     </partintro>
 
-    <chapter id="code-config" version="5">
-      <title>Concepts</title>
-
-      <para>The goal of Spring CodeConfig is to provide an rich code
-      configuration capability rooted in code rather than the more common
-      XML.</para>
-
-      <sect1><title>Object Definitions are Code</title>The simplest way to
-      understand CodeConfig is to investigate a working sample.</sect1>
-
-      <para></para>
-    </chapter>
+	&migration-example;    
   </part>
 
-  <part>
+  <part xml:id="reference">
     <title>Reference</title>
 
     <partintro>
@@ -71,22 +79,9 @@
     </partintro>
 
     &codeconfig-context;
-	
-	&attribute-reference;
+
+    &attribute-reference;
 
     &sample-apps;
-  </part>
-
-  <part id="resources">
-    <title>Other Resources</title>
-
-    <partintro>
-      <para>In addition to this reference documentation, there exist a number
-      of other resources that may help you learn about WPF.</para>
-    </partintro>
-
-    &further-reading;
-
-    &bibliography;
   </part>
 </book>

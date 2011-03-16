@@ -44,8 +44,8 @@
     <literal>[Configuration]</literal> attribute, parses them to construct
     appropriate <literal>ObjectDefinition</literal> instances, and registers
     those Object Definitions with the <literal>IApplicationContext</literal>
-    for use. You can also mix-and-match configuration source, with some object
-    definitions comes from XML and others from code.</para>
+    for use. You can also mix-and-match configuration sources, with some object
+    definitions coming from XML and others from code.</para>
 
     <sect2>
       <title>Using the CodeConfigApplicationContext</title>

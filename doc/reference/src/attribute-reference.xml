@@ -13,7 +13,7 @@
   attributes have a corresponding representation in Spring XML so should be
   very familiar to current Spring.NET users.</para>
 
-  <sect1>
+  <sect1 xml:id="configuration-attribute-reference">
     <title>[Configuration] Attribute</title>
 
     <para>The <literal>[Configuration]</literal> attribute is applied to
@@ -61,7 +61,7 @@ public class MyConfigurationClass
     </sect2>
   </sect1>
 
-  <sect1>
+  <sect1 xml:id="definition-attribute-reference">
     <title>[Definition] Attribute</title>
 
     <para>The <literal>[Definition]</literal> attribute is applied to one or
@@ -140,8 +140,8 @@ public class MyConfigurationClass
 }</programlisting>
 
         <para><note>
-            <para> You can just also call the method 'AfterCreation' inside
-            the body of the HomeController implementation itself.</para>
+            <para>You can just also call the method 'AfterCreation' inside the
+            body of the HomeController implementation itself.</para>
           </note></para>
       </sect3>
 
@@ -167,7 +167,7 @@ public class MyConfigurationClass
     </sect2>
   </sect1>
 
-  <sect1>
+  <sect1 xml:id="dependson-attribute-reference">
     <title>[DependsOn] Attribute</title>
 
     <para>The <literal>[DependsOn]</literal> attribute can be applied to any
@@ -209,7 +209,7 @@ public class MyConfigurationClass
     </sect2>
   </sect1>
 
-  <sect1>
+  <sect1 xml:id="import-attribute-reference">
     <title>[Import] Attribute</title>
 
     <para>The <literal>[Import]</literal> attribute allows you to identify one
@@ -330,7 +330,7 @@ public class MyThirdConfiguration
     </sect2>
   </sect1>
 
-  <sect1>
+  <sect1 xml:id="importresource-attribute-reference">
     <title>[ImportResource] Attribute</title>
 
     <para>Just as the <literal>[Import]</literal> attribute provides the
@@ -426,7 +426,7 @@ public class MyConfigurationClass
     </sect2>
   </sect1>
 
-  <sect1>
+  <sect1 xml:id="lazy-attribute-reference">
     <title>[Lazy] Attribute</title>
 
     <para>The <literal>[Lazy]</literal> attribute allows you to specify that
@@ -501,7 +501,7 @@ public class MyConfigurationClass
     </sect2>
   </sect1>
 
-  <sect1>
+  <sect1 xml:id="scope-attribute-reference">
     <title>[Scope] Attribute</title>
 
     <para>The [Scope] attribute permits you to declare the lifetime of the
