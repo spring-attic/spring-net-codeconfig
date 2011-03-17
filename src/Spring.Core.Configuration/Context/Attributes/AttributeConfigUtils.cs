@@ -19,6 +19,8 @@
 #endregion
 
 using System;
+using System.Collections.ObjectModel;
+using System.Reflection;
 using Spring.Objects.Factory.Attributes;
 using Spring.Objects.Factory.Config;
 using Spring.Objects.Factory.Support;
@@ -45,6 +47,10 @@ namespace Spring.Context.Attributes
         public static readonly string CONFIGURATION_ATTRIBUTE_PROCESSOR_OBJECT_NAME = "Spring.Context.Attributes.InternalConfigurationClassPostProcessor";
 
 
+        /// <summary>
+        /// Registers the attribute config processors.
+        /// </summary>
+        /// <param name="registry">The registry.</param>
         public static void RegisterAttributeConfigProcessors(IObjectDefinitionRegistry registry)
         {
             if (!registry.ContainsObjectDefinition(CONFIGURATION_ATTRIBUTE_PROCESSOR_OBJECT_NAME))

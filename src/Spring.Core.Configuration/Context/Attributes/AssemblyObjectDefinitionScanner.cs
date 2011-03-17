@@ -25,17 +25,34 @@ using Spring.Objects.Factory.Support;
 
 namespace Spring.Context.Attributes
 {
+    /// <summary>
+    /// AssemblyTypeScanner that only accepts types that also meet the requirements of being ObjectDefintions.
+    /// </summary>
     public class AssemblyObjectDefinitionScanner : RequiredConstraintAssemblyTypeScanner
     {
         private readonly List<Predicate<Assembly>> _assemblyExclusionPredicates = new List<Predicate<Assembly>>();
 
-        //TODO: add comprehensive list of Spring Framework Assemblies to ignore to this list
-        private readonly IEnumerable<string> _springAssemblies = new List<string>()
-                                                                    {
-                                                                        "Spring.Core",
-                                                                        "Spring.Data",
-                                                                        "Spring.Services"
-                                                                    };
+        private readonly IEnumerable<string> _springAssemblies = new List<string>
+                                                                     {
+                                                                         "Spring.Core",
+                                                                         "Spring.Aop",
+                                                                         "Spring.Data",
+                                                                         "Spring.Services",
+                                                                         "Spring.Messaging",
+                                                                         "Spring.Messaging.Ems",
+                                                                         "Spring.Messaging.Nms",
+                                                                         "Spring.Template.Velocity",
+                                                                         "Spring.Messaging.Quartz",
+                                                                         "Spring.Testing.Microsoft",
+                                                                         "Spring.Testing.Nunit",
+                                                                         "Spring.Data.NHibernate12",
+                                                                         "Spring.Data.NHibernate21",
+                                                                         "Spring.Data.NHibernate20",
+                                                                         "Spring.Data.NHibernate30",
+                                                                         "Spring.Web",
+                                                                         "Spring.Web.Extensions",
+                                                                         "Spring.Web.Mvc",
+                                                                     };
 
         /// <summary>
         /// Initializes a new instance of the AssemblyObjectDefinitionScanner class.
@@ -43,22 +60,108 @@ namespace Spring.Context.Attributes
         /// <param name="folderScanPath">The folder scan path.</param>
         public AssemblyObjectDefinitionScanner(string folderScanPath)
             : base(folderScanPath)
-        { }
+        {
+        }
 
         /// <summary>
         /// Initializes a new instance of the AssemblyObjectDefinitionScanner class.
         /// </summary>
         public AssemblyObjectDefinitionScanner()
             : base(null)
-        { }
-
-        protected override bool IsRequiredConstraintSatisfiedBy(Type type)
         {
-            return Attribute.GetCustomAttribute(type, typeof(ConfigurationAttribute), true) != null && !type.IsAbstract;
+        }
+
+        /// <summary>
+        /// Registers the defintions for types.
+        /// </summary>
+        /// <param name="registry">The registry.</param>
+        /// <param name="typesToRegister">The types to register.</param>
+        private void RegisterDefinitionsForTypes(IObjectDefinitionRegistry registry, IEnumerable<Type> typesToRegister)
+        {
+            foreach (Type type in typesToRegister)
+            {
+                ObjectDefinitionBuilder definition = ObjectDefinitionBuilder.GenericObjectDefinition(type);
+                registry.RegisterObjectDefinition(definition.ObjectDefinition.ObjectTypeName,
+                                                  definition.ObjectDefinition);
+            }
         }
 
 
-        public void ScanAndRegisterTypes(IObjectDefinitionRegistry registry)
+        /// <summary>
+        /// Applies the assembly filters to the assembly candidates.
+        /// </summary>
+        /// <param name="assemblyCandidates">The assembly candidates.</param>
+        /// <returns></returns>
+        protected override IEnumerable<Assembly> ApplyAssemblyFiltersTo(IEnumerable<Assembly> assemblyCandidates)
+        {
+            return assemblyCandidates.Where(
+                delegate(Assembly candidate) { return IsIncludedAssembly(candidate) && !IsExcludedAssembly(candidate); });
+        }
+
+        /// <summary>
+        /// Determines whether the specified candidate is and excluded assembly.
+        /// </summary>
+        /// <param name="candidate">The candidate.</param>
+        /// <returns>
+        /// 	<c>true</c> if the specified candidate is an excluded assembly ; otherwise, <c>false</c>.
+        /// </returns>
+        protected virtual bool IsExcludedAssembly(Assembly candidate)
+        {
+            return _assemblyExclusionPredicates.Any(delegate(Predicate<Assembly> exclude) { return exclude(candidate); });
+        }
+
+        /// <summary>
+        /// Determines whether the required constraint is satisfied by the specified type.
+        /// </summary>
+        /// <param name="type">The type.</param>
+        /// <returns>
+        /// 	<c>true</c> if the required constraint is satisfied by the specified type; otherwise, <c>false</c>.
+        /// </returns>
+        protected override bool IsRequiredConstraintSatisfiedBy(Type type)
+        {
+            if (!type.Assembly.ReflectionOnly)
+            {
+                return Attribute.GetCustomAttribute(type, typeof (ConfigurationAttribute), true) != null &&
+                       !type.IsAbstract;
+            }
+
+            bool satisfied = false;
+
+            foreach (CustomAttributeData customAttributeData in CustomAttributeData.GetCustomAttributes(type))
+            {
+                if (customAttributeData.Constructor.DeclaringType.FullName == typeof (ConfigurationAttribute).FullName &&
+                    !type.IsAbstract)
+                {
+                    satisfied = true;
+                    break;
+                }
+            }
+
+            return satisfied;
+        }
+
+        /// <summary>
+        /// Sets the default filters.
+        /// </summary>
+        protected override void SetDefaultFilters()
+        {
+            //set the built-in defaults
+            base.SetDefaultFilters();
+
+            //add the desired assembly exclusions to the list
+            _assemblyExclusionPredicates.Add(
+                delegate(Assembly a) { return _springAssemblies.Contains(a.GetName().Name); });
+            _assemblyExclusionPredicates.Add(delegate(Assembly a) { return a.GetName().Name.StartsWith("System."); });
+            _assemblyExclusionPredicates.Add(delegate(Assembly a) { return a.GetName().Name.StartsWith("Microsoft."); });
+            _assemblyExclusionPredicates.Add(delegate(Assembly a) { return a.GetName().Name == "mscorlib"; });
+            _assemblyExclusionPredicates.Add(delegate(Assembly a) { return a.GetName().Name == "System"; });
+        }
+
+        /// <summary>
+        /// Scans the and register types.
+        /// </summary>
+        /// <param name="registry">The registry within which to register the types.</param>
+        public virtual void ScanAndRegisterTypes(IObjectDefinitionRegistry registry)
         {
             IEnumerable<Type> configTypes = base.Scan();
 
@@ -68,49 +171,7 @@ namespace Spring.Context.Attributes
                 AttributeConfigUtils.RegisterAttributeConfigProcessors(registry);
             }
 
-            RegisiterDefintionsForTypes(registry, configTypes);
-
+            RegisterDefinitionsForTypes(registry, configTypes);
         }
-
-        protected override IEnumerable<Assembly> ApplyAssemblyFiltersTo(IEnumerable<Assembly> assemblyCandidates)
-        {
-            return assemblyCandidates.Where(
-                delegate(Assembly candidate) { return IsIncludedAssembly(candidate) && !IsExcludedAssembly(candidate); });
-        }
-
-        protected virtual bool IsExcludedAssembly(Assembly candidate)
-        {
-            return _assemblyExclusionPredicates.Any(delegate(Predicate<Assembly> exclude) { return exclude(candidate); });
-        }
-
-        protected override void SetDefaultFilters()
-        {
-            //set the built-in defaults
-            base.SetDefaultFilters();
-
-            //add the desired assembly exclusions to the list
-            _assemblyExclusionPredicates.Add(delegate(Assembly a) { return _springAssemblies.Contains(a.GetName().Name); });
-            _assemblyExclusionPredicates.Add(delegate(Assembly a) { return a.GetName().Name.StartsWith("System."); });
-            _assemblyExclusionPredicates.Add(delegate(Assembly a) { return a.GetName().Name.StartsWith("Microsoft."); });
-            _assemblyExclusionPredicates.Add(delegate(Assembly a) { return a.GetName().Name == "mscorlib"; });
-            _assemblyExclusionPredicates.Add(delegate(Assembly a) { return a.GetName().Name == "System"; });
-        }
-
-
-
-        /// <summary>
-        /// Regisiters the defintions for types.
-        /// </summary>
-        /// <param name="registry">The registry.</param>
-        /// <param name="typesToRegister">The types to register.</param>
-        private void RegisiterDefintionsForTypes(IObjectDefinitionRegistry registry, IEnumerable<Type> typesToRegister)
-        {
-            foreach (Type type in typesToRegister)
-            {
-                ObjectDefinitionBuilder definition = ObjectDefinitionBuilder.GenericObjectDefinition(type);
-                registry.RegisterObjectDefinition(definition.ObjectDefinition.ObjectTypeName, definition.ObjectDefinition);
-            }
-        }
-
     }
 }

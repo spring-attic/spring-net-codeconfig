@@ -8,7 +8,13 @@
     <property name="lib.dir" value="${root.dir}/lib" />
     <property name="package.dir" value="${root.dir}/package" />
     <property name="doc.dir" value="${root.dir}/doc" />
+	<property name="project.sign" value="false" overwrite="false" />
+	<property name="compiling.examples" value="false" overwrite="true" />
 
+	<if test="${project.sign and not(file::exists(root.dir + '/Spring.Net.snk'))}">
+		<fail message="project.sign='true' but keyfile ${root.dir+'/Spring.Net.snk'} is missing" />
+	</if>
+	
     <property name="project.majorversion" value="1.0" />
     <property name="project.patchversion" value="0" overwrite="false" />
     <property name="project.buildnumber" value="${math::abs(math::floor(timespan::get-total-days(datetime::now() - datetime::parse('01/01/2000'))))}" />
@@ -29,6 +35,7 @@
         <echo message="Current .NET Framework = ${nant.settings.currentframework}"/>
         <call target="update-common-assemblyinfo" />
         <call target="RebuildAllSolutions" />
+		<call target="RebuildExampleSolutions" />
     </target>
 
     <target name="update-common-assemblyinfo">
@@ -136,19 +143,22 @@
 
   </target>
 
-  <target name="package.binaries" depends1="build">
-      <echo message="Processing ${build.dir}\net-3.5"/>
-      <copy todir="${package.dir}/bin/net/3.5/debug" flatten="true" verbose="true">
+  <target name="package.binaries" depends="build">
+      <echo message="Processing ${build.dir}\net-2.0"/>
+      <copy todir="${package.dir}/bin/net/2.0/" flatten="true" verbose="true">
         <fileset>
-          <include name="${build.dir}\net-3.5\Spring.Config*.???"/>
+          <include name="${build.dir}\net-2.0\Spring.Core.Config*.???"/>
         </fileset>
       </copy>
-      <echo message="Processing ${build.dir}\net-4.0"/>
-      <copy todir="${package.dir}/bin/net/4.0/debug" flatten="true" verbose="true">
+	  
+	  <!--
+	  <echo message="Processing ${build.dir}\net-3.5"/>
+      <copy todir="${package.dir}/bin/net/3.5/" flatten="true" verbose="true">
         <fileset>
-          <include name="${build.dir}\net-4.0\Spring.Config*.???"/>
+          <include name="${build.dir}\net-3.5\Spring.Core.Config*.???"/>
         </fileset>
       </copy>
+	  -->
   </target>
 
   <target name="package.sources">
@@ -215,10 +225,12 @@
   </target>
 
     <target name="common.run-tests">
-        <call target="common.run-tests.nunit" />
-	<!--
-	<call target="common.run-tests.ncover" />
+    <!--
+	<call target="common.run-tests.nunit" />
 	-->
+	
+	<call target="common.run-tests.ncover" />
+	
     </target>
 
     <!--
@@ -360,14 +372,30 @@ ${tool.dir}       : dir for tools
         <foreach item="File" property="filename">
             <in>
                 <items basedir="${root.dir}">
-                    <exclude name="tools/**" />
-
-					<!-- TODO: update this 2008 sln so it actually *builds* then remove this EXCLUDE -->
-					<exclude name="examples/**/Spring.IocQuickStart.MovieFinder.2008.sln" />
-
+                    <exclude name="**/tools/**" />
+					<exclude name="**/examples/**" />
+					<exclude name="**/package/**" />
                     <include name="**/*.sln" />
                 </items>
             </in>
+            <do>
+                <property name="solutionfile" value="${filename}" />
+                <property name="solutionconfiguration" value="${buildconfiguration}" />
+                <call target="RebuildSolution" />
+            </do>
+        </foreach>
+    </target>
+	
+	<target name="RebuildExampleSolutions" depends="RebuildAllSolutions">
+        <!-- never sign/stong-name the example solutions, even when the we're signing the main binaries  -->
+		<property name="compiling.examples" value="true" />
+		
+		<foreach item="File" property="filename">
+            <in>
+                <items basedir="${root.dir}/examples">
+					<include name="**/*.sln" />
+                </items>
+            </in>z
             <do>
                 <property name="solutionfile" value="${filename}" />
                 <property name="solutionconfiguration" value="${buildconfiguration}" />
@@ -385,6 +413,9 @@ ${tool.dir}       : dir for tools
             <arg value="${solutionfile}"/>
             <arg line="/nologo" />
             <arg line="/property:Configuration=${solutionconfiguration}"/>
+			<arg value="/property:DefineExtraConstants=STRONG" if="${project.sign and not compiling.examples}" />
+			<arg value="/property:SignAssembly=true" if="${project.sign and not compiling.examples}" />
+			<arg value="/property:AssemblyOriginatorKeyFile=..\..\Spring.Net.snk" if="${project.sign and not compiling.examples}" />
         </exec>
     </target>
 

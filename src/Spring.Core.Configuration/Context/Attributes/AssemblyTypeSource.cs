@@ -27,19 +27,30 @@ using Spring.Util;
 
 namespace Spring.Context.Attributes
 {
+    /// <summary>
+    /// Represents a collection of Types.
+    /// </summary>
     public class AssemblyTypeSource : IEnumerable<Type>
     {
-        private readonly _Assembly assembly;
+        private readonly _Assembly _assembly;
 
+        /// <summary>
+        /// Initializes a new instance of the <see cref="AssemblyTypeSource"/> class.
+        /// </summary>
+        /// <param name="assembly">The assembly.</param>
         public AssemblyTypeSource(Assembly assembly)
         {
             AssertUtils.ArgumentNotNull(assembly, "assembly");
-            this.assembly = assembly;
+            this._assembly = assembly;
         }
 
+        /// <summary>
+        /// Gets the enumerator.
+        /// </summary>
+        /// <returns></returns>
         public IEnumerator<Type> GetEnumerator()
         {
-            foreach (var type in assembly.GetTypes())
+            foreach (var type in _assembly.GetTypes())
                 yield return type;
         }
 

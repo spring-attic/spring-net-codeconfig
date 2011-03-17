@@ -36,6 +36,9 @@
     <Reference Include="Spring.Core">
       <HintPath>..\..\..\..\lib\net\2.0\Spring.Core.dll</HintPath>
     </Reference>
+    <Reference Include="Spring.Core.Configuration">
+      <HintPath>..\..\..\..\build\net-2.0\Spring.Core.Configuration.dll</HintPath>
+    </Reference>
     <Reference Include="Spring.Data">
       <HintPath>..\..\..\..\lib\net\2.0\Spring.Data.dll</HintPath>
     </Reference>
@@ -118,12 +121,6 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
-  </ItemGroup>
-  <ItemGroup>
-    <ProjectReference Include="..\..\..\..\src\Spring.Core.Configuration\Spring.Core.Configuration.2010.csproj">
-      <Project>{7B65D538-E863-4F57-8DDC-2C38E4150045}</Project>
-      <Name>Spring.Core.Configuration.2010</Name>
-    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <Import Project="$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v10.0\WebApplications\Microsoft.WebApplication.targets" />

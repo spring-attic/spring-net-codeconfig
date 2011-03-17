@@ -26,8 +26,26 @@ using Spring.Objects.Factory.Xml;
 
 namespace Spring.Context.Config
 {
+    /// <summary>
+    /// Parses ObjectDefinitions from classes identified by an <see cref="AssemblyObjectDefinitionScanner"/>.
+    /// </summary>
 	public class ComponentScanObjectDefinitionParser : IObjectDefinitionParser
 	{
+        /// <summary>
+        /// Parse the specified XmlElement and register the resulting
+        /// ObjectDefinitions with the <see cref="P:Spring.Objects.Factory.Xml.ParserContext.Registry"/> IObjectDefinitionRegistry
+        /// embedded in the supplied <see cref="T:Spring.Objects.Factory.Xml.ParserContext"/>
+        /// </summary>
+        /// <param name="element">The element to be parsed.</param>
+        /// <param name="parserContext">TThe object encapsulating the current state of the parsing process.
+        /// Provides access to a IObjectDefinitionRegistry</param>
+        /// <returns>The primary object definition.</returns>
+        /// <remarks>
+        /// 	<p>
+        /// This method is never invoked if the parser is namespace aware
+        /// and was called to process the root node.
+        /// </p>
+        /// </remarks>
 		public IObjectDefinition ParseElement(XmlElement element, ParserContext parserContext)
 		{
 			AssemblyObjectDefinitionScanner scanner = ConfigureScanner(parserContext, element);
@@ -49,6 +67,12 @@ namespace Spring.Context.Config
 			return null;
 		}
 
+        /// <summary>
+        /// Configures the scanner.
+        /// </summary>
+        /// <param name="parserContext">The parser context.</param>
+        /// <param name="element">The element.</param>
+        /// <returns></returns>
 		protected virtual AssemblyObjectDefinitionScanner ConfigureScanner(ParserContext parserContext, XmlElement element)
 		{
 			XmlReaderContext readerContext = parserContext.ReaderContext;
@@ -58,36 +82,8 @@ namespace Spring.Context.Config
 				useDefaultFilters = bool.Parse(element.GetAttribute("use-default-filters"));
 			}
 
-			//String assemblies = element.GetAttribute("assembly");
-
-			//foldersPath
 			AssemblyObjectDefinitionScanner scanner = new AssemblyObjectDefinitionScanner();
-			//setBeanDefinitionDefaults
-			//setAutowireCandidatePatterns
 			
-			/*
-				if (element.hasAttribute(RESOURCE_PATTERN_ATTRIBUTE)) {
-					scanner.setResourcePattern(element.getAttribute(RESOURCE_PATTERN_ATTRIBUTE));
-				}
-
-				try {
-					parseBeanNameGenerator(element, scanner);
-				}
-				catch (Exception ex) {
-					readerContext.error(ex.getMessage(), readerContext.extractSource(element), ex.getCause());
-				}
-
-				try {
-					parseScope(element, scanner);
-				}
-				catch (Exception ex) {
-					readerContext.error(ex.getMessage(), readerContext.extractSource(element), ex.getCause());
-				}
-
-				parseTypeFilters(element, scanner, readerContext, parserContext);
-			*/
-
-
 			return scanner;
 		}
 

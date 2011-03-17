@@ -22,14 +22,17 @@
     <DefineConstants>TRACE;DEBUG</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
+    <DocumentationFile>..\..\build\net-2.0\Spring.Core.Configuration.XML</DocumentationFile>
+    <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <DebugType>pdbonly</DebugType>
     <Optimize>true</Optimize>
-    <OutputPath>bin\Release\</OutputPath>
+    <OutputPath>..\..\build\net-2.0\</OutputPath>
     <DefineConstants>TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
+    <DocumentationFile>..\..\build\net-2.0\Spring.Core.Configuration.XML</DocumentationFile>
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="Common.Logging">
@@ -65,12 +68,14 @@
     <Compile Include="Context\Attributes\ImportResourceAttribute.cs" />
     <Compile Include="Context\Attributes\LazyAttribute.cs" />
     <Compile Include="Context\Attributes\LinqExtensionMethods.cs" />
+    <Compile Include="Context\Attributes\ReflectionOnlyUtils.cs" />
     <Compile Include="Context\Attributes\RequiredConstraintAssemblyTypeScanner.cs" />
     <Compile Include="Context\Attributes\ScopeAttribute.cs" />
     <Compile Include="Context\Config\AttributeConfigObjectDefinitionParser.cs" />
     <Compile Include="Context\Config\ComponentScanObjectDefinitionParser.cs" />
     <Compile Include="Context\Config\ContextNamespaceParser.cs" />
-    <Compile Include="Context\Extension\ApplcaitionContextExtensions.cs" />
+    <Compile Include="Context\Extension\AbstractApplicationContextExtensions.cs" />
+    <Compile Include="Context\Extension\ApplicaitionContextExtensions.cs" />
     <Compile Include="Context\Support\CodeConfigApplicationContext.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

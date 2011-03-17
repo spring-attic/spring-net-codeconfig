@@ -18,7 +18,7 @@
     <DebugSymbols>true</DebugSymbols>
     <DebugType>full</DebugType>
     <Optimize>false</Optimize>
-    <OutputPath>..\..\build\net-3.5\</OutputPath>
+    <OutputPath>bin\Debug\</OutputPath>
     <DefineConstants>DEBUG;TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
@@ -40,9 +40,6 @@
     </Reference>
     <Reference Include="Spring.Core">
       <HintPath>..\..\lib\net\2.0\Spring.Core.dll</HintPath>
-    </Reference>
-    <Reference Include="Spring.Core.Tests">
-      <HintPath>..\..\lib\net\2.0\Spring.Core.Tests.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />

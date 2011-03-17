@@ -3,6 +3,9 @@ using System.Collections.Generic;
 
 namespace Spring.Context.Attributes
 {
+    /// <summary>
+    /// Limited extension methods reproducing the small subset of LINQ that is needed in the code; required b/c the project targets .NET 2.0 where LINQ is not available.
+    /// </summary>
     internal static class LinqExtensionMethods
     {
         public static int Count<TSource>(this IEnumerable<TSource> source)

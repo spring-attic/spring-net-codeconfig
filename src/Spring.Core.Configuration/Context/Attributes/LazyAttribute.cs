@@ -25,7 +25,7 @@ namespace Spring.Context.Attributes
     /// <summary>
     /// Indicates whether a object is to be lazily initialized.
     /// 
-    /// <para>If this annotation is not present on a Component or object definition, eager
+    /// <para>If this attribute is not present on a Component or object definition, eager
     /// initialization will occur. If present and set to true, the
     /// object/Component will not be initialized until referenced by another object or
     /// explicitly retrieved from the enclosing <see cref="Spring.Objects.Factory.IObjectFactory"/>.
@@ -33,8 +33,8 @@ namespace Spring.Context.Attributes
     /// that perform eager initialization of singletons.
     /// </para>
     /// <para>
-    /// If Lazy is present on a <see cref="Configuration"/> class, this indicates that all
-    /// <see cref="Definition"/> methods within that <see cref="Configuration"/> should be lazily
+    /// If Lazy is present on a <see cref="ConfigurationAttribute"/> class, this indicates that all
+    /// <see cref="DefinitionAttribute"/> methods within that <see cref="ConfigurationAttribute"/> should be lazily
     /// initialized. If Lazy is present and false on a object method within a
     /// Lazy-annotated Configuration class, this indicates overriding the 'default
     /// lazy' behavior and that the object should be eagerly initialized.

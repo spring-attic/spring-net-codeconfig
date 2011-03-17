@@ -24,23 +24,14 @@ using Spring.Objects.Factory.Parsing;
 
 namespace Spring.Context.Attributes
 {
-
-    /**
- * Represents a {@link Configuration} class method marked with the {@link Object} annotation.
- *
- * @author Chris Beams
- * @author Juergen Hoeller
- * @since 3.0
- * @see ConfigurationClass
- * @see ConfigurationClassParser
- * @see ConfigurationClassObjectDefinitionReader
- */
-
+    /// <summary>
+    /// Represents a <see cref="ConfigurationAttribute"/> class method marked with the <see cref="DefinitionAttribute"/>.
+    /// </summary>
     public class ConfigurationClassMethod
     {
-        private ConfigurationClass _configurationClass;
+        private readonly ConfigurationClass _configurationClass;
 
-        private MethodInfo _methodInfo;
+        private readonly MethodInfo _methodInfo;
 
         /// <summary>
         /// Initializes a new instance of the ConfigurationClassMethod class.
@@ -53,46 +44,65 @@ namespace Spring.Context.Attributes
             _configurationClass = configurationClass;
         }
 
+        /// <summary>
+        /// Gets the configuration class.
+        /// </summary>
+        /// <value>The configuration class.</value>
         public ConfigurationClass ConfigurationClass
         {
-            get
-            {
-                return _configurationClass;
-            }
+            get { return _configurationClass; }
         }
 
+        /// <summary>
+        /// Gets the method metadata.
+        /// </summary>
+        /// <value>The method metadata.</value>
         public MethodInfo MethodMetadata
         {
-            get
-            {
-                return _methodInfo;
-            }
+            get { return _methodInfo; }
         }
 
+        /// <summary>
+        /// Gets the resource location.
+        /// </summary>
+        /// <value>The resource location.</value>
         public Location ResourceLocation
         {
             get { return new Location(_configurationClass.Resource, _methodInfo); }
-
         }
 
+        /// <summary>
+        /// Returns a <see cref="System.String"/> that represents this instance.
+        /// </summary>
+        /// <returns>
+        /// A <see cref="System.String"/> that represents this instance.
+        /// </returns>
         public override string ToString()
         {
-            return string.Format("{0}:name={1},declaringClass={2}", GetType().Name, _methodInfo.Name, _methodInfo.DeclaringType.FullName);
+            return string.Format("{0}:name={1},declaringClass={2}", GetType().Name, _methodInfo.Name,
+                                 _methodInfo.DeclaringType.FullName);
         }
 
+        /// <summary>
+        /// Validates the specified problem reporter.
+        /// </summary>
+        /// <param name="problemReporter">The problem reporter.</param>
         public void Validate(IProblemReporter problemReporter)
         {
-            //TODO: shouldn't this be "if method has Definition attribute" instead of "if class has Configuration attribute" --????
-            if (Attribute.GetCustomAttribute(ConfigurationClass.ConfigurationClassType, typeof(ConfigurationAttribute)) != null)
+            //TODO: investigate whether this should be "if method has Definition attribute" instead of "if class has Configuration attribute"
+            if (
+                Attribute.GetCustomAttribute(ConfigurationClass.ConfigurationClassType, typeof (ConfigurationAttribute)) !=
+                null)
             {
-                if (!MethodMetadata.IsVirtual)
-                {
-                    problemReporter.Error(new NonVirtualMethodError(MethodMetadata.Name, ResourceLocation));
-                }
 
                 if (MethodMetadata.IsStatic)
                 {
                     problemReporter.Error(new StaticMethodError(MethodMetadata.Name, ResourceLocation));
+                }
+
+                if (!MethodMetadata.IsVirtual)
+                {
+                    problemReporter.Error(new NonVirtualMethodError(MethodMetadata.Name, ResourceLocation));
                 }
 
                 if (MethodMetadata.GetParameters().Length != 0)
@@ -105,27 +115,31 @@ namespace Spring.Context.Attributes
         private class MethodWithParametersError : Problem
         {
             public MethodWithParametersError(string methodName, Location location)
-                : base(String.Format("Method '{0}' must not accept parameters; remove the method's parameters to continue.",
-                methodName), location)
-            { }
-        }
-
-
-        private class StaticMethodError : Problem
-        {
-            public StaticMethodError(string methodName, Location location)
-                : base(String.Format("Method '{0}' must not be static; remove the method's static modifier to continue.",
-                methodName), location)
-            { }
+                : base(
+                    String.Format(
+                        "Method '{0}' must not accept parameters; remove the method's parameters to continue.",
+                        methodName), location)
+            {
+            }
         }
 
         private class NonVirtualMethodError : Problem
         {
             public NonVirtualMethodError(string methodName, Location location)
                 : base(String.Format("Method '{0}' must be public virtual; change the method's modifiers to continue.",
-                methodName), location)
-            { }
+                                     methodName), location)
+            {
+            }
         }
 
+        private class StaticMethodError : Problem
+        {
+            public StaticMethodError(string methodName, Location location)
+                : base(
+                    String.Format("Method '{0}' must not be static; remove the method's static modifier to continue.",
+                                  methodName), location)
+            {
+            }
+        }
     }
 }

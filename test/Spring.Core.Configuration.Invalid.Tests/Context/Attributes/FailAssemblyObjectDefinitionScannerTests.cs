@@ -21,6 +21,7 @@
 using System;
 using NUnit.Framework;
 using Spring.Context.Support;
+using Spring.Objects.Factory;
 using Spring.Objects.Factory.Parsing;
 
 namespace Spring.Context.Attributes
@@ -57,6 +58,20 @@ namespace Spring.Context.Attributes
         }
 
         [Test]
+        public void Can_Prevent_Methods_With_Parameters()
+        {
+            ScanForAndRegisterSingleType(typeof(ConfigurationClassWithMethodHavingParameters));
+            Assert.Throws<ObjectDefinitionParsingException>(_context.Refresh);
+        }
+
+        [Test]
+        public void Can_Prevent_Static_Methods()
+        {
+            ScanForAndRegisterSingleType(typeof(ConfigurationClassWithStaticMethod));
+            Assert.Throws<ObjectDefinitionParsingException>(_context.Refresh);
+        }
+
+        [Test]
         public void Can_Prevent_Non_Virtual_Methods()
         {
             ScanForAndRegisterSingleType(typeof(ConfigurationClassWithNonVirtualMethod));
@@ -71,10 +86,25 @@ namespace Spring.Context.Attributes
         }
 
         [Test]
-        public void Can_Prevent_Methods_With_Parameters()
+        public void Can_Prevent_Overloaded_Methods()
         {
-            ScanForAndRegisterSingleType(typeof(ConfigurationClassWithMethodHavingParameters));
+            ScanForAndRegisterSingleType(typeof(ConfigurationClassWithOverloadedMethods));
             Assert.Throws<ObjectDefinitionParsingException>(_context.Refresh);
+        }
+
+        [Test]
+        public void Can_Prevent_Circular_ConfigurationClass_Refereces()
+        {
+            ScanForAndRegisterSingleType(typeof(FirstConfigurationClassWithCircularReference));
+
+            try
+            {
+                _context.Refresh();
+            }
+            catch (ObjectDefinitionStoreException ex)
+            {
+                Assert.That(ex.InnerException, Is.TypeOf(typeof(ObjectDefinitionParsingException)));
+            }
         }
 
     }
@@ -93,6 +123,55 @@ namespace Spring.Context.Attributes
             return new SomeType();
         }
     }
+
+    [Configuration]
+    public class ConfigurationClassWithStaticMethod
+    {
+        [Definition]
+        public static SomeType MethodThatRegistersSomeType()
+        {
+            return new SomeType();
+        }
+    }
+
+    [Configuration]
+    public class ConfigurationClassWithOverloadedMethods
+    {
+        [Definition]
+        public virtual SomeType MethodThatRegistersSomeType()
+        {
+            return new SomeType();
+        }
+
+        [Definition]
+        public virtual SomeType MethodThatRegistersSomeType(int i)
+        {
+            return new SomeType();
+        }
+    }
+
+    [Configuration]
+    [Import(typeof(SecondConfigurationClassWithCircularReference))]
+    public class FirstConfigurationClassWithCircularReference
+    {
+        [Definition]
+        public virtual SomeType MethodThatRegistersSomeType()
+        {
+            return new SomeType();
+        }
+    }
+
+    [Configuration]
+    [Import(typeof(FirstConfigurationClassWithCircularReference))]
+    public class SecondConfigurationClassWithCircularReference
+    {
+        [Definition]
+        public virtual SomeType MethodThatRegistersSomeType()
+        {
+            return new SomeType();
+        }
+    }
+
 
     [Configuration]
     public class ConfigurationClassWithMethodHavingParameters

@@ -21,6 +21,7 @@
 using System;
 using System.Reflection;
 using Spring.Context.Attributes;
+using Spring.Objects.Factory.Config;
 using Spring.Objects.Factory.Support;
 
 namespace Spring.Context.Support
@@ -87,74 +88,9 @@ namespace Spring.Context.Support
         /// </summary>
         /// <param name="name">The name of the application context.</param><param name="caseSensitive">if set to <c>true</c> names in the context are case sensitive.</param><param name="parent">The parent application context.</param><param name="objectFactory">The object factory to use for this context</param>
         public CodeConfigApplicationContext(string name, bool caseSensitive, IApplicationContext parent,
-                                          DefaultListableObjectFactory objectFactory)
+                                            DefaultListableObjectFactory objectFactory)
             : base(name, caseSensitive, parent, objectFactory)
         {
-        }
-
-        /// <summary>
-        /// Scans for types using the provided scanner.
-        /// </summary>
-        /// <param name="scanner">The scanner.</param>
-        public void Scan(AssemblyObjectDefinitionScanner scanner)
-        {
-            scanner.ScanAndRegisterTypes(DefaultListableObjectFactory);
-        }
-
-        /// <summary>
-        /// Scans for types using the default scanner.
-        /// </summary>
-        public void ScanAllAssemblies()
-        {
-            Scan(new AssemblyObjectDefinitionScanner());
-        }
-
-
-        /// <summary>
-        /// Scans the with type filter.
-        /// </summary>
-        /// <param name="typePredicate">The type predicate.</param>
-        public void ScanWithTypeFilter(Predicate<Type> typePredicate)
-        {
-            Scan(null, delegate { return true; }, typePredicate);
-        }
-
-        /// <summary>
-        /// Scans for types that satisfy specified predicates located in the specified scan path.
-        /// </summary>
-        /// <param name="assemblyScanPath">The assembly scan path.</param>
-        /// <param name="assemblyPredicate">The assembly predicate.</param>
-        /// <param name="typePredicate">The type predicate.</param>
-        public void Scan(string assemblyScanPath, Predicate<Assembly> assemblyPredicate, Predicate<Type> typePredicate)
-        {
-            //create a scanner instance using the scan path
-            var scanner = new AssemblyObjectDefinitionScanner(assemblyScanPath);
-
-            //configure the scanner per the provided constraints
-            scanner.WithAssemblyFilter(assemblyPredicate).WithIncludeFilter(typePredicate);
-
-            //pass the scanner to primary Scan method to actually do the work
-            Scan(scanner);
-        }
-
-        /// <summary>
-        /// Scans for types that satisfy specified predicates.
-        /// </summary>
-        /// <param name="assemblyPredicate">The assembly predicate.</param>
-        /// <param name="typePredicate">The type predicate.</param>
-        public void Scan(Predicate<Assembly> assemblyPredicate, Predicate<Type> typePredicate)
-        {
-            Scan(null, assemblyPredicate, typePredicate);
-        }
-
-
-        /// <summary>
-        /// Scans the with assembly filter.
-        /// </summary>
-        /// <param name="assemblyPredicate">The assembly predicate.</param>
-        public void ScanWithAssemblyFilter(Predicate<Assembly> assemblyPredicate)
-        {
-            Scan(null, assemblyPredicate, delegate { return true; });
         }
     }
 }

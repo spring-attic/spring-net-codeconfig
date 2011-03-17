@@ -23,13 +23,11 @@ using Spring.Objects.Factory.Xml;
 namespace Spring.Context.Config
 {
     /// <summary>
-    /// <code>NamespaceParser</code> allowing for the configuration of
+    /// 	<code>NamespaceParser</code> allowing for the configuration of
     /// declarative transaction management using either XML or using attributes.
-    /// 
     /// This namespace handler is the central piece of functionality in the
     /// Spring transaction management facilities and offers two appraoches
     /// to declaratively manage transactions.
-    /// 
     /// One approach uses transaction semantics defined in XML using the
     /// <code>&lt;tx:advice&gt;</code> elements, the other uses attributes
     /// in combination with the <code>&lt;tx:annotation-driven&gt;</code> element.

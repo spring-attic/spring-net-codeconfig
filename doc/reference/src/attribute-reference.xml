@@ -10,10 +10,10 @@
 
   <para>In this chapter, we will explore the attributes that are the essential
   components for declaring Object Definitions with Spring CodeConfig. These
-  attributes have a correponding representation in Spring XML so should be
+  attributes have a corresponding representation in Spring XML so should be
   very familiar to current Spring.NET users.</para>
 
-  <sect1>
+  <sect1 xml:id="configuration-attribute-reference">
     <title>[Configuration] Attribute</title>
 
     <para>The <literal>[Configuration]</literal> attribute is applied to
@@ -61,13 +61,13 @@ public class MyConfigurationClass
     </sect2>
   </sect1>
 
-  <sect1>
+  <sect1 xml:id="definition-attribute-reference">
     <title>[Definition] Attribute</title>
 
     <para>The <literal>[Definition]</literal> attribute is applied to one or
     more methods within any class to which the
     <literal>[Configuration]</literal> attribute has been applied. During
-    scanning, any <literal>public virutal</literal> method having the
+    scanning, any <literal>public virtual</literal> method having the
     <literal>[Definition]</literal> attribute is considered to contain Object
     Definition metadata.</para>
 
@@ -79,7 +79,7 @@ public class MyConfigurationClass
       <sect3>
         <title>Simple Usage</title>
 
-        <para>The first usage of the <literal>[Defintion]</literal> attribute
+        <para>The first usage of the <literal>[Definition]</literal> attribute
         simply applies the attribute to the method. The name of the of the
         Object to be registered with the
         <literal>CodeConfigApplicationContext</literal>, will be the name of
@@ -100,7 +100,7 @@ public class MyConfigurationClass
         <para>If you need to control the name of the Object registered with
         the <literal>CodeConfigApplicationContext</literal>, the
         <literal>[Definition]</literal> attribute accepts one or more
-        comma-deliminted names as aliases for the Object when
+        comma-delimited names as aliases for the Object when
         registered.</para>
 
         <programlisting language="csharp">[Configuration]
@@ -140,8 +140,8 @@ public class MyConfigurationClass
 }</programlisting>
 
         <para><note>
-            <para> You can just also call the method 'AfterCreation' inside
-            the body of the HomeController implementation itself.</para>
+            <para>You can just also call the method 'AfterCreation' inside the
+            body of the HomeController implementation itself.</para>
           </note></para>
       </sect3>
 
@@ -167,7 +167,7 @@ public class MyConfigurationClass
     </sect2>
   </sect1>
 
-  <sect1>
+  <sect1 xml:id="dependson-attribute-reference">
     <title>[DependsOn] Attribute</title>
 
     <para>The <literal>[DependsOn]</literal> attribute can be applied to any
@@ -204,13 +204,12 @@ public class MyConfigurationClass
   {
     return new AboutController();
   }
-
 }</programlisting>
       </sect3>
     </sect2>
   </sect1>
 
-  <sect1>
+  <sect1 xml:id="import-attribute-reference">
     <title>[Import] Attribute</title>
 
     <para>The <literal>[Import]</literal> attribute allows you to identify one
@@ -331,7 +330,7 @@ public class MyThirdConfiguration
     </sect2>
   </sect1>
 
-  <sect1>
+  <sect1 xml:id="importresource-attribute-reference">
     <title>[ImportResource] Attribute</title>
 
     <para>Just as the <literal>[Import]</literal> attribute provides the
@@ -427,7 +426,7 @@ public class MyConfigurationClass
     </sect2>
   </sect1>
 
-  <sect1>
+  <sect1 xml:id="lazy-attribute-reference">
     <title>[Lazy] Attribute</title>
 
     <para>The <literal>[Lazy]</literal> attribute allows you to specify that
@@ -472,7 +471,6 @@ public class MyConfigurationClass
   {
     return new InvalidController();
   }
-
 }</programlisting>
       </sect3>
 
@@ -503,7 +501,7 @@ public class MyConfigurationClass
     </sect2>
   </sect1>
 
-  <sect1>
+  <sect1 xml:id="scope-attribute-reference">
     <title>[Scope] Attribute</title>
 
     <para>The [Scope] attribute permits you to declare the lifetime of the
@@ -540,7 +538,6 @@ public class MyConfigurationClass
   {
     return new UserSettings();
   }
-
 }</programlisting>
     </sect2>
   </sect1>

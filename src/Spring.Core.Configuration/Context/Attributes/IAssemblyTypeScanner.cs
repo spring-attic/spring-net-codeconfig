@@ -30,16 +30,60 @@ namespace Spring.Context.Attributes
     /// </summary>
     public interface IAssemblyTypeScanner
     {
+        /// <summary>
+        /// Add the Assembly containing the specified <see cref="Type"/>.
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        /// <returns></returns>
         IAssemblyTypeScanner AssemblyHavingType<T>();
+        
+        /// <summary>
+        /// Adds the predicate to the assembly filter constraints.
+        /// </summary>
+        /// <param name="assemblyPredicate">The assembly predicate.</param>
+        /// <returns></returns>
         IAssemblyTypeScanner WithAssemblyFilter(Predicate<Assembly> assemblyPredicate);
 
+        /// <summary>
+        /// Adds the predicte to the include filter for <see cref="Type"/>.
+        /// </summary>
+        /// <param name="predicate">The predicate.</param>
+        /// <returns></returns>
         IAssemblyTypeScanner WithIncludeFilter(Predicate<Type> predicate);
+
+        /// <summary>
+        /// Adds the predicte to the exclude filter for <see cref="Type"/>.
+        /// </summary>
+        /// <param name="predicate">The predicate.</param>
+        /// <returns></returns>
         IAssemblyTypeScanner WithExcludeFilter(Predicate<Type> predicate);
 
+        /// <summary>
+        /// Includes the specific types.
+        /// </summary>
+        /// <param name="typeSource">The types.</param>
+        /// <returns></returns>
         IAssemblyTypeScanner IncludeTypes(IEnumerable<Type> typeSource);
+
+
+        /// <summary>
+        /// Includes the type.
+        /// </summary>
+        /// <typeparam name="T">The <see cref="Type"/> to include.</typeparam>
+        /// <returns></returns>
         IAssemblyTypeScanner IncludeType<T>();
+
+        /// <summary>
+        /// Excludes the type.
+        /// </summary>
+        /// <typeparam name="T">The <see cref="Type"/> to exclude.</typeparam>
+        /// <returns></returns>
         IAssemblyTypeScanner ExcludeType<T>();
 
+        /// <summary>
+        /// Perform the Scan, applying all provided 
+        /// </summary>
+        /// <returns></returns>
         IEnumerable<Type> Scan();
     }
 }

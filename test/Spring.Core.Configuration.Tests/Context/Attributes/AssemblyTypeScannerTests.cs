@@ -21,8 +21,8 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Reflection;
 using NUnit.Framework;
+using Spring.Core;
 using Spring.Util;
 
 namespace Spring.Context.Attributes
@@ -30,25 +30,79 @@ namespace Spring.Context.Attributes
     [TestFixture]
     public class AssemblyTypeScannerTests
     {
+        #region Setup/Teardown
+
+        [SetUp]
+        public void _TestSetup()
+        {
+            _scanner = new AssemblyObjectDefinitionScanner();
+        }
+
+        #endregion
+
+        [Test]
+        public void AssemblyHavingType_T_Adds_Assembly()
+        {
+            _scanner.AssemblyHavingType<IOrdered>();
+            Assert.That(TypeSources.Any(t => t.Contains(typeof (IOrdered))));
+        }
+
+        [Test]
+        public void IncludeType_T_Adds_Type()
+        {
+            _scanner.IncludeType<IOrdered>();
+            _scanner.IncludeType<IPriorityOrdered>();
+
+            IncludePredicates.Any(p => p(typeof (IOrdered)));
+            IncludePredicates.Any(p => p(typeof (IPriorityOrdered)));
+        }
+
+        [Test]
+        public void WithExcludeFilter_Excludes_Type()
+        {
+            //var scanner1 = new AssemblyObjectDefinitionScanner();
+
+            _scanner.IncludeType<TheConfigurationClass>();
+            _scanner.IncludeType<TheImportedConfigurationClass>();
+            _scanner.WithExcludeFilter(t => t.Name.StartsWith("TheImported"));
+
+            IEnumerable<Type> types = _scanner.Scan();
+
+            //Assert.That(types.Any(t => t.Name == "TheConfigurationClass"));
+            //Assert.False(types.Any(t => t.Name == "TheImportedConfigurationClass"));
+
+            Assert.That(types, Contains.Item((typeof (TheConfigurationClass))));
+            Assert.False(types.Contains(typeof (TheImportedConfigurationClass)));
+        }
+
+        [Test]
+        public void WithIncludeFilter_Includes_Types()
+        {
+            _scanner.WithIncludeFilter(t => t.Name.Contains("ConfigurationClass"));
+
+            Assert.That(_scanner.Scan(), Contains.Item((typeof (TheConfigurationClass))));
+            Assert.That(_scanner.Scan(), Contains.Item((typeof (TheImportedConfigurationClass))));
+        }
 
         private class Scanner : AssemblyTypeScanner
         {
             public Scanner(string folderScanPath)
                 : base(folderScanPath)
-            { }
+            {
+            }
 
             public Scanner()
                 : base(null)
-            { }
+            {
+            }
 
             protected override bool IsCompoundPredicateSatisfiedBy(Type type)
             {
                 return IsIncludedType(type) && !IsExcludedType(type);
-
             }
         }
 
-        private Scanner _scanner;
+        private AssemblyObjectDefinitionScanner _scanner;
 
         private List<Predicate<Type>> ExcludePredicates
         {
@@ -56,7 +110,8 @@ namespace Spring.Context.Attributes
             {
                 //get at the collection of excludePredicates from the private field
                 //(yuck!-- test smell, but at least its wrapped up in a neat private property getter!)
-                return (List<Predicate<Type>>)(ReflectionUtils.GetInstanceFieldValue(_scanner, "TypeExclusionPredicates"));
+                return
+                    (List<Predicate<Type>>) (ReflectionUtils.GetInstanceFieldValue(_scanner, "TypeExclusionPredicates"));
             }
         }
 
@@ -66,7 +121,8 @@ namespace Spring.Context.Attributes
             {
                 //get at the collection of includePredicates from the private field
                 //(yuck!-- test smell, but at least its wrapped up in a neat private property getter!)
-                return (List<Predicate<Type>>)(ReflectionUtils.GetInstanceFieldValue(_scanner, "TypeInclusionPredicates"));
+                return
+                    (List<Predicate<Type>>) (ReflectionUtils.GetInstanceFieldValue(_scanner, "TypeInclusionPredicates"));
             }
         }
 
@@ -76,54 +132,8 @@ namespace Spring.Context.Attributes
             {
                 //get at the collection of typeSources from the private field
                 //(yuck!-- test smell, but at least its wrapped up in a neat private property getter!)
-                return (List<IEnumerable<Type>>)(ReflectionUtils.GetInstanceFieldValue(_scanner, "TypeSources"));
+                return (List<IEnumerable<Type>>) (ReflectionUtils.GetInstanceFieldValue(_scanner, "TypeSources"));
             }
         }
-
-        [SetUp]
-        public void _TestSetup()
-        {
-            _scanner = new Scanner();
-        }
-
-        [Test]
-        public void AssemblyHavingType_T_Adds_Assembly()
-        {
-            _scanner.AssemblyHavingType<Spring.Core.IOrdered>();
-            Assert.That(TypeSources.Any(t => t.Contains(typeof(Spring.Core.IOrdered))));
-        }
-
-        [Test]
-        public void IncludeType_T_Adds_Type()
-        {
-            _scanner.IncludeType<Spring.Core.IOrdered>();
-            _scanner.IncludeType<Spring.Core.IPriorityOrdered>();
-
-            IncludePredicates.Any(p => p(typeof(Spring.Core.IOrdered)));
-            IncludePredicates.Any(p => p(typeof(Spring.Core.IPriorityOrdered)));
-        }
-
-        [Test]
-        public void WithExcludeFilter_Excludes_Type()
-        {
-            _scanner.IncludeType<TheConfigurationClass>();
-            _scanner.IncludeType<TheImportedConfigurationClass>();
-            _scanner.WithExcludeFilter(t => t.Name.StartsWith("TheImported"));
-
-            IEnumerable<Type> types = _scanner.Scan();
-
-            Assert.That(types, Contains.Item((typeof(TheConfigurationClass))));
-            Assert.False(types.Contains(typeof(TheImportedConfigurationClass)));
-        }
-
-        [Test]
-        public void WithIncludeFilter_Includes_Types()
-        {
-            _scanner.WithIncludeFilter(t => t.Name.Contains("ConfigurationClass"));
-
-            Assert.That(_scanner.Scan(), Contains.Item((typeof(TheConfigurationClass))));
-            Assert.That(_scanner.Scan(), Contains.Item((typeof(TheImportedConfigurationClass))));
-        }
-
     }
 }

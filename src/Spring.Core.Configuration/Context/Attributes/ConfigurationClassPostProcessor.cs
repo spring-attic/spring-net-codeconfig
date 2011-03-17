@@ -33,6 +33,9 @@ using Spring.Aop;
 
 namespace Spring.Context.Attributes
 {
+    /// <summary>
+    /// Postprocesses the <see cref="ConfigurationAttribute"/> applied types registered with the <see cref="IApplicationContext"/>.
+    /// </summary>
     public class ConfigurationClassPostProcessor : IObjectDefinitionRegistryPostProcessor, IOrdered
     {
         private ILog _logger = LogManager.GetLogger(typeof(ConfigurationClassPostProcessor));
@@ -43,16 +46,41 @@ namespace Spring.Context.Attributes
 
         private IProblemReporter _problemReporter = new FailFastProblemReporter();
 
+        /// <summary>
+        /// Return the order value of this object, where a higher value means greater in
+        /// terms of sorting.
+        /// </summary>
+        /// <value></value>
+        /// <remarks>
+        /// 	<p>
+        /// Normally starting with 0 or 1, with <see cref="F:System.Int32.MaxValue"/> indicating
+        /// greatest. Same order values will result in arbitrary positions for the affected
+        /// objects.
+        /// </p>
+        /// 	<p>
+        /// Higher value can be interpreted as lower priority, consequently the first object
+        /// has highest priority.
+        /// </p>
+        /// </remarks>
+        /// <returns>The order value.</returns>
         public int Order
         {
             get { return int.MinValue; }
         }
 
+        /// <summary>
+        /// Sets the problem reporter.
+        /// </summary>
+        /// <value>The problem reporter.</value>
         public IProblemReporter ProblemReporter
         {
             set { _problemReporter = (value ?? new FailFastProblemReporter()); }
         }
 
+        /// <summary>
+        /// Postsprocesses the object definition registry.
+        /// </summary>
+        /// <param name="registry">The registry.</param>
         public void PostProcessObjectDefinitionRegistry(IObjectDefinitionRegistry registry)
         {
             if (_postProcessObjectDefinitionRegistryCalled)
@@ -67,6 +95,10 @@ namespace Spring.Context.Attributes
             ProcessConfigObjectDefinitions(registry);
         }
 
+        /// <summary>
+        /// Postprocesses the object factory.
+        /// </summary>
+        /// <param name="objectFactory">The object factory.</param>
         public void PostProcessObjectFactory(IConfigurableListableObjectFactory objectFactory)
         {
             if (_postProcessObjectFactoryCalled)
@@ -176,11 +208,19 @@ namespace Spring.Context.Attributes
             reader.LoadObjectDefinitions(parser.ConfigurationClasses);
         }
 
+        /// <summary>
+        /// The <see cref="IObjectFactory"/> target of the aspects being applied.
+        /// </summary>
         public class ObjectFactoryTargetSource : ITargetSource
         {
             private readonly string _objectName;
             private readonly IConfigurableListableObjectFactory _objectFactory;
 
+            /// <summary>
+            /// Initializes a new instance of the <see cref="ObjectFactoryTargetSource"/> class.
+            /// </summary>
+            /// <param name="objectName">Name of the object.</param>
+            /// <param name="objectFactory">The object factory.</param>
             public ObjectFactoryTargetSource(string objectName, IConfigurableListableObjectFactory objectFactory)
             {
                 _objectName = objectName;
@@ -189,20 +229,39 @@ namespace Spring.Context.Attributes
 
             #region ITargetSource Members
 
+            /// <summary>
+            /// Returns the target object.
+            /// </summary>
+            /// <returns>The target object.</returns>
+            /// <exception cref="T:System.Exception">
+            /// If unable to obtain the target object.
+            /// </exception>
             public object GetTarget()
             {
                 return _objectFactory.GetObject(_objectName);
             }
 
+            /// <summary>
+            /// Is the target source static?
+            /// </summary>
+            /// <value><see langword="true"/> if the target source is static.</value>
             public bool IsStatic
             {
                 get { return _objectFactory.IsSingleton(_objectName); }
             }
 
+            /// <summary>
+            /// Releases the target object.
+            /// </summary>
+            /// <param name="target">The target object to release.</param>
             public void ReleaseTarget(object target)
             {
             }
 
+            /// <summary>
+            /// The <see cref="T:System.Type"/> of the target object.
+            /// </summary>
+            /// <value></value>
             public Type TargetType
             {
                 get { return _objectFactory.GetType(_objectName); }

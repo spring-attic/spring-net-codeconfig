@@ -41,8 +41,12 @@ namespace Spring.Context.Advice
         #endregion
 
         private readonly IConfigurableListableObjectFactory _configurableListableObjectFactory;
-        
 
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="SpringObjectMethodInterceptor"/> class.
+        /// </summary>
+        /// <param name="configurableListableObjectFactory">The configurable listable object factory.</param>
         public SpringObjectMethodInterceptor(IConfigurableListableObjectFactory configurableListableObjectFactory)
         {
             _configurableListableObjectFactory = configurableListableObjectFactory;
@@ -51,6 +55,27 @@ namespace Spring.Context.Advice
 
         #region IMethodInterceptor Members
 
+        /// <summary>
+        /// Implement this method to perform extra treatments before and after
+        /// the call to the supplied <paramref name="invocation"/>.
+        /// </summary>
+        /// <param name="invocation">The method invocation that is being intercepted.</param>
+        /// <returns>
+        /// The result of the call to the
+        /// <see cref="M:AopAlliance.Intercept.IJoinpoint.Proceed"/> method of
+        /// the supplied <paramref name="invocation"/>; this return value may
+        /// well have been intercepted by the interceptor.
+        /// </returns>
+        /// <remarks>
+        /// 	<p>
+        /// Polite implementations would certainly like to invoke
+        /// <see cref="M:AopAlliance.Intercept.IJoinpoint.Proceed"/>.
+        /// </p>
+        /// </remarks>
+        /// <exception cref="T:System.Exception">
+        /// If any of the interceptors in the chain or the target object itself
+        /// throws an exception.
+        /// </exception>
         public object Invoke(IMethodInvocation invocation)
         {
             MethodInfo m = invocation.Method;
@@ -64,7 +89,6 @@ namespace Spring.Context.Advice
             {
 
             }
-
 
             if (IsCurrentlyInCreation(name))
             {
