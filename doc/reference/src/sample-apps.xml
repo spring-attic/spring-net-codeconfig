@@ -1,12 +1,16 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<chapter id="sample-apps" xmlns="http://docbook.org/ns/docbook" version="5" >
+<chapter id="sample-apps" version="5" xmlns="http://docbook.org/ns/docbook"
+         xmlns:ns52="http://www.w3.org/1999/xhtml"
+         xmlns:ns5="http://www.w3.org/1999/xlink"
+         xmlns:ns4="http://www.w3.org/2000/svg"
+         xmlns:ns3="http://www.w3.org/1998/Math/MathML"
+         xmlns:ns="http://docbook.org/ns/docbook">
   <title>Sample Applications</title>
 
   <section>
     <title>Introduction</title>
 
-    <para>The Spring WPF project includes XXX sample applications.
-    </para>
+    <para>The Spring CodeConfig for .NET project includes two sample
+    applications.</para>
   </section>
-
 </chapter>

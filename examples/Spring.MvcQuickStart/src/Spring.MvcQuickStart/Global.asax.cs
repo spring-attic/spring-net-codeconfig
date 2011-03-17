@@ -17,12 +17,5 @@ namespace Spring.MvcQuickStart
 
     public class MvcApplication : SpringMvcApplication
     {
-        protected override void ConfigureApplicationContext()
-        {
-            CodeConfigApplicationContext codeConfigApplicationContext = new CodeConfigApplicationContext();
-            codeConfigApplicationContext.ScanAllAssemblies();
-            codeConfigApplicationContext.Refresh();
-            ContextRegistry.RegisterContext(codeConfigApplicationContext);
-        }
     }
 }
