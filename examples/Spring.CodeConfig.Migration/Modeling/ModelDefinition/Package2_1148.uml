@@ -1,0 +1,66 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<package xmlns:dm0="http://schemas.microsoft.com/VisualStudio/2008/DslTools/Core" xmlns:dm1="http://schemas.microsoft.com/dsltools/Kernel" xmlns:dm2="http://schemas.microsoft.com/dsltools/Component" xmlns:dm3="http://schemas.microsoft.com/dsltools/UseCase" xmlns:dm4="http://schemas.microsoft.com/dsltools/Activity" xmlns:dm5="http://schemas.microsoft.com/dsltools/Interaction" xmlns:dm6="http://schemas.microsoft.com/dsltools/UmlModelLibrary" xmlns:dm7="http://schemas.microsoft.com/dsltools/UmlDiagrams" xmlns:dm8="http://schemas.microsoft.com/dsltools/LogicalClassDesigner"
+  dslVersion="1.0.0.0"
+  Id="cc87ca1f-d4df-4ce7-8754-3bfb715dba29"
+  name="Context"
+  visibility="Private" xmlns="http://schemas.microsoft.com/dsltools/ModelStore">
+  <referencesInternal>
+    <reference
+      Id="3798889b-9276-4ebb-a9b1-d9363c3324e7"
+      handle="viewcode://./CodeSchema_Namespace?Namespace=Spring.Context"
+      tag="ViewCode" />
+  </referencesInternal>
+  <packagedElements>
+    <packageHasNamedElement>
+      <Interface
+        Id="cbe94dc3-d3e5-4d10-a921-b55033612ec4"
+        name="IApplicationContext"
+        visibility="Private"
+        isAbstract="false"
+        isLeaf="false">
+        <referencesInternal>
+          <reference
+            Id="87bb0e8b-b799-4407-b718-4422301acac7"
+            handle="viewcode://./CodeSchema_Interface?Assembly=&quot;file:///C:/_wrk/Open Source Journal Spring.NET Article/Code Sample/lib/spring/Spring.Core.dll&quot; Namespace=Spring.Context Type=IApplicationContext"
+            tag="ViewCode" />
+        </referencesInternal>
+        <appliedStereotypesInternal>
+          <stereotypeInstance
+            Id="7c5ce5b4-9e65-4679-bb90-b20668803e9c"
+            name="interface"
+            profile="CSharpProfile">
+            <propertyInstances>
+              <stereotypeInstanceHasPropertyInstances
+                Id="1a31a3eb-d054-4f4e-8fdf-b0b891e9ce65">
+                <propertyInstance
+                  Id="2c4c4081-ff50-4f86-9a31-60e2d83be9d4"
+                  name="ClrAttributes" />
+              </stereotypeInstanceHasPropertyInstances>
+              <stereotypeInstanceHasPropertyInstances
+                Id="6913675d-83f3-4fc4-965a-3b51692e04a6">
+                <propertyInstance
+                  Id="97dbd6fa-e239-46e2-bcf9-5a8e37479cc4"
+                  name="IsPartial"
+                  value="false" />
+              </stereotypeInstanceHasPropertyInstances>
+              <stereotypeInstanceHasPropertyInstances
+                Id="0558389b-14fc-4cce-a555-4550ab15a711">
+                <propertyInstance
+                  Id="de7ea714-719d-4626-b186-04fd7110ed79"
+                  name="IsUnsafe"
+                  value="false" />
+              </stereotypeInstanceHasPropertyInstances>
+              <stereotypeInstanceHasPropertyInstances
+                Id="6a4b93ab-d556-4730-a05a-334c48b14769">
+                <propertyInstance
+                  Id="cc57b1da-55d1-4f71-bacf-59a6a57fc62d"
+                  name="PackageVisibility"
+                  value="internal" />
+              </stereotypeInstanceHasPropertyInstances>
+            </propertyInstances>
+          </stereotypeInstance>
+        </appliedStereotypesInternal>
+      </Interface>
+    </packageHasNamedElement>
+  </packagedElements>
+</package>

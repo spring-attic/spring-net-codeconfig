@@ -1,0 +1,1895 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<package xmlns:dm0="http://schemas.microsoft.com/VisualStudio/2008/DslTools/Core" xmlns:dm1="http://schemas.microsoft.com/dsltools/Kernel" xmlns:dm2="http://schemas.microsoft.com/dsltools/Component" xmlns:dm3="http://schemas.microsoft.com/dsltools/UseCase" xmlns:dm4="http://schemas.microsoft.com/dsltools/Activity" xmlns:dm5="http://schemas.microsoft.com/dsltools/Interaction" xmlns:dm6="http://schemas.microsoft.com/dsltools/UmlModelLibrary" xmlns:dm7="http://schemas.microsoft.com/dsltools/UmlDiagrams" xmlns:dm8="http://schemas.microsoft.com/dsltools/LogicalClassDesigner"
+  dslVersion="1.0.0.0"
+  Id="4d2e7803-8066-4174-b84b-74e894cb62ba"
+  name="Primes"
+  visibility="Private" xmlns="http://schemas.microsoft.com/dsltools/ModelStore">
+  <referencesInternal>
+    <reference
+      Id="6f2a29ef-9a90-4aae-a02c-d6a90a896412"
+      handle="viewcode://./CodeSchema_Namespace?Namespace=Primes"
+      tag="ViewCode" />
+  </referencesInternal>
+  <profileInstances>
+    <packageHasProfileInstances
+      Id="4405547a-28f5-4047-b261-724c271124f9">
+      <profileInstance
+        Id="bb43ca2b-ebc9-41a6-aa7c-e6ad053952c7"
+        name="CSharpProfile" />
+    </packageHasProfileInstances>
+  </profileInstances>
+  <packagedElements>
+    <packageHasNamedElement>
+      <class
+        Id="c7b446cb-d93d-4355-a222-4c717c1db042"
+        name="ConsoleReport"
+        isAbstract="false"
+        isLeaf="false"
+        isActiveClass="false">
+        <referencesInternal>
+          <reference
+            Id="cb68033e-2922-461e-b83a-255c93948ff2"
+            handle="viewcode://./CodeSchema_Class?Assembly=&quot;file:///C:/_wrk/Open Source Journal Spring.NET Article/Code Sample/src/Primes/bin/Debug/Primes.dll&quot; Namespace=Primes Type=ConsoleReport"
+            tag="ViewCode" />
+        </referencesInternal>
+        <appliedStereotypesInternal>
+          <stereotypeInstance
+            Id="d48f80b6-1310-432e-afa1-89ad698141e9"
+            name="class"
+            profile="CSharpProfile">
+            <propertyInstances>
+              <stereotypeInstanceHasPropertyInstances
+                Id="b208504f-60cb-47cd-84ac-beb22b148918">
+                <propertyInstance
+                  Id="acff1963-4655-4af4-9d1d-383e617c41cf"
+                  name="ClrAttributes" />
+              </stereotypeInstanceHasPropertyInstances>
+              <stereotypeInstanceHasPropertyInstances
+                Id="0b1cf363-6df9-4559-b30c-82cd88e9cbc8">
+                <propertyInstance
+                  Id="61660c20-38ad-486c-8d15-9d8991a749a0"
+                  name="IsPartial"
+                  value="false" />
+              </stereotypeInstanceHasPropertyInstances>
+              <stereotypeInstanceHasPropertyInstances
+                Id="40b48f5e-bf3b-4766-aa39-2258291e7ad9">
+                <propertyInstance
+                  Id="1654a3cb-a423-4136-9767-90142fc17f04"
+                  name="IsStatic"
+                  value="False" />
+              </stereotypeInstanceHasPropertyInstances>
+              <stereotypeInstanceHasPropertyInstances
+                Id="999047a4-4371-46c9-b845-83ab9154153c">
+                <propertyInstance
+                  Id="8e8f8497-f900-4bf4-b115-ff769e49a832"
+                  name="IsUnsafe"
+                  value="false" />
+              </stereotypeInstanceHasPropertyInstances>
+              <stereotypeInstanceHasPropertyInstances
+                Id="affc08bf-c027-4297-bfe2-8d5896c29937">
+                <propertyInstance
+                  Id="f578d7d1-62a2-4a71-94c2-54087a051803"
+                  name="PackageVisibility"
+                  value="internal" />
+              </stereotypeInstanceHasPropertyInstances>
+            </propertyInstances>
+          </stereotypeInstance>
+        </appliedStereotypesInternal>
+        <targetEnds>
+          <association
+            Id="8b4345f5-a006-4c1a-91ff-aa2c51fcc8d4"
+            isDerived="false"
+            sourceEndRoleName="ConsoleReport"
+            targetEndRoleName="OutputFormatter"
+            isLeaf="false"
+            isAbstract="false">
+            <interfaceMoniker
+              Id="69f70472-c742-483a-8cd4-eb02b5b52e7b"
+              LastKnownName="IOutputFormatter"
+              LastKnownLocation="Package_1138.uml" />
+            <description>Property OutputFormatter references type IOutputFormatter.</description>
+            <relationshipOwnedElementsInternal>
+              <associationHasOwnedEnds>
+                <memberEnd
+                  Id="81ae588c-bfb0-4c91-90a0-26242cfb3727"
+                  name="ConsoleReport"
+                  isLeaf="false"
+                  isStatic="false"
+                  isReadOnly="false"
+                  isDerived="false"
+                  isDerivedUnion="false"
+                  aggregation="None"
+                  isComposite="false"
+                  isNavigableOwned="false">
+                  <lowerValueInternal>
+                    <literalString
+                      Id="057e2733-4de0-49e5-88b1-0d045de6acae"
+                      name="Lower"
+                      value="*" />
+                  </lowerValueInternal>
+                  <upperValueInternal>
+                    <literalString
+                      Id="eef60f10-458f-4660-ae25-6aae04dbcaee"
+                      name="Upper"
+                      value="*" />
+                  </upperValueInternal>
+                </memberEnd>
+              </associationHasOwnedEnds>
+              <associationHasOwnedEnds>
+                <memberEnd
+                  Id="e7c21856-ec20-4ce6-9f7d-3788fb561547"
+                  name="OutputFormatter"
+                  isLeaf="false"
+                  isStatic="false"
+                  isReadOnly="false"
+                  isDerived="false"
+                  isDerivedUnion="false"
+                  aggregation="None"
+                  isComposite="false">
+                  <lowerValueInternal>
+                    <literalString
+                      Id="737837ec-c1c0-4cf3-8745-8007ac3395e3"
+                      name="Lower"
+                      value="1" />
+                  </lowerValueInternal>
+                  <upperValueInternal>
+                    <literalString
+                      Id="e5991a19-6db7-4226-9df3-596147baab29"
+                      name="Upper"
+                      value="1" />
+                  </upperValueInternal>
+                </memberEnd>
+              </associationHasOwnedEnds>
+            </relationshipOwnedElementsInternal>
+          </association>
+        </targetEnds>
+        <ownedAttributesInternal>
+          <property
+            Id="a9cc66f0-3723-472a-9e55-f5aae0cd928b"
+            name="OutputFormatter"
+            isLeaf="false"
+            isStatic="false"
+            isReadOnly="false"
+            isDerived="false"
+            isDerivedUnion="false"
+            aggregation="None"
+            isComposite="false">
+            <referencesInternal>
+              <reference
+                Id="9ebc24c1-02b7-4d03-afba-30ddf9e7d211"
+                handle="viewcode://./CodeSchema_Property?Assembly=&quot;file:///C:/_wrk/Open Source Journal Spring.NET Article/Code Sample/src/Primes/bin/Debug/Primes.dll&quot; Namespace=Primes Type=ConsoleReport Member=OutputFormatter"
+                tag="ViewCode" />
+            </referencesInternal>
+            <appliedStereotypesInternal>
+              <stereotypeInstance
+                Id="9a6125ba-9925-49a1-accc-412fb0d8012f"
+                name="property"
+                profile="CSharpProfile">
+                <propertyInstances>
+                  <stereotypeInstanceHasPropertyInstances
+                    Id="f43f6e35-3e7e-48d3-8162-58a4b84d86a4">
+                    <propertyInstance
+                      Id="3f3b62e5-8752-415a-a84f-817039b0bb59"
+                      name="ClrAttributes" />
+                  </stereotypeInstanceHasPropertyInstances>
+                  <stereotypeInstanceHasPropertyInstances
+                    Id="af1cb1fa-fc27-4765-80c5-5a7c76314b7a">
+                    <propertyInstance
+                      Id="2e3bad3e-61b7-4226-8127-07baa8ac6325"
+                      name="Get"
+                      value="none" />
+                  </stereotypeInstanceHasPropertyInstances>
+                  <stereotypeInstanceHasPropertyInstances
+                    Id="7dade3a6-6cd8-4f48-9a9a-9e4dea5b372d">
+                    <propertyInstance
+                      Id="20aaf7e1-9de0-4930-b3e2-4415249cdab5"
+                      name="HasBody"
+                      value="false" />
+                  </stereotypeInstanceHasPropertyInstances>
+                  <stereotypeInstanceHasPropertyInstances
+                    Id="42fe479f-fc65-4f7b-93d9-d2a2fc4da83e">
+                    <propertyInstance
+                      Id="88031a59-d09f-43ca-8a7c-d3b18397bd65"
+                      name="IsUnsafe"
+                      value="false" />
+                  </stereotypeInstanceHasPropertyInstances>
+                  <stereotypeInstanceHasPropertyInstances
+                    Id="684b971c-ed68-4395-8a60-0703d59db941">
+                    <propertyInstance
+                      Id="c108fbb3-7d8c-4a1b-ae31-90c0c0a05838"
+                      name="PackageVisibility"
+                      value="internal" />
+                  </stereotypeInstanceHasPropertyInstances>
+                  <stereotypeInstanceHasPropertyInstances
+                    Id="6da97725-794e-4b94-9ee3-fb44c28206ba">
+                    <propertyInstance
+                      Id="79bf8500-462a-4fc1-b45f-a9d0e28c0307"
+                      name="Set"
+                      value="public" />
+                  </stereotypeInstanceHasPropertyInstances>
+                </propertyInstances>
+              </stereotypeInstance>
+            </appliedStereotypesInternal>
+            <type_NamedElement>
+              <interfaceMoniker
+                Id="69f70472-c742-483a-8cd4-eb02b5b52e7b"
+                LastKnownName="IOutputFormatter"
+                LastKnownLocation="Package_1138.uml" />
+            </type_NamedElement>
+          </property>
+          <property
+            Id="8c3cb55f-ee8e-414d-875b-bc76914e1962"
+            name="MaxNumber"
+            isLeaf="false"
+            isStatic="false"
+            isReadOnly="false"
+            isDerived="false"
+            isDerivedUnion="false"
+            aggregation="None"
+            isComposite="false">
+            <referencesInternal>
+              <reference
+                Id="352396e7-ecd2-487f-b8f8-798a33495d02"
+                handle="viewcode://./CodeSchema_Property?Assembly=&quot;file:///C:/_wrk/Open Source Journal Spring.NET Article/Code Sample/src/Primes/bin/Debug/Primes.dll&quot; Namespace=Primes Type=ConsoleReport Member=MaxNumber"
+                tag="ViewCode" />
+            </referencesInternal>
+            <appliedStereotypesInternal>
+              <stereotypeInstance
+                Id="83931d63-bfe9-4350-b405-8c88a096cc6e"
+                name="property"
+                profile="CSharpProfile">
+                <propertyInstances>
+                  <stereotypeInstanceHasPropertyInstances
+                    Id="92ee32b1-ab90-450d-8096-04a7f41d73fe">
+                    <propertyInstance
+                      Id="6587666b-fbda-4307-833b-a9ae6a83a1d0"
+                      name="ClrAttributes" />
+                  </stereotypeInstanceHasPropertyInstances>
+                  <stereotypeInstanceHasPropertyInstances
+                    Id="9569d830-8811-4da2-840a-0b2d56f50166">
+                    <propertyInstance
+                      Id="de058904-4eea-4de0-a80b-14bf69cd9043"
+                      name="Get"
+                      value="public" />
+                  </stereotypeInstanceHasPropertyInstances>
+                  <stereotypeInstanceHasPropertyInstances
+                    Id="e4f01385-63c8-48b8-9f25-3a1267608ef7">
+                    <propertyInstance
+                      Id="0172a979-e8d1-4734-8bf2-a668a2535493"
+                      name="HasBody"
+                      value="false" />
+                  </stereotypeInstanceHasPropertyInstances>
+                  <stereotypeInstanceHasPropertyInstances
+                    Id="f6a0d75e-edfc-441b-8cf9-4f33f499577e">
+                    <propertyInstance
+                      Id="3b17996c-b923-4a0b-bba0-0b87cd85bd42"
+                      name="IsUnsafe"
+                      value="false" />
+                  </stereotypeInstanceHasPropertyInstances>
+                  <stereotypeInstanceHasPropertyInstances
+                    Id="5580db36-2a4c-467d-a891-371deda4ed8a">
+                    <propertyInstance
+                      Id="cb61818b-1852-4a83-887e-5e215b47ba9a"
+                      name="PackageVisibility"
+                      value="internal" />
+                  </stereotypeInstanceHasPropertyInstances>
+                  <stereotypeInstanceHasPropertyInstances
+                    Id="3ebb6383-0838-481d-8efa-d3a692ede764">
+                    <propertyInstance
+                      Id="0b66e59e-8bac-4dbe-bef4-f00fc2a74570"
+                      name="Set"
+                      value="public" />
+                  </stereotypeInstanceHasPropertyInstances>
+                </propertyInstances>
+              </stereotypeInstance>
+            </appliedStereotypesInternal>
+            <type_NamedElement>
+              <primitiveTypeMoniker
+                Id="220a3521-e091-4221-bae9-3ef9018e845c"
+                LastKnownName="Integer"
+                LastKnownLocation="ModelingProject1.uml" />
+            </type_NamedElement>
+          </property>
+          <property
+            Id="df578d5a-5ee1-4745-9c2f-b268831a464e"
+            name="_outputFormatter"
+            visibility="Private"
+            isLeaf="false"
+            isStatic="false"
+            isReadOnly="false"
+            isDerived="false"
+            isDerivedUnion="false"
+            aggregation="None"
+            isComposite="false">
+            <referencesInternal>
+              <reference
+                Id="b17ff919-a22d-4276-8561-d8ecaf4986fc"
+                handle="viewcode://./CodeSchema_Field?Assembly=&quot;file:///C:/_wrk/Open Source Journal Spring.NET Article/Code Sample/src/Primes/bin/Debug/Primes.dll&quot; Namespace=Primes Type=ConsoleReport Member=_outputFormatter"
+                tag="ViewCode" />
+            </referencesInternal>
+            <appliedStereotypesInternal>
+              <stereotypeInstance
+                Id="37dfba33-3002-45d2-9723-804d2f821476"
+                name="field"
+                profile="CSharpProfile">
+                <propertyInstances>
+                  <stereotypeInstanceHasPropertyInstances
+                    Id="146613c0-2ad4-471e-a8a2-99eb95d7ae29">
+                    <propertyInstance
+                      Id="79b54f04-c72f-4ca6-8cf1-8f8745d91dbe"
+                      name="ClrAttributes" />
+                  </stereotypeInstanceHasPropertyInstances>
+                  <stereotypeInstanceHasPropertyInstances
+                    Id="9bb41eb7-e9ef-461c-b511-b2c31a577c02">
+                    <propertyInstance
+                      Id="e564142e-a2fa-41e9-885a-13965f38dfa8"
+                      name="IsConst"
+                      value="false" />
+                  </stereotypeInstanceHasPropertyInstances>
+                  <stereotypeInstanceHasPropertyInstances
+                    Id="1a93644d-7413-4f59-bf0b-20d67d50359f">
+                    <propertyInstance
+                      Id="30e9038c-d309-494c-947f-110002bf2bf0"
+                      name="IsNullable"
+                      value="false" />
+                  </stereotypeInstanceHasPropertyInstances>
+                  <stereotypeInstanceHasPropertyInstances
+                    Id="e5cc8cd0-f112-426f-a18d-059c2358e693">
+                    <propertyInstance
+                      Id="728a0831-4366-407f-80ad-ae57e3fd2157"
+                      name="IsVolatile"
+                      value="false" />
+                  </stereotypeInstanceHasPropertyInstances>
+                  <stereotypeInstanceHasPropertyInstances
+                    Id="66c1331a-3416-45c5-968d-383ed064c700">
+                    <propertyInstance
+                      Id="4ee54fb2-6ae7-4a69-969d-21a487b3996d"
+                      name="PackageVisibility"
+                      value="internal" />
+                  </stereotypeInstanceHasPropertyInstances>
+                </propertyInstances>
+              </stereotypeInstance>
+            </appliedStereotypesInternal>
+            <type_NamedElement>
+              <interfaceMoniker
+                Id="69f70472-c742-483a-8cd4-eb02b5b52e7b"
+                LastKnownName="IOutputFormatter"
+                LastKnownLocation="Package_1138.uml" />
+            </type_NamedElement>
+          </property>
+          <property
+            Id="0ae533db-b990-4e15-bd06-920e3f8f244f"
+            name="_primeGenerator"
+            visibility="Private"
+            isLeaf="false"
+            isStatic="false"
+            isReadOnly="false"
+            isDerived="false"
+            isDerivedUnion="false"
+            aggregation="None"
+            isComposite="false">
+            <referencesInternal>
+              <reference
+                Id="08dc57d5-0684-48b9-8590-227862e82a53"
+                handle="viewcode://./CodeSchema_Field?Assembly=&quot;file:///C:/_wrk/Open Source Journal Spring.NET Article/Code Sample/src/Primes/bin/Debug/Primes.dll&quot; Namespace=Primes Type=ConsoleReport Member=_primeGenerator"
+                tag="ViewCode" />
+            </referencesInternal>
+            <appliedStereotypesInternal>
+              <stereotypeInstance
+                Id="a233547a-86a9-4d2b-b5ae-e0b13d031279"
+                name="field"
+                profile="CSharpProfile">
+                <propertyInstances>
+                  <stereotypeInstanceHasPropertyInstances
+                    Id="206ec67b-7fa4-498a-a644-2178b83f8051">
+                    <propertyInstance
+                      Id="7b8bc506-6b9a-4edf-aa4f-e7bad62a2f6a"
+                      name="ClrAttributes" />
+                  </stereotypeInstanceHasPropertyInstances>
+                  <stereotypeInstanceHasPropertyInstances
+                    Id="b8042a1d-a6ce-47ee-bf70-fef061bf2aaa">
+                    <propertyInstance
+                      Id="9db101c5-7b89-42c7-916c-7af7a5a9b4b1"
+                      name="IsConst"
+                      value="false" />
+                  </stereotypeInstanceHasPropertyInstances>
+                  <stereotypeInstanceHasPropertyInstances
+                    Id="5cdcd06e-a5a0-414b-a6e1-3610a619ba35">
+                    <propertyInstance
+                      Id="bf8d0b43-04ca-4ab4-962a-5c63d32d4aac"
+                      name="IsNullable"
+                      value="false" />
+                  </stereotypeInstanceHasPropertyInstances>
+                  <stereotypeInstanceHasPropertyInstances
+                    Id="fde49933-6e2b-4d9b-a546-c78affe637a9">
+                    <propertyInstance
+                      Id="41113f94-b1bb-4604-9086-27c1f5baed56"
+                      name="IsVolatile"
+                      value="false" />
+                  </stereotypeInstanceHasPropertyInstances>
+                  <stereotypeInstanceHasPropertyInstances
+                    Id="b22562c5-3281-40a8-a62c-688163e20420">
+                    <propertyInstance
+                      Id="b778c318-adfa-44d7-b1c2-ecda97d5dbba"
+                      name="PackageVisibility"
+                      value="internal" />
+                  </stereotypeInstanceHasPropertyInstances>
+                </propertyInstances>
+              </stereotypeInstance>
+            </appliedStereotypesInternal>
+            <type_NamedElement>
+              <interfaceMoniker
+                Id="cda11892-90a3-4980-bf1f-c4d523914d41"
+                LastKnownName="IPrimeGenerator"
+                LastKnownLocation="Package_1138.uml" />
+            </type_NamedElement>
+          </property>
+          <property
+            Id="161e4142-a984-4645-8537-a1b557b0c421"
+            name="_maxNumber"
+            visibility="Private"
+            isLeaf="false"
+            isStatic="false"
+            isReadOnly="false"
+            isDerived="false"
+            isDerivedUnion="false"
+            aggregation="None"
+            isComposite="false">
+            <referencesInternal>
+              <reference
+                Id="2d399b17-3c0f-434a-b31f-91373b217a06"
+                handle="viewcode://./CodeSchema_Field?Assembly=&quot;file:///C:/_wrk/Open Source Journal Spring.NET Article/Code Sample/src/Primes/bin/Debug/Primes.dll&quot; Namespace=Primes Type=ConsoleReport Member=_maxNumber"
+                tag="ViewCode" />
+            </referencesInternal>
+            <appliedStereotypesInternal>
+              <stereotypeInstance
+                Id="6b820da4-25b9-426f-96ba-5d65d0728d95"
+                name="field"
+                profile="CSharpProfile">
+                <propertyInstances>
+                  <stereotypeInstanceHasPropertyInstances
+                    Id="114c3c35-5393-47ed-97b3-9fd677c7dbdd">
+                    <propertyInstance
+                      Id="2f851830-c9ca-4d27-b459-6766383b4b58"
+                      name="ClrAttributes" />
+                  </stereotypeInstanceHasPropertyInstances>
+                  <stereotypeInstanceHasPropertyInstances
+                    Id="1dafc85a-aa42-4454-b1e0-b4425cde8bf9">
+                    <propertyInstance
+                      Id="b99c2d16-4d64-4ae9-a874-502eff3d1c71"
+                      name="IsConst"
+                      value="false" />
+                  </stereotypeInstanceHasPropertyInstances>
+                  <stereotypeInstanceHasPropertyInstances
+                    Id="16d30187-c0e0-4542-a2f8-829a6e397266">
+                    <propertyInstance
+                      Id="b0ecc02b-3d42-4467-8762-8988282b4e1d"
+                      name="IsNullable"
+                      value="false" />
+                  </stereotypeInstanceHasPropertyInstances>
+                  <stereotypeInstanceHasPropertyInstances
+                    Id="555c792f-4b1a-48f0-a822-b6e1ba392607">
+                    <propertyInstance
+                      Id="c82b840b-b287-4979-9a86-4bbb95ff42e6"
+                      name="IsVolatile"
+                      value="false" />
+                  </stereotypeInstanceHasPropertyInstances>
+                  <stereotypeInstanceHasPropertyInstances
+                    Id="6e564ffc-c295-4a18-999a-1ddb8e205e7b">
+                    <propertyInstance
+                      Id="1c7ca8b6-ced6-4589-8cae-a3b831ae8afc"
+                      name="PackageVisibility"
+                      value="internal" />
+                  </stereotypeInstanceHasPropertyInstances>
+                </propertyInstances>
+              </stereotypeInstance>
+            </appliedStereotypesInternal>
+            <type_NamedElement>
+              <primitiveTypeMoniker
+                Id="220a3521-e091-4221-bae9-3ef9018e845c"
+                LastKnownName="Integer"
+                LastKnownLocation="ModelingProject1.uml" />
+            </type_NamedElement>
+          </property>
+        </ownedAttributesInternal>
+        <ownedOperationsInternal>
+          <operation
+            Id="6456a8d5-3c14-4057-9165-1c403248411b"
+            name="ConsoleReport"
+            isLeaf="false"
+            isStatic="false"
+            isAbstract="false"
+            concurrency="Sequential"
+            isQuery="false">
+            <referencesInternal>
+              <reference
+                Id="ff48fdc0-5f3a-41d0-b7b0-4d8f25290c2c"
+                handle="viewcode://./CodeSchema_Method?Assembly=&quot;file:///C:/_wrk/Open Source Journal Spring.NET Article/Code Sample/src/Primes/bin/Debug/Primes.dll&quot; Namespace=Primes Type=ConsoleReport Member=(Name=.ctor OverloadingParameters=[(Assembly=&quot;file:///C:/_wrk/Open Source Journal Spring.NET Article/Code Sample/src/Primes/bin/Debug/Primes.dll&quot; Namespace=Primes Type=IOutputFormatter),(Assembly=&quot;file:///C:/_wrk/Open Source Journal Spring.NET Article/Code Sample/src/Primes/bin/Debug/Primes.dll&quot; Namespace=Primes Type=IPrimeGenerator)])"
+                tag="ViewCode" />
+            </referencesInternal>
+            <appliedStereotypesInternal>
+              <stereotypeInstance
+                Id="c707dffa-c4ba-4701-890a-7a98a4e5211b"
+                name="method"
+                profile="CSharpProfile">
+                <propertyInstances>
+                  <stereotypeInstanceHasPropertyInstances
+                    Id="7bd2129b-b73b-4495-84af-c7acbe539808">
+                    <propertyInstance
+                      Id="ad7cf01c-124e-485f-9ef8-25a341890ba4"
+                      name="ClrAttributes" />
+                  </stereotypeInstanceHasPropertyInstances>
+                  <stereotypeInstanceHasPropertyInstances
+                    Id="d19fd200-c5a1-40e5-a733-914d70462dde">
+                    <propertyInstance
+                      Id="501b9051-86b4-4e7e-8625-d16655fff8df"
+                      name="IsPartial"
+                      value="false" />
+                  </stereotypeInstanceHasPropertyInstances>
+                  <stereotypeInstanceHasPropertyInstances
+                    Id="81245b17-9f50-4a8f-9321-8c19a5e00f20">
+                    <propertyInstance
+                      Id="81eb63e5-fc5d-4231-af9c-9a187a5e5e1a"
+                      name="IsUnsafe"
+                      value="false" />
+                  </stereotypeInstanceHasPropertyInstances>
+                  <stereotypeInstanceHasPropertyInstances
+                    Id="11e22f23-23d2-411d-b5e1-2baa9dbec574">
+                    <propertyInstance
+                      Id="8b2833cc-957b-415e-9855-68e67fb7ed9f"
+                      name="PackageVisibility"
+                      value="internal" />
+                  </stereotypeInstanceHasPropertyInstances>
+                  <stereotypeInstanceHasPropertyInstances
+                    Id="e44287fc-bd59-4f42-8999-2be7c080965c">
+                    <propertyInstance
+                      Id="8d072d9d-2205-4ad2-ad0c-32e9b6b91695"
+                      name="params"
+                      value="false" />
+                  </stereotypeInstanceHasPropertyInstances>
+                </propertyInstances>
+              </stereotypeInstance>
+            </appliedStereotypesInternal>
+            <ownedParameters>
+              <operationHasOwnedParameters>
+                <parameter
+                  Id="a25e0e69-e8f6-4f93-9534-d968a4541358"
+                  name="outputFormatter"
+                  direction="In">
+                  <referencesInternal>
+                    <reference
+                      Id="5c36de1d-69c3-4251-bfa3-69971e1f969e"
+                      handle="viewcode://./CodeSchema_Parameter?Assembly=&quot;file:///C:/_wrk/Open Source Journal Spring.NET Article/Code Sample/src/Primes/bin/Debug/Primes.dll&quot; Namespace=Primes Type=ConsoleReport Member=(Name=.ctor OverloadingParameters=[(Assembly=&quot;file:///C:/_wrk/Open Source Journal Spring.NET Article/Code Sample/src/Primes/bin/Debug/Primes.dll&quot; Namespace=Primes Type=IOutputFormatter),(Assembly=&quot;file:///C:/_wrk/Open Source Journal Spring.NET Article/Code Sample/src/Primes/bin/Debug/Primes.dll&quot; Namespace=Primes Type=IPrimeGenerator)]) ParameterIdentifier=outputFormatter"
+                      tag="ViewCode" />
+                  </referencesInternal>
+                  <type_NamedElement>
+                    <interfaceMoniker
+                      Id="69f70472-c742-483a-8cd4-eb02b5b52e7b"
+                      LastKnownName="IOutputFormatter"
+                      LastKnownLocation="Package_1138.uml" />
+                  </type_NamedElement>
+                </parameter>
+              </operationHasOwnedParameters>
+              <operationHasOwnedParameters>
+                <parameter
+                  Id="43789fcf-11c8-46d0-9dab-2ae537f98592"
+                  name="primeGenerator"
+                  direction="In">
+                  <referencesInternal>
+                    <reference
+                      Id="6b7f0122-3336-4f16-8e0a-b91d34570b38"
+                      handle="viewcode://./CodeSchema_Parameter?Assembly=&quot;file:///C:/_wrk/Open Source Journal Spring.NET Article/Code Sample/src/Primes/bin/Debug/Primes.dll&quot; Namespace=Primes Type=ConsoleReport Member=(Name=.ctor OverloadingParameters=[(Assembly=&quot;file:///C:/_wrk/Open Source Journal Spring.NET Article/Code Sample/src/Primes/bin/Debug/Primes.dll&quot; Namespace=Primes Type=IOutputFormatter),(Assembly=&quot;file:///C:/_wrk/Open Source Journal Spring.NET Article/Code Sample/src/Primes/bin/Debug/Primes.dll&quot; Namespace=Primes Type=IPrimeGenerator)]) ParameterIdentifier=primeGenerator"
+                      tag="ViewCode" />
+                  </referencesInternal>
+                  <type_NamedElement>
+                    <interfaceMoniker
+                      Id="cda11892-90a3-4980-bf1f-c4d523914d41"
+                      LastKnownName="IPrimeGenerator"
+                      LastKnownLocation="Package_1138.uml" />
+                  </type_NamedElement>
+                </parameter>
+              </operationHasOwnedParameters>
+            </ownedParameters>
+          </operation>
+          <operation
+            Id="f083f869-9d87-4fc2-b0fd-874ae24b45fd"
+            name="Write"
+            isLeaf="false"
+            isStatic="false"
+            isAbstract="false"
+            concurrency="Sequential"
+            isQuery="false">
+            <referencesInternal>
+              <reference
+                Id="8e694a89-e159-4571-a66a-4bc1660aa864"
+                handle="viewcode://./CodeSchema_Method?Assembly=&quot;file:///C:/_wrk/Open Source Journal Spring.NET Article/Code Sample/src/Primes/bin/Debug/Primes.dll&quot; Namespace=Primes Type=ConsoleReport Member=Write"
+                tag="ViewCode" />
+            </referencesInternal>
+            <appliedStereotypesInternal>
+              <stereotypeInstance
+                Id="476b4648-1109-4867-938e-0a732c948fb9"
+                name="method"
+                profile="CSharpProfile">
+                <propertyInstances>
+                  <stereotypeInstanceHasPropertyInstances
+                    Id="e5bb4686-59e3-428a-985b-a0be4e3eacb3">
+                    <propertyInstance
+                      Id="4682da5f-ec90-4c8a-8e97-7f98fc724402"
+                      name="ClrAttributes" />
+                  </stereotypeInstanceHasPropertyInstances>
+                  <stereotypeInstanceHasPropertyInstances
+                    Id="82c333fc-b105-40bd-a63b-713a32462ceb">
+                    <propertyInstance
+                      Id="baf16420-2853-4f27-b296-005c197f6ba2"
+                      name="IsPartial"
+                      value="false" />
+                  </stereotypeInstanceHasPropertyInstances>
+                  <stereotypeInstanceHasPropertyInstances
+                    Id="0bf25664-0c12-4e83-b1f6-462d69158802">
+                    <propertyInstance
+                      Id="503a9068-210e-48be-afeb-a84e28c66fc2"
+                      name="IsUnsafe"
+                      value="false" />
+                  </stereotypeInstanceHasPropertyInstances>
+                  <stereotypeInstanceHasPropertyInstances
+                    Id="2894c071-ead5-44e7-a82f-f4fb86a00efa">
+                    <propertyInstance
+                      Id="405865e4-caf4-43a5-9003-a73e0c4e5a33"
+                      name="PackageVisibility"
+                      value="internal" />
+                  </stereotypeInstanceHasPropertyInstances>
+                  <stereotypeInstanceHasPropertyInstances
+                    Id="1f7ad7e2-09e5-4218-a257-e00d0f8b0114">
+                    <propertyInstance
+                      Id="d9293e09-fa10-4101-bc78-c7fa4923c225"
+                      name="params"
+                      value="false" />
+                  </stereotypeInstanceHasPropertyInstances>
+                </propertyInstances>
+              </stereotypeInstance>
+            </appliedStereotypesInternal>
+          </operation>
+        </ownedOperationsInternal>
+      </class>
+    </packageHasNamedElement>
+    <packageHasNamedElement>
+      <Interface
+        Id="69f70472-c742-483a-8cd4-eb02b5b52e7b"
+        name="IOutputFormatter"
+        isAbstract="false"
+        isLeaf="false">
+        <referencesInternal>
+          <reference
+            Id="93677a92-ea92-4fde-b03b-8a0dad8cf7c1"
+            handle="viewcode://./CodeSchema_Interface?Assembly=&quot;file:///C:/_wrk/Open Source Journal Spring.NET Article/Code Sample/src/Primes/bin/Debug/Primes.dll&quot; Namespace=Primes Type=IOutputFormatter"
+            tag="ViewCode" />
+        </referencesInternal>
+        <appliedStereotypesInternal>
+          <stereotypeInstance
+            Id="39a36cb6-0119-4f7f-b69b-e705feb309aa"
+            name="interface"
+            profile="CSharpProfile">
+            <propertyInstances>
+              <stereotypeInstanceHasPropertyInstances
+                Id="ed1b9e0f-56ae-41cc-816e-d966504c8e48">
+                <propertyInstance
+                  Id="e7b7c735-31fa-4946-91b4-b9b5a0758552"
+                  name="ClrAttributes" />
+              </stereotypeInstanceHasPropertyInstances>
+              <stereotypeInstanceHasPropertyInstances
+                Id="4910011f-a206-4d23-9552-8223408aae8d">
+                <propertyInstance
+                  Id="4b7926c7-c097-473f-ab89-3fb77a77ecde"
+                  name="IsPartial"
+                  value="false" />
+              </stereotypeInstanceHasPropertyInstances>
+              <stereotypeInstanceHasPropertyInstances
+                Id="82747ae7-e686-4e85-aaaf-40eb90a93c9b">
+                <propertyInstance
+                  Id="5254da8e-9988-46f5-a912-9357070e8f0a"
+                  name="IsUnsafe"
+                  value="false" />
+              </stereotypeInstanceHasPropertyInstances>
+              <stereotypeInstanceHasPropertyInstances
+                Id="8b2d13f2-58d8-43c9-98b2-aa2c750bef2a">
+                <propertyInstance
+                  Id="e856a047-68e0-44f6-b611-79dafc510774"
+                  name="PackageVisibility"
+                  value="internal" />
+              </stereotypeInstanceHasPropertyInstances>
+            </propertyInstances>
+          </stereotypeInstance>
+        </appliedStereotypesInternal>
+        <ownedOperations>
+          <operation
+            Id="2395c9e1-bc4f-453a-a48a-0c46b3897a5b"
+            name="Format"
+            isLeaf="false"
+            isStatic="false"
+            isAbstract="false"
+            concurrency="Sequential"
+            isQuery="false">
+            <referencesInternal>
+              <reference
+                Id="d7d3e642-6bdd-42ba-82c4-f0ba071e7212"
+                handle="viewcode://./CodeSchema_Method?Assembly=&quot;file:///C:/_wrk/Open Source Journal Spring.NET Article/Code Sample/src/Primes/bin/Debug/Primes.dll&quot; Namespace=Primes Type=IOutputFormatter Member=(Name=Format OverloadingParameters=[(Assembly=file:///C:/Windows/Microsoft.NET/Framework/v2.0.50727/mscorlib.dll Namespace=System Type=String)])"
+                tag="ViewCode" />
+            </referencesInternal>
+            <appliedStereotypesInternal>
+              <stereotypeInstance
+                Id="2d674971-1c90-4611-958c-04839eda52f8"
+                name="method"
+                profile="CSharpProfile">
+                <propertyInstances>
+                  <stereotypeInstanceHasPropertyInstances
+                    Id="1fcf9753-3274-4768-9e73-94b8d4a361c5">
+                    <propertyInstance
+                      Id="5c631c97-f66e-4722-a5ca-6ece0a3cb4f3"
+                      name="ClrAttributes" />
+                  </stereotypeInstanceHasPropertyInstances>
+                  <stereotypeInstanceHasPropertyInstances
+                    Id="abae0c8a-a7f1-47e7-8b62-bdd4cd2123ff">
+                    <propertyInstance
+                      Id="21e32ded-d625-4fa8-bde1-e194853e6859"
+                      name="IsPartial"
+                      value="false" />
+                  </stereotypeInstanceHasPropertyInstances>
+                  <stereotypeInstanceHasPropertyInstances
+                    Id="74204d98-7ddd-4374-b812-f18c6d5fcbb8">
+                    <propertyInstance
+                      Id="995afc4b-d776-49e3-85e1-a6355b9c7360"
+                      name="IsUnsafe"
+                      value="false" />
+                  </stereotypeInstanceHasPropertyInstances>
+                  <stereotypeInstanceHasPropertyInstances
+                    Id="64e50e84-e8e7-4eaf-b229-a00805fa2865">
+                    <propertyInstance
+                      Id="dbd04c8c-411e-4c3d-a370-d528cb7d2c67"
+                      name="PackageVisibility"
+                      value="internal" />
+                  </stereotypeInstanceHasPropertyInstances>
+                  <stereotypeInstanceHasPropertyInstances
+                    Id="31e8521a-b970-4139-a8bc-b444e704a7aa">
+                    <propertyInstance
+                      Id="2f8e1bee-2d10-44bc-833f-a9dd08eb5832"
+                      name="params"
+                      value="false" />
+                  </stereotypeInstanceHasPropertyInstances>
+                </propertyInstances>
+              </stereotypeInstance>
+            </appliedStereotypesInternal>
+            <ownedParameters>
+              <operationHasOwnedParameters>
+                <parameter
+                  Id="cedab205-bc94-474c-a591-554802f1a1cf"
+                  direction="Return">
+                  <type_NamedElement>
+                    <interfaceMoniker
+                      Id="119054e0-3ec6-4b82-b9dc-c6096a5a1492"
+                      LastKnownName="IList&lt;String&gt;"
+                      LastKnownLocation="Package3_1138.uml" />
+                  </type_NamedElement>
+                </parameter>
+              </operationHasOwnedParameters>
+              <operationHasOwnedParameters>
+                <parameter
+                  Id="4856720c-214a-4186-b74d-505979747c30"
+                  name="input"
+                  direction="In">
+                  <referencesInternal>
+                    <reference
+                      Id="e4b15ffa-e2c5-43e8-8cf2-bb875d0690da"
+                      handle="viewcode://./CodeSchema_Parameter?Assembly=&quot;file:///C:/_wrk/Open Source Journal Spring.NET Article/Code Sample/src/Primes/bin/Debug/Primes.dll&quot; Namespace=Primes Type=IOutputFormatter Member=(Name=Format OverloadingParameters=[(Assembly=file:///C:/Windows/Microsoft.NET/Framework/v2.0.50727/mscorlib.dll Namespace=System Type=String)]) ParameterIdentifier=input"
+                      tag="ViewCode" />
+                  </referencesInternal>
+                  <type_NamedElement>
+                    <primitiveTypeMoniker
+                      Id="59259974-6d55-42c6-b7bd-763d77ac8ef9"
+                      LastKnownName="String"
+                      LastKnownLocation="ModelingProject1.uml" />
+                  </type_NamedElement>
+                </parameter>
+              </operationHasOwnedParameters>
+            </ownedParameters>
+          </operation>
+        </ownedOperations>
+      </Interface>
+    </packageHasNamedElement>
+    <packageHasNamedElement>
+      <Interface
+        Id="cda11892-90a3-4980-bf1f-c4d523914d41"
+        name="IPrimeGenerator"
+        isAbstract="false"
+        isLeaf="false">
+        <referencesInternal>
+          <reference
+            Id="4c996d28-353b-4eb4-9788-62ae35b63ebb"
+            handle="viewcode://./CodeSchema_Interface?Assembly=&quot;file:///C:/_wrk/Open Source Journal Spring.NET Article/Code Sample/src/Primes/bin/Debug/Primes.dll&quot; Namespace=Primes Type=IPrimeGenerator"
+            tag="ViewCode" />
+        </referencesInternal>
+        <appliedStereotypesInternal>
+          <stereotypeInstance
+            Id="64d4d1c2-26f9-4199-8d72-da12f79ac926"
+            name="interface"
+            profile="CSharpProfile">
+            <propertyInstances>
+              <stereotypeInstanceHasPropertyInstances
+                Id="111d73eb-ef3a-4d90-80a5-9eb97cb92b88">
+                <propertyInstance
+                  Id="94dd9183-16c8-4fb5-9fd6-579a952e3876"
+                  name="ClrAttributes" />
+              </stereotypeInstanceHasPropertyInstances>
+              <stereotypeInstanceHasPropertyInstances
+                Id="5181238f-4087-4caf-a592-e31f3e7c5d27">
+                <propertyInstance
+                  Id="9e39e13e-a165-48f1-b3e2-d9c3ad63a6c2"
+                  name="IsPartial"
+                  value="false" />
+              </stereotypeInstanceHasPropertyInstances>
+              <stereotypeInstanceHasPropertyInstances
+                Id="fcbda725-ecf6-49f1-b54f-8292875c7ddc">
+                <propertyInstance
+                  Id="a4a7fea8-474c-4284-b64a-47918ba5d2b2"
+                  name="IsUnsafe"
+                  value="false" />
+              </stereotypeInstanceHasPropertyInstances>
+              <stereotypeInstanceHasPropertyInstances
+                Id="b289b90e-2ffa-4e87-bfc5-7aa399f22e7b">
+                <propertyInstance
+                  Id="27d24db2-835f-446f-b6b7-6696032a4579"
+                  name="PackageVisibility"
+                  value="internal" />
+              </stereotypeInstanceHasPropertyInstances>
+            </propertyInstances>
+          </stereotypeInstance>
+        </appliedStereotypesInternal>
+        <ownedOperations>
+          <operation
+            Id="15bca2df-6894-4eb1-a339-5b736a0455f4"
+            name="GeneratePrimesUpTo"
+            isLeaf="false"
+            isStatic="false"
+            isAbstract="false"
+            concurrency="Sequential"
+            isQuery="false">
+            <referencesInternal>
+              <reference
+                Id="7d49c336-2019-42e0-85cb-9f184668a9fb"
+                handle="viewcode://./CodeSchema_Method?Assembly=&quot;file:///C:/_wrk/Open Source Journal Spring.NET Article/Code Sample/src/Primes/bin/Debug/Primes.dll&quot; Namespace=Primes Type=IPrimeGenerator Member=(Name=GeneratePrimesUpTo OverloadingParameters=[(Assembly=file:///C:/Windows/Microsoft.NET/Framework/v2.0.50727/mscorlib.dll Namespace=System Type=Int32)])"
+                tag="ViewCode" />
+            </referencesInternal>
+            <appliedStereotypesInternal>
+              <stereotypeInstance
+                Id="4d1922e8-48fd-471a-8d69-804a4afc1dfa"
+                name="method"
+                profile="CSharpProfile">
+                <propertyInstances>
+                  <stereotypeInstanceHasPropertyInstances
+                    Id="137825e4-a03d-40b1-a50e-eae0a47c794c">
+                    <propertyInstance
+                      Id="01486cd9-6d82-4477-81a1-c54d63b835c6"
+                      name="ClrAttributes" />
+                  </stereotypeInstanceHasPropertyInstances>
+                  <stereotypeInstanceHasPropertyInstances
+                    Id="b3ebee09-9c87-434b-9c1d-5ec59e6ec540">
+                    <propertyInstance
+                      Id="0e0fb627-8cc3-4f28-b6fb-1d9359516e1b"
+                      name="IsPartial"
+                      value="false" />
+                  </stereotypeInstanceHasPropertyInstances>
+                  <stereotypeInstanceHasPropertyInstances
+                    Id="6dce926e-9336-40f2-9279-702dda60dd81">
+                    <propertyInstance
+                      Id="d1e02f79-f1d4-4bb5-be1d-1bb09715e76e"
+                      name="IsUnsafe"
+                      value="false" />
+                  </stereotypeInstanceHasPropertyInstances>
+                  <stereotypeInstanceHasPropertyInstances
+                    Id="7af1519d-4888-4be7-b546-27b9bce4cce5">
+                    <propertyInstance
+                      Id="feff0014-2521-4f40-bed1-efde7e87f2e1"
+                      name="PackageVisibility"
+                      value="internal" />
+                  </stereotypeInstanceHasPropertyInstances>
+                  <stereotypeInstanceHasPropertyInstances
+                    Id="d890fe49-1988-4bdb-b498-0f6ea9108209">
+                    <propertyInstance
+                      Id="4662551b-2feb-49e3-9d04-560cc6816b85"
+                      name="params"
+                      value="false" />
+                  </stereotypeInstanceHasPropertyInstances>
+                </propertyInstances>
+              </stereotypeInstance>
+            </appliedStereotypesInternal>
+            <ownedParameters>
+              <operationHasOwnedParameters>
+                <parameter
+                  Id="79b11d0b-9391-4b2f-a8d4-3835fac6bd53"
+                  direction="Return">
+                  <type_NamedElement>
+                    <primitiveTypeMoniker
+                      Id="59259974-6d55-42c6-b7bd-763d77ac8ef9"
+                      LastKnownName="String"
+                      LastKnownLocation="ModelingProject1.uml" />
+                  </type_NamedElement>
+                </parameter>
+              </operationHasOwnedParameters>
+              <operationHasOwnedParameters>
+                <parameter
+                  Id="246af8bd-5c07-4b0d-92ce-ea7639ce3deb"
+                  name="max"
+                  direction="In">
+                  <referencesInternal>
+                    <reference
+                      Id="0429e38d-948e-41b4-9913-cbb1bee0e7a1"
+                      handle="viewcode://./CodeSchema_Parameter?Assembly=&quot;file:///C:/_wrk/Open Source Journal Spring.NET Article/Code Sample/src/Primes/bin/Debug/Primes.dll&quot; Namespace=Primes Type=IPrimeGenerator Member=(Name=GeneratePrimesUpTo OverloadingParameters=[(Assembly=file:///C:/Windows/Microsoft.NET/Framework/v2.0.50727/mscorlib.dll Namespace=System Type=Int32)]) ParameterIdentifier=max"
+                      tag="ViewCode" />
+                  </referencesInternal>
+                  <type_NamedElement>
+                    <primitiveTypeMoniker
+                      Id="220a3521-e091-4221-bae9-3ef9018e845c"
+                      LastKnownName="Integer"
+                      LastKnownLocation="ModelingProject1.uml" />
+                  </type_NamedElement>
+                </parameter>
+              </operationHasOwnedParameters>
+            </ownedParameters>
+          </operation>
+        </ownedOperations>
+      </Interface>
+    </packageHasNamedElement>
+    <packageHasNamedElement>
+      <class
+        Id="3885f5e4-bfca-4b82-ac79-280d07009327"
+        name="LinqPrimeGenerator"
+        isAbstract="false"
+        isLeaf="false"
+        isActiveClass="false">
+        <referencesInternal>
+          <reference
+            Id="a6eee25c-7f6c-425e-8715-80f3c4d351a8"
+            handle="viewcode://./CodeSchema_Class?Assembly=&quot;file:///C:/_wrk/Open Source Journal Spring.NET Article/Code Sample/src/Primes/bin/Debug/Primes.dll&quot; Namespace=Primes Type=LinqPrimeGenerator"
+            tag="ViewCode" />
+        </referencesInternal>
+        <appliedStereotypesInternal>
+          <stereotypeInstance
+            Id="da2237fd-196c-443c-b373-cf1e07746c9c"
+            name="class"
+            profile="CSharpProfile">
+            <propertyInstances>
+              <stereotypeInstanceHasPropertyInstances
+                Id="f8dff665-3052-44fa-aa67-d20d85ed02ce">
+                <propertyInstance
+                  Id="87256692-55ea-4b3c-bf69-d47fb25bd18c"
+                  name="ClrAttributes" />
+              </stereotypeInstanceHasPropertyInstances>
+              <stereotypeInstanceHasPropertyInstances
+                Id="e4aa57b1-b20d-4c63-9fe0-628fe5b6d92c">
+                <propertyInstance
+                  Id="63816f34-bd16-4b2f-999c-708f55508577"
+                  name="IsPartial"
+                  value="false" />
+              </stereotypeInstanceHasPropertyInstances>
+              <stereotypeInstanceHasPropertyInstances
+                Id="7e1a07ae-5601-4010-ab2a-db97c2cfff95">
+                <propertyInstance
+                  Id="bff898bc-1022-4c42-be25-a9fc66bedb7c"
+                  name="IsStatic"
+                  value="False" />
+              </stereotypeInstanceHasPropertyInstances>
+              <stereotypeInstanceHasPropertyInstances
+                Id="416feead-1694-44eb-a085-1a2d1f8aa1c6">
+                <propertyInstance
+                  Id="9a11d27d-f9be-4cd8-90d4-44225bbff27c"
+                  name="IsUnsafe"
+                  value="false" />
+              </stereotypeInstanceHasPropertyInstances>
+              <stereotypeInstanceHasPropertyInstances
+                Id="967f7743-99db-41ed-a45f-8331e431e17d">
+                <propertyInstance
+                  Id="6ca6c9ae-ba82-4828-a35e-98ab8c64826c"
+                  name="PackageVisibility"
+                  value="internal" />
+              </stereotypeInstanceHasPropertyInstances>
+            </propertyInstances>
+          </stereotypeInstance>
+        </appliedStereotypesInternal>
+        <suppliersInternal>
+          <interfaceRealization
+            Id="6d5eaffc-7ee2-4d06-9b78-cf3c7be43058">
+            <interfaceMoniker
+              Id="cda11892-90a3-4980-bf1f-c4d523914d41"
+              LastKnownName="IPrimeGenerator"
+              LastKnownLocation="Package_1138.uml" />
+          </interfaceRealization>
+        </suppliersInternal>
+        <ownedOperationsInternal>
+          <operation
+            Id="4db560e4-20ee-4cac-97a9-631361548c64"
+            name="GeneratePrimesUpTo"
+            isLeaf="false"
+            isStatic="false"
+            isAbstract="false"
+            concurrency="Sequential"
+            isQuery="false">
+            <referencesInternal>
+              <reference
+                Id="dc4bfab7-017c-4b4a-85d1-c2fbb41c505d"
+                handle="viewcode://./CodeSchema_Method?Assembly=&quot;file:///C:/_wrk/Open Source Journal Spring.NET Article/Code Sample/src/Primes/bin/Debug/Primes.dll&quot; Namespace=Primes Type=LinqPrimeGenerator Member=(Name=GeneratePrimesUpTo OverloadingParameters=[(Assembly=file:///C:/Windows/Microsoft.NET/Framework/v2.0.50727/mscorlib.dll Namespace=System Type=Int32)])"
+                tag="ViewCode" />
+            </referencesInternal>
+            <appliedStereotypesInternal>
+              <stereotypeInstance
+                Id="185c7411-5bc8-4c6f-ba74-e0924880028c"
+                name="method"
+                profile="CSharpProfile">
+                <propertyInstances>
+                  <stereotypeInstanceHasPropertyInstances
+                    Id="44a86eab-c603-410e-9a5c-aa5ea005af7c">
+                    <propertyInstance
+                      Id="dce690fd-6ce1-4c35-92c1-f41810d9eb6a"
+                      name="ClrAttributes" />
+                  </stereotypeInstanceHasPropertyInstances>
+                  <stereotypeInstanceHasPropertyInstances
+                    Id="54b26203-4fa1-4eda-aae2-0dacac0a2e07">
+                    <propertyInstance
+                      Id="4e18dc62-6f60-460e-a446-a914febbacea"
+                      name="IsPartial"
+                      value="false" />
+                  </stereotypeInstanceHasPropertyInstances>
+                  <stereotypeInstanceHasPropertyInstances
+                    Id="61986507-0e6e-4c45-b945-6789d3bde00b">
+                    <propertyInstance
+                      Id="f8840cc9-426d-407c-a698-14dfa339dc8f"
+                      name="IsUnsafe"
+                      value="false" />
+                  </stereotypeInstanceHasPropertyInstances>
+                  <stereotypeInstanceHasPropertyInstances
+                    Id="373d72d0-0d58-4f85-ad31-fb6a4b5a6037">
+                    <propertyInstance
+                      Id="49e0fb96-8249-498f-b04e-c6ff5e376af4"
+                      name="PackageVisibility"
+                      value="internal" />
+                  </stereotypeInstanceHasPropertyInstances>
+                  <stereotypeInstanceHasPropertyInstances
+                    Id="c4d8d85f-9e33-44b0-8514-f6a55ff18785">
+                    <propertyInstance
+                      Id="c77c8608-aa96-49d2-94c5-bb5fd40ff0f0"
+                      name="params"
+                      value="false" />
+                  </stereotypeInstanceHasPropertyInstances>
+                </propertyInstances>
+              </stereotypeInstance>
+            </appliedStereotypesInternal>
+            <ownedParameters>
+              <operationHasOwnedParameters>
+                <parameter
+                  Id="e0bf0d14-38e5-48ca-9bc2-e367cd26d0a0"
+                  direction="Return">
+                  <type_NamedElement>
+                    <primitiveTypeMoniker
+                      Id="59259974-6d55-42c6-b7bd-763d77ac8ef9"
+                      LastKnownName="String"
+                      LastKnownLocation="ModelingProject1.uml" />
+                  </type_NamedElement>
+                </parameter>
+              </operationHasOwnedParameters>
+              <operationHasOwnedParameters>
+                <parameter
+                  Id="47648168-982a-4915-bd90-d1b3817612a4"
+                  name="maxNumber"
+                  direction="In">
+                  <referencesInternal>
+                    <reference
+                      Id="bdb521b6-30a2-4607-908d-dcd3d46d61d4"
+                      handle="viewcode://./CodeSchema_Parameter?Assembly=&quot;file:///C:/_wrk/Open Source Journal Spring.NET Article/Code Sample/src/Primes/bin/Debug/Primes.dll&quot; Namespace=Primes Type=LinqPrimeGenerator Member=(Name=GeneratePrimesUpTo OverloadingParameters=[(Assembly=file:///C:/Windows/Microsoft.NET/Framework/v2.0.50727/mscorlib.dll Namespace=System Type=Int32)]) ParameterIdentifier=maxNumber"
+                      tag="ViewCode" />
+                  </referencesInternal>
+                  <type_NamedElement>
+                    <primitiveTypeMoniker
+                      Id="220a3521-e091-4221-bae9-3ef9018e845c"
+                      LastKnownName="Integer"
+                      LastKnownLocation="ModelingProject1.uml" />
+                  </type_NamedElement>
+                </parameter>
+              </operationHasOwnedParameters>
+            </ownedParameters>
+          </operation>
+          <operation
+            Id="709734f0-6aab-4adc-b4fb-287d17b09132"
+            name="LinqPrimeGenerator"
+            isLeaf="false"
+            isStatic="false"
+            isAbstract="false"
+            concurrency="Sequential"
+            isQuery="false">
+            <referencesInternal>
+              <reference
+                Id="f8155650-3225-425f-b26b-aab1acb36f2c"
+                handle="viewcode://./CodeSchema_Method?Assembly=&quot;file:///C:/_wrk/Open Source Journal Spring.NET Article/Code Sample/src/Primes/bin/Debug/Primes.dll&quot; Namespace=Primes Type=LinqPrimeGenerator Member=.ctor"
+                tag="ViewCode" />
+            </referencesInternal>
+            <appliedStereotypesInternal>
+              <stereotypeInstance
+                Id="cacfa737-c504-40d5-8a74-1742283fc37a"
+                name="method"
+                profile="CSharpProfile">
+                <propertyInstances>
+                  <stereotypeInstanceHasPropertyInstances
+                    Id="12246cb6-8216-4be3-bbd8-4c050d5764d4">
+                    <propertyInstance
+                      Id="052d62f8-4164-4ff6-8eae-a2dcb524b3c8"
+                      name="ClrAttributes" />
+                  </stereotypeInstanceHasPropertyInstances>
+                  <stereotypeInstanceHasPropertyInstances
+                    Id="0a7c7de6-8dd3-4154-850f-07619ade2b56">
+                    <propertyInstance
+                      Id="446df1ed-c746-469e-a51e-8f75a8a428c5"
+                      name="IsPartial"
+                      value="false" />
+                  </stereotypeInstanceHasPropertyInstances>
+                  <stereotypeInstanceHasPropertyInstances
+                    Id="e20f6232-81f7-486f-af3f-2ca12a3b4673">
+                    <propertyInstance
+                      Id="30c0428c-7146-46c2-b14e-654d7c4d7744"
+                      name="IsUnsafe"
+                      value="false" />
+                  </stereotypeInstanceHasPropertyInstances>
+                  <stereotypeInstanceHasPropertyInstances
+                    Id="b3709f11-606a-48e2-9e52-6d8ca0dd200f">
+                    <propertyInstance
+                      Id="d474778e-bb33-4181-89e2-62ee1b5fecc6"
+                      name="PackageVisibility"
+                      value="internal" />
+                  </stereotypeInstanceHasPropertyInstances>
+                  <stereotypeInstanceHasPropertyInstances
+                    Id="75bfc417-9184-4e63-8d91-3480a6910a3b">
+                    <propertyInstance
+                      Id="5b42f0ef-e9b0-4ec6-a082-459b6ae60736"
+                      name="params"
+                      value="false" />
+                  </stereotypeInstanceHasPropertyInstances>
+                </propertyInstances>
+              </stereotypeInstance>
+            </appliedStereotypesInternal>
+          </operation>
+        </ownedOperationsInternal>
+      </class>
+    </packageHasNamedElement>
+    <packageHasNamedElement>
+      <class
+        Id="123b6487-f34e-4db6-90bb-2595de6777cd"
+        name="OutputFormatter"
+        isAbstract="false"
+        isLeaf="false"
+        isActiveClass="false">
+        <referencesInternal>
+          <reference
+            Id="d9a324a4-22ec-4560-92d0-b1c29da8455f"
+            handle="viewcode://./CodeSchema_Class?Assembly=&quot;file:///C:/_wrk/Open Source Journal Spring.NET Article/Code Sample/src/Primes/bin/Debug/Primes.dll&quot; Namespace=Primes Type=OutputFormatter"
+            tag="ViewCode" />
+        </referencesInternal>
+        <appliedStereotypesInternal>
+          <stereotypeInstance
+            Id="33c0e2a9-85f9-4e6a-9a1f-6203a6e57ce0"
+            name="class"
+            profile="CSharpProfile">
+            <propertyInstances>
+              <stereotypeInstanceHasPropertyInstances
+                Id="35ed45c3-1c51-4198-a4af-5e36e6b49831">
+                <propertyInstance
+                  Id="12bdde2b-bb30-4d47-aebb-28a3dcdaf290"
+                  name="ClrAttributes" />
+              </stereotypeInstanceHasPropertyInstances>
+              <stereotypeInstanceHasPropertyInstances
+                Id="eacd12b3-4bfe-41f8-8ee6-168008b77099">
+                <propertyInstance
+                  Id="16c10b5c-6ffe-45c4-a5e8-3cd699e51add"
+                  name="IsPartial"
+                  value="false" />
+              </stereotypeInstanceHasPropertyInstances>
+              <stereotypeInstanceHasPropertyInstances
+                Id="cfc22fdd-5273-40ff-9566-b9293180f087">
+                <propertyInstance
+                  Id="579f914e-8a88-4f30-9a29-edb4482e7b6d"
+                  name="IsStatic"
+                  value="False" />
+              </stereotypeInstanceHasPropertyInstances>
+              <stereotypeInstanceHasPropertyInstances
+                Id="c5540c46-5a58-46bd-8684-94f2baec2c88">
+                <propertyInstance
+                  Id="44940f15-5dbf-4e11-acb9-461241272c72"
+                  name="IsUnsafe"
+                  value="false" />
+              </stereotypeInstanceHasPropertyInstances>
+              <stereotypeInstanceHasPropertyInstances
+                Id="a16cfddf-64bd-426d-a919-afed84781474">
+                <propertyInstance
+                  Id="8af1f8aa-90ec-4ddd-a4fd-9e87dd17eb86"
+                  name="PackageVisibility"
+                  value="internal" />
+              </stereotypeInstanceHasPropertyInstances>
+            </propertyInstances>
+          </stereotypeInstance>
+        </appliedStereotypesInternal>
+        <suppliersInternal>
+          <interfaceRealization
+            Id="d50f3026-c8b2-49cf-8497-e64e0787dbf0">
+            <interfaceMoniker
+              Id="69f70472-c742-483a-8cd4-eb02b5b52e7b"
+              LastKnownName="IOutputFormatter"
+              LastKnownLocation="Package_1138.uml" />
+          </interfaceRealization>
+        </suppliersInternal>
+        <ownedOperationsInternal>
+          <operation
+            Id="baabeb96-8dc5-4e66-ab03-04dcb7837027"
+            name="Format"
+            isLeaf="false"
+            isStatic="false"
+            isAbstract="false"
+            concurrency="Sequential"
+            isQuery="false">
+            <referencesInternal>
+              <reference
+                Id="2f1199a4-a945-4e9b-8b12-e6135ae17d89"
+                handle="viewcode://./CodeSchema_Method?Assembly=&quot;file:///C:/_wrk/Open Source Journal Spring.NET Article/Code Sample/src/Primes/bin/Debug/Primes.dll&quot; Namespace=Primes Type=OutputFormatter Member=(Name=Format OverloadingParameters=[(Assembly=file:///C:/Windows/Microsoft.NET/Framework/v2.0.50727/mscorlib.dll Namespace=System Type=String)])"
+                tag="ViewCode" />
+            </referencesInternal>
+            <appliedStereotypesInternal>
+              <stereotypeInstance
+                Id="a995b4b7-0498-4be0-982e-f74c17aba417"
+                name="method"
+                profile="CSharpProfile">
+                <propertyInstances>
+                  <stereotypeInstanceHasPropertyInstances
+                    Id="5a498752-cedc-4ee1-a747-796342dde2b7">
+                    <propertyInstance
+                      Id="8fd34d9f-fbe1-4181-b1c0-b12dc1211c46"
+                      name="ClrAttributes" />
+                  </stereotypeInstanceHasPropertyInstances>
+                  <stereotypeInstanceHasPropertyInstances
+                    Id="bdc2e2dc-5bef-4d43-838d-03d14144ccf1">
+                    <propertyInstance
+                      Id="9923b2ee-873b-46f0-a7ff-3dd09d56340d"
+                      name="IsPartial"
+                      value="false" />
+                  </stereotypeInstanceHasPropertyInstances>
+                  <stereotypeInstanceHasPropertyInstances
+                    Id="e6cb3707-bdec-449e-bf29-17f1a47e6f66">
+                    <propertyInstance
+                      Id="18628f38-9ebf-471d-8854-e7c432527eac"
+                      name="IsUnsafe"
+                      value="false" />
+                  </stereotypeInstanceHasPropertyInstances>
+                  <stereotypeInstanceHasPropertyInstances
+                    Id="79ad70a6-556d-4a05-b609-eacc40a1ff90">
+                    <propertyInstance
+                      Id="e34e53ac-ed44-4a60-95bc-bb63c1defdf0"
+                      name="PackageVisibility"
+                      value="internal" />
+                  </stereotypeInstanceHasPropertyInstances>
+                  <stereotypeInstanceHasPropertyInstances
+                    Id="0e965b91-daa9-4d50-92f9-f66c8b7faf5d">
+                    <propertyInstance
+                      Id="c22eb4a7-990e-4641-92c6-b786f5101c96"
+                      name="params"
+                      value="false" />
+                  </stereotypeInstanceHasPropertyInstances>
+                </propertyInstances>
+              </stereotypeInstance>
+            </appliedStereotypesInternal>
+            <ownedParameters>
+              <operationHasOwnedParameters>
+                <parameter
+                  Id="9cd2d9ae-3ab8-4df1-b582-0b8da21ce93d"
+                  direction="Return">
+                  <type_NamedElement>
+                    <interfaceMoniker
+                      Id="119054e0-3ec6-4b82-b9dc-c6096a5a1492"
+                      LastKnownName="IList&lt;String&gt;"
+                      LastKnownLocation="Package3_1138.uml" />
+                  </type_NamedElement>
+                </parameter>
+              </operationHasOwnedParameters>
+              <operationHasOwnedParameters>
+                <parameter
+                  Id="f7f1f7eb-f74a-4871-9572-10a5ac45b376"
+                  name="input"
+                  direction="In">
+                  <referencesInternal>
+                    <reference
+                      Id="5afff989-f911-4318-8022-50951c282663"
+                      handle="viewcode://./CodeSchema_Parameter?Assembly=&quot;file:///C:/_wrk/Open Source Journal Spring.NET Article/Code Sample/src/Primes/bin/Debug/Primes.dll&quot; Namespace=Primes Type=OutputFormatter Member=(Name=Format OverloadingParameters=[(Assembly=file:///C:/Windows/Microsoft.NET/Framework/v2.0.50727/mscorlib.dll Namespace=System Type=String)]) ParameterIdentifier=input"
+                      tag="ViewCode" />
+                  </referencesInternal>
+                  <type_NamedElement>
+                    <primitiveTypeMoniker
+                      Id="59259974-6d55-42c6-b7bd-763d77ac8ef9"
+                      LastKnownName="String"
+                      LastKnownLocation="ModelingProject1.uml" />
+                  </type_NamedElement>
+                </parameter>
+              </operationHasOwnedParameters>
+            </ownedParameters>
+          </operation>
+          <operation
+            Id="1bf2365c-fdf7-49d0-ba41-ba1e8936cf83"
+            name="OutputFormatter"
+            isLeaf="false"
+            isStatic="false"
+            isAbstract="false"
+            concurrency="Sequential"
+            isQuery="false">
+            <referencesInternal>
+              <reference
+                Id="ee784cb3-967d-45ed-b092-c32f772eef03"
+                handle="viewcode://./CodeSchema_Method?Assembly=&quot;file:///C:/_wrk/Open Source Journal Spring.NET Article/Code Sample/src/Primes/bin/Debug/Primes.dll&quot; Namespace=Primes Type=OutputFormatter Member=.ctor"
+                tag="ViewCode" />
+            </referencesInternal>
+            <appliedStereotypesInternal>
+              <stereotypeInstance
+                Id="533cc312-b7f7-4f4e-ba41-b12ad55b8168"
+                name="method"
+                profile="CSharpProfile">
+                <propertyInstances>
+                  <stereotypeInstanceHasPropertyInstances
+                    Id="6bc01907-53da-47cb-8736-2a7de372332c">
+                    <propertyInstance
+                      Id="52a94d69-52ed-465e-b295-a83461253c23"
+                      name="ClrAttributes" />
+                  </stereotypeInstanceHasPropertyInstances>
+                  <stereotypeInstanceHasPropertyInstances
+                    Id="9a57b677-f2ff-4ad9-b703-f6494d2c2f3c">
+                    <propertyInstance
+                      Id="2c1fc221-7204-4ba7-b7e5-fccb39e0f3f8"
+                      name="IsPartial"
+                      value="false" />
+                  </stereotypeInstanceHasPropertyInstances>
+                  <stereotypeInstanceHasPropertyInstances
+                    Id="54d43124-e5b3-4c4f-8344-d517667e6f14">
+                    <propertyInstance
+                      Id="3b74a460-ce34-4dad-a8e6-b1e34098af23"
+                      name="IsUnsafe"
+                      value="false" />
+                  </stereotypeInstanceHasPropertyInstances>
+                  <stereotypeInstanceHasPropertyInstances
+                    Id="0d57868f-3221-45c5-a2c1-8d89afd7d0e1">
+                    <propertyInstance
+                      Id="3fe8f4ba-7d52-4ab5-8334-ae77377664a2"
+                      name="PackageVisibility"
+                      value="internal" />
+                  </stereotypeInstanceHasPropertyInstances>
+                  <stereotypeInstanceHasPropertyInstances
+                    Id="5345b344-a34f-46d6-974f-95a6fab2a920">
+                    <propertyInstance
+                      Id="af0dfa66-5f48-4dfe-a59b-9e8b6f302f3f"
+                      name="params"
+                      value="false" />
+                  </stereotypeInstanceHasPropertyInstances>
+                </propertyInstances>
+              </stereotypeInstance>
+            </appliedStereotypesInternal>
+          </operation>
+        </ownedOperationsInternal>
+      </class>
+    </packageHasNamedElement>
+    <packageHasNamedElement>
+      <class
+        Id="63e45b35-1e86-4a53-b03d-712d6f95bab1"
+        name="PrimeEvaluationEngine"
+        isAbstract="false"
+        isLeaf="false"
+        isActiveClass="false">
+        <referencesInternal>
+          <reference
+            Id="35d016e8-3be4-4933-95a6-127f844c54fa"
+            handle="viewcode://./CodeSchema_Class?Assembly=&quot;file:///C:/_wrk/Open Source Journal Spring.NET Article/Code Sample/src/Primes/bin/Debug/Primes.dll&quot; Namespace=Primes Type=PrimeEvaluationEngine"
+            tag="ViewCode" />
+        </referencesInternal>
+        <appliedStereotypesInternal>
+          <stereotypeInstance
+            Id="035a0f5e-21d1-4c0c-a0ed-26015bd2f3da"
+            name="class"
+            profile="CSharpProfile">
+            <propertyInstances>
+              <stereotypeInstanceHasPropertyInstances
+                Id="fe7ffd68-3220-4860-9325-31022b3388a2">
+                <propertyInstance
+                  Id="122c84f8-2ade-4073-bf17-3ee04b4aa75a"
+                  name="ClrAttributes" />
+              </stereotypeInstanceHasPropertyInstances>
+              <stereotypeInstanceHasPropertyInstances
+                Id="d18f5b38-a85e-44f2-8100-1a48ba43bccd">
+                <propertyInstance
+                  Id="315c33b0-b623-49a7-8f2c-6fc5f231ff5b"
+                  name="IsPartial"
+                  value="false" />
+              </stereotypeInstanceHasPropertyInstances>
+              <stereotypeInstanceHasPropertyInstances
+                Id="30b55f9a-5ebc-4337-b3d6-6ce38554a140">
+                <propertyInstance
+                  Id="a06517c3-dfdf-4241-8f75-82616e4b3961"
+                  name="IsStatic"
+                  value="False" />
+              </stereotypeInstanceHasPropertyInstances>
+              <stereotypeInstanceHasPropertyInstances
+                Id="0136f4a4-9f86-46db-abcc-2e70145231b2">
+                <propertyInstance
+                  Id="a4db6b92-1d79-4772-954c-2620d857ee5b"
+                  name="IsUnsafe"
+                  value="false" />
+              </stereotypeInstanceHasPropertyInstances>
+              <stereotypeInstanceHasPropertyInstances
+                Id="4582ffd1-2284-42b9-b01f-e0d7855cb25e">
+                <propertyInstance
+                  Id="81124699-d78d-445a-8034-6d6d5d6264da"
+                  name="PackageVisibility"
+                  value="internal" />
+              </stereotypeInstanceHasPropertyInstances>
+            </propertyInstances>
+          </stereotypeInstance>
+        </appliedStereotypesInternal>
+        <ownedOperationsInternal>
+          <operation
+            Id="06b931ca-4a1a-4edf-a1c3-9cb80628c349"
+            name="IsPrime"
+            isLeaf="false"
+            isStatic="false"
+            isAbstract="false"
+            concurrency="Sequential"
+            isQuery="false">
+            <referencesInternal>
+              <reference
+                Id="5d37118e-72b5-4656-ad36-35d96f8f00c0"
+                handle="viewcode://./CodeSchema_Method?Assembly=&quot;file:///C:/_wrk/Open Source Journal Spring.NET Article/Code Sample/src/Primes/bin/Debug/Primes.dll&quot; Namespace=Primes Type=PrimeEvaluationEngine Member=(Name=IsPrime OverloadingParameters=[(Assembly=file:///C:/Windows/Microsoft.NET/Framework/v2.0.50727/mscorlib.dll Namespace=System Type=Int32)])"
+                tag="ViewCode" />
+            </referencesInternal>
+            <appliedStereotypesInternal>
+              <stereotypeInstance
+                Id="75b7f163-66ce-4802-bda9-b905cf329364"
+                name="method"
+                profile="CSharpProfile">
+                <propertyInstances>
+                  <stereotypeInstanceHasPropertyInstances
+                    Id="b6e41182-9bd5-4a03-97b3-6720dfd65ce9">
+                    <propertyInstance
+                      Id="3bdad48a-399c-4ac7-9497-2e1538094e9f"
+                      name="ClrAttributes" />
+                  </stereotypeInstanceHasPropertyInstances>
+                  <stereotypeInstanceHasPropertyInstances
+                    Id="8956c19c-f022-43e1-a761-3cf713157ba1">
+                    <propertyInstance
+                      Id="323b297d-231c-47e1-8f66-ad834d68569b"
+                      name="IsPartial"
+                      value="false" />
+                  </stereotypeInstanceHasPropertyInstances>
+                  <stereotypeInstanceHasPropertyInstances
+                    Id="9f19aeee-1485-4953-b4a8-2eb31847184f">
+                    <propertyInstance
+                      Id="648b54b8-b2e1-40a8-9cd8-1a424f4e30ae"
+                      name="IsUnsafe"
+                      value="false" />
+                  </stereotypeInstanceHasPropertyInstances>
+                  <stereotypeInstanceHasPropertyInstances
+                    Id="35fea3f5-262d-429e-bafc-87ca2c19d004">
+                    <propertyInstance
+                      Id="78e24f06-ece9-4fe8-acfa-10b8377750d5"
+                      name="PackageVisibility"
+                      value="internal" />
+                  </stereotypeInstanceHasPropertyInstances>
+                  <stereotypeInstanceHasPropertyInstances
+                    Id="8b3f568d-676c-4096-bb62-a6d0606ab81c">
+                    <propertyInstance
+                      Id="106fba5d-531c-4b6f-aa42-6adc0c2fb5d4"
+                      name="params"
+                      value="false" />
+                  </stereotypeInstanceHasPropertyInstances>
+                </propertyInstances>
+              </stereotypeInstance>
+            </appliedStereotypesInternal>
+            <ownedParameters>
+              <operationHasOwnedParameters>
+                <parameter
+                  Id="64e4edd9-c7fd-4f0d-bf76-96a322a47ff6"
+                  direction="Return">
+                  <type_NamedElement>
+                    <primitiveTypeMoniker
+                      Id="8943dc84-709e-4f62-b15a-a3273aa6f165"
+                      LastKnownName="Boolean"
+                      LastKnownLocation="ModelingProject1.uml" />
+                  </type_NamedElement>
+                </parameter>
+              </operationHasOwnedParameters>
+              <operationHasOwnedParameters>
+                <parameter
+                  Id="9759a223-623c-43a5-a3da-b8374a49fabe"
+                  name="candidate"
+                  direction="In">
+                  <referencesInternal>
+                    <reference
+                      Id="5ff37c0e-bd80-405b-af9e-e13b502e636f"
+                      handle="viewcode://./CodeSchema_Parameter?Assembly=&quot;file:///C:/_wrk/Open Source Journal Spring.NET Article/Code Sample/src/Primes/bin/Debug/Primes.dll&quot; Namespace=Primes Type=PrimeEvaluationEngine Member=(Name=IsPrime OverloadingParameters=[(Assembly=file:///C:/Windows/Microsoft.NET/Framework/v2.0.50727/mscorlib.dll Namespace=System Type=Int32)]) ParameterIdentifier=candidate"
+                      tag="ViewCode" />
+                  </referencesInternal>
+                  <type_NamedElement>
+                    <primitiveTypeMoniker
+                      Id="220a3521-e091-4221-bae9-3ef9018e845c"
+                      LastKnownName="Integer"
+                      LastKnownLocation="ModelingProject1.uml" />
+                  </type_NamedElement>
+                </parameter>
+              </operationHasOwnedParameters>
+            </ownedParameters>
+          </operation>
+          <operation
+            Id="c50e5d91-da11-4a28-8b5a-0efbea61ce34"
+            name="PrimeEvaluationEngine"
+            isLeaf="false"
+            isStatic="false"
+            isAbstract="false"
+            concurrency="Sequential"
+            isQuery="false">
+            <referencesInternal>
+              <reference
+                Id="22671435-c09c-4c6d-85bc-4dbfc57a65ab"
+                handle="viewcode://./CodeSchema_Method?Assembly=&quot;file:///C:/_wrk/Open Source Journal Spring.NET Article/Code Sample/src/Primes/bin/Debug/Primes.dll&quot; Namespace=Primes Type=PrimeEvaluationEngine Member=.ctor"
+                tag="ViewCode" />
+            </referencesInternal>
+            <appliedStereotypesInternal>
+              <stereotypeInstance
+                Id="74519ddd-c573-47cb-8d84-aa2c711a6c4e"
+                name="method"
+                profile="CSharpProfile">
+                <propertyInstances>
+                  <stereotypeInstanceHasPropertyInstances
+                    Id="87604b21-6781-4698-ae85-d8c83a461d0c">
+                    <propertyInstance
+                      Id="fcd3521e-c2c7-421b-9979-71027f0c3076"
+                      name="ClrAttributes" />
+                  </stereotypeInstanceHasPropertyInstances>
+                  <stereotypeInstanceHasPropertyInstances
+                    Id="d4bb9f9e-fbee-4138-87d9-61786020308e">
+                    <propertyInstance
+                      Id="1d1f4ebc-ff55-42fa-bb8d-969227d56844"
+                      name="IsPartial"
+                      value="false" />
+                  </stereotypeInstanceHasPropertyInstances>
+                  <stereotypeInstanceHasPropertyInstances
+                    Id="ad942986-f65e-4549-8ef6-f0a23a6c4ef3">
+                    <propertyInstance
+                      Id="ab7c1b35-341d-4e2c-b63b-55c97c17a63d"
+                      name="IsUnsafe"
+                      value="false" />
+                  </stereotypeInstanceHasPropertyInstances>
+                  <stereotypeInstanceHasPropertyInstances
+                    Id="2492b03e-979c-491a-bed7-150215cdf73f">
+                    <propertyInstance
+                      Id="00deef97-d411-41a4-9275-312a278d3adc"
+                      name="PackageVisibility"
+                      value="internal" />
+                  </stereotypeInstanceHasPropertyInstances>
+                  <stereotypeInstanceHasPropertyInstances
+                    Id="27c34162-64c8-454c-ae74-2f4f33eb3f63">
+                    <propertyInstance
+                      Id="eaf4f42e-e1f3-400d-bf04-3f2eb0b31306"
+                      name="params"
+                      value="false" />
+                  </stereotypeInstanceHasPropertyInstances>
+                </propertyInstances>
+              </stereotypeInstance>
+            </appliedStereotypesInternal>
+          </operation>
+        </ownedOperationsInternal>
+      </class>
+    </packageHasNamedElement>
+    <packageHasNamedElement>
+      <class
+        Id="589210b1-b309-4ad3-97b2-bb85a725024a"
+        name="PrimeGenerator"
+        isAbstract="false"
+        isLeaf="false"
+        isActiveClass="false">
+        <referencesInternal>
+          <reference
+            Id="5494d4b7-6e37-4566-97b1-b00658e8bee1"
+            handle="viewcode://./CodeSchema_Class?Assembly=&quot;file:///C:/_wrk/Open Source Journal Spring.NET Article/Code Sample/src/Primes/bin/Debug/Primes.dll&quot; Namespace=Primes Type=PrimeGenerator"
+            tag="ViewCode" />
+        </referencesInternal>
+        <appliedStereotypesInternal>
+          <stereotypeInstance
+            Id="988fc2ab-21c6-4c4b-9a58-ce877eff7839"
+            name="class"
+            profile="CSharpProfile">
+            <propertyInstances>
+              <stereotypeInstanceHasPropertyInstances
+                Id="b403783e-be2f-4c27-9027-e64d4353f0c0">
+                <propertyInstance
+                  Id="ef10ab6b-925d-47d3-9580-6868d839e732"
+                  name="ClrAttributes" />
+              </stereotypeInstanceHasPropertyInstances>
+              <stereotypeInstanceHasPropertyInstances
+                Id="243d643f-13f0-48bb-829f-0161fd35777e">
+                <propertyInstance
+                  Id="602fa28e-e6b8-44cc-b339-2e8ad8293089"
+                  name="IsPartial"
+                  value="false" />
+              </stereotypeInstanceHasPropertyInstances>
+              <stereotypeInstanceHasPropertyInstances
+                Id="d6d4029f-2d55-413d-a0ee-762eda8c78a5">
+                <propertyInstance
+                  Id="aaabb39c-fdaf-40a2-b8d1-b3804c5e3842"
+                  name="IsStatic"
+                  value="False" />
+              </stereotypeInstanceHasPropertyInstances>
+              <stereotypeInstanceHasPropertyInstances
+                Id="cc565219-83d4-443c-b994-9263b8730e58">
+                <propertyInstance
+                  Id="a08a6f34-3712-40ed-b7b9-52cb1b695b8e"
+                  name="IsUnsafe"
+                  value="false" />
+              </stereotypeInstanceHasPropertyInstances>
+              <stereotypeInstanceHasPropertyInstances
+                Id="b78867bc-a3b3-4f15-bc55-bc5ac516191f">
+                <propertyInstance
+                  Id="d1fcd764-d9f6-403c-b71b-cf8c47df30ec"
+                  name="PackageVisibility"
+                  value="internal" />
+              </stereotypeInstanceHasPropertyInstances>
+            </propertyInstances>
+          </stereotypeInstance>
+        </appliedStereotypesInternal>
+        <suppliersInternal>
+          <interfaceRealization
+            Id="76d798f5-7f26-4889-bcb1-a24dd5b7696d">
+            <interfaceMoniker
+              Id="cda11892-90a3-4980-bf1f-c4d523914d41"
+              LastKnownName="IPrimeGenerator"
+              LastKnownLocation="Package_1138.uml" />
+          </interfaceRealization>
+        </suppliersInternal>
+        <ownedAttributesInternal>
+          <property
+            Id="51b0930d-25fe-4155-b960-8f0f0d41e893"
+            name="_primeEvaluationEngine"
+            visibility="Private"
+            isLeaf="false"
+            isStatic="false"
+            isReadOnly="false"
+            isDerived="false"
+            isDerivedUnion="false"
+            aggregation="None"
+            isComposite="false">
+            <referencesInternal>
+              <reference
+                Id="e1c74c04-89fa-4013-ab45-46bd51ef2f29"
+                handle="viewcode://./CodeSchema_Field?Assembly=&quot;file:///C:/_wrk/Open Source Journal Spring.NET Article/Code Sample/src/Primes/bin/Debug/Primes.dll&quot; Namespace=Primes Type=PrimeGenerator Member=_primeEvaluationEngine"
+                tag="ViewCode" />
+            </referencesInternal>
+            <appliedStereotypesInternal>
+              <stereotypeInstance
+                Id="14089eec-803f-49c2-8344-f770cd16e6c3"
+                name="field"
+                profile="CSharpProfile">
+                <propertyInstances>
+                  <stereotypeInstanceHasPropertyInstances
+                    Id="a1f264b4-267e-42bf-81cb-39f93446f346">
+                    <propertyInstance
+                      Id="e04e7092-4cfc-4746-a0a8-9a16cb566e43"
+                      name="ClrAttributes" />
+                  </stereotypeInstanceHasPropertyInstances>
+                  <stereotypeInstanceHasPropertyInstances
+                    Id="16f9d19e-d074-4d8b-b819-c5e4529a08af">
+                    <propertyInstance
+                      Id="87ed8382-d61c-40c3-b3fc-aabf155d6fba"
+                      name="IsConst"
+                      value="false" />
+                  </stereotypeInstanceHasPropertyInstances>
+                  <stereotypeInstanceHasPropertyInstances
+                    Id="836b8a7a-201f-4831-8c94-0f386157ea79">
+                    <propertyInstance
+                      Id="42a3524e-e297-43cb-a8b0-9370aff9d223"
+                      name="IsNullable"
+                      value="false" />
+                  </stereotypeInstanceHasPropertyInstances>
+                  <stereotypeInstanceHasPropertyInstances
+                    Id="4781f87c-de20-40de-9e01-3e02719808c1">
+                    <propertyInstance
+                      Id="6ed49040-5ec5-4086-948e-b4c8d0aa35ed"
+                      name="IsVolatile"
+                      value="false" />
+                  </stereotypeInstanceHasPropertyInstances>
+                  <stereotypeInstanceHasPropertyInstances
+                    Id="a6328880-1a8f-470f-9135-fd286c267353">
+                    <propertyInstance
+                      Id="2f1090ad-5e7f-4d91-a378-6cc895ce257e"
+                      name="PackageVisibility"
+                      value="internal" />
+                  </stereotypeInstanceHasPropertyInstances>
+                </propertyInstances>
+              </stereotypeInstance>
+            </appliedStereotypesInternal>
+            <type_NamedElement>
+              <classMoniker
+                Id="63e45b35-1e86-4a53-b03d-712d6f95bab1"
+                LastKnownName="PrimeEvaluationEngine"
+                LastKnownLocation="Package_1138.uml" />
+            </type_NamedElement>
+          </property>
+        </ownedAttributesInternal>
+        <ownedOperationsInternal>
+          <operation
+            Id="04a4f22d-6640-4d4e-a516-91372698c366"
+            name="GeneratePrimesUpTo"
+            isLeaf="false"
+            isStatic="false"
+            isAbstract="false"
+            concurrency="Sequential"
+            isQuery="false">
+            <referencesInternal>
+              <reference
+                Id="bbd053e8-9da9-4e69-bf54-ab094aae6c8b"
+                handle="viewcode://./CodeSchema_Method?Assembly=&quot;file:///C:/_wrk/Open Source Journal Spring.NET Article/Code Sample/src/Primes/bin/Debug/Primes.dll&quot; Namespace=Primes Type=PrimeGenerator Member=(Name=GeneratePrimesUpTo OverloadingParameters=[(Assembly=file:///C:/Windows/Microsoft.NET/Framework/v2.0.50727/mscorlib.dll Namespace=System Type=Int32)])"
+                tag="ViewCode" />
+            </referencesInternal>
+            <appliedStereotypesInternal>
+              <stereotypeInstance
+                Id="70e55b5d-f0dd-4006-bd44-be1e71c73321"
+                name="method"
+                profile="CSharpProfile">
+                <propertyInstances>
+                  <stereotypeInstanceHasPropertyInstances
+                    Id="c02d87a7-de1c-4628-b5fb-30dcf3307a5a">
+                    <propertyInstance
+                      Id="6795b6ad-6048-4a39-92d2-315d872ef882"
+                      name="ClrAttributes" />
+                  </stereotypeInstanceHasPropertyInstances>
+                  <stereotypeInstanceHasPropertyInstances
+                    Id="da92e305-60e5-474e-af8f-55403d69631e">
+                    <propertyInstance
+                      Id="72d6ba6e-9d9c-436a-8ae1-02c7cd8adc7d"
+                      name="IsPartial"
+                      value="false" />
+                  </stereotypeInstanceHasPropertyInstances>
+                  <stereotypeInstanceHasPropertyInstances
+                    Id="e116f5f8-361c-40d0-ae28-f9023a495ace">
+                    <propertyInstance
+                      Id="43d26d20-84c8-4af8-900a-7acbb36ea882"
+                      name="IsUnsafe"
+                      value="false" />
+                  </stereotypeInstanceHasPropertyInstances>
+                  <stereotypeInstanceHasPropertyInstances
+                    Id="0f8ef638-69cd-42a8-8396-d7f67b37e83b">
+                    <propertyInstance
+                      Id="bf1409c8-0e18-4331-ac04-c0b271fa0175"
+                      name="PackageVisibility"
+                      value="internal" />
+                  </stereotypeInstanceHasPropertyInstances>
+                  <stereotypeInstanceHasPropertyInstances
+                    Id="94ec00d9-6991-4f69-8e35-8964584cfa60">
+                    <propertyInstance
+                      Id="6d620398-eb79-4c66-833f-d0e7e7688fd5"
+                      name="params"
+                      value="false" />
+                  </stereotypeInstanceHasPropertyInstances>
+                </propertyInstances>
+              </stereotypeInstance>
+            </appliedStereotypesInternal>
+            <ownedParameters>
+              <operationHasOwnedParameters>
+                <parameter
+                  Id="d0519ff4-12ac-4fb0-9f8e-a68ac63e69f9"
+                  direction="Return">
+                  <type_NamedElement>
+                    <primitiveTypeMoniker
+                      Id="59259974-6d55-42c6-b7bd-763d77ac8ef9"
+                      LastKnownName="String"
+                      LastKnownLocation="ModelingProject1.uml" />
+                  </type_NamedElement>
+                </parameter>
+              </operationHasOwnedParameters>
+              <operationHasOwnedParameters>
+                <parameter
+                  Id="5434be7d-cce6-469f-b935-8cb96c7aed3f"
+                  name="max"
+                  direction="In">
+                  <referencesInternal>
+                    <reference
+                      Id="d8ace759-97bd-461e-9351-cfa2e4a7c9e5"
+                      handle="viewcode://./CodeSchema_Parameter?Assembly=&quot;file:///C:/_wrk/Open Source Journal Spring.NET Article/Code Sample/src/Primes/bin/Debug/Primes.dll&quot; Namespace=Primes Type=PrimeGenerator Member=(Name=GeneratePrimesUpTo OverloadingParameters=[(Assembly=file:///C:/Windows/Microsoft.NET/Framework/v2.0.50727/mscorlib.dll Namespace=System Type=Int32)]) ParameterIdentifier=max"
+                      tag="ViewCode" />
+                  </referencesInternal>
+                  <type_NamedElement>
+                    <primitiveTypeMoniker
+                      Id="220a3521-e091-4221-bae9-3ef9018e845c"
+                      LastKnownName="Integer"
+                      LastKnownLocation="ModelingProject1.uml" />
+                  </type_NamedElement>
+                </parameter>
+              </operationHasOwnedParameters>
+            </ownedParameters>
+          </operation>
+          <operation
+            Id="dbde3f8e-f053-48a4-97c9-a6ae364d0a5c"
+            name="PrimeGenerator"
+            isLeaf="false"
+            isStatic="false"
+            isAbstract="false"
+            concurrency="Sequential"
+            isQuery="false">
+            <referencesInternal>
+              <reference
+                Id="06635e6d-0da4-43e1-8a18-7629527fe659"
+                handle="viewcode://./CodeSchema_Method?Assembly=&quot;file:///C:/_wrk/Open Source Journal Spring.NET Article/Code Sample/src/Primes/bin/Debug/Primes.dll&quot; Namespace=Primes Type=PrimeGenerator Member=(Name=.ctor OverloadingParameters=[(Assembly=&quot;file:///C:/_wrk/Open Source Journal Spring.NET Article/Code Sample/src/Primes/bin/Debug/Primes.dll&quot; Namespace=Primes Type=PrimeEvaluationEngine)])"
+                tag="ViewCode" />
+            </referencesInternal>
+            <appliedStereotypesInternal>
+              <stereotypeInstance
+                Id="86965ae7-d863-449d-bfe0-4b2b9cd9fcce"
+                name="method"
+                profile="CSharpProfile">
+                <propertyInstances>
+                  <stereotypeInstanceHasPropertyInstances
+                    Id="566b22be-c370-4fa0-9c77-45e0354e6e73">
+                    <propertyInstance
+                      Id="2ba27120-8b8f-41e6-8882-77b659d03150"
+                      name="ClrAttributes" />
+                  </stereotypeInstanceHasPropertyInstances>
+                  <stereotypeInstanceHasPropertyInstances
+                    Id="e63d8bc8-a354-46ee-a9a2-cbf380030128">
+                    <propertyInstance
+                      Id="5612f070-9bf7-4b18-841b-a85dec1e2003"
+                      name="IsPartial"
+                      value="false" />
+                  </stereotypeInstanceHasPropertyInstances>
+                  <stereotypeInstanceHasPropertyInstances
+                    Id="2fb13eb0-8690-4259-8660-b9a5740ab1c5">
+                    <propertyInstance
+                      Id="f6fe6157-2279-4f47-88df-476911dcab26"
+                      name="IsUnsafe"
+                      value="false" />
+                  </stereotypeInstanceHasPropertyInstances>
+                  <stereotypeInstanceHasPropertyInstances
+                    Id="89e1d774-8345-4596-93a3-73581dbd0c79">
+                    <propertyInstance
+                      Id="8bdec361-e853-41ef-87cd-74458fb20ab5"
+                      name="PackageVisibility"
+                      value="internal" />
+                  </stereotypeInstanceHasPropertyInstances>
+                  <stereotypeInstanceHasPropertyInstances
+                    Id="c7c97919-d787-4c61-a848-d9b6ebe0712b">
+                    <propertyInstance
+                      Id="1e8020ea-e4b1-4bf2-ab29-861c32a11245"
+                      name="params"
+                      value="false" />
+                  </stereotypeInstanceHasPropertyInstances>
+                </propertyInstances>
+              </stereotypeInstance>
+            </appliedStereotypesInternal>
+            <ownedParameters>
+              <operationHasOwnedParameters>
+                <parameter
+                  Id="a79dbf92-1b71-45fe-a728-61ff905c3b33"
+                  name="primeEvaluationEngine"
+                  direction="In">
+                  <referencesInternal>
+                    <reference
+                      Id="e7c61472-9f7f-4b87-b042-5075a616c90e"
+                      handle="viewcode://./CodeSchema_Parameter?Assembly=&quot;file:///C:/_wrk/Open Source Journal Spring.NET Article/Code Sample/src/Primes/bin/Debug/Primes.dll&quot; Namespace=Primes Type=PrimeGenerator Member=(Name=.ctor OverloadingParameters=[(Assembly=&quot;file:///C:/_wrk/Open Source Journal Spring.NET Article/Code Sample/src/Primes/bin/Debug/Primes.dll&quot; Namespace=Primes Type=PrimeEvaluationEngine)]) ParameterIdentifier=primeEvaluationEngine"
+                      tag="ViewCode" />
+                  </referencesInternal>
+                  <type_NamedElement>
+                    <classMoniker
+                      Id="63e45b35-1e86-4a53-b03d-712d6f95bab1"
+                      LastKnownName="PrimeEvaluationEngine"
+                      LastKnownLocation="Package_1138.uml" />
+                  </type_NamedElement>
+                </parameter>
+              </operationHasOwnedParameters>
+            </ownedParameters>
+          </operation>
+        </ownedOperationsInternal>
+      </class>
+    </packageHasNamedElement>
+  </packagedElements>
+</package>

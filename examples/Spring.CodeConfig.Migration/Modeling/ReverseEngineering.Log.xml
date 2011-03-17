@@ -1,0 +1,28 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<?xml-stylesheet type="text/xsl" href="file:///C:/Program Files (x86)/Microsoft Visual Studio 10.0/Common7/IDE/Extensions/Microsoft/Visualization and Modeling Feature Pack/2.0/Logging/ReverseEngineeringLog.xslt"?>
+<Log xmlns="http://schemas.microsoft.com/VisualStudio/2010/CodeGen.RE.Log">
+  <Message Timestamp="2011-02-07T11:48:58" Importance="High" Text="Reverse Engineering Started." />
+  <Message Timestamp="2011-02-07T11:48:59" Importance="Diagnostic" Text="Element reverse engineered into the UML model: 'ModelingProject1::Primes' -  (Package)" />
+  <Message Timestamp="2011-02-07T11:48:59" Importance="Diagnostic" Text="Element reverse engineered into the UML model: 'ModelingProject1::Primes::ConsoleReport' -  (Class)   (partially reverse engineered - definition not updated) " />
+  <Message Timestamp="2011-02-07T11:48:59" Importance="Diagnostic" Text="Element reverse engineered into the UML model: 'ModelingProject1::Primes::IOutputFormatter' -  (Interface)   (partially reverse engineered - definition not updated) " />
+  <Message Timestamp="2011-02-07T11:48:59" Importance="Diagnostic" Text="Element reverse engineered into the UML model: 'ModelingProject1::Primes::IPrimeGenerator' -  (Interface)   (partially reverse engineered - definition not updated) " />
+  <Message Timestamp="2011-02-07T11:48:59" Importance="Diagnostic" Text="Element reverse engineered into the UML model: 'ModelingProject1::Spring' -  (Package)" />
+  <Message Timestamp="2011-02-07T11:48:59" Importance="Diagnostic" Text="Element reverse engineered into the UML model: 'ModelingProject1::Spring::Context' -  (Package)" />
+  <Message Timestamp="2011-02-07T11:48:59" Importance="Diagnostic" Text="Element reverse engineered into the UML model: 'ModelingProject1::Spring::Context::IApplicationContext' -  (Interface)   (partially reverse engineered - definition not updated) " />
+  <Message Timestamp="2011-02-07T11:48:59" Importance="Diagnostic" Text="Element reverse engineered into the UML model: 'ModelingProject1::SpringApp' -  (Package)" />
+  <Message Timestamp="2011-02-07T11:48:59" Importance="Medium" Text="Element reverse engineered into the UML model: 'ModelingProject1::SpringApp::PrimesConfiguration' -  (Class)" />
+  <Message Timestamp="2011-02-07T11:48:59" Importance="Diagnostic" Text="Element reverse engineered into the UML model: 'ModelingProject1::SpringApp::PrimesConfiguration::ConsoleReport' -  (Operation)" />
+  <Message Timestamp="2011-02-07T11:48:59" Importance="Diagnostic" Text="Element reverse engineered into the UML model: 'ModelingProject1::SpringApp::PrimesConfiguration::OutputFormatter' -  (Operation)" />
+  <Message Timestamp="2011-02-07T11:48:59" Importance="Diagnostic" Text="Element reverse engineered into the UML model: 'ModelingProject1::SpringApp::PrimesConfiguration::PrimeGenerator' -  (Operation)" />
+  <Message Timestamp="2011-02-07T11:48:59" Importance="Diagnostic" Text="Element reverse engineered into the UML model: 'ModelingProject1::SpringApp::PrimesConfiguration::PrimesConfiguration' -  (Operation)" />
+  <Message Timestamp="2011-02-07T11:48:59" Importance="Medium" Text="Element reverse engineered into the UML model: 'ModelingProject1::SpringApp::Program' -  (Class)" />
+  <Message Timestamp="2011-02-07T11:48:59" Importance="Diagnostic" Text="Element reverse engineered into the UML model: 'ModelingProject1::SpringApp::Program::CreateContainerUsingCodeConfig' -  (Operation)" />
+  <Message Timestamp="2011-02-07T11:48:59" Importance="Diagnostic" Text="Element reverse engineered into the UML model: 'ModelingProject1::SpringApp::Program::CreateContainerUsingXML' -  (Operation)" />
+  <Message Timestamp="2011-02-07T11:48:59" Importance="Diagnostic" Text="Element reverse engineered into the UML model: 'ModelingProject1::SpringApp::Program::Main' -  (Operation)" />
+  <Message Timestamp="2011-02-07T11:48:59" Importance="Diagnostic" Text="Element reverse engineered into the UML model: 'ModelingProject1::SpringApp::Program::Main::args' -  (Parameter)" />
+  <Message Timestamp="2011-02-07T11:48:59" Importance="Diagnostic" Text="Element reverse engineered into the UML model: 'ModelingProject1::SpringApp::Program::Program' -  (Operation)" />
+  <Message Timestamp="2011-02-07T11:48:59" Importance="Diagnostic" Text="Element reverse engineered into the UML model: 'String' -  (PrimitiveType)" />
+  <Message Timestamp="2011-02-07T11:48:59" Importance="High" Text="(2) type(s) fully reverse engineered." />
+  <Message Timestamp="2011-02-07T11:48:59" Importance="High" Text="(4) type(s) partially reverse engineered.  These types were not included in the original selection so their full definitions are not reverse engineered.  Instead, this shallow operation has simply ensured these types exist in the UML model because they are needed in order to fully describe other elements." />
+  <Message Timestamp="2011-02-07T11:48:59" Importance="High" Text="The reverse engineering operation completed with (0) error(s), and (0) warning(s)." />
+</Log>
