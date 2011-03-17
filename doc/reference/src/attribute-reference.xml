@@ -18,7 +18,7 @@
 
     <para>The <literal>[Configuration]</literal> attribute is applied to
     classes that contain one or more <literal>[Definition]</literal>
-    attributed-menthods. During scanning by the
+    attributed-methods. During scanning by the
     <literal>CodeConfigApplicationContext</literal>, only types having the
     <literal>[Configuration]</literal> attribute will be considered candidates
     to contain Object Definition configurations.</para>
@@ -31,11 +31,13 @@
       <sect3>
         <title>Simple Usage</title>
 
-        <para>The first usage of the <literal>[Configuration]</literal>
-        attribute simply applies the attribute to a class. The name of the of
-        the type, once registered with the
-        <literal>CodeConfigApplicationContext</literal>, will be the name of
-        the class itself.<programlisting language="csharp">[Configuration]
+        <para>The most common usage of the <literal>[Configuration]</literal>
+        attribute simply applies the attribute to a class without any
+        attribute parameters. The name of the of the type, once registered
+        with the <literal>CodeConfigApplicationContext</literal>, will be the
+        name of the class itself. Note that it is not a common use-case to ask
+        the container for this configuration class.<programlisting
+        language="csharp">[Configuration]
 public class MyConfigurationClass
 {
   //[Definition] methods here
@@ -174,7 +176,9 @@ public class MyConfigurationClass
     <literal>[Definition]</literal>-attributed method to declare a
     construction sequence dependency upon one or more objects that the
     <literal>CodeConfigApplicationContext</literal> will ensure are created
-    prior to the creation of the current object.</para>
+    prior to the creation of the current object. This is only required if
+    there is a hidden depedency between the two classes that isn't exposed via
+    constructor or setter properties.</para>
 
     <sect2>
       <title>Using the DependsOn Attribute</title>
@@ -203,7 +207,7 @@ public class MyConfigurationClass
   public virtual AboutController AboutController()
   {
     return new AboutController();
-  }
+  }b
 }</programlisting>
       </sect3>
     </sect2>

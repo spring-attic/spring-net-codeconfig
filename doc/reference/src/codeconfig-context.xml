@@ -19,10 +19,10 @@
   files. For a general overview on the design of the Spring.NET container
   please see <link
   ns4:href="http://www.springframework.net/doc-latest/reference/html/objects.html#objects-basics">container
-  overview</link>. The distribution includes two sample applications, a
-  console application MovieFinder and a ASP.NET MVC web application. Refer to
-  the <link linkend="sample-apps">examples section</link> for more
-  information.</para>
+  overview</link>. The distribution includes three sample applications, two
+  console applications (the familiar MovieFinder and a prime number generator)
+  and a ASP.NET MVC web application. Refer to the <link
+  linkend="sample-apps">examples section</link> for more information.</para>
 
   <note>
     <para>The code-based configuration support requires .NET 2.0 or higher and
@@ -45,8 +45,12 @@
     <literal>[Configuration]</literal> attribute, parses them to construct
     appropriate <literal>ObjectDefinition</literal> instances, and registers
     those Object Definitions with the <literal>IApplicationContext</literal>
-    for use. You can also mix-and-match configuration sources, with some
-    object definitions coming from XML and others from code.</para>
+    for use. The default folder for scanning is the runtime directory and
+    scanning is done using the 'ReflectionOnly' facilities in the BCL so only
+    the assemblies that have the <literal>[Configuration]</literal> attribute
+    will be loaded into the AppDomain. You can also mix-and-match
+    configuration sources, with some object definitions coming from XML and
+    others from code.</para>
 
     <sect2>
       <title>Using the CodeConfigApplicationContext</title>
@@ -72,7 +76,8 @@
 
         <listitem>
           <para>Initialize (refresh) the
-          <literal>CodeConfigApplicationContext</literal></para>
+          <literal>CodeConfigApplicationContext</literal> which creates the
+          object definition and eagerly instantiates singleton objects.</para>
         </listitem>
       </orderedlist>
 
@@ -125,15 +130,33 @@
 
 &lt;/configuration&gt;</programlisting>
 
-      <para></para>
+      <para>You can also start from a CodeConfig class and import XML based
+      object defintions. The example below shows loading of an embedded XML
+      resource file using the <literal>[ImportResource]</literal>
+      attribute.</para>
+
+      <programlisting>[Configuration]
+[ImportResource("assembly://MyApp/MyApp.MyNamespace.MyConfig/ObjectDefinitions.xml"))]
+public class DataModuleConfigurationClass
+{
+    [Definition]
+    public virtual SomeType SomeType()
+    {
+        return new SomeType();
+    }
+}</programlisting>
     </sect2>
   </sect1>
 
   <sect1>
     <title>Scanning Basics</title>
 
-    <para>The behavior of the <literal>CodeConfigApplicationContext</literal>
-    scanning operation can be controlled by the following constraints:</para>
+    <para>The default folder for scanning is the runtime directory and
+    scanning is done using the 'ReflectionOnly' facilities in the BCL so only
+    the assemblies that have the <literal>[Configuration]</literal> attribute
+    will be loaded into the AppDomain. The behavior of the
+    <literal>CodeConfigApplicationContext</literal> scanning operation can be
+    controlled by the following constraints:</para>
 
     <itemizedlist>
       <listitem>
