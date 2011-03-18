@@ -135,7 +135,7 @@
       resource file using the <literal>[ImportResource]</literal>
       attribute.</para>
 
-      <programlisting>[Configuration]
+      <programlisting language="csharp">[Configuration]
 [ImportResource("assembly://MyApp/MyApp.MyNamespace.MyConfig/ObjectDefinitions.xml"))]
 public class DataModuleConfigurationClass
 {
@@ -262,16 +262,12 @@ ctx.Refresh();</programlisting>
               Predicate&lt;Assembly&gt; assemblyPredicate,
               Predicate&lt;Type&gt; typePredicate)</literal></entry>
 
-              <entrytbl cols="1">
-                <tbody>
-                  <row>
+              
                     <entry>Scans the provided
                     <literal>assemblyScanPath</literal> for assemblies that
                     match the <literal>assemblyPredicate</literal> and types
                     that match the <literal>typePredicate</literal></entry>
-                  </row>
-                </tbody>
-              </entrytbl>
+           
             </row>
 
             <row>
@@ -279,30 +275,22 @@ ctx.Refresh();</programlisting>
               assemblyPredicate, Predicate&lt;Type&gt;
               typePredicate)</literal></entry>
 
-              <entrytbl cols="1">
-                <tbody>
-                  <row>
+        
                     <entry>Scans the AppDomain root path for assemblies that
                     match the <literal>assemblyPredicate</literal> and types
                     that match the <literal>typePredicate</literal></entry>
-                  </row>
-                </tbody>
-              </entrytbl>
+           
             </row>
 
             <row>
               <entry><literal>Scan(AssemblyObjectDefinitionScanner
               scanner)</literal></entry>
 
-              <entrytbl cols="1">
-                <tbody>
-                  <row>
+              
                     <entry>Performs the scan using the settings encapsulated
                     in the provided
                     <literal>ObjectDefintionScanner</literal></entry>
-                  </row>
-                </tbody>
-              </entrytbl>
+              
             </row>
           </tbody>
         </tgroup>
