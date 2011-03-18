@@ -42,12 +42,12 @@
     populate the metadata model. In the case of CodeConfig, the
     <literal>CodeConfigApplicationContext</literal> scans one or more folders
     for assemblies containing one or more types attributed with the
-    <literal>[Configuration]</literal> attribute, parses them to construct
+    <link linkend="configuration-attribute-reference"><literal>[Configuration]</literal></link> attribute, parses them to construct
     appropriate <literal>ObjectDefinition</literal> instances, and registers
     those Object Definitions with the <literal>IApplicationContext</literal>
     for use. The default folder for scanning is the runtime directory and
     scanning is done using the 'ReflectionOnly' facilities in the BCL so only
-    the assemblies that have the <literal>[Configuration]</literal> attribute
+    the assemblies that have the <link linkend="configuration-attribute-reference"><literal>[Configuration]</literal></link> attribute
     will be loaded into the AppDomain. You can also mix-and-match
     configuration sources, with some object definitions coming from XML and
     others from code.</para>
@@ -153,7 +153,7 @@ public class DataModuleConfigurationClass
 
     <para>The default folder for scanning is the runtime directory and
     scanning is done using the 'ReflectionOnly' facilities in the BCL so only
-    the assemblies that have the <literal>[Configuration]</literal> attribute
+    the assemblies that have the <link linkend="configuration-attribute-reference"><literal>[Configuration]</literal></link> attribute
     will be loaded into the AppDomain. The behavior of the
     <literal>CodeConfigApplicationContext</literal> scanning operation can be
     controlled by the following constraints:</para>
@@ -420,10 +420,10 @@ ctx.ScanWithTypeFilter(type =&gt; type.FullName.Contains("Config");</programlist
           <para>There is always an implicit additional <emphasis>Type
           Inclusion Constraint</emphasis> of "...and the
           <literal>Type</literal> must have the
-          <literal>[Configuration]</literal> attribute applied to it"</para>
+          <link linkend="configuration-attribute-reference"><literal>[Configuration]</literal></link> attribute applied to it"</para>
 
           <para>No Type that does not have the
-          <literal>[Configuration]</literal> attribute applied to its
+          <link linkend="configuration-attribute-reference"><literal>[Configuration]</literal></link> attribute applied to its
           declaration will ever be scanned regardless of any <emphasis>Type
           Inclusion Constraint</emphasis>.</para>
         </listitem>

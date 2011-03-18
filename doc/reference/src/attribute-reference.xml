@@ -16,11 +16,11 @@
   <sect1 xml:id="configuration-attribute-reference">
     <title>[Configuration] Attribute</title>
 
-    <para>The <literal>[Configuration]</literal> attribute is applied to
-    classes that contain one or more <literal>[Definition]</literal>
+    <para>The <literal><link linkend="configuration-attribute-reference">[Configuration]</link></literal> attribute is applied to
+    classes that contain one or more <literal><link linkend="definition-attribute-reference">[Definition]</link></literal>
     attributed-methods. During scanning by the
     <literal>CodeConfigApplicationContext</literal>, only types having the
-    <literal>[Configuration]</literal> attribute will be considered candidates
+    <literal><link linkend="configuration-attribute-reference">[Configuration]</link></literal> attribute will be considered candidates
     to contain Object Definition configurations.</para>
 
     <sect2>
@@ -31,7 +31,7 @@
       <sect3>
         <title>Simple Usage</title>
 
-        <para>The most common usage of the <literal>[Configuration]</literal>
+        <para>The most common usage of the <literal><link linkend="configuration-attribute-reference">[Configuration]</link></literal>
         attribute simply applies the attribute to a class without any
         attribute parameters. The name of the of the type, once registered
         with the <literal>CodeConfigApplicationContext</literal>, will be the
@@ -50,7 +50,7 @@ public class MyConfigurationClass
         <para>While not a common use-case, if you need fine-grained control
         over the name of the type registered with the
         <literal>CodeConfigApplicationContext</literal>, the
-        <literal>[Configuration]</literal> attribute accepts a
+        <literal><link linkend="configuration-attribute-reference">[Configuration]</link></literal> attribute accepts a
         <literal>Name</literal> parameter which will be applied to the
         registered Object Definition in the
         <literal>CodeConfigApplicationContext</literal>.<programlisting
@@ -66,11 +66,11 @@ public class MyConfigurationClass
   <sect1 xml:id="definition-attribute-reference">
     <title>[Definition] Attribute</title>
 
-    <para>The <literal>[Definition]</literal> attribute is applied to one or
+    <para>The <literal><link linkend="definition-attribute-reference">[Definition]</link></literal> attribute is applied to one or
     more methods within any class to which the
-    <literal>[Configuration]</literal> attribute has been applied. During
+    <literal><link linkend="configuration-attribute-reference">[Configuration]</link></literal> attribute has been applied. During
     scanning, any <literal>public virtual</literal> method having the
-    <literal>[Definition]</literal> attribute is considered to contain Object
+    <literal><link linkend="definition-attribute-reference">[Definition]</link></literal> attribute is considered to contain Object
     Definition metadata.</para>
 
     <sect2>
@@ -81,7 +81,7 @@ public class MyConfigurationClass
       <sect3>
         <title>Simple Usage</title>
 
-        <para>The first usage of the <literal>[Definition]</literal> attribute
+        <para>The first usage of the <literal><link linkend="definition-attribute-reference">[Definition]</link></literal> attribute
         simply applies the attribute to the method. The name of the of the
         Object to be registered with the
         <literal>CodeConfigApplicationContext</literal>, will be the name of
@@ -101,7 +101,7 @@ public class MyConfigurationClass
 
         <para>If you need to control the name of the Object registered with
         the <literal>CodeConfigApplicationContext</literal>, the
-        <literal>[Definition]</literal> attribute accepts one or more
+        <literal><link linkend="definition-attribute-reference">[Definition]</link></literal> attribute accepts one or more
         comma-delimited names as aliases for the Object when
         registered.</para>
 
@@ -126,7 +126,7 @@ public class MyConfigurationClass
         <title>Setting an Init Method for the Object</title>
 
         <para>If you need to declare an Initialization Method for the object
-        definition, the <literal>[Definition]</literal> attribute accepts a
+        definition, the <literal><link linkend="definition-attribute-reference">[Definition]</link></literal> attribute accepts a
         method name to be invoked at the appropriate stage in the object's
         creation by the
         <literal>CodeConfigApplicationContext</literal>.</para>
@@ -151,7 +151,7 @@ public class MyConfigurationClass
         <title>Setting a Destroy Method for the Object</title>
 
         <para>If you need to declare a Destroy Method for the object
-        definition, the <literal>[Definition]</literal> attribute accepts a
+        definition, the <literal><link linkend="definition-attribute-reference">[Definition]</link></literal> attribute accepts a
         method name to be invoked at the appropriate stage in the object's
         destruction by the
         <literal>CodeConfigApplicationContext</literal>.</para>
@@ -173,7 +173,7 @@ public class MyConfigurationClass
     <title>[DependsOn] Attribute</title>
 
     <para>The <literal>[DependsOn]</literal> attribute can be applied to any
-    <literal>[Definition]</literal>-attributed method to declare a
+    <literal><link linkend="definition-attribute-reference">[Definition]</link></literal>-attributed method to declare a
     construction sequence dependency upon one or more objects that the
     <literal>CodeConfigApplicationContext</literal> will ensure are created
     prior to the creation of the current object. This is only required if
@@ -231,7 +231,7 @@ public class MyConfigurationClass
         <para>To support your specifying additional types to scan, the
         <literal>[Import]</literal> attribute accepts an array of one or more
         Types to scan as well. To be candidates for scanning, the types listed
-        in this array must also have the <literal>[Configuration]</literal>
+        in this array must also have the <literal><link linkend="configuration-attribute-reference">[Configuration]</link></literal>
         attribute applied to them. Note that no error is reported if these
         types lack the<literal>[Configuration</literal>] attribute, but
         without it they will not satisfy the scanner's requirements for
@@ -278,7 +278,7 @@ public class MyThirdConfiguration
         to specify perhaps only a single 'root' class from which to 'begin'
         the scan and leverage the <literal>[Import]</literal> attribute to
         'chain' successive types into the scanning scope, transitively
-        pointing from one <literal>[Configuration]</literal>-attributed type
+        pointing from one <literal><link linkend="configuration-attribute-reference">[Configuration]</link></literal>-attributed type
         to the next as in the following example where
         <literal>MyConfigurationClass</literal> has an
         <literal>[Import]</literal> attribute pointing to the
@@ -323,11 +323,11 @@ public class MyThirdConfiguration
         <literal>CodeConfigApplicationContext</literal> would only need to be
         told to scan the single <literal>MyConfigurationClass</literal> type
         in order to effectively scan and discover the
-        <literal>[Definition]</literal> methods contained all three
-        <literal>[Configuration]</literal> types. Using this approach, its
+        <literal><link linkend="definition-attribute-reference">[Definition]</link></literal> methods contained all three
+        <literal><link linkend="configuration-attribute-reference">[Configuration]</link></literal> types. Using this approach, its
         possible to use a compositional approach to segregate
-        <literal>[Definition]</literal> methods into multiple<literal>
-        [Configuration]</literal> classes and then chain them together just as
+        <literal><link linkend="definition-attribute-reference">[Definition]</link></literal> methods into multiple<literal>
+        <link linkend="configuration-attribute-reference">[Configuration]</link></literal> classes and then chain them together just as
         one might do with XML based configuration files for many of the other
         <literal>IApplicationContext</literal> implementations.</para>
       </sect3>
@@ -339,7 +339,7 @@ public class MyThirdConfiguration
 
     <para>Just as the <literal>[Import]</literal> attribute provides the
     ability to reference and import additional types attributed with the
-    <literal>[Configuration] </literal>attribute, the
+    <literal><link linkend="configuration-attribute-reference">[Configuration]</link> </literal>attribute, the
     <literal>[ImportResrource]</literal> attribute permits referencing and
     importing Object Defintions from any <literal>IResource</literal>
     implementation including those defined natively in Spring.NET
@@ -434,7 +434,7 @@ public class MyConfigurationClass
     <title>[Lazy] Attribute</title>
 
     <para>The <literal>[Lazy]</literal> attribute allows you to specify that
-    the object described by the <literal>[Definition]</literal> should either
+    the object described by the <literal><link linkend="definition-attribute-reference">[Definition]</link></literal> should either
     be be lazily or eagerly instantiated.</para>
 
     <sect2>
@@ -448,14 +448,14 @@ public class MyConfigurationClass
         <para>To specify Lazy Instantiation of any singleton object by the
         <literal>CodeConfigApplicationContext</literal>, apply the<literal>
         [Lazy] </literal>attribute to any
-        <literal>[Definition]</literal>-attributed method as in the following
+        <literal><link linkend="definition-attribute-reference">[Definition]</link></literal>-attributed method as in the following
         example. Note that the default usage of the<literal>[Lazy]</literal>
         attribute sets Lazy = true and so <literal>[Lazy]</literal> and
         <literal>[Lazy(true)]</literal> are considered functionally
         equivalent. Also note that specification of lazy instantiation is only
         valid for Singleton-scoped objects; any attempt to apply the
         <literal>[Lazy]</literal> attribute to a non-singleton-scoped
-        <literal>[Definition]</literal> method will result in an exception
+        <literal><link linkend="definition-attribute-reference">[Definition]</link></literal> method will result in an exception
         thrown by the underlying ApplicationContext.</para>
 
         <programlisting language="csharp">[Configuration]
@@ -488,7 +488,7 @@ public class MyConfigurationClass
         <literal>[Lazy]</literal> attribute will accept a
         <literal>bool</literal> value of <literal>false</literal> if you
         desire to be explicit about the <literal>[Lazy]</literal> setting for
-        the <literal>[Definition] </literal>as shown in the following code
+        the <literal><link linkend="definition-attribute-reference">[Definition]</link> </literal>as shown in the following code
         snippet.</para>
 
         <programlisting language="csharp">[Configuration]
@@ -510,7 +510,7 @@ public class MyConfigurationClass
 
     <para>The [Scope] attribute permits you to declare the lifetime of the
     object managed by the <literal>CodeConfigApplicationContext</literal> for
-    each <literal>[Definition]</literal>-attributed method.</para>
+    each <literal><link linkend="definition-attribute-reference">[Definition]</link></literal>-attributed method.</para>
 
     <sect2>
       <title>Scope Attribute Usage</title>
