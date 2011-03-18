@@ -11,11 +11,11 @@
   <sect1>
     <title>A Dependency Injection Example</title>
 
-    <para>We will introduce this new approach by working with a very simple
-    application that will provide us the context to understand the concepts of
-    CodeConfig. We start by examining a sample application that uses
-    Spring.NET configured via ‘traditional’ XML configuration files. Then we
-    show how CodeConfig can be used to achieve the same results without any
+    <para>We will introduce the new code based approach by working with a very
+    simple application that will provide us the context to understand the
+    concepts of CodeConfig. We start by examining a sample application that
+    uses Spring.NET configured via ‘traditional’ XML configuration files. Then
+    we show how CodeConfig can be used to achieve the same results without any
     XML configuration files at all.</para>
 
     <para>To begin with, let’s explore the sample application that we will be
@@ -145,10 +145,10 @@ private static IApplicationContext CreateContainerUsingXML()
     configuration for Spring.NET over to use the CodeConfig approach.</para>
 
     <sect2>
-      <title>The CodeConfig Class(es)</title>
+      <title>The CodeConfig Classes</title>
 
       <sect3>
-        <title>Creating the CodeConfig Class(es)</title>
+        <title>Creating the CodeConfig Classes</title>
 
         <para>First, we need to construct one or more classes to contain our
         configuration metadata and attribute them properly. Spring.NET
@@ -191,7 +191,7 @@ namespace SpringApp
       </sect3>
 
       <sect3>
-        <title>Elements of the CodeConfig Class(es)</title>
+        <title>Elements of the CodeConfig Classes</title>
 
         <para>Let’s explore the important elements of the CodeConfig file in
         Listing 4 to understand how it can convey the same information to the
