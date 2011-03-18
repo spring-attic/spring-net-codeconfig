@@ -19,10 +19,14 @@
     XML configuration files at all.</para>
 
     <para>To begin with, let’s explore the sample application that we will be
-    working with. To keep things simple, it’s a .NET console application
-    designed to calculate and display the prime numbers between zero and an
-    arbitrary maximum number. There are four classes that must collaborate
-    together to do the work: <literal>ConsoleReporter</literal>,
+    working with. This sample app is included in the Spring.NET CodeConfig
+    download package in the
+    <literal>/examples/Spring.CodeConfig.Migration</literal> folder.</para>
+
+    <para>To keep things simple, it’s just a .NET console application designed
+    to calculate and display the prime numbers between zero and an arbitrary
+    maximum number. There are four classes that must collaborate together to
+    do the work: <literal>ConsoleReporter</literal>,
     <literal>PrimeGenerator</literal>,
     <literal>PrimeEvaluationEngine</literal>, and
     <literal>OutputFormatter</literal>. <literal>ConsoleReporter</literal>
@@ -232,25 +236,29 @@ namespace SpringApp
 
           <para>To begin understanding how this works let’s look at the
           simplest of the definitions, that of the OutputFormatter. Let’s
-          start with the method visibility: all
-          <link linkend="definition-attribute-reference"><literal>[Definition]</literal></link> methods must be declared both public
-          and virtual.</para>
+          start with the method visibility: all <link
+          linkend="definition-attribute-reference"><literal>[Definition]</literal></link>
+          methods must be declared both public and virtual.</para>
 
           <sidebar>
             <title>Why must the [Definition] methods be virtual?</title>
 
-            <para>The requirement for the <link linkend="definition-attribute-reference"><literal>[Definition]</literal></link> methods being virtual comes from the need when using
-            CodeConfig for the container to proxy
-            <link linkend="definition-attribute-reference"><literal>[Definition]</literal></link> methods on the
-            <link linkend="configuration-attribute-reference"><literal>[Configuration]</literal></link> classes. When the container is
-            asked for an object, this proxy intercepts the invocation of the
-            <link linkend="definition-attribute-reference"><literal>[Definition]</literal></link> methods and ensures that requests
-            for objects respect object scoping rules like singleton and
-            prototype. Singleton scope ensures that if you ask the container
-            multiple times for the same named object, it will always return
-            the same instance rather than a new one each time. Singleton scope
-            is common in server-side programming and is the default lifecycle
-            in Spring.NET.</para>
+            <para>The requirement for the <link
+            linkend="definition-attribute-reference"><literal>[Definition]</literal></link>
+            methods being virtual comes from the need when using CodeConfig
+            for the container to proxy <link
+            linkend="definition-attribute-reference"><literal>[Definition]</literal></link>
+            methods on the <link
+            linkend="configuration-attribute-reference"><literal>[Configuration]</literal></link>
+            classes. When the container is asked for an object, this proxy
+            intercepts the invocation of the <link
+            linkend="definition-attribute-reference"><literal>[Definition]</literal></link>
+            methods and ensures that requests for objects respect object
+            scoping rules like singleton and prototype. Singleton scope
+            ensures that if you ask the container multiple times for the same
+            named object, it will always return the same instance rather than
+            a new one each time. Singleton scope is common in server-side
+            programming and is the default lifecycle in Spring.NET.</para>
           </sidebar>
 
           <para>The method return type, <literal>IOutputFormatter</literal>,
@@ -259,8 +267,9 @@ namespace SpringApp
           <literal>OutputFormatter</literal>, is the equivalent of the id or
           name that will be assigned to the object in the container. This name
           can also be controlled by setting the <literal>Names</literal>
-          property on the <link linkend="definition-attribute-reference"><literal>[Definition]</literal></link> attribute
-          itself.</para>
+          property on the <link
+          linkend="definition-attribute-reference"><literal>[Definition]</literal></link>
+          attribute itself.</para>
 
           <para>The body of the <literal>OutputFormatter()</literal> method
           simply creates a new instance of the
@@ -275,14 +284,14 @@ namespace SpringApp
         <sect4>
           <title>More Complex Methods</title>
 
-          <para>To understand a slightly more complex
-          <link linkend="definition-attribute-reference"><literal>[Definition]</literal></link> method, let’s now examine the
-          <literal>PrimeGenerator()</literal> method. Given what we already
-          know about CodeConfig, it’s easy to see that the
-          <literal>PrimeGenerator()</literal> method describes an Object
-          Definition that will be registered with the container under the name
-          “<literal>PrimeGenerator</literal>” (the method name) and the type
-          <literal>IPrimeGenerator</literal> (the return type of the
+          <para>To understand a slightly more complex <link
+          linkend="definition-attribute-reference"><literal>[Definition]</literal></link>
+          method, let’s now examine the <literal>PrimeGenerator()</literal>
+          method. Given what we already know about CodeConfig, it’s easy to
+          see that the <literal>PrimeGenerator()</literal> method describes an
+          Object Definition that will be registered with the container under
+          the name “<literal>PrimeGenerator</literal>” (the method name) and
+          the type <literal>IPrimeGenerator</literal> (the return type of the
           method).</para>
 
           <para>The method needs to return a new
@@ -298,7 +307,8 @@ namespace SpringApp
           <literal>PrimeEvaluationEngine</literal> is satisfied in much the
           same way as when coded ‘by hand’ as shown in Listing 1.</para>
 
-          <para>As a slightly more complex <link linkend="definition-attribute-reference"><literal>[Definition]</literal></link>
+          <para>As a slightly more complex <link
+          linkend="definition-attribute-reference"><literal>[Definition]</literal></link>
           example, let’s examine the <literal>ConsoleReport()</literal> method
           next. This method needs to return a new
           <literal>ConsoleReport</literal> instance, but as with the
@@ -308,19 +318,22 @@ namespace SpringApp
           <literal>IOutputFormatter</literal> instance and an
           <literal>IPrimeGenerator</literal> instance be provided. In our call
           to new up an instance of the <literal>ConsoleReport</literal> class
-          in the <literal>ConsoleReport()</literal> <link linkend="definition-attribute-reference"><literal>[Definition]</literal></link> method, we
-          are invoking the other <link linkend="definition-attribute-reference"><literal>[Definition]</literal></link> methods
-          themselves to return these types. Since these other methods in turn
-          return <literal>IOutputFormatter</literal> and
+          in the <literal>ConsoleReport()</literal> <link
+          linkend="definition-attribute-reference"><literal>[Definition]</literal></link>
+          method, we are invoking the other <link
+          linkend="definition-attribute-reference"><literal>[Definition]</literal></link>
+          methods themselves to return these types. Since these other methods
+          in turn return <literal>IOutputFormatter</literal> and
           <literal>IPrimeGenerator</literal> instances respectively, calls to
           these other methods will satisfy the constructor dependency of the
           <literal>ConsoleReport</literal> class and thus permit us to create
           a new <literal>ConsoleReport</literal> to return at the end of the
           <literal>ConsoleReport()</literal> method itself. In this manner, we
           are delegating from one <literal>[Definition] </literal>method to
-          the other <link linkend="definition-attribute-reference"><literal>[Definition]</literal></link> methods to create the
-          object graph that we seek to return from the call to the
-          <literal>ConsoleReport()</literal> method.</para>
+          the other <link
+          linkend="definition-attribute-reference"><literal>[Definition]</literal></link>
+          methods to create the object graph that we seek to return from the
+          call to the <literal>ConsoleReport()</literal> method.</para>
         </sect4>
 
         <sect4>
@@ -355,12 +368,14 @@ namespace SpringApp
       instead. Just as the <literal>XmlApplicationContext</literal> is
       designed to use XML as the initial entry point to its configuration
       settings, the <literal>CodeConfigApplicationContext</literal> is
-      designed to scan assemblies for <link linkend="configuration-attribute-reference"><literal>[Configuration]</literal></link>
-      classes and <link linkend="definition-attribute-reference"><literal>[Definition]</literal></link> methods as the initial entry
-      point to its configuration settings. Listing 5 shows the<literal>
-      CreateContainerUsingCodeConfig()</literal> method from the
-      <literal>Program.cs</literal> file in the sample application that
-      demonstrates this process.</para>
+      designed to scan assemblies for <link
+      linkend="configuration-attribute-reference"><literal>[Configuration]</literal></link>
+      classes and <link
+      linkend="definition-attribute-reference"><literal>[Definition]</literal></link>
+      methods as the initial entry point to its configuration settings.
+      Listing 5 shows the<literal> CreateContainerUsingCodeConfig()</literal>
+      method from the <literal>Program.cs</literal> file in the sample
+      application that demonstrates this process.</para>
 
       <programlisting language="csharp">//Listing 5 (bootstrapping the CodeConfigApplicationContext from Program.cs)
 private static IApplicationContext CreateContainerUsingCodeConfig()
@@ -374,16 +389,20 @@ private static IApplicationContext CreateContainerUsingCodeConfig()
       <para>After instantiating the
       <literal>CodeConfigApplicationContext</literal>, we next invoke the
       <literal>ScanAllAssemblies() </literal>method to perform the scanning
-      for the <link linkend="configuration-attribute-reference"><literal>[Configuration]</literal></link>-attributed classes and
-      <link linkend="definition-attribute-reference"><literal>[Definition]</literal></link>-attributed methods within our project.
-      Lastly, the container is initialized by calling the
-      <literal>Refresh()</literal> method and then the ready-to-use context is
-      returned from the method. In the invocation of the
-      <literal>ScanAllAssemblies()</literal> method, we are asking the
+      for the <link
+      linkend="configuration-attribute-reference"><literal>[Configuration]</literal></link>-attributed
+      classes and <link
+      linkend="definition-attribute-reference"><literal>[Definition]</literal></link>-attributed
+      methods within our project. Lastly, the container is initialized by
+      calling the <literal>Refresh()</literal> method and then the
+      ready-to-use context is returned from the method. In the invocation of
+      the <literal>ScanAllAssemblies()</literal> method, we are asking the
       <literal>CodeConfigApplicationContext</literal> to scan the current
       AppDomain’s root folder and all subfolders recursively for all
       assemblies that might contain CodeConfig classes (classes having the
-      <link linkend="configuration-attribute-reference"><literal>[Configuration]</literal></link> attribute).</para>
+      <link
+      linkend="configuration-attribute-reference"><literal>[Configuration]</literal></link>
+      attribute).</para>
     </sect2>
   </sect1>
 
@@ -392,7 +411,10 @@ private static IApplicationContext CreateContainerUsingCodeConfig()
 
     <para>The example in Listing 4 and Listing 5 demonstrates only the most
     basic use-cases for CodeConfig. More granular control over each of the
-    definitions is provided by applying additional attributes to the <link linkend="configuration-attribute-reference"><literal>[Configuration]</literal></link> classes and <link linkend="definition-attribute-reference"><literal>[Definition]</literal></link>
+    definitions is provided by applying additional attributes to the <link
+    linkend="configuration-attribute-reference"><literal>[Configuration]</literal></link>
+    classes and <link
+    linkend="definition-attribute-reference"><literal>[Definition]</literal></link>
     methods and by setting various values on these attributes. Among these are
     the following:</para>
 
@@ -400,28 +422,34 @@ private static IApplicationContext CreateContainerUsingCodeConfig()
       <listitem>
         <para><literal><link
         linkend="scope-attribute-reference">[Scope]</link></literal> for
-        controlling object lifecycle settings on a <link linkend="definition-attribute-reference"><literal>[Definition]</literal></link> such as singleton, prototype, etc.</para>
+        controlling object lifecycle settings on a <link
+        linkend="definition-attribute-reference"><literal>[Definition]</literal></link>
+        such as singleton, prototype, etc.</para>
       </listitem>
 
       <listitem>
         <para><literal><link
         linkend="import-attribute-reference">[Import]</link> </literal>for
-        chaining <link linkend="configuration-attribute-reference"><literal>[Configuration]</literal></link> classes together so that
-        you can logically divide your <link linkend="definition-attribute-reference"><literal>[Definition]</literal></link> methods
-        among multiple classes in much the same way you may do so with
+        chaining <link
+        linkend="configuration-attribute-reference"><literal>[Configuration]</literal></link>
+        classes together so that you can logically divide your <link
+        linkend="definition-attribute-reference"><literal>[Definition]</literal></link>
+        methods among multiple classes in much the same way you may do so with
         multiple XML files that provide pointers to other XML files</para>
       </listitem>
 
       <listitem>
         <para><literal><link
         linkend="importresource-attribute-reference">[ImportResource]</link></literal>
-        for combining <link linkend="configuration-attribute-reference"><literal>[Configuration]</literal></link> classes with any of
-        Spring.NET’s many implementations of its <literal>IResource</literal>
-        abstraction (file://, assembly://, etc.), the most common one being an
-        XML resource so that you can define part of your configuration
-        metadata in <link linkend="configuration-attribute-reference"><literal>[Configuration]</literal></link> classes and other parts
-        of it in XML files as either embedded resource(s) in your assemblies
-        or as file(s) on disk.</para>
+        for combining <link
+        linkend="configuration-attribute-reference"><literal>[Configuration]</literal></link>
+        classes with any of Spring.NET’s many implementations of its
+        <literal>IResource</literal> abstraction (file://, assembly://, etc.),
+        the most common one being an XML resource so that you can define part
+        of your configuration metadata in <link
+        linkend="configuration-attribute-reference"><literal>[Configuration]</literal></link>
+        classes and other parts of it in XML files as either embedded
+        resource(s) in your assemblies or as file(s) on disk.</para>
       </listitem>
 
       <listitem>
@@ -440,13 +468,15 @@ private static IApplicationContext CreateContainerUsingCodeConfig()
     </itemizedlist>
 
     <para>In addition, finer-grained control of the root path within which to
-    begin the scan, specific assemblies to scan, and specific
-    <link linkend="configuration-attribute-reference"><literal>[Configuration]</literal></link> classes to include and/or exclude is
-    supported by the scanning API. It is also possible to compose
-    configurations by dividing your <link linkend="definition-attribute-reference"><literal>[Definition]</literal></link> methods
-    into multiple different <link linkend="configuration-attribute-reference"><literal>[Configuration]</literal></link> classes and
-    then to assemble them as building blocks to configure your container as it
-    is initialized.</para>
+    begin the scan, specific assemblies to scan, and specific <link
+    linkend="configuration-attribute-reference"><literal>[Configuration]</literal></link>
+    classes to include and/or exclude is supported by the scanning API. It is
+    also possible to compose configurations by dividing your <link
+    linkend="definition-attribute-reference"><literal>[Definition]</literal></link>
+    methods into multiple different <link
+    linkend="configuration-attribute-reference"><literal>[Configuration]</literal></link>
+    classes and then to assemble them as building blocks to configure your
+    container as it is initialized.</para>
 
     <para>The CodeConfig approach enables us to express the same configuration
     metadata to our Dependency Injection container as the XML file in Listing
