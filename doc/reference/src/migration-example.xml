@@ -490,4 +490,211 @@ private static IApplicationContext CreateContainerUsingCodeConfig()
     CodeConfig in even more flexible ways in the near future including
     convention-based registration of objects.</para>
   </sect1>
+
+  <sect1>
+    <title>Organizing and Composing Multiple [Configuration] Classes</title>
+
+    <para>The <link linkend="sample-apps">examples</link> referenced in this
+    document and provided in this distribution almost all employ merely a
+    single <link
+    linkend="configuration-attribute-reference">[Configuration]</link> class
+    from which their ApplicationContext is to be configured. For these simple
+    examples this approach is viable but just as is the case when configuring
+    the ApplicationContext via XML, any significantly complex solution is
+    likely to require separating your <link
+    linkend="definition-attribute-reference">[Definition]</link> methods into
+    multiple <link
+    linkend="configuration-attribute-reference">[Configuration]</link>
+    classes.</para>
+
+    <para>Just as there are several strategies for effectively managing
+    multiple XML configuration files, so too are there many options available
+    to the developer to organize and compose multiple <link
+    linkend="configuration-attribute-reference">[Configuration]</link> classes
+    together in a larger solution. This section doesn't attempt to cover all
+    of the available options in deep detail, but is intended to provide a
+    high-level understanding of some of the techniques that can be combined
+    together to help manage multiple such classes. Users familair with the
+    common techniques for composing together multiple XML configuration files
+    for Spring.NET will recognize some of these same patterns applied to <link
+    linkend="configuration-attribute-reference">[Configuration]</link> classes
+    in the following sections as well.</para>
+
+    <sect2>
+      <title>Multiple Stand-Alone Configuration Classes</title>
+
+      <para>The simplest organization approach is providing multiple
+      stand-alone <link
+      linkend="configuration-attribute-reference">[Configuration]</link>
+      classes. In this scenario, <link
+      linkend="definition-attribute-reference">[Definition]</link> methods are
+      organized into separate <link
+      linkend="configuration-attribute-reference">[Configuration]</link>
+      classes but each of the <link
+      linkend="configuration-attribute-reference">[Configuration]</link>
+      classes is entirely self-contained and unrealted to the others. The
+      decomposition principles can of course be anything of your choosing. One
+      simple possibility might be to divide your configuration data between
+      different kinds of services as in the following example:</para>
+
+      <programlisting language="csharp">[Configuration]
+public class WcfServicesConfigurations
+{
+     [Definition]
+     public virtual IWebService MySpecialService()
+     {
+          //construct and return a IWebService implementation here
+     }
+}
+
+[Configuration]
+public class RepositoryServicesConfigurations
+{
+     [Definition]
+     public virtual ICustomerRepository MyCustomerRepository()
+     {
+          //construct and return a ICustomerRepository implementation here
+     }
+
+     [Definition]
+     public virtual IShippingRepository MyShippingRepository()
+     {
+          //construct and return a IShippingRepository implementation here
+     }
+}</programlisting>
+
+      <para>In this example, both of these <literal><link
+      linkend="configuration-attribute-reference">[Configuration]</link></literal>
+      classes would need to be explicitly scanned and registered with the
+      <literal><link
+      linkend="codeconfig-context">CodeConfigApplicationContext</link></literal>
+      since they each are completely stand-alone and both are needed for the
+      proper configuration of the ApplicationContext. Since these two classes
+      in this example have no interdependencies between them, each class may
+      be placed into a different file or even assembly.</para>
+    </sect2>
+
+    <sect2>
+      <title>High-Level [Configuration] Classes that [Import] Others</title>
+
+      <para>Another strategy for composing multiple <link
+      linkend="configuration-attribute-reference"><literal>[Configuration]</literal></link>
+      classes together is to devise one or more 'high-level entry-point'
+      classes and leverage the <literal><link
+      linkend="import-attribute-reference">[Import]</link></literal> attribute
+      so that the scanning of the high-level class automatically imports one
+      or more lower-level classes. The high-level classes may contain
+      [Definition] methods of their own or merely hold reference to one or
+      more [Import] classes as needed.</para>
+
+      <programlisting language="csharp">[Configuration]
+[Import(typeof(MyWebServicesConfigurations))]
+[Import(typeof(MyMessagingServicesConfigurations))]
+[Import(typeof(MyPersistenceServicesConfigurations))]
+public class ServicesConfigurations
+{
+     //rest of class here as needed
+}</programlisting>
+
+      <para>In this example, only the
+      <literal>ServicesConfigurations</literal> class needs to be scanned
+      because the <link
+      linkend="import-attribute-reference"><literal>[Import]</literal></link>
+      attributes point directly to the other classes to scan for
+      <literal><link
+      linkend="configuration-attribute-reference">[Configuration]</link></literal>
+      and <literal linkend="definition-attribute-reference"><link
+      linkend="definition-attribute-reference">[Definition]</link></literal>
+      metadata.</para>
+    </sect2>
+
+    <sect2>
+      <title>Referencing [Definition]s from one [Configuration] Class in
+      Another</title>
+
+      <para>Once you decompose your <link
+      linkend="definition-attribute-reference"><literal>[Definition]</literal></link>
+      methods into separate classes, often you will find that you have a need
+      to reference the objects defined in one <link
+      linkend="configuration-attribute-reference"><literal>[Configuration]</literal></link>
+      class when coding the <link
+      linkend="definition-attribute-reference"><literal>[Definition]</literal></link>
+      methods in another <link
+      linkend="configuration-attribute-reference"><literal>[Configuration]</literal></link>
+      class. The architecture of Spring CodeConfig for .NET makes it simple to
+      address this need: you can simply ask the ApplicationContext to resolve
+      the needed Type.</para>
+
+      <para>To understand how this works, its first important to understand
+      that <literal><link
+      linkend="configuration-attribute-reference">[Configuration]</link></literal>
+      classes are themselves registered as types in the ApplicationContext
+      <emphasis>in addition to</emphasis> the types defined in their <link
+      linkend="definition-attribute-reference"><literal>[Definition]</literal></link>
+      methods. Combining that knowledge with the special
+      <literal>IApplicationContextAware</literal> interface in Spring.NET
+      allows us to ask the ApplicationContext to inject
+      <emphasis>itself</emphasis> into our <literal><link
+      linkend="configuration-attribute-reference">[Configuration]</link></literal>
+      classes. This ApplicationContext is then available to us to resolve
+      requests for needed types that may be defined elsewhere, whether in
+      other <link
+      linkend="configuration-attribute-reference"><literal>[Configuration]</literal></link>
+      classes or perhaps even other XML files.</para>
+
+      <para>Let's explore the following example where the
+      <literal>SecondConfiguration</literal> class needs access to the
+      <literal>TransactionManager</literal> that is defined in the
+      <literal>FirstConfiguration</literal> class in order to properly build
+      and configure a <literal>CustomerRepository</literal> instance:</para>
+
+      <programlisting language="csharp">[Configuration]
+public class FirstConfiguration
+{
+     [Definition]
+     public virtual TransactionManager MySpecialTransactionManager()
+     {
+          return new TransactionManager();
+     }
+}
+
+[Configuration]
+public class SecondConfiguration : IApplicationContextAware //note the interface implementation
+{
+     //field to hold the injected context
+     private _IApplicationContext _context;
+
+     //property setter defined by the IApplcationContextAware interface
+     //     so that the context can inject itself into the class
+     public IApplicationContext ApplicationContext { set { _context = value; } }
+
+     [Definition]
+     public virtual ICustomerRepository CustomerRepository()
+     {
+          //to construct the CustomerRepository, we need a TransactionManager instance
+          //     as a constructor argument so let's ask the injected context to resolve one for us
+          return new CustomerRepository(_context.GetObject&lt;TransactionManager&gt;());
+     }
+}
+
+//somewhere else in your solution the CustomerRepository class is defined as follows...
+public class CustomerRespository : ICustomerRespository
+{
+     private TransactionManager _transactionManager;
+
+     public CustomerRespository(TransactionManager transactionManager)
+     {
+          _transactionManager = transactionManager;
+     }
+}</programlisting>
+
+      <para>In this way, there is no direct coupling between <literal><link
+      linkend="configuration-attribute-reference">[Configuration]</link></literal>
+      classes and the SecondConfiguration class is only aware of the
+      ApplicationContext itself and the actual Types it needs to construct the
+      Types described in its <link
+      linkend="definition-attribute-reference"><literal>[Definition]</literal></link>
+      methods.</para>
+    </sect2>
+  </sect1>
 </chapter>

@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE book [
 <!ENTITY preface SYSTEM "preface.xml">
-<!ENTITY quick-tour SYSTEM "quick-tour.xml">
 <!ENTITY codeconfig-context SYSTEM "codeconfig-context.xml">
 <!ENTITY attribute-reference SYSTEM "attribute-reference.xml">
 <!ENTITY sample-apps SYSTEM "sample-apps.xml">
