@@ -4,7 +4,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Spring.Core.Configuration.2
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Spring.Core.Configuration.Tests.2010", "test\Spring.Core.Configuration.Tests\Spring.Core.Configuration.Tests.2010.csproj", "{4F1A206C-09A8-43FF-B791-FE956E99A120}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Spring.Core.Configuration.Invalid.Tests", "test\Spring.Core.Configuration.Invalid.Tests\Spring.Core.Configuration.Invalid.Tests.csproj", "{4BEF1570-0816-4C79-90CE-13B644668204}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Spring.Core.Configuration.Invalid.Tests.2010", "test\Spring.Core.Configuration.Invalid.Tests\Spring.Core.Configuration.Invalid.Tests.2010.csproj", "{4BEF1570-0816-4C79-90CE-13B644668204}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
