@@ -38,7 +38,7 @@ namespace Spring.Objects.Factory.Xml
     /// <author>Erich Eichinger (.NET)</author>
     public class ReadOnlyXmlTestResource : IResource 
     {
-        private readonly IResource underlyingResource;
+        private readonly IResource _underlyingResource;
         private const string TestDataFolder = ".";
 
         /// <summary>
@@ -54,9 +54,9 @@ namespace Spring.Objects.Factory.Xml
             if (ConfigurableResourceLoader.HasProtocol(fileName))
             {
                 ConfigurableResourceLoader loader = new ConfigurableResourceLoader();
-                underlyingResource = loader.GetResource(fileName);
+                _underlyingResource = loader.GetResource(fileName);
             }
-            underlyingResource = new FileSystemResource(fileName);
+            _underlyingResource = new FileSystemResource(fileName);
         }
 
         /// <summary>
@@ -77,37 +77,37 @@ namespace Spring.Objects.Factory.Xml
 
         public IResource CreateRelative(string relativePath)
         {
-            return this.underlyingResource.CreateRelative(relativePath);
+            return _underlyingResource.CreateRelative(relativePath);
         }
 
         public bool IsOpen
         {
-            get { return this.underlyingResource.IsOpen; }
+            get { return _underlyingResource.IsOpen; }
         }
 
         public Uri Uri
         {
-            get { return this.underlyingResource.Uri; }
+            get { return _underlyingResource.Uri; }
         }
 
         public FileInfo File
         {
-            get { return this.underlyingResource.File; }
+            get { return _underlyingResource.File; }
         }
 
         public string Description
         {
-            get { return this.underlyingResource.Description; }
+            get { return _underlyingResource.Description; }
         }
 
         public bool Exists
         {
-            get { return this.underlyingResource.Exists; }
+            get { return _underlyingResource.Exists; }
         }
 
         public Stream InputStream
         {
-            get { return this.underlyingResource.InputStream; }
+            get { return _underlyingResource.InputStream; }
         }
 
         public static string GetFilePath (string fileName, Type associatedTestType) 
