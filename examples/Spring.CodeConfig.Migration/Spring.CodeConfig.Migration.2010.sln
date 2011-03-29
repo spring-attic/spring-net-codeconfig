@@ -1,11 +1,11 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 11.00
 # Visual Studio 2010
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Primes", "src\Primes\Primes.csproj", "{865E1A8E-88F3-48D8-869F-B584C5A36740}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Primes", "src\Primes\Primes.2010.csproj", "{865E1A8E-88F3-48D8-869F-B584C5A36740}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Primes.Tests", "test\Primes.Tests\Primes.Tests.csproj", "{32476935-0852-4A11-B938-4D202D8B4454}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Primes.Tests", "test\Primes.Tests\Primes.Tests.2010.csproj", "{32476935-0852-4A11-B938-4D202D8B4454}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SpringApp", "src\SpringApp\SpringApp.csproj", "{08A8AC17-E5E1-48FC-9958-76ECA8C08D71}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SpringApp", "src\SpringApp\SpringApp.2010.csproj", "{08A8AC17-E5E1-48FC-9958-76ECA8C08D71}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
