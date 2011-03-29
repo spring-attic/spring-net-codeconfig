@@ -151,14 +151,6 @@
         </fileset>
       </copy>
 	  
-	  <!--
-	  <echo message="Processing ${build.dir}\net-3.5"/>
-      <copy todir="${package.dir}/bin/net/3.5/" flatten="true" verbose="true">
-        <fileset>
-          <include name="${build.dir}\net-3.5\Spring.Core.Config*.???"/>
-        </fileset>
-      </copy>
-	  -->
   </target>
 
   <target name="package.sources">
@@ -170,9 +162,6 @@
         <exclude name="*.suo"/>
         <exclude name="*.user"/>
         <exclude name="*.cache"/>
-        <exclude name="src/**/bin" />
-        <exclude name="test/**/bin" />
-        <exclude name="example/**/bin" />
       </fileset>
     </copy>
 
@@ -187,6 +176,15 @@
         <include name="test/**/*.*"/>
         <include name="examples/**/*.*"/>
         <exclude name="**/*.user"/>
+		<exclude name="**/*.suo"/>
+		<exclude name="**/*.cache"/>
+        <exclude name="src/**/bin/**" />
+		<exclude name="src/**/obj/**" />
+        <exclude name="test/**/bin/**" />
+		<exclude name="test/**/obj/**" />
+        <exclude name="examples/**/bin/**" />
+		<exclude name="examples/**/obj/**" />
+		<exclude name="**/_ReSharper*/**" />		
       </fileset>
     </copy>
   </target>
