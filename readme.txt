@@ -1,4 +1,4 @@
-The Spring Code Config project for .NET, Release 1.0.0 (3/15/2011)
+The Spring Code Config project for .NET, Release 1.0.0 (3/30/2011)
 --------------------------------------------------------------------
 https://github.com/SpringSource/spring-net-codeconfig
 
