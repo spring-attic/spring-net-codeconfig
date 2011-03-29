@@ -42,18 +42,9 @@ namespace Spring.Context.Attributes
         /// Initializes a new instance of the Import class.
         /// </summary>
         /// <param name="types"></param>
-        public ImportAttribute(Type[] types)
+        public ImportAttribute(params Type[] types)
         {
             _types = types;
-        }
-
-        /// <summary>
-        /// Initializes a new instance of the <see cref="ImportAttribute"/> class.
-        /// </summary>
-        /// <param name="type">The type.</param>
-        public ImportAttribute(Type type)
-        {
-            _types = new[] { type };
         }
 
         /// <summary>

@@ -45,7 +45,7 @@ namespace Spring.Context.Attributes
         /// Initializes a new instance of the DependsOn class.
         /// </summary>
         /// <param name="name"></param>
-        public DependsOnAttribute(string[] name)
+        public DependsOnAttribute(params string[] name)
         {
             _name = name;
         }
