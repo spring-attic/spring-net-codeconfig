@@ -56,13 +56,14 @@ VS.NET
 ------
 The is a solution file for different version of VS.NET
 
+* Spring.Config.2008.sln for use with VS.NET 2008
 * Spring.Config.2010.sln for use with VS.NET 2010
 
 8. Support
 
 The user forums at http://forum.springframework.net/ are available for you to submit questions, support requests, and interact with other Spring.NET users.
 
-Bug and issue tracking can be found at https://jira.springsource.org/browse/SPRNET
+Bug and issue tracking can be found at https://jira.springsource.org/browse/SPRNET/component/11081
 
 To get the sources, check them out at the git repository at https://github.com/SpringSource/spring-net-codeconfig
 
