@@ -35,9 +35,24 @@
         <echo message="Current .NET Framework = ${nant.settings.currentframework}"/>
         <call target="update-common-assemblyinfo" />
         <call target="RebuildAllSolutions" />
+		
+		<!-- need to get the bins copied to the bin folder for reference by examples before they are compiled -->
+		<call target="copy-to-bin-for-reference" />
+		
 		<call target="RebuildExampleSolutions" />
     </target>
 
+	<target name="copy-to-bin-for-reference">
+      <echo message="Processing ${build.dir}\net-2.0"/>
+      <copy todir="${root.dir}/bin/net/2.0/" flatten="true" verbose="true">
+        <fileset>
+          <include name="${build.dir}\net-2.0\Spring.Core.Config*.???"/>
+        </fileset>
+      </copy>
+	  
+  </target>
+	
+	
     <target name="update-common-assemblyinfo">
 
       <!-- ensure src/CommonAssemblyInfo.cs is writable if it already exists -->
