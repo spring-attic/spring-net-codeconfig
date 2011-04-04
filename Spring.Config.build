@@ -1,4 +1,4 @@
-<?xml version="1.0" ?>
+<?xml version="1.0" encoding="UTF-8" ?>
 <project name="Spring.Config" default="test">
 
     <property name="root.dir" value="${project::get-base-directory()}" overwrite="false" />
@@ -27,7 +27,10 @@
 
     <!-- readregistry property="vs2008.install.dir" key="SOFTWARE\Microsoft\VisualStudio\9.0\InstallDir" hive="LocalMachine" failonerror="false"/ -->
 
-    <property name="buildconfiguration" value="Debug" />
+    <property name="buildconfiguration" value="Debug" overwrite="false" />
+	
+	
+	
     <!-- force net-3.5 -->
 <!--    <property name="nant.settings.currentframework" value="net-3.5"/>-->
 
@@ -55,6 +58,8 @@
 	
     <target name="update-common-assemblyinfo">
 
+	<echo message="PROJECT-VERSION: ${project.version}" />
+	
       <!-- ensure src/CommonAssemblyInfo.cs is writable if it already exists -->
       <attrib file="${root.dir}/src/CommonAssemblyInfo.cs" readonly="false" if="${file::exists('${root.dir}/src/CommonAssemblyInfo.cs')}" />
       <!-- generate the source file holding the common assembly-level attributes -->
@@ -67,16 +72,17 @@
           <import namespace="System.Security.Permissions" />
         </imports>
         <attributes>
-          <attribute type="CLSCompliantAttribute" value="true" />
+          <attribute type="CLSCompliantAttribute" value="false" />
           <attribute type="ComVisibleAttribute" value="false" />
           <attribute type="AllowPartiallyTrustedCallersAttribute" asis="true"/>
           <!-- attribute type="SecurityTransparentAttribute" asis="true"/ -->
           <attribute type="SecurityPermissionAttribute" value="SecurityAction.RequestMinimum" asis="true"/>
-          <attribute type="AssemblyCompanyAttribute" value="http://springsource.org/springextensions/" />
-          <attribute type="AssemblyCopyrightAttribute" value="Copyright 2010 SpringSource." />
+          <attribute type="AssemblyCompanyAttribute" value="http://www.springframework.net" />
+          <attribute type="AssemblyCopyrightAttribute" value="Copyright 2010-2011 Spring.NET Framework Team." />
           <attribute type="AssemblyTrademarkAttribute" value="Apache License, Version 2.0" />
           <attribute type="AssemblyCultureAttribute" value="" />
           <attribute type="AssemblyVersionAttribute" value="${project.version}" />
+		  <attribute type="AssemblyFileVersionAttribute" value="${project.version}" />
           <attribute type="AssemblyConfigurationAttribute" value="${framework::get-target-framework()}.${platform::get-name()}; ${project.releasetype}" />
           <attribute type="AssemblyInformationalVersionAttribute" value="${project.version}; ${framework::get-target-framework()}.${platform::get-name()}; ${project.releasetype}" />
           <attribute type="AssemblyDelaySignAttribute" value="false" />
@@ -177,6 +183,7 @@
         <exclude name="*.suo"/>
         <exclude name="*.user"/>
         <exclude name="*.cache"/>
+		<exclude name="Spring.Config.build" />
       </fileset>
     </copy>
 

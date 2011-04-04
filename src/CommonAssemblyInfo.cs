@@ -14,16 +14,17 @@ using System.Security.Permissions;
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-[assembly: CLSCompliantAttribute(true)]
+[assembly: CLSCompliantAttribute(false)]
 [assembly: ComVisibleAttribute(false)]
 [assembly: AllowPartiallyTrustedCallersAttribute()]
 [assembly: SecurityPermissionAttribute(SecurityAction.RequestMinimum)]
-[assembly: AssemblyCompanyAttribute("http://springsource.org/springextensions/")]
-[assembly: AssemblyCopyrightAttribute("Copyright 2010 SpringSource.")]
+[assembly: AssemblyCompanyAttribute("http://www.springframework.net")]
+[assembly: AssemblyCopyrightAttribute("Copyright 2010-2011 Spring.NET Framework Team.")]
 [assembly: AssemblyTrademarkAttribute("Apache License, Version 2.0")]
 [assembly: AssemblyCultureAttribute("")]
-[assembly: AssemblyVersionAttribute("1.0.0.4107")]
+[assembly: AssemblyVersionAttribute("1.0.0.4111")]
+[assembly: AssemblyFileVersionAttribute("1.0.0.4111")]
 [assembly: AssemblyConfigurationAttribute("net-4.0.win32; release")]
-[assembly: AssemblyInformationalVersionAttribute("1.0.0.4107; net-4.0.win32; release")]
+[assembly: AssemblyInformationalVersionAttribute("1.0.0.4111; net-4.0.win32; release")]
 [assembly: AssemblyDelaySignAttribute(false)]
 
