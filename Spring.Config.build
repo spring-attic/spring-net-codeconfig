@@ -58,8 +58,6 @@
 	
     <target name="update-common-assemblyinfo">
 
-	<echo message="PROJECT-VERSION: ${project.version}" />
-	
       <!-- ensure src/CommonAssemblyInfo.cs is writable if it already exists -->
       <attrib file="${root.dir}/src/CommonAssemblyInfo.cs" readonly="false" if="${file::exists('${root.dir}/src/CommonAssemblyInfo.cs')}" />
       <!-- generate the source file holding the common assembly-level attributes -->
