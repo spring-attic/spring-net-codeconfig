@@ -2,4 +2,4 @@ SPRING CODE CONFIG .NET CHANGELOG
 ==================================
 https://github.com/SpringSource/spring-net-codeconfig
 
-Release Version 1.0.0 April 1, 2010
+Release Version 1.0.0 April 4, 2011
