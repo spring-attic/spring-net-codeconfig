@@ -1,4 +1,4 @@
-The Spring Code Config project for .NET, Release 1.0.0 (3/30/2011)
+The Spring Code Config project for .NET, Release 1.0.0 (4/4/2011)
 --------------------------------------------------------------------
 https://github.com/SpringSource/spring-net-codeconfig
 
@@ -19,7 +19,7 @@ Spring Code Config for .NET version 1.0 supports the .NET 2.0 and later framewor
 This initial relase of Spring Code Config for .NET supports the basic configuration of Object Definitions Metadata related to object construction but does not (yet) support the more advanced features of the Spring.NET Dependency Injection container including the application of Aspects, the subsitution of VariablePlaceholderValues, and others.  This support will be provided in subsequent releases of this project.
 
 * Compiler Warning  
-You may receive the following warning when compiling your projects when referencing Spring Code Config for .NET: "Warning: The predefined type 'System.Runtime.CompilerServices.ExtensionAttribute' is defined in multiple assemblies in the global alias; using definition from '<path-to-System.Core.dll>'.  To extend the behavior of the AbstractApplicationContext, extension methods have been used.  To enable extension methods under .NET 2.0 where they would otherwise be unsupported, the work-around as described here http://www.danielmoth.com/Blog/Using-Extension-Methods-In-Fx-20-Projects.aspx has been employed.  Depending on your targeted runtime version, this approach can result in the preceeding warning being issued by the compiler.  This warning can be safely ignored as it will not impact the functionality of the Spring Code Config for .NET or your own application.
+You may receive the following warning when compiling your projects when referencing Spring Code Config for .NET: "Warning: The predefined type 'System.Runtime.CompilerServices.ExtensionAttribute' is defined in multiple assemblies in the global alias; using definition from '<path-to-System.Core.dll>'.  To extend the behavior of the GenericApplicationContext, extension methods have been used.  To enable extension methods under .NET 2.0 where they would otherwise be unsupported, the work-around as described here http://www.danielmoth.com/Blog/Using-Extension-Methods-In-Fx-20-Projects.aspx has been employed.  Depending on your targeted runtime version, this approach can result in the preceeding warning being issued by the compiler.  This warning can be safely ignored as it will not impact the functionality of the Spring Code Config for .NET or your own application.
 
 4. RELEASE INFO
 
