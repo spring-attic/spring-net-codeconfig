@@ -199,7 +199,9 @@
 		<exclude name="test/**/obj/**" />
         <exclude name="examples/**/bin/**" />
 		<exclude name="examples/**/obj/**" />
-		<exclude name="**/_ReSharper*/**" />		
+		<exclude name="**/_ReSharper*/**" />
+		<exclude name="**/CommonAssemblyInfo.cs.tempplate" />
+		<exclude name="Spring.Config.build" />
       </fileset>
     </copy>
   </target>
