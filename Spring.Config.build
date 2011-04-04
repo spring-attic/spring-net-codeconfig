@@ -82,7 +82,7 @@
           <attribute type="AssemblyVersionAttribute" value="${project.version}" />
 		  <attribute type="AssemblyFileVersionAttribute" value="${project.version}" />
           <attribute type="AssemblyConfigurationAttribute" value="${framework::get-target-framework()}.${platform::get-name()}; ${project.releasetype}" />
-          <attribute type="AssemblyInformationalVersionAttribute" value="${project.version}; ${framework::get-target-framework()}.${platform::get-name()}; ${project.releasetype}" />
+          <attribute type="AssemblyInformationalVersionAttribute" value="${project.version}" />
           <attribute type="AssemblyDelaySignAttribute" value="false" />
         </attributes>
       </asminfo>
