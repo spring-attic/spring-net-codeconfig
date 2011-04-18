@@ -36,8 +36,8 @@ namespace Spring.Context.Attributes
         /// <summary>
         /// Logger Instance.
         /// </summary>
-        protected static ILog Logger = LogManager.GetLogger(typeof (AssemblyTypeScanner));
-        
+        protected static ILog Logger = LogManager.GetLogger(typeof(AssemblyTypeScanner));
+
         /// <summary>
         /// Assembly Inclusion Predicates.
         /// </summary>
@@ -57,29 +57,6 @@ namespace Spring.Context.Attributes
         /// Assemblies to scan.
         /// </summary>
         protected readonly List<IEnumerable<Type>> TypeSources = new List<IEnumerable<Type>>();
-        
-        /// <summary>
-        /// Fully-qualified path to the root folder from which to begin the recursive scan.
-        /// </summary>
-        protected string FolderScanPath;
-
-        /// <summary>
-        /// Initializes a new instance of the AssemblyTypeScanner class.
-        /// </summary>
-        /// <param name="folderScanPath"></param>
-        protected AssemblyTypeScanner(string folderScanPath)
-        {
-            FolderScanPath = !string.IsNullOrEmpty(folderScanPath) ? folderScanPath : GetCurrentBinDirectoryPath();
-            AppDomain.CurrentDomain.ReflectionOnlyAssemblyResolve += MyReflectionOnlyResolveEventHandler;
-        }
-
-        /// <summary>
-        /// Initializes a new instance of the AssemblyTypeScanner class.
-        /// </summary>
-        protected AssemblyTypeScanner()
-            : this(string.Empty)
-        {
-        }
 
         #region IAssemblyTypeScanner Members
 
@@ -90,7 +67,7 @@ namespace Spring.Context.Attributes
         /// <returns></returns>
         public IAssemblyTypeScanner AssemblyHavingType<T>()
         {
-            TypeSources.Add(new AssemblyTypeSource((typeof (T).Assembly)));
+            TypeSources.Add(new AssemblyTypeSource((typeof(T).Assembly)));
             return this;
         }
 
@@ -101,7 +78,7 @@ namespace Spring.Context.Attributes
         /// <returns></returns>
         public IAssemblyTypeScanner ExcludeType<T>()
         {
-            TypeExclusionPredicates.Add(delegate(Type t) { return t.FullName == typeof (T).FullName; });
+            TypeExclusionPredicates.Add(delegate(Type t) { return t.FullName == typeof(T).FullName; });
             return this;
         }
 
@@ -112,7 +89,7 @@ namespace Spring.Context.Attributes
         /// <returns></returns>
         public IAssemblyTypeScanner IncludeType<T>()
         {
-            TypeInclusionPredicates.Add(delegate(Type t) { return t.FullName == typeof (T).FullName; });
+            TypeInclusionPredicates.Add(delegate(Type t) { return t.FullName == typeof(T).FullName; });
             return this;
         }
 
@@ -156,7 +133,7 @@ namespace Spring.Context.Attributes
                 }
             }
 
-            return EnsureAllTypesLoadedInAppDomain(types);
+            return types;
         }
 
         /// <summary>
@@ -194,37 +171,14 @@ namespace Spring.Context.Attributes
 
         #endregion
 
-        private IEnumerable<Type> EnsureAllTypesLoadedInAppDomain(IEnumerable<Type> potentialReflectionOnlyTypes)
+        private IEnumerable<Assembly> GetAllAssembliesInPath()
         {
-            var actualAppDomainTypes = new List<Type>();
 
-            foreach (Type type in potentialReflectionOnlyTypes)
-            {
-                if (type.Assembly.ReflectionOnly)
-                {
-                    try
-                    {
-                        Assembly.LoadFrom(type.Assembly.Location);
-                    }
-                    catch (Exception)
-                    {
-                        throw new CannotLoadObjectTypeException(
-                            string.Format("Unable to load type {0} from assembly {1}", type.FullName,
-                                          type.Assembly.Location));
-                    }
-                }
+            string folderPath = GetCurrentBinDirectoryPath();
 
-                actualAppDomainTypes.Add(Type.GetType(type.FullName + "," + type.Assembly.FullName));
-            }
-
-            return actualAppDomainTypes;
-        }
-
-        private IEnumerable<Assembly> GetAllAssembliesInPath(string folderPath)
-        {
             var assemblies = new List<Assembly>();
-            AddFilesForExtension(folderPath, "*.dll", assemblies);
-            AddFilesForExtension(folderPath, "*.exe", assemblies);
+            AddDiscoveredAssemblies(folderPath, "*.dll", assemblies);
+            AddDiscoveredAssemblies(folderPath, "*.exe", assemblies);
 
             if (Logger.IsDebugEnabled)
             {
@@ -235,7 +189,7 @@ namespace Spring.Context.Attributes
 
         private IEnumerable<Assembly> GetAllMatchingAssemblies()
         {
-            IEnumerable<Assembly> assemblyCandidates = GetAllAssembliesInPath(FolderScanPath);
+            IEnumerable<Assembly> assemblyCandidates = GetAllAssembliesInPath();
             return ApplyAssemblyFiltersTo(assemblyCandidates);
         }
 
@@ -244,20 +198,6 @@ namespace Spring.Context.Attributes
             return string.IsNullOrEmpty(AppDomain.CurrentDomain.DynamicDirectory)
                        ? AppDomain.CurrentDomain.BaseDirectory
                        : AppDomain.CurrentDomain.DynamicDirectory;
-        }
-
-        private Assembly MyReflectionOnlyResolveEventHandler(object sender, ResolveEventArgs args)
-        {
-            var name = new AssemblyName(args.Name);
-
-            String asmToCheck = Path.GetDirectoryName(FolderScanPath) + "\\" + name.Name + ".dll";
-
-            if (File.Exists(asmToCheck))
-            {
-                return Assembly.ReflectionOnlyLoadFrom(asmToCheck);
-            }
-
-            return ReflectionOnlyUtils.ReflectionOnlyLoadWithPartialName(name.Name);
         }
 
         /// <summary>
@@ -334,18 +274,18 @@ namespace Spring.Context.Attributes
         }
 
         /// <summary>
-        /// Adds the files found in the recursive search path for the given extension.
+        /// Loads the assemblies found.
         /// </summary>
         /// <param name="folderPath">The folder path.</param>
         /// <param name="extension">The extension.</param>
         /// <param name="assemblies">The assemblies.</param>
-        public void AddFilesForExtension(string folderPath, string extension, IList<Assembly> assemblies)
+        public void AddDiscoveredAssemblies(string folderPath, string extension, IList<Assembly> assemblies)
         {
-            IEnumerable<string> files = Directory.GetFiles(folderPath, extension, SearchOption.AllDirectories);
+            IEnumerable<string> files = Directory.GetFiles(folderPath, extension, SearchOption.TopDirectoryOnly);
             foreach (string file in files)
                 try
                 {
-                    assemblies.Add(Assembly.ReflectionOnlyLoadFrom(file));
+                    assemblies.Add(Assembly.LoadFrom(file));
                 }
                 catch (Exception ex)
                 {

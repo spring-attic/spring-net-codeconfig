@@ -31,7 +31,7 @@ namespace Spring.Context.Support
                                 Predicate<Type> typePredicate)
         {
             //create a scanner instance using the scan path
-            var scanner = new AssemblyObjectDefinitionScanner(assemblyScanPath);
+            var scanner = new AssemblyObjectDefinitionScanner();
 
             //configure the scanner per the provided constraints
             scanner.WithAssemblyFilter(assemblyPredicate).WithIncludeFilter(typePredicate);

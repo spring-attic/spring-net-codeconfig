@@ -86,16 +86,6 @@ namespace Spring.Context.Attributes
 
         private class Scanner : AssemblyTypeScanner
         {
-            public Scanner(string folderScanPath)
-                : base(folderScanPath)
-            {
-            }
-
-            public Scanner()
-                : base(null)
-            {
-            }
-
             protected override bool IsCompoundPredicateSatisfiedBy(Type type)
             {
                 return IsIncludedType(type) && !IsExcludedType(type);

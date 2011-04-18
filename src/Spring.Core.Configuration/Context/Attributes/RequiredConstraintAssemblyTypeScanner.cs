@@ -10,21 +10,6 @@ namespace Spring.Context.Attributes
     /// </summary>
     public abstract class RequiredConstraintAssemblyTypeScanner : AssemblyTypeScanner
     {
-        /// <summary>
-        /// Initializes a new instance of the <see cref="RequiredConstraintAssemblyTypeScanner"/> class.
-        /// </summary>
-        /// <param name="folderScanPath"></param>
-        protected RequiredConstraintAssemblyTypeScanner(string folderScanPath)
-            : base(folderScanPath)
-        {
-        }
-
-        /// <summary>
-        /// Initializes a new instance of the <see cref="RequiredConstraintAssemblyTypeScanner"/> class.
-        /// </summary>
-        protected RequiredConstraintAssemblyTypeScanner()
-        {
-        }
 
         /// <summary>
         /// Determines whether the compound predicate is satisfied by the specified type.

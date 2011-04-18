@@ -54,22 +54,6 @@ namespace Spring.Context.Attributes
                                                                          "Spring.Web.Mvc",
                                                                      };
 
-        /// <summary>
-        /// Initializes a new instance of the AssemblyObjectDefinitionScanner class.
-        /// </summary>
-        /// <param name="folderScanPath">The folder scan path.</param>
-        public AssemblyObjectDefinitionScanner(string folderScanPath)
-            : base(folderScanPath)
-        {
-        }
-
-        /// <summary>
-        /// Initializes a new instance of the AssemblyObjectDefinitionScanner class.
-        /// </summary>
-        public AssemblyObjectDefinitionScanner()
-            : base(null)
-        {
-        }
 
         /// <summary>
         /// Registers the defintions for types.
