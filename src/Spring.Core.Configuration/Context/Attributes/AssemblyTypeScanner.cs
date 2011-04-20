@@ -257,6 +257,7 @@ namespace Spring.Context.Attributes
             return TypeInclusionPredicates.Any(delegate(Predicate<Type> include) { return include(type); });
         }
 
+        protected IList<Predicate<string>> AssemblyLoadExclusionPredicates = new List<Predicate<string>>();
 
         /// <summary>
         /// Sets the default filters.
@@ -281,19 +282,26 @@ namespace Spring.Context.Attributes
         /// <param name="assemblies">The assemblies.</param>
         public void AddDiscoveredAssemblies(string folderPath, string extension, IList<Assembly> assemblies)
         {
-            IEnumerable<string> files = Directory.GetFiles(folderPath, extension, SearchOption.TopDirectoryOnly);
+            IEnumerable<string> files = Directory.GetFiles(folderPath, extension, SearchOption.AllDirectories);
             foreach (string file in files)
-                try
+            {
+                string name = Path.GetFileNameWithoutExtension(file);
+
+                if (!AssemblyLoadExclusionPredicates.Any(delegate(Predicate<string> exclude) { return exclude(name); }))
                 {
-                    assemblies.Add(Assembly.LoadFrom(file));
+                    try
+                    {
+                        assemblies.Add(Assembly.LoadFrom(file));
+                    }
+                    catch (Exception ex)
+                    {
+                        //log and swallow everything that might go wrong here...
+                        if (Logger.IsDebugEnabled)
+                            Logger.Debug(
+                                string.Format("Failed to load assembly {0} to inspect for [Configuration] types!", file), ex);
+                    }
                 }
-                catch (Exception ex)
-                {
-                    //log and swallow everything that might go wrong here...
-                    if (Logger.IsDebugEnabled)
-                        Logger.Debug(
-                            string.Format("Failed to load assembly {0} to inspect for [Configuration] types!", file), ex);
-                }
+            }
         }
     }
 }
