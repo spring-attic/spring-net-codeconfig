@@ -77,6 +77,8 @@
     <Compile Include="Context\Config\AttributeConfigObjectDefinitionParser.cs" />
     <Compile Include="Context\Config\ComponentScanObjectDefinitionParser.cs" />
     <Compile Include="Context\Config\ContextNamespaceParser.cs" />
+    <Compile Include="Context\Extension\AppDomainExtensions.cs" />
+    <Compile Include="Context\Extension\AssemblyExtensions.cs" />
     <Compile Include="Context\Extension\GenericApplicationContextExtensions.cs" />
     <Compile Include="Context\Extension\ApplicationContextExtensions.cs" />
     <Compile Include="Context\Support\CodeConfigApplicationContext.cs" />

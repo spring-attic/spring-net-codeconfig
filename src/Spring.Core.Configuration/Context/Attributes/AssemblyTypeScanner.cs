@@ -38,6 +38,8 @@ namespace Spring.Context.Attributes
         /// </summary>
         protected static ILog Logger = LogManager.GetLogger(typeof(AssemblyTypeScanner));
 
+        protected IList<Predicate<string>> AssemblyLoadExclusionPredicates = new List<Predicate<string>>();
+
         /// <summary>
         /// Assembly Inclusion Predicates.
         /// </summary>
@@ -256,8 +258,6 @@ namespace Spring.Context.Attributes
         {
             return TypeInclusionPredicates.Any(delegate(Predicate<Type> include) { return include(type); });
         }
-
-        protected IList<Predicate<string>> AssemblyLoadExclusionPredicates = new List<Predicate<string>>();
 
         /// <summary>
         /// Sets the default filters.
