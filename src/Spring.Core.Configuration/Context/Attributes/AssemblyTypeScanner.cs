@@ -23,9 +23,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Reflection;
 using Common.Logging;
-using Spring.Core;
 using Spring.Util;
-using Spring.Context.Extension;
 
 namespace Spring.Context.Attributes
 {
@@ -196,30 +194,13 @@ namespace Spring.Context.Attributes
         {
             IEnumerable<string> assemblyCandidates = GetAllAssembliesInPath();
 
-            IEnumerable<string> matchingAssemblies = assemblyCandidates
-
-               .ScanAssembliesInSandbox<Predicate<Type>, string>(
-                 IsCompoundPredicateSatisfiedBy,
-                 delegate(Assembly asm, Predicate<Type> predicate)
-                 {
-                     foreach (var t in asm.GetTypes())
-                     {
-                         if (predicate(t))
-                         {
-                             return t.Assembly.FullName;
-                         }
-                     }
-
-                     return null;
-                 });
-
             IList<Assembly> assemblies = new List<Assembly>();
 
-            foreach (var assembly in matchingAssemblies)
+            foreach (string assembly in assemblyCandidates)
             {
                 if (!string.IsNullOrEmpty(assembly))
                 {
-                    Assembly loadedAssembly = TryLoadAssembly(assembly);
+                    Assembly loadedAssembly = TryLoadAssemblyFromPath(assembly);
 
                     if (null != loadedAssembly)
                     {
@@ -231,20 +212,20 @@ namespace Spring.Context.Attributes
             return ApplyAssemblyFiltersTo(assemblies);
         }
 
-        private Assembly TryLoadAssembly(string assemblyName)
+        private Assembly TryLoadAssemblyFromPath(string filename)
         {
             Assembly assembly = null;
 
             try
             {
-                assembly = Assembly.Load(assemblyName);
+                assembly = Assembly.LoadFrom(filename);
             }
             catch (Exception ex)
             {
                 //log and swallow everything that might go wrong here...
                 if (Logger.IsDebugEnabled)
                     Logger.Debug(
-                        string.Format("Failed to load assembly {0} to inspect for [Configuration] types!", assemblyName), ex);
+                        string.Format("Failed to load assembly {0} to inspect for [Configuration] types!", filename), ex);
             }
 
             return assembly;
