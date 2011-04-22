@@ -1,7 +1,7 @@
 ﻿#region License
 
 /*
- * Copyright © 2002-2010 the original author or authors.
+ * Copyright © 2010-2011 the original author or authors.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -80,22 +80,16 @@ namespace Spring.Context.Attributes
         {
             _scanner.WithIncludeFilter(t => t.Name.Contains("ConfigurationClass"));
 
-            Assert.That(_scanner.Scan(), Contains.Item((typeof (TheConfigurationClass))));
-            Assert.That(_scanner.Scan(), Contains.Item((typeof (TheImportedConfigurationClass))));
+            IEnumerable<Type> types = _scanner.Scan();
+            
+            Assert.That(types, Contains.Item((typeof (TheConfigurationClass))));
+            Assert.That(types, Contains.Item((typeof (TheImportedConfigurationClass))));
+            Assert.That(types.Count(),Is.EqualTo(2));
         }
 
+        [Serializable]
         private class Scanner : AssemblyTypeScanner
         {
-            public Scanner(string folderScanPath)
-                : base(folderScanPath)
-            {
-            }
-
-            public Scanner()
-                : base(null)
-            {
-            }
-
             protected override bool IsCompoundPredicateSatisfiedBy(Type type)
             {
                 return IsIncludedType(type) && !IsExcludedType(type);

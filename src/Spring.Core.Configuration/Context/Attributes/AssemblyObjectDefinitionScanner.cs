@@ -1,7 +1,7 @@
 ﻿#region License
 
 /*
- * Copyright © 2002-2010 the original author or authors.
+ * Copyright © 2010-2011 the original author or authors.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -28,48 +28,34 @@ namespace Spring.Context.Attributes
     /// <summary>
     /// AssemblyTypeScanner that only accepts types that also meet the requirements of being ObjectDefintions.
     /// </summary>
+    [Serializable]
     public class AssemblyObjectDefinitionScanner : RequiredConstraintAssemblyTypeScanner
     {
         private readonly List<Predicate<Assembly>> _assemblyExclusionPredicates = new List<Predicate<Assembly>>();
 
-        private readonly IEnumerable<string> _springAssemblies = new List<string>
-                                                                     {
-                                                                         "Spring.Core",
-                                                                         "Spring.Aop",
-                                                                         "Spring.Data",
-                                                                         "Spring.Services",
-                                                                         "Spring.Messaging",
-                                                                         "Spring.Messaging.Ems",
-                                                                         "Spring.Messaging.Nms",
-                                                                         "Spring.Template.Velocity",
-                                                                         "Spring.Messaging.Quartz",
-                                                                         "Spring.Testing.Microsoft",
-                                                                         "Spring.Testing.Nunit",
-                                                                         "Spring.Data.NHibernate12",
-                                                                         "Spring.Data.NHibernate21",
-                                                                         "Spring.Data.NHibernate20",
-                                                                         "Spring.Data.NHibernate30",
-                                                                         "Spring.Web",
-                                                                         "Spring.Web.Extensions",
-                                                                         "Spring.Web.Mvc",
-                                                                     };
+        private readonly IList<string> _springAssemblies = new List<string>()
+                                                               {
+                                                                             "Spring.Core",
+                                                                             "Spring.Core.Configuration",
+                                                                             "Spring.Aop",
+                                                                             "Spring.Data",
+                                                                             "Spring.Services",
+                                                                             "Spring.Messaging",
+                                                                             "Spring.Messaging.Ems",
+                                                                             "Spring.Messaging.Nms",
+                                                                             "Spring.Template.Velocity",
+                                                                             "Spring.Messaging.Quartz",
+                                                                             "Spring.Testing.Microsoft",
+                                                                             "Spring.Testing.Nunit",
+                                                                             "Spring.Data.NHibernate12",
+                                                                             "Spring.Data.NHibernate21",
+                                                                             "Spring.Data.NHibernate20",
+                                                                             "Spring.Data.NHibernate30",
+                                                                             "Spring.Web",
+                                                                             "Spring.Web.Extensions",
+                                                                             "Spring.Web.Mvc",
+                                                                };
 
-        /// <summary>
-        /// Initializes a new instance of the AssemblyObjectDefinitionScanner class.
-        /// </summary>
-        /// <param name="folderScanPath">The folder scan path.</param>
-        public AssemblyObjectDefinitionScanner(string folderScanPath)
-            : base(folderScanPath)
-        {
-        }
-
-        /// <summary>
-        /// Initializes a new instance of the AssemblyObjectDefinitionScanner class.
-        /// </summary>
-        public AssemblyObjectDefinitionScanner()
-            : base(null)
-        {
-        }
 
         /// <summary>
         /// Registers the defintions for types.
@@ -121,7 +107,7 @@ namespace Spring.Context.Attributes
         {
             if (!type.Assembly.ReflectionOnly)
             {
-                return Attribute.GetCustomAttribute(type, typeof (ConfigurationAttribute), true) != null &&
+                return Attribute.GetCustomAttribute(type, typeof(ConfigurationAttribute), true) != null &&
                        !type.IsAbstract;
             }
 
@@ -129,7 +115,7 @@ namespace Spring.Context.Attributes
 
             foreach (CustomAttributeData customAttributeData in CustomAttributeData.GetCustomAttributes(type))
             {
-                if (customAttributeData.Constructor.DeclaringType.FullName == typeof (ConfigurationAttribute).FullName &&
+                if (customAttributeData.Constructor.DeclaringType.FullName == typeof(ConfigurationAttribute).FullName &&
                     !type.IsAbstract)
                 {
                     satisfied = true;
@@ -173,5 +159,18 @@ namespace Spring.Context.Attributes
 
             RegisterDefinitionsForTypes(registry, configTypes);
         }
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="AssemblyObjectDefinitionScanner"/> class.
+        /// </summary>
+        public AssemblyObjectDefinitionScanner()
+        {
+            AssemblyLoadExclusionPredicates.Add(delegate(string name) { return _springAssemblies.Contains(name); });
+            AssemblyLoadExclusionPredicates.Add(delegate(string name) { return name.StartsWith("System."); });
+            AssemblyLoadExclusionPredicates.Add(delegate(string name) { return name.StartsWith("Microsoft."); });
+            AssemblyLoadExclusionPredicates.Add(delegate(string name) { return name == "mscorlib"; });
+            AssemblyLoadExclusionPredicates.Add(delegate(string name) { return name == "System"; });
+        }
+
     }
 }

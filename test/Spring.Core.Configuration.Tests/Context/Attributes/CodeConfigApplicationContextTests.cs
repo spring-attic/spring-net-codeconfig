@@ -18,37 +18,27 @@
 
 #endregion
 
+
 using NUnit.Framework;
+using Spring.Context.Support;
 
 namespace Spring.Context.Attributes
 {
     [TestFixture]
-    public class DefinitionAttributeTests
+    public class CodeConfigApplicationContextTests : AbstractConfigurationClassPostProcessorTests
     {
-        [Test]
-        public void Can_Accept_Single_Name()
+
+        protected override void CreateApplicationContext()
         {
-            var def = new DefinitionAttribute();
+            GenericApplicationContext ctx = new GenericApplicationContext();
 
-            def.Names = "Steve";
+            ctx.ScanAllAssemblies();
 
-            Assert.That(def.NamesToArray[0], Is.EqualTo("Steve"));
+            ctx.Refresh();
+
+            _ctx = ctx;
         }
 
-
-        [Test]
-        public void Can_Accept_Multiple_Names()
-        {
-            var def = new DefinitionAttribute();
-            var names = "Name1,Name2,Name3";
-
-            def.Names = names;
-            Assert.That(def.NamesToArray[0], Is.EqualTo("Name1"));
-            Assert.That(def.NamesToArray[1], Is.EqualTo("Name2"));
-            Assert.That(def.NamesToArray[2], Is.EqualTo("Name3"));
-
-        }
-
-        
     }
+
 }
