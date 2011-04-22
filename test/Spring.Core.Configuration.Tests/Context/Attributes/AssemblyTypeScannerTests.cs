@@ -80,10 +80,14 @@ namespace Spring.Context.Attributes
         {
             _scanner.WithIncludeFilter(t => t.Name.Contains("ConfigurationClass"));
 
-            Assert.That(_scanner.Scan(), Contains.Item((typeof (TheConfigurationClass))));
-            Assert.That(_scanner.Scan(), Contains.Item((typeof (TheImportedConfigurationClass))));
+            IEnumerable<Type> types = _scanner.Scan();
+            
+            Assert.That(types, Contains.Item((typeof (TheConfigurationClass))));
+            Assert.That(types, Contains.Item((typeof (TheImportedConfigurationClass))));
+            Assert.That(types.Count(),Is.EqualTo(2));
         }
 
+        [Serializable]
         private class Scanner : AssemblyTypeScanner
         {
             protected override bool IsCompoundPredicateSatisfiedBy(Type type)

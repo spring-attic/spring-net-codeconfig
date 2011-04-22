@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace RemoteAssemblyScanningExtensions
+namespace Spring.Context.Extension
 {
 	/// <summary>
 	/// Extension methods for the <see cref="System.AppDomain"/> class.

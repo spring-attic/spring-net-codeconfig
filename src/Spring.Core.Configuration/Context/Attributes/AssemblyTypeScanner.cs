@@ -25,12 +25,14 @@ using System.Reflection;
 using Common.Logging;
 using Spring.Core;
 using Spring.Util;
+using Spring.Context.Extension;
 
 namespace Spring.Context.Attributes
 {
     /// <summary>
     /// Scans Assebmlies for Types that satisfy a given set of constraints.
     /// </summary>
+    [Serializable]
     public abstract class AssemblyTypeScanner : IAssemblyTypeScanner
     {
         /// <summary>
@@ -173,14 +175,15 @@ namespace Spring.Context.Attributes
 
         #endregion
 
-        private IEnumerable<Assembly> GetAllAssembliesInPath()
+        private List<string> GetAllAssembliesInPath()
         {
 
             string folderPath = GetCurrentBinDirectoryPath();
 
-            var assemblies = new List<Assembly>();
-            AddDiscoveredAssemblies(folderPath, "*.dll", assemblies);
-            AddDiscoveredAssemblies(folderPath, "*.exe", assemblies);
+            var assemblies = new List<string>();
+            assemblies.AddRange(DiscoverAssemblies(folderPath, "*.dll"));
+            assemblies.AddRange(DiscoverAssemblies(folderPath, "*.exe"));
+
 
             if (Logger.IsDebugEnabled)
             {
@@ -191,8 +194,60 @@ namespace Spring.Context.Attributes
 
         private IEnumerable<Assembly> GetAllMatchingAssemblies()
         {
-            IEnumerable<Assembly> assemblyCandidates = GetAllAssembliesInPath();
-            return ApplyAssemblyFiltersTo(assemblyCandidates);
+            IEnumerable<string> assemblyCandidates = GetAllAssembliesInPath();
+
+            IEnumerable<string> matchingAssemblies = assemblyCandidates
+
+               .ScanAssembliesInSandbox<Predicate<Type>, string>(
+                 IsCompoundPredicateSatisfiedBy,
+                 delegate(Assembly asm, Predicate<Type> predicate)
+                 {
+                     foreach (var t in asm.GetTypes())
+                     {
+                         if (predicate(t))
+                         {
+                             return t.Assembly.FullName;
+                         }
+                     }
+
+                     return null;
+                 });
+
+            IList<Assembly> assemblies = new List<Assembly>();
+
+            foreach (var assembly in matchingAssemblies)
+            {
+                if (!string.IsNullOrEmpty(assembly))
+                {
+                    Assembly loadedAssembly = TryLoadAssembly(assembly);
+
+                    if (null != loadedAssembly)
+                    {
+                        assemblies.Add(loadedAssembly);
+                    }
+                }
+            }
+
+            return ApplyAssemblyFiltersTo(assemblies);
+        }
+
+        private Assembly TryLoadAssembly(string assemblyName)
+        {
+            Assembly assembly = null;
+
+            try
+            {
+                assembly = Assembly.Load(assemblyName);
+            }
+            catch (Exception ex)
+            {
+                //log and swallow everything that might go wrong here...
+                if (Logger.IsDebugEnabled)
+                    Logger.Debug(
+                        string.Format("Failed to load assembly {0} to inspect for [Configuration] types!", assemblyName), ex);
+            }
+
+            return assembly;
         }
 
         private string GetCurrentBinDirectoryPath()
@@ -280,28 +335,24 @@ namespace Spring.Context.Attributes
         /// <param name="folderPath">The folder path.</param>
         /// <param name="extension">The extension.</param>
         /// <param name="assemblies">The assemblies.</param>
-        public void AddDiscoveredAssemblies(string folderPath, string extension, IList<Assembly> assemblies)
+        private IList<string> DiscoverAssemblies(string folderPath, string extension)
         {
+            IList<string> assemblies = new List<string>();
+
             IEnumerable<string> files = Directory.GetFiles(folderPath, extension, SearchOption.AllDirectories);
+
             foreach (string file in files)
             {
                 string name = Path.GetFileNameWithoutExtension(file);
 
                 if (!AssemblyLoadExclusionPredicates.Any(delegate(Predicate<string> exclude) { return exclude(name); }))
                 {
-                    try
-                    {
-                        assemblies.Add(Assembly.LoadFrom(file));
-                    }
-                    catch (Exception ex)
-                    {
-                        //log and swallow everything that might go wrong here...
-                        if (Logger.IsDebugEnabled)
-                            Logger.Debug(
-                                string.Format("Failed to load assembly {0} to inspect for [Configuration] types!", file), ex);
-                    }
+                    assemblies.Add(file);
                 }
+
             }
+
+            return assemblies;
         }
     }
 }

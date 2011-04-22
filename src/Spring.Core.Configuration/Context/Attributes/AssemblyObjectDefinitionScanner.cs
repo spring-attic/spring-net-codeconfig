@@ -28,6 +28,7 @@ namespace Spring.Context.Attributes
     /// <summary>
     /// AssemblyTypeScanner that only accepts types that also meet the requirements of being ObjectDefintions.
     /// </summary>
+    [Serializable]
     public class AssemblyObjectDefinitionScanner : RequiredConstraintAssemblyTypeScanner
     {
         private readonly List<Predicate<Assembly>> _assemblyExclusionPredicates = new List<Predicate<Assembly>>();

@@ -30,6 +30,7 @@ namespace Spring.Context.Attributes
     /// <summary>
     /// Represents a collection of Types.
     /// </summary>
+    [Serializable]
     public class AssemblyTypeSource : IEnumerable<Type>
     {
         private readonly _Assembly _assembly;

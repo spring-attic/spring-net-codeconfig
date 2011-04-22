@@ -1,13 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
-using System.Globalization;
 using System.IO;
 using System.Reflection;
-using System.Security.Permissions;
-using System.Web;
 
-namespace RemoteAssemblyScanningExtensions
+namespace Spring.Context.Extension
 {
 	/// <summary>
 	/// Extension methods for the <see cref="System.Reflection.Assembly"/> class.
@@ -316,7 +313,7 @@ namespace RemoteAssemblyScanningExtensions
 		/// <exception cref="System.IO.FileNotFoundException">
 		/// Thrown if <paramref name="file" /> does not exist.
 		/// </exception>
-		/// <seealso cref="RemoteAssemblyScanningExtensions.AppDomainExtensions.CloneDomain"/>
+		/// <seealso cref="AppDomainExtensions.CloneDomain"/>
 		public static TOutput ScanAssemblyInSandbox<TInput, TOutput>(this FileInfo file, TInput scanParameters, Func<Assembly, TInput, TOutput> scanner)
 		{
 			/* The body of this method looks a lot like the AppDomainExtensions.CloneDomainAndRemoteExecute
@@ -398,7 +395,7 @@ namespace RemoteAssemblyScanningExtensions
 		/// </remarks>
 		[ExcludeFromCodeCoverage]
 		[SuppressMessage("Microsoft.Performance", "CA1812", Justification = "This class is instantiated via AppDomain.CreateInstanceAndUnwrap, which FxCop does not properly detect.")]
-		private class RemoteAssemblyScanner : MarshalByRefObject
+        private class RemoteAssemblyScanner : MarshalByRefObject
 		{
 			/// <summary>
 			/// Executes a remote assembly scan.

@@ -28,6 +28,7 @@ namespace Spring.Context.Attributes
     /// AssemblyTypeScanner that provides for applying a final hard-coded Required Constraint to all types found in the the scanned assemblies
     /// in addition to respecting the constraints passed to it during its configuration.
     /// </summary>
+    [Serializable]
     public abstract class RequiredConstraintAssemblyTypeScanner : AssemblyTypeScanner
     {
 
