@@ -38,6 +38,9 @@ namespace Spring.Context.Attributes
         /// </summary>
         protected static ILog Logger = LogManager.GetLogger(typeof(AssemblyTypeScanner));
 
+        /// <summary>
+        /// Names of Assemblies to exclude from being loaded for scanning.
+        /// </summary>
         protected IList<Predicate<string>> AssemblyLoadExclusionPredicates = new List<Predicate<string>>();
 
         /// <summary>
@@ -315,7 +318,6 @@ namespace Spring.Context.Attributes
         /// </summary>
         /// <param name="folderPath">The folder path.</param>
         /// <param name="extension">The extension.</param>
-        /// <param name="assemblies">The assemblies.</param>
         private IList<string> DiscoverAssemblies(string folderPath, string extension)
         {
             IList<string> assemblies = new List<string>();
