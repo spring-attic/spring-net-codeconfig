@@ -2,12 +2,12 @@
 <project name="Spring.Config" default="test">
 
     <property name="root.dir" value="${project::get-base-directory()}" overwrite="false" />
-    <property name="deploy.dir" value="${root.dir}/../deploy" />
-    <property name="build.dir" value="${root.dir}/build" />
-    <property name="tool.dir" value="${root.dir}/tools" />
-    <property name="lib.dir" value="${root.dir}/lib" />
-    <property name="package.dir" value="${root.dir}/package" />
-    <property name="doc.dir" value="${root.dir}/doc" />
+    <property name="deploy.dir" value="${root.dir}\..\deploy" />
+    <property name="build.dir" value="${root.dir}\build" />
+    <property name="tool.dir" value="${root.dir}\tools" />
+    <property name="lib.dir" value="${root.dir}\lib" />
+    <property name="package.dir" value="${root.dir}\package" />
+    <property name="doc.dir" value="${root.dir}\doc" />
 	<property name="project.sign" value="false" overwrite="false" />
 	<property name="compiling.examples" value="false" overwrite="true" />
 
@@ -22,7 +22,7 @@
     <!-- dev / alpha / beta# / rc# / release -->
     <property name="project.releasetype" value="dev" overwrite="false" />
 
-    <readregistry property="net35.install.dir" key="SOFTWARE\Microsoft\NET Framework Setup\NDP\v3.5\InstallPath" hive="LocalMachine" failonerror="true"/>
+    <readregistry property="net35.install.dir" key="SOFTWARE\Microsoft\NET Framework Setup\NDP\v4\Full\InstallPath" hive="LocalMachine" failonerror="true"/>
     <property name="msbuild.exe" value="${net35.install.dir}\msbuild.exe"/>
 
     <!-- readregistry property="vs2008.install.dir" key="SOFTWARE\Microsoft\VisualStudio\9.0\InstallDir" hive="LocalMachine" failonerror="false"/ -->
@@ -37,9 +37,11 @@
     <target name="build" depends="clean">
         <echo message="Current .NET Framework = ${nant.settings.currentframework}"/>
         <call target="update-common-assemblyinfo" />
-        <call target="RebuildAllSolutions" />
 		
-		<!-- need to get the bins copied to the bin folder for reference by examples before they are compiled -->
+		<call target="build-net-2.0" />		
+		<call target="build-net-4.0" />		
+		
+        <!-- need to get the bins copied to the bin folder for reference by examples before they are compiled -->
 		<call target="copy-to-bin-for-reference" />
 		
 		<call target="RebuildExampleSolutions" />
@@ -53,6 +55,14 @@
         </fileset>
       </copy>
 	  
+	  <!--
+	  <echo message="Processing ${build.dir}\net-4.0"/>
+      <copy todir="${root.dir}/bin/net/4.0/" flatten="true" verbose="true">
+        <fileset>
+          <include name="${build.dir}\net-4.0\Spring.Core.Config*.???"/>
+        </fileset>
+      </copy>
+	  -->
   </target>
 	
 	
@@ -74,7 +84,7 @@
           <attribute type="ComVisibleAttribute" value="false" />
           <attribute type="AllowPartiallyTrustedCallersAttribute" asis="true"/>
           <!-- attribute type="SecurityTransparentAttribute" asis="true"/ -->
-          <attribute type="SecurityPermissionAttribute" value="SecurityAction.RequestMinimum" asis="true"/>
+          <!-- <attribute type="SecurityPermissionAttribute" value="SecurityAction.RequestMinimum" asis="true"/> -->
           <attribute type="AssemblyCompanyAttribute" value="http://www.springframework.net" />
           <attribute type="AssemblyCopyrightAttribute" value="Copyright 2010-2011 Spring.NET Framework Team." />
           <attribute type="AssemblyTrademarkAttribute" value="Apache License, Version 2.0" />
@@ -88,13 +98,64 @@
       </asminfo>
     </target>
 
+	<target name="set-project-file-to-target-framework">
+		<foreach item="File" property="filename">
+            <in>
+                <items basedir="${root.dir}/src">
+                    <include name="**/*.2010.csproj" />
+                </items>
+            </in>
+            <do>
+			
+			<echo message="Poking file ${filename} to set framework version to ${nant.settings.targetframeworkstring}" />
+			
+			<xmlpoke file="${filename}" xpath="/n:Project/n:PropertyGroup/n:TargetFrameworkVersion" value="${nant.settings.targetframeworkstring}">
+				<namespaces>
+					<namespace prefix="n" uri="http://schemas.microsoft.com/developer/msbuild/2003" />
+				</namespaces>
+			</xmlpoke>
+			
+			<!--
+                <property name="solutionfile" value="${filename}" />
+                <property name="solutionconfiguration" value="${buildconfiguration}" />
+                <call target="RebuildSolution" />
+				-->
+            </do>
+        </foreach>
+	</target>
+	
+	<target name="build-net-2.0">
+        <property name="nant.settings.currentframework" value="net-2.0"/>
+		<property name="nant.settings.targetframeworkstring" value="v2.0" />
+		<property name="nant.settings.libfoldername" value="2.0" />
+        <property name="test.bin.dir" value="${build.dir}\${nant.settings.currentframework}" />
+		
+		<echo message="Compiling for .NET Framework Version: ${nant.settings.currentframework}" />
+		
+		<call target="set-project-file-to-target-framework" />
+		<call target="RebuildAllSolutions" />
+	</target>
+	
+	
+	<target name="build-net-4.0">
+        <property name="nant.settings.currentframework" value="net-4.0"/>
+		<property name="nant.settings.targetframeworkstring" value="v4.0" />
+		<property name="nant.settings.libfolder" value="4.0" />
+        <property name="test.bin.dir" value="${build.dir}\${nant.settings.currentframework}" />
+		
+		<echo message="Compiling for .NET Framework Version: ${nant.settings.currentframework}" />
+		
+		<call target="set-project-file-to-target-framework" />
+		<call target="RebuildAllSolutions" />
+	</target>
+	
     <target name="test" depends="build">
-        <property name="nant.settings.currentframework" value="net-3.5"/>
-        <property name="test.bin.dir" value="${build.dir}\${nant.settings.currentframework}" />
+
+		
         <call target="TestAllAssemblies" />
-        <!--
-		<property name="nant.settings.currentframework" value="net-4.0"/>
-        <property name="test.bin.dir" value="${build.dir}\${nant.settings.currentframework}" />
+		
+		<!--
+		<call target="build-net-4.0" />		
         <call target="TestAllAssemblies" />
 		-->
     </target>
@@ -316,10 +377,10 @@ ${tool.dir}       : dir for tools
             <arg value="/xml:${test.assemblyname}.dll-TestResults.xml" />
             <arg value="/nologo" />
             <arg value="/noshadow" />
-	    <!--
+	    
             <arg value="/framework:${nant.settings.currentframework}" />
-	    -->
-            <arg value="/framework:net-2.0" />
+	    
+            <!-- <arg value="/framework:net-2.0" /> -->
         </exec>
 
     </target>
@@ -388,14 +449,14 @@ ${tool.dir}       : dir for tools
         </exec>
     </target>
 
-    <target name="RebuildAllSolutions" depends="clean">
+    <target name="RebuildAllSolutions" > <!-- depends="clean"> -->
         <foreach item="File" property="filename">
             <in>
                 <items basedir="${root.dir}">
                     <exclude name="**/tools/**" />
 					<exclude name="**/examples/**" />
 					<exclude name="**/package/**" />
-                    <include name="**/*.sln" />
+                    <include name="**/*2010.sln" />
                 </items>
             </in>
             <do>
@@ -406,7 +467,7 @@ ${tool.dir}       : dir for tools
         </foreach>
     </target>
 	
-	<target name="RebuildExampleSolutions" depends="RebuildAllSolutions">
+	<target name="RebuildExampleSolutions" > <!-- depends="buildRebuildAllSolutions"> -->
         <!-- never sign/stong-name the example solutions, even when the we're signing the main binaries  -->
 		<property name="compiling.examples" value="true" />
 		
@@ -426,12 +487,17 @@ ${tool.dir}       : dir for tools
 
     <target name="RebuildSolution" description="rebuilds a given solution file">
         <echo message="Rebuilding Solution ${solutionfile}" />
+		
+		<echo message="LIB PATH VALUE: ${lib.dir}\net\${nant.settings.libfoldername}" />
+		
         <exec program="${msbuild.exe}">
             <!--
       <arg value="/property:OutDir=${output.dir}/"/>
 -->
             <arg value="${solutionfile}"/>
             <arg line="/nologo" />
+			<arg value="/property:OutputPath=${build.dir}\${nant.settings.currentframework}" if="${not compiling.examples}" />
+			<!-- <arg value="/property:AssemblySearchPaths=${lib.dir}\net\${nant.settings.libfoldername}" /> -->
             <arg line="/property:Configuration=${solutionconfiguration}"/>
 			<arg value="/property:DefineExtraConstants=STRONG" if="${project.sign and not compiling.examples}" />
 			<arg value="/property:SignAssembly=true" if="${project.sign and not compiling.examples}" />
