@@ -60,7 +60,7 @@ namespace Spring.Context.Attributes
 
         private static bool HasAttributeOnMethods(Type objectType, Type attributeType)
         {
-            ISet<MethodInfo> methods = ConfigurationClassParser.GetAllMethodsWithCustomAttributeForClass(objectType,
+            Collections.Generic.ISet<MethodInfo> methods = ConfigurationClassParser.GetAllMethodsWithCustomAttributeForClass(objectType,
                                                                                                          attributeType);
             foreach (MethodInfo method in methods)
             {
@@ -76,7 +76,7 @@ namespace Spring.Context.Attributes
         /// Loads the object definitions.
         /// </summary>
         /// <param name="configurationModel">The configuration model.</param>
-        public void LoadObjectDefinitions(ISet<ConfigurationClass> configurationModel)
+        public void LoadObjectDefinitions(Collections.Generic.ISet<ConfigurationClass> configurationModel)
         {
             foreach (ConfigurationClass configClass in configurationModel)
             {

@@ -32,7 +32,7 @@ namespace Spring.Context.Attributes
     /// </summary>
     public class ConfigurationClassParser
     {
-        private ISet<ConfigurationClass> _configurationClasses = new HashedSet<ConfigurationClass>();
+        private Collections.Generic.ISet<ConfigurationClass> _configurationClasses = new HashedSet<ConfigurationClass>();
 
         private Stack<ConfigurationClass> _importStack = new Stack<ConfigurationClass>();
 
@@ -51,7 +51,7 @@ namespace Spring.Context.Attributes
         /// Gets the configuration classes.
         /// </summary>
         /// <value>The configuration classes.</value>
-        public ISet<ConfigurationClass> ConfigurationClasses
+        public Collections.Generic.ISet<ConfigurationClass> ConfigurationClasses
         {
             get { return _configurationClasses; }
         }
@@ -112,7 +112,7 @@ namespace Spring.Context.Attributes
                 }
             }
 
-            ISet<MethodInfo> definitionMethods = GetAllMethodsWithCustomAttributeForClass(configurationClass.ConfigurationClassType, typeof(DefinitionAttribute));
+            Collections.Generic.ISet<MethodInfo> definitionMethods = GetAllMethodsWithCustomAttributeForClass(configurationClass.ConfigurationClassType, typeof(DefinitionAttribute));
             foreach (MethodInfo definitionMethod in definitionMethods)
             {
                 configurationClass.Methods.Add(new ConfigurationClassMethod(definitionMethod, configurationClass));
@@ -126,9 +126,9 @@ namespace Spring.Context.Attributes
         /// <param name="theClass">The class.</param>
         /// <param name="customAttribute">The custom attribute.</param>
         /// <returns></returns>
-        public static ISet<MethodInfo> GetAllMethodsWithCustomAttributeForClass(Type theClass, Type customAttribute)
+        public static Collections.Generic.ISet<MethodInfo> GetAllMethodsWithCustomAttributeForClass(Type theClass, Type customAttribute)
         {
-            ISet<MethodInfo> methods = new HashedSet<MethodInfo>();
+            Collections.Generic.ISet<MethodInfo> methods = new HashedSet<MethodInfo>();
 
             foreach (MethodInfo method in theClass.GetMethods())
             {

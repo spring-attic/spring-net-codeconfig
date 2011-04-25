@@ -37,7 +37,7 @@ namespace Spring.Context.Attributes
 
         private readonly IDictionary<string, Type> _importedResources = new Dictionary<string, Type>();
 
-        private readonly ISet<ConfigurationClassMethod> _methods = new HashedSet<ConfigurationClassMethod>();
+        private readonly Collections.Generic.ISet<ConfigurationClassMethod> _methods = new HashedSet<ConfigurationClassMethod>();
 
         private string _objectName;
 
@@ -84,7 +84,7 @@ namespace Spring.Context.Attributes
         /// Gets the methods.
         /// </summary>
         /// <value>The methods.</value>
-        public ISet<ConfigurationClassMethod> Methods
+        public Collections.Generic.ISet<ConfigurationClassMethod> Methods
         {
             get
             {

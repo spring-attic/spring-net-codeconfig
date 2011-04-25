@@ -37,7 +37,6 @@ using System.Security.Permissions;
 [assembly: CLSCompliantAttribute(false)]
 [assembly: ComVisibleAttribute(false)]
 [assembly: AllowPartiallyTrustedCallersAttribute()]
-[assembly: SecurityPermissionAttribute(SecurityAction.RequestMinimum)]
 [assembly: AssemblyCompanyAttribute("http://www.springframework.net")]
 [assembly: AssemblyCopyrightAttribute("Copyright 2010-2011 Spring.NET Framework Team.")]
 [assembly: AssemblyTrademarkAttribute("Apache License, Version 2.0")]
