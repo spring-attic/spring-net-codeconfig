@@ -25,6 +25,7 @@
     <DocumentationFile>..\..\build\net-2.0\Spring.Core.Configuration.XML</DocumentationFile>
     <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
     <NoWarn>1685</NoWarn>
+    <RunCodeAnalysis>false</RunCodeAnalysis>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <DebugType>pdbonly</DebugType>
@@ -37,13 +38,13 @@
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="Common.Logging">
-      <HintPath>..\..\lib\net\2.0\Common.Logging.dll</HintPath>
+      <HintPath>..\..\lib\net\4.0\Common.Logging.dll</HintPath>
     </Reference>
     <Reference Include="Spring.Aop">
-      <HintPath>..\..\lib\net\2.0\Spring.Aop.dll</HintPath>
+      <HintPath>..\..\lib\net\4.0\Spring.Aop.dll</HintPath>
     </Reference>
     <Reference Include="Spring.Core">
-      <HintPath>..\..\lib\net\2.0\Spring.Core.dll</HintPath>
+      <HintPath>..\..\lib\net\4.0\Spring.Core.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Data" />

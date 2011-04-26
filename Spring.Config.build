@@ -52,17 +52,17 @@
       <copy todir="${root.dir}/bin/net/2.0/" flatten="true" verbose="true">
         <fileset>
           <include name="${build.dir}\net-2.0\Spring.Core.Config*.???"/>
+		  <exclude name="**\*Test*.*"/>
         </fileset>
       </copy>
-	  
-	  <!--
-	  <echo message="Processing ${build.dir}\net-4.0"/>
+	
+	<echo message="Processing ${build.dir}\net-4.0"/>
       <copy todir="${root.dir}/bin/net/4.0/" flatten="true" verbose="true">
         <fileset>
           <include name="${build.dir}\net-4.0\Spring.Core.Config*.???"/>
+		  <exclude name="**\*Test*.*"/>
         </fileset>
       </copy>
-	  -->
   </target>
 	
 	
@@ -82,7 +82,7 @@
         <attributes>
           <attribute type="CLSCompliantAttribute" value="false" />
           <attribute type="ComVisibleAttribute" value="false" />
-          <attribute type="AllowPartiallyTrustedCallersAttribute" asis="true"/>
+          <!-- <attribute type="AllowPartiallyTrustedCallersAttribute" asis="true"/> -->
           <!-- attribute type="SecurityTransparentAttribute" asis="true"/ -->
           <!-- <attribute type="SecurityPermissionAttribute" value="SecurityAction.RequestMinimum" asis="true"/> -->
           <attribute type="AssemblyCompanyAttribute" value="http://www.springframework.net" />
@@ -114,25 +114,55 @@
 					<namespace prefix="n" uri="http://schemas.microsoft.com/developer/msbuild/2003" />
 				</namespaces>
 			</xmlpoke>
-			
-			<!--
-                <property name="solutionfile" value="${filename}" />
-                <property name="solutionconfiguration" value="${buildconfiguration}" />
-                <call target="RebuildSolution" />
-				-->
-            </do>
+			</do>
         </foreach>
 	</target>
+	
+	
+	<target name="set-assembly-hint-paths-for-target-framework">
+		<foreach item="File" property="filename">
+            <in>
+                <items basedir="${root.dir}/src">
+                    <include name="**/*.2010.csproj" />
+                </items>
+            </in>
+            <do>
+
+			<property name="reference-name" value="Common.Logging" />
+			<echo message="Poking file ${filename} to set hint paths for ${reference-name}" />
+			<call target="set-assembly-hint-path" />
+
+			<property name="reference-name" value="Spring.Core" />
+			<echo message="Poking file ${filename} to set hint paths for ${reference-name}" />
+			<call target="set-assembly-hint-path" />
+
+			<property name="reference-name" value="Spring.Aop" />
+			<echo message="Poking file ${filename} to set hint paths for ${reference-name}" />
+			<call target="set-assembly-hint-path" />
+
+			</do>
+        </foreach>
+	</target>
+	
+	<target name="set-assembly-hint-path">
+		<xmlpoke file="${filename}" xpath="/n:Project/n:ItemGroup/n:Reference[@Include = '${reference-name}']/n:HintPath" value="${framework-specific.lib.dir}\${reference-name}.dll">
+			<namespaces>
+				<namespace prefix="n" uri="http://schemas.microsoft.com/developer/msbuild/2003" />
+			</namespaces>
+		</xmlpoke>
+	</target>
+	
 	
 	<target name="build-net-2.0">
         <property name="nant.settings.currentframework" value="net-2.0"/>
 		<property name="nant.settings.targetframeworkstring" value="v2.0" />
-		<property name="nant.settings.libfoldername" value="2.0" />
+		<property name="framework-specific.lib.dir" value="..\..\lib\net\2.0" />
         <property name="test.bin.dir" value="${build.dir}\${nant.settings.currentframework}" />
 		
 		<echo message="Compiling for .NET Framework Version: ${nant.settings.currentframework}" />
 		
 		<call target="set-project-file-to-target-framework" />
+		<call target="set-assembly-hint-paths-for-target-framework" />
 		<call target="RebuildAllSolutions" />
 	</target>
 	
@@ -140,24 +170,18 @@
 	<target name="build-net-4.0">
         <property name="nant.settings.currentframework" value="net-4.0"/>
 		<property name="nant.settings.targetframeworkstring" value="v4.0" />
-		<property name="nant.settings.libfolder" value="4.0" />
+		<property name="framework-specific.lib.dir" value="..\..\lib\net\4.0" />
         <property name="test.bin.dir" value="${build.dir}\${nant.settings.currentframework}" />
 		
 		<echo message="Compiling for .NET Framework Version: ${nant.settings.currentframework}" />
 		
 		<call target="set-project-file-to-target-framework" />
+		<call target="set-assembly-hint-paths-for-target-framework" />
 		<call target="RebuildAllSolutions" />
 	</target>
 	
     <target name="test" depends="build">
-
-		
         <call target="TestAllAssemblies" />
-		
-		<!--
-		<call target="build-net-4.0" />		
-        <call target="TestAllAssemblies" />
-		-->
     </target>
 
     <target name="test-integration" depends="test">
@@ -228,9 +252,16 @@
       <copy todir="${package.dir}/bin/net/2.0/" flatten="true" verbose="true">
         <fileset>
           <include name="${build.dir}\net-2.0\Spring.Core.Config*.???"/>
+		  <exclude name="**\*Test*.*" />
         </fileset>
       </copy>
-	  
+	<echo message="Processing ${build.dir}\net-4.0"/>
+      <copy todir="${package.dir}/bin/net/4.0/" flatten="true" verbose="true">
+        <fileset>
+          <include name="${build.dir}\net-4.0\Spring.Core.Config*.???"/>
+		  <exclude name="**\*Test*.*" />
+        </fileset>
+      </copy>
   </target>
 
   <target name="package.sources">
@@ -487,9 +518,7 @@ ${tool.dir}       : dir for tools
 
     <target name="RebuildSolution" description="rebuilds a given solution file">
         <echo message="Rebuilding Solution ${solutionfile}" />
-		
-		<echo message="LIB PATH VALUE: ${lib.dir}\net\${nant.settings.libfoldername}" />
-		
+
         <exec program="${msbuild.exe}">
             <!--
       <arg value="/property:OutDir=${output.dir}/"/>
@@ -497,7 +526,6 @@ ${tool.dir}       : dir for tools
             <arg value="${solutionfile}"/>
             <arg line="/nologo" />
 			<arg value="/property:OutputPath=${build.dir}\${nant.settings.currentframework}" if="${not compiling.examples}" />
-			<!-- <arg value="/property:AssemblySearchPaths=${lib.dir}\net\${nant.settings.libfoldername}" /> -->
             <arg line="/property:Configuration=${solutionconfiguration}"/>
 			<arg value="/property:DefineExtraConstants=STRONG" if="${project.sign and not compiling.examples}" />
 			<arg value="/property:SignAssembly=true" if="${project.sign and not compiling.examples}" />
