@@ -1,22 +1,22 @@
-The Spring Code Config project for .NET, Release 1.0.0 (4/4/2011)
+The Spring Code Config project for .NET, Release 1.0.1 (4/26/2011)
 --------------------------------------------------------------------
 https://github.com/SpringSource/spring-net-codeconfig
 
 
 1. INTRODUCTION
 
-The 1.0.0 release of Spring Code Config for NET provides:
+The 1.0.1 release of Spring Code Config for NET provides:
 
      * the ability to configure a Spring container using standard .NET code instead of or in addition to XML configuration
 
 2. SUPPORTED .NET FRAMEWORK VERSIONS
 
-Spring Code Config for .NET version 1.0 supports the .NET 2.0 and later framework runtimes (but REQUIRES Visual Studio 2008 or later, even when targeting .NET 2.0 -- see KNOWN ISSUES/LIMITATIONS for details).
+Spring Code Config for .NET version 1.0.1 supports the .NET 2.0 and later framework runtimes (but REQUIRES Visual Studio 2008 or later, even when targeting .NET 2.0 -- see KNOWN ISSUES/LIMITATIONS for details).
 
 3. KNOWN ISSUES/LIMITATIONS
 
-* Initial Features
-This initial relase of Spring Code Config for .NET supports the basic configuration of Object Definitions Metadata related to object construction but does not (yet) support the more advanced features of the Spring.NET Dependency Injection container including the application of Aspects, the subsitution of VariablePlaceholderValues, and others.  This support will be provided in subsequent releases of this project.
+* Features
+This relase of Spring Code Config for .NET supports the basic configuration of Object Definitions Metadata related to object construction but does not (yet) support the more advanced features of the Spring.NET Dependency Injection container including the application of Aspects, the subsitution of VariablePlaceholderValues, and others.  This support will be provided in subsequent releases of this project.
 
 * Compiler Warning  
 You may receive the following warning when compiling your projects when referencing Spring Code Config for .NET: "Warning: The predefined type 'System.Runtime.CompilerServices.ExtensionAttribute' is defined in multiple assemblies in the global alias; using definition from '<path-to-System.Core.dll>'.  To extend the behavior of the GenericApplicationContext, extension methods have been used.  To enable extension methods under .NET 2.0 where they would otherwise be unsupported, the work-around as described here http://www.danielmoth.com/Blog/Using-Extension-Methods-In-Fx-20-Projects.aspx has been employed.  Depending on your targeted runtime version, this approach can result in the preceeding warning being issued by the compiler.  This warning can be safely ignored as it will not impact the functionality of the Spring Code Config for .NET or your own application.
@@ -27,8 +27,9 @@ Release contents:
 
 * "src" contains the C# source files for the framework
 * "test" contains the C# source files for the test suite
-* "bin" contains the distribution dll files
-* "lib/net" contains common libraries needed for building and running the framework
+* "bin\net\2.0" contains the distribution dll files for .NET 2.0 and 3.5
+* "bin\net\4.0" contains the distribution dll files for .NET 4.0
+* "lib\net" contains common libraries needed for building the project
 * "doc" contains reference documentation, MSDN-style API help, and the Spring Code Config for .NET xsd.
 * "examples" contains sample applications.
 
@@ -41,7 +42,10 @@ Spring Code Config for .NET is released under the terms of the Apache Software L
 5. DISTRIBUTION DLLs
 
 The "bin" directory contains the following distinct dll files for use in applications:
-* Spring.Core.CodeConfig
+
+* bin\net\2.0\Spring.Core.CodeConfig.dll for .NET 2.0 and 3.5
+* bin\net\4.0\Spring.Core.CodeConfig.dll for .NET 4.0
+
 
 6. WHERE TO START?
 
@@ -75,10 +79,3 @@ or feature request, please submit a ticket in JIRA (see link above).
 InnovaSys Document X!
 ---------------------
 InnovSys has kindly provided a license to generate the SDK documentation and supporting utilities for
-integration with Visual Studio.
-
-
-
-
-
-

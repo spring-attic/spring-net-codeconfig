@@ -16,7 +16,7 @@
 	</if>
 	
     <property name="project.majorversion" value="1.0" />
-    <property name="project.patchversion" value="0" overwrite="false" />
+    <property name="project.patchversion" value="1" overwrite="false" />
     <property name="project.buildnumber" value="${math::abs(math::floor(timespan::get-total-days(datetime::now() - datetime::parse('01/01/2000'))))}" />
     <property name="project.version" value="${project.majorversion}.${project.patchversion}.${project.buildnumber}" overwrite="false" />
     <!-- dev / alpha / beta# / rc# / release -->
