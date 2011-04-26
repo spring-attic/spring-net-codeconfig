@@ -467,8 +467,8 @@ private static IApplicationContext CreateContainerUsingCodeConfig()
       </listitem>
     </itemizedlist>
 
-    <para>In addition, finer-grained control of the root path within which to
-    begin the scan, specific assemblies to scan, and specific <link
+    <para>In addition, finer-grained control of the specific assemblies to
+    scan, and specific <link
     linkend="configuration-attribute-reference"><literal>[Configuration]</literal></link>
     classes to include and/or exclude is supported by the scanning API. It is
     also possible to compose configurations by dividing your <link
@@ -662,7 +662,7 @@ public class FirstConfiguration
 public class SecondConfiguration : IApplicationContextAware //note the interface implementation
 {
      //field to hold the injected context
-     private _IApplicationContext _context;
+     private IApplicationContext _context;
 
      //property setter defined by the IApplcationContextAware interface
      //     so that the context can inject itself into the class

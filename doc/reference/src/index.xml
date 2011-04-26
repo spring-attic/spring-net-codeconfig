@@ -17,17 +17,20 @@
   <bookinfo>
     <title>Spring CodeConfig - Reference Documentation</title>
 
-    <releaseinfo>1.0.0</releaseinfo>
+    <releaseinfo>1.0.1</releaseinfo>
 
     <authorgroup>
       <author>
         <firstname>Stephen</firstname>
+
         <surname>Bohlen</surname>
       </author>
+
       <author>
         <firstname>Mark</firstname>
+
         <surname>Pollack</surname>
-      </author>	  
+      </author>
     </authorgroup>
 
     <legalnotice>
@@ -66,15 +69,14 @@
       configuration metadata in XML files, there are also many problems with
       this approach including the verbosity of XML and its heavy dependence on
       string-literals which are both prone to typing errors and unusually
-      resistant to most modern refactoring tools in use today.  The CodeConfig
+      resistant to most modern refactoring tools in use today. The CodeConfig
       approach removes these problems by providing a type safe, code-based,
-      approach to dependency injection.  It keeps the configuration metadatda external
-      to your class so your class can be a POCO, free of any DI related annotations.
-      </para>
-
+      approach to dependency injection. It keeps the configuration metadatda
+      external to your class so your class can be a POCO, free of any DI
+      related annotations.</para>
     </partintro>
 
-	&migration-example;    
+    &migration-example;
   </part>
 
   <part xml:id="reference">

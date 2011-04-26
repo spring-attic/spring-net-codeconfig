@@ -40,19 +40,14 @@
     that Spring.NET uses to perform dependency injection. In the case of
     XML-based configuration sources, XmlApplicationContext parses XML files to
     populate the metadata model. In the case of CodeConfig, the
-    <literal>CodeConfigApplicationContext</literal> scans one or more folders
-    for assemblies containing one or more types attributed with the <link
+    <literal>CodeConfigApplicationContext</literal> scans one or more
+    assemblies containing one or more types attributed with the <link
     linkend="configuration-attribute-reference"><literal>[Configuration]</literal></link>
     attribute, parses them to construct appropriate
     <literal>ObjectDefinition</literal> instances, and registers those Object
-    Definitions with the <literal>IApplicationContext</literal> for use. The
-    default folder for scanning is the runtime directory and scanning is done
-    using the 'ReflectionOnly' facilities in the BCL so only the assemblies
-    that have the <link
-    linkend="configuration-attribute-reference"><literal>[Configuration]</literal></link>
-    attribute will be loaded into the AppDomain. You can also mix-and-match
-    configuration sources, with some object definitions coming from XML and
-    others from code.</para>
+    Definitions with the <literal>IApplicationContext</literal> for use. You
+    can also mix-and-match configuration sources, with some object definitions
+    originating in XML and others in code.</para>
 
     <sect2>
       <title>Using the CodeConfigApplicationContext</title>
@@ -151,25 +146,10 @@ public class DataModuleConfigurationClass
   <sect1>
     <title>Scanning Basics</title>
 
-    <para>The default folder for scanning is the runtime directory and
-    scanning is done using the 'ReflectionOnly' facilities in the BCL so only
-    the assemblies that have the <link
-    linkend="configuration-attribute-reference"><literal>[Configuration]</literal></link>
-    attribute will be loaded into the AppDomain. The behavior of the
-    <literal>CodeConfigApplicationContext</literal> scanning operation can be
-    controlled by the following constraints:</para>
+    <para>The behavior of the <literal>CodeConfigApplicationContext</literal>
+    scanning operation can be controlled by the following constraints:</para>
 
     <itemizedlist>
-      <listitem>
-        <para><emphasis>Scan Root Path</emphasis></para>
-
-        <para>The directory specified by this value and all subdirectories
-        beneath it will be recursively scanned for assemblies and types
-        matching all other constraints; defaults to the current AppDomain's
-        'bin' or run-time directory. In most common usage scenarios, this
-        value will rarely need to be changed.</para>
-      </listitem>
-
       <listitem>
         <para><emphasis>Assembly Inclusion Constraint</emphasis></para>
 
@@ -212,10 +192,10 @@ ctx.Refresh();</programlisting>
     <sect2>
       <title>Scanning specific assemblies and types</title>
 
-      <para>While the scanning process is very performant, say as compared to
-      the overhead of parsing XML files, you may want to control the scope of
-      the scanning operations to match your deployment or other usage models.
-      To facilitate control of the scope of the scanning operation, the
+      <para>While the scanning process is very rapid (as compared to the
+      overhead of parsing XML files) you may want to control the scope of the
+      scanning operations to match your deployment or other usage models. To
+      facilitate control of the scope of the scanning operation, the
       <literal>CodeConfigApplicationContext</literal> provides several
       <literal>.ScanXXX()</literal> methods that accept constraints to be
       applied to the assemblies and types during the scanning process. The
@@ -238,7 +218,7 @@ ctx.Refresh();</programlisting>
             <row>
               <entry><literal>ScanAllAssemblies()</literal></entry>
 
-              <entry>Scans all assemblies, excpect those in the .NET BCL and
+              <entry>Scans all assemblies, except those in the .NET BCL and
               Spring distribution</entry>
             </row>
 
@@ -256,17 +236,6 @@ ctx.Refresh();</programlisting>
 
               <entry>Scans only those assemblines that match the
               <literal>assemblyPredicate</literal></entry>
-            </row>
-
-            <row>
-              <entry><literal>Scan(string assemblyScanPath,
-              Predicate&lt;Assembly&gt; assemblyPredicate,
-              Predicate&lt;Type&gt; typePredicate)</literal></entry>
-
-              <entry>Scans the provided <literal>assemblyScanPath</literal>
-              for assemblies that match the
-              <literal>assemblyPredicate</literal> and types that match the
-              <literal>typePredicate</literal></entry>
             </row>
 
             <row>
@@ -326,7 +295,7 @@ ctx.ScanWithAssemblyFilter(IsOneOfOurConfigAssemblies);</programlisting>
 
       <para>None of this is anything other than simple .NET Delegate handling,
       but its important to take note that the full flexibility of .NET
-      Delegates and lamda expressions is at your disposal for formulating and
+      Delegates and lambda expressions is at your disposal for formulating and
       passing scanning constraints.</para>
     </sect2>
 
@@ -446,14 +415,10 @@ ctx.ScanWithTypeFilter(type =&gt; type.FullName.Contains("Config");</programlist
       <programlisting language="csharp">var ctx = new CodeConfigApplicationContext();
 ctx.Scan(assy =&gt; assy.FullName.Name.BeginsWith("Config"), type =&gt; type.Name.Contains("Infrastructure"));</programlisting>
 
-      <para>For even more control over the scanning, you can provide a root
-      scan path to the <literal>.Scan(...)</literal> method as well as shown
-      in the following sample:<programlisting language="csharp">var ctx = new CodeConfigApplicationContext();
-ctx.Scan("c:\\MySpecialFolder\\MyConfigAssemblies", assy =&gt; assy.FullName.Name.BeginsWith("Config"), type =&gt; type.Name.Contains("Infrastructure"));</programlisting>Note
-      that it is not possible to exclude specific types from the scanning
-      process using these overloads of the <literal>.Scan(...)</literal>
-      method. To get type-exclusion control, you must instantiate and pass in
-      your own instance of the
+      <para>Note that it is not possible to exclude specific types from the
+      scanning process using these overloads of the
+      <literal>.Scan(...)</literal> method. To get type-exclusion control, you
+      must instantiate and pass in your own instance of the
       <literal>AssemblyObjectDefinitionScanner</literal> as described in the
       following section(s).</para>
     </sect2>
@@ -469,22 +434,6 @@ ctx.Scan("c:\\MySpecialFolder\\MyConfigAssemblies", assy =&gt; assy.FullName.Nam
       <literal>AssemblyObjectDefinitonScanner</literal> provides many methods
       for defining the contraints that will control the scanning
       process.</para>
-
-      <sect3>
-        <title>Controlling the Root of the Scanning Path</title>
-
-        <para>The contructor for the
-        <literal>AssemblyObjectDefinitionScanner</literal> provides an
-        overload that accepts the fully-qualified path at which the scan will
-        begin the search for assemblies and types. As mentioned elsewhere, if
-        this path is not provided it will default to the root of the
-        currently-executing AppDomain.</para>
-
-        <programlisting language="csharp">//start the scan at special location for the assemblies containing [Configuration]-attributed types
-var scanner = new AssemblyObjectDefinitionScanner("c:\\MySpecialConfigurationLocation\\MyFavoriteConfigAssemblies");
-var ctx = new CodeConfigApplicationContext();
-ctx.Scan(scanner);</programlisting>
-      </sect3>
 
       <sect3>
         <title>Scanning Specific Assemblies and Types</title>
