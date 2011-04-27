@@ -2,12 +2,13 @@
 <project name="Spring.Config" default="test">
 
     <property name="root.dir" value="${project::get-base-directory()}" overwrite="false" />
-    <property name="deploy.dir" value="${root.dir}\..\deploy" />
+    <property name="deploy.dir" value="${root.dir}\deploy" />
     <property name="build.dir" value="${root.dir}\build" />
     <property name="tool.dir" value="${root.dir}\tools" />
     <property name="lib.dir" value="${root.dir}\lib" />
     <property name="package.dir" value="${root.dir}\package" />
     <property name="doc.dir" value="${root.dir}\doc" />
+	<property name="setup.dir" value="${root.dir}\setup" />
 	<property name="project.sign" value="false" overwrite="false" />
 	<property name="compiling.examples" value="false" overwrite="true" />
 
@@ -22,10 +23,8 @@
     <!-- dev / alpha / beta# / rc# / release -->
     <property name="project.releasetype" value="dev" overwrite="false" />
 
-    <readregistry property="net35.install.dir" key="SOFTWARE\Microsoft\NET Framework Setup\NDP\v4\Full\InstallPath" hive="LocalMachine" failonerror="true"/>
-    <property name="msbuild.exe" value="${net35.install.dir}\msbuild.exe"/>
-
-    <!-- readregistry property="vs2008.install.dir" key="SOFTWARE\Microsoft\VisualStudio\9.0\InstallDir" hive="LocalMachine" failonerror="false"/ -->
+    <readregistry property="net40.install.dir" key="SOFTWARE\Microsoft\NET Framework Setup\NDP\v4\Full\InstallPath" hive="LocalMachine" failonerror="true"/>
+    <property name="msbuild.exe" value="${net40.install.dir}\msbuild.exe"/>
 
     <property name="buildconfiguration" value="Debug" overwrite="false" />
 	
@@ -36,7 +35,6 @@
 
     <target name="build" depends="clean">
         <echo message="Current .NET Framework = ${nant.settings.currentframework}"/>
-        <call target="update-common-assemblyinfo" />
 		
 		<call target="build-net-2.0" />		
 		<call target="build-net-4.0" />		
@@ -82,16 +80,13 @@
         <attributes>
           <attribute type="CLSCompliantAttribute" value="false" />
           <attribute type="ComVisibleAttribute" value="false" />
-          <!-- <attribute type="AllowPartiallyTrustedCallersAttribute" asis="true"/> -->
-          <!-- attribute type="SecurityTransparentAttribute" asis="true"/ -->
-          <!-- <attribute type="SecurityPermissionAttribute" value="SecurityAction.RequestMinimum" asis="true"/> -->
           <attribute type="AssemblyCompanyAttribute" value="http://www.springframework.net" />
           <attribute type="AssemblyCopyrightAttribute" value="Copyright 2010-2011 Spring.NET Framework Team." />
           <attribute type="AssemblyTrademarkAttribute" value="Apache License, Version 2.0" />
           <attribute type="AssemblyCultureAttribute" value="" />
           <attribute type="AssemblyVersionAttribute" value="${project.version}" />
 		  <attribute type="AssemblyFileVersionAttribute" value="${project.version}" />
-          <attribute type="AssemblyConfigurationAttribute" value="${framework::get-target-framework()}.${platform::get-name()}; ${project.releasetype}" />
+          <attribute type="AssemblyConfigurationAttribute" value="${nant.settings.currentframework}.${platform::get-name()}; ${project.releasetype}" />
           <attribute type="AssemblyInformationalVersionAttribute" value="${project.version}" />
           <attribute type="AssemblyDelaySignAttribute" value="false" />
         </attributes>
@@ -160,7 +155,7 @@
         <property name="test.bin.dir" value="${build.dir}\${nant.settings.currentframework}" />
 		
 		<echo message="Compiling for .NET Framework Version: ${nant.settings.currentframework}" />
-		
+		<call target="update-common-assemblyinfo" />
 		<call target="set-project-file-to-target-framework" />
 		<call target="set-assembly-hint-paths-for-target-framework" />
 		<call target="RebuildAllSolutions" />
@@ -174,7 +169,7 @@
         <property name="test.bin.dir" value="${build.dir}\${nant.settings.currentframework}" />
 		
 		<echo message="Compiling for .NET Framework Version: ${nant.settings.currentframework}" />
-		
+		<call target="update-common-assemblyinfo" />
 		<call target="set-project-file-to-target-framework" />
 		<call target="set-assembly-hint-paths-for-target-framework" />
 		<call target="RebuildAllSolutions" />
@@ -533,4 +528,19 @@ ${tool.dir}       : dir for tools
         </exec>
     </target>
 
+	 <target name="nuget" depends="package-zip">
+    <echo message="Generating NuGet package..." />
+
+    <mkdir dir="${deploy.dir}"/>
+    <exec program="${setup.dir}\NuGet\lib\NuGet.exe" workingdir="${build.dir}" verbose="true">
+      <arg value="pack" />
+      <arg value="${setup.dir}\NuGet\src\Spring.CodeConfig.nuspec" />
+	  <arg value="-Version" />
+	  <arg value="${project.majorversion}.${project.patchversion}" />
+	  <arg value="-OutputDirectory" />
+	  <arg value="${deploy.dir}" />
+    </exec>
+  </target>
+	
+	
 </project>

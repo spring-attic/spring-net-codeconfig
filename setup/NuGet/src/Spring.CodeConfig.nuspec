@@ -1,0 +1,28 @@
+<?xml version="1.0"?>
+
+<package xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+	<metadata xmlns="http://schemas.microsoft.com/packaging/2010/07/nuspec.xsd">
+		<id>Spring.CodeConfig</id>
+		<title>Spring.CodeConfig</title>
+		<projectUrl>http://www.springframework.net/</projectUrl>
+		<licenseUrl>http://www.springframework.net/license.html</licenseUrl>
+		<iconUrl>http://springframework.net/images/SpringSource_Leaves32x32.png</iconUrl>
+		<version>0.0.0</version> <!-- this value is a placeholder replaced by build script -->
+		<authors>SpringSource</authors>
+		<description>Provides the ability to configure a Spring container using standard .NET code instead of or in addition to XML</description>
+		<summary>Provides the ability to configure a Spring container using standard .NET code instead of or in addition to XML</summary>
+		<language>en-US</language>
+		<dependencies>
+			<dependency id="Spring.Core" version="1.3.1" />
+			<dependency id="Spring.Aop" version="1.3.1" />
+		</dependencies>
+	</metadata>
+		<files>
+			<file src="..\..\..\bin\net\2.0\Spring.Core.Configuration.dll" target="lib\net20" />
+			<file src="..\..\..\bin\net\2.0\Spring.Core.Configuration.pdb" target="lib\net20" />
+			<file src="..\..\..\bin\net\2.0\Spring.Core.Configuration.xml" target="lib\net20" />
+			<file src="..\..\..\bin\net\4.0\Spring.Core.Configuration.dll" target="lib\net40" />
+			<file src="..\..\..\bin\net\4.0\Spring.Core.Configuration.pdb" target="lib\net40" />
+			<file src="..\..\..\bin\net\4.0\Spring.Core.Configuration.xml" target="lib\net40" />
+		</files>
+</package>
