@@ -1,11 +1,11 @@
-The Spring Code Config project for .NET, Release 1.0.1 (4/26/2011)
+The Spring.NET CodeConfig project, Release 1.0.1 (4/26/2011)
 --------------------------------------------------------------------
 https://github.com/SpringSource/spring-net-codeconfig
 
 
 1. INTRODUCTION
 
-The 1.0.1 release of Spring Code Config for NET provides:
+The 1.0.1 release of Spring.NET CodeConfig provides:
 
      * the ability to configure a Spring container using standard .NET code instead of or in addition to XML configuration
 
@@ -79,3 +79,7 @@ or feature request, please submit a ticket in JIRA (see link above).
 InnovaSys Document X!
 ---------------------
 InnovSys has kindly provided a license to generate the SDK documentation and supporting utilities for
+
+10. Contributing to Spring.NET CodeConfig
+
+Github is for social coding: if you want to write code, we encourage contributions through pull requests from forks of this repository (see http://help.github.com/forking/). Before we accept a non-trivial patch or pull request we will need you to sign the contributor's agreement (see https://support.springsource.com/spring_committer_signup). Signing the contributor's agreement does not grant anyone commit rights to the main repository, but it does mean that we can accept your contributions, and you will get an author credit if we do. Active contributors might be asked to join the core team, and given the ability to merge pull requests.
