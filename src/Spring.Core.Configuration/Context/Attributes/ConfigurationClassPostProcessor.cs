@@ -19,17 +19,13 @@
 #endregion
 
 using System;
-using Common.Logging;
+
+using Spring.Core;
+using Spring.Objects.Factory;
 using Spring.Objects.Factory.Parsing;
 using Spring.Objects.Factory.Support;
 using Spring.Objects.Factory.Config;
 using Spring.Collections.Generic;
-using Spring.Objects.Factory;
-using Spring.Core;
-using Spring.Aop.Framework;
-using Spring.Context.Advice;
-using Spring.Aop.Framework.DynamicProxy;
-using Spring.Aop;
 
 namespace Spring.Context.Attributes
 {
@@ -38,7 +34,11 @@ namespace Spring.Context.Attributes
     /// </summary>
     public class ConfigurationClassPostProcessor : IObjectDefinitionRegistryPostProcessor, IOrdered
     {
-        private ILog _logger = LogManager.GetLogger(typeof(ConfigurationClassPostProcessor));
+        #region Logging
+
+        private static readonly Common.Logging.ILog LOG = Common.Logging.LogManager.GetLogger(typeof(ConfigurationClassPostProcessor));
+
+        #endregion
 
         private bool _postProcessObjectDefinitionRegistryCalled = false;
 
@@ -119,51 +119,38 @@ namespace Spring.Context.Attributes
 
         private void EnhanceConfigurationClasses(IConfigurableListableObjectFactory objectFactory)
         {
+            ConfigurationClassEnhancer enhancer = new ConfigurationClassEnhancer(objectFactory);
+
             string[] objectNames = objectFactory.GetObjectDefinitionNames();
 
-            foreach (string t in objectNames)
+            foreach (string name in objectNames)
             {
-                IObjectDefinition objDef = objectFactory.GetObjectDefinition(t);
+                IObjectDefinition objDef = objectFactory.GetObjectDefinition(name);
 
                 if (((AbstractObjectDefinition)objDef).HasObjectType)
                 {
                     if (Attribute.GetCustomAttribute(objDef.ObjectType, typeof(ConfigurationAttribute)) != null)
                     {
-
-                        ProxyFactory proxyFactory = new ProxyFactory();
-                        proxyFactory.ProxyTargetAttributes = true;
-                        proxyFactory.Interfaces = Type.EmptyTypes;
-                        proxyFactory.TargetSource = new ObjectFactoryTargetSource(t, objectFactory);
-                        SpringObjectMethodInterceptor methodInterceptor = new SpringObjectMethodInterceptor(objectFactory);
-                        proxyFactory.AddAdvice(methodInterceptor);
-
                         //TODO check type of object isn't infrastructure type.
 
-                        InheritanceAopProxyTypeBuilder iaptb = new InheritanceAopProxyTypeBuilder(proxyFactory);
-                        //iaptb.ProxyDeclaredMembersOnly = true; // make configurable.
-                        ((IConfigurableObjectDefinition)objDef).ObjectType = iaptb.BuildProxyType();
+                        Type configClass = objDef.ObjectType;
+                        Type enhancedClass = enhancer.Enhance(configClass);
 
-                        objDef.ConstructorArgumentValues.AddIndexedArgumentValue(objDef.ConstructorArgumentValues.ArgumentCount, proxyFactory);
+                        #region Logging
 
+                        if (LOG.IsDebugEnabled)
+                        {
+                            LOG.Debug(String.Format(
+                                "Replacing object definition '{0}' existing class '{1}' with enhanced class", 
+                                name, configClass.FullName));
+                        }
+
+                        #endregion
+
+                        ((IConfigurableObjectDefinition)objDef).ObjectType = enhancedClass;
                     }
                 }
             }
-        }
-
-        private Type GenerateProxyType(string objectName, IConfigurableListableObjectFactory objectFactory)
-        {
-            ProxyFactory proxyFactory = new ProxyFactory();
-            proxyFactory.ProxyTargetAttributes = true;
-            proxyFactory.Interfaces = Type.EmptyTypes;
-            proxyFactory.TargetSource = new ObjectFactoryTargetSource(objectName, objectFactory);
-            SpringObjectMethodInterceptor methodInterceptor = new SpringObjectMethodInterceptor(objectFactory);
-            proxyFactory.AddAdvice(methodInterceptor);
-
-            //TODO check type of object isn't infrastructure type.
-
-            InheritanceAopProxyTypeBuilder iaptb = new InheritanceAopProxyTypeBuilder(proxyFactory);
-            //iaptb.ProxyDeclaredMembersOnly = true; // make configurable.
-            return iaptb.BuildProxyType();
         }
 
         private void ProcessConfigObjectDefinitions(IObjectDefinitionRegistry registry)
@@ -206,68 +193,6 @@ namespace Spring.Context.Attributes
             // Read the model and create Object definitions based on its content
             ConfigurationClassObjectDefinitionReader reader = new ConfigurationClassObjectDefinitionReader(registry, _problemReporter);
             reader.LoadObjectDefinitions(parser.ConfigurationClasses);
-        }
-
-        /// <summary>
-        /// The <see cref="IObjectFactory"/> target of the aspects being applied.
-        /// </summary>
-        public class ObjectFactoryTargetSource : ITargetSource
-        {
-            private readonly string _objectName;
-            private readonly IConfigurableListableObjectFactory _objectFactory;
-
-            /// <summary>
-            /// Initializes a new instance of the <see cref="ObjectFactoryTargetSource"/> class.
-            /// </summary>
-            /// <param name="objectName">Name of the object.</param>
-            /// <param name="objectFactory">The object factory.</param>
-            public ObjectFactoryTargetSource(string objectName, IConfigurableListableObjectFactory objectFactory)
-            {
-                _objectName = objectName;
-                _objectFactory = objectFactory;
-            }
-
-            #region ITargetSource Members
-
-            /// <summary>
-            /// Returns the target object.
-            /// </summary>
-            /// <returns>The target object.</returns>
-            /// <exception cref="T:System.Exception">
-            /// If unable to obtain the target object.
-            /// </exception>
-            public object GetTarget()
-            {
-                return _objectFactory.GetObject(_objectName);
-            }
-
-            /// <summary>
-            /// Is the target source static?
-            /// </summary>
-            /// <value><see langword="true"/> if the target source is static.</value>
-            public bool IsStatic
-            {
-                get { return _objectFactory.IsSingleton(_objectName); }
-            }
-
-            /// <summary>
-            /// Releases the target object.
-            /// </summary>
-            /// <param name="target">The target object to release.</param>
-            public void ReleaseTarget(object target)
-            {
-            }
-
-            /// <summary>
-            /// The <see cref="T:System.Type"/> of the target object.
-            /// </summary>
-            /// <value></value>
-            public Type TargetType
-            {
-                get { return _objectFactory.GetType(_objectName); }
-            }
-
-            #endregion
         }
     }
 }
