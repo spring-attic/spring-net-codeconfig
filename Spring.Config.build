@@ -131,10 +131,6 @@
 			<echo message="Poking file ${filename} to set hint paths for ${reference-name}" />
 			<call target="set-assembly-hint-path" />
 
-			<property name="reference-name" value="Spring.Aop" />
-			<echo message="Poking file ${filename} to set hint paths for ${reference-name}" />
-			<call target="set-assembly-hint-path" />
-
 			</do>
         </foreach>
 	</target>

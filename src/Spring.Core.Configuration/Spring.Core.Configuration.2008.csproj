@@ -38,9 +38,6 @@
     <Reference Include="Common.Logging">
       <HintPath>..\..\lib\net\2.0\Common.Logging.dll</HintPath>
     </Reference>
-    <Reference Include="Spring.Aop">
-      <HintPath>..\..\lib\net\2.0\Spring.Aop.dll</HintPath>
-    </Reference>
     <Reference Include="Spring.Core">
       <HintPath>..\..\lib\net\2.0\Spring.Core.dll</HintPath>
     </Reference>
@@ -53,7 +50,6 @@
       <Link>CommonAssemblyInfo.cs</Link>
     </Compile>
     <Compile Include="AssemblyInfo.cs" />
-    <Compile Include="Context\Advice\SpringObjectMethodInterceptor.cs" />
     <Compile Include="Context\Attributes\AssemblyObjectDefinitionScanner.cs" />
     <Compile Include="Context\Attributes\AssemblyTypeScanner.cs" />
     <Compile Include="Context\Attributes\AssemblyTypeSource.cs" />
@@ -61,6 +57,7 @@
     <Compile Include="Context\Attributes\ConfigurationAttribute.cs" />
     <Compile Include="Context\Attributes\ConfigurationClass.cs" />
     <Compile Include="Context\Attributes\ConfigurationClassAssemblyResource.cs" />
+    <Compile Include="Context\Attributes\ConfigurationClassEnhancer.cs" />
     <Compile Include="Context\Attributes\ConfigurationClassMethod.cs" />
     <Compile Include="Context\Attributes\ConfigurationClassObjectDefinitionReader.cs" />
     <Compile Include="Context\Attributes\ConfigurationClassParser.cs" />
