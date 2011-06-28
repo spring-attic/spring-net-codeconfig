@@ -520,6 +520,7 @@ ${tool.dir}       : dir for tools
             <arg line="/property:Configuration=${solutionconfiguration}"/>
 			<arg value="/property:DefineExtraConstants=STRONG" if="${project.sign and not compiling.examples}" />
 			<arg value="/property:SignAssembly=true" if="${project.sign and not compiling.examples}" />
+			<arg value="/property:DefineExtraConstants=NET_3_5" if="${nant.settings.currentframework == 'net-4.0'}" />
 			<arg value="/property:AssemblyOriginatorKeyFile=..\..\Spring.Net.snk" if="${project.sign and not compiling.examples}" />
         </exec>
     </target>
