@@ -20,6 +20,7 @@
 
 using Spring.Objects.Factory;
 
+#if(! DotNetVersion35)
 
 namespace System.Runtime.CompilerServices
 {
@@ -32,8 +33,7 @@ namespace System.Runtime.CompilerServices
     }
 }
 
-
-
+#endif
 
 
 namespace Spring.Context
