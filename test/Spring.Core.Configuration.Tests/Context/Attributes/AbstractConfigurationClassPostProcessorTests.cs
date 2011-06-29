@@ -35,6 +35,10 @@ namespace Spring.Context.Attributes
         [SetUp]
         public void _SetUp()
         {
+            SingletonParent.InstanceCount = 0;
+            SingletonChild.InstanceCount = 0;
+            PrototypeParent.InstanceCount = 0;
+            PrototypeChild.InstanceCount = 0;
             CreateApplicationContext();
         }
 
@@ -77,18 +81,42 @@ namespace Spring.Context.Attributes
         [Test]
         public void Can_Respect_Default_Singleton_Scope()
         {
-            var firstObject = (SingletonParent)_ctx[typeof(SingletonParent).Name];
-            var secondObject = (SingletonParent)_ctx[typeof(SingletonParent).Name];
+            var firstObject = (SingletonChild)_ctx[typeof(SingletonChild).Name];
+            var secondObject = (SingletonChild)_ctx[typeof(SingletonChild).Name];
 
+            Assert.That(SingletonChild.InstanceCount, Is.EqualTo(1));
             Assert.That(firstObject, Is.SameAs(secondObject));
         }
 
         [Test]
-        public void Can_Respect_Explicit_PrototypeScope()
+        public void Can_Respect_Default_Singleton_Scope_With_Explicit_Prototype_Dependency()
+        {
+            var firstObject = (SingletonParent)_ctx[typeof(SingletonParent).Name];
+            var secondObject = (SingletonParent)_ctx[typeof(SingletonParent).Name];
+
+            Assert.That(SingletonParent.InstanceCount, Is.EqualTo(1));
+            //Assert.That(PrototypeChild.InstanceCount, Is.EqualTo(2));  // Requires scoped proxies
+            Assert.That(firstObject, Is.SameAs(secondObject));
+        }
+
+        [Test]
+        public void Can_Respect_Explicit_Prototype_Scope()
         {
             var firstObject = (PrototypeChild)_ctx[typeof(PrototypeChild).Name];
             var secondObject = (PrototypeChild)_ctx[typeof(PrototypeChild).Name];
 
+            Assert.That(PrototypeChild.InstanceCount, Is.EqualTo(3)); // One instance used by SingletonParent
+            Assert.That(firstObject, Is.Not.SameAs(secondObject));
+        }
+
+        [Test]
+        public void Can_Respect_Explicit_Prototype_Scope_With_Default_Singleton_Dependency()
+        {
+            var firstObject = (PrototypeParent)_ctx[typeof(PrototypeParent).Name];
+            var secondObject = (PrototypeParent)_ctx[typeof(PrototypeParent).Name];
+
+            Assert.That(PrototypeParent.InstanceCount, Is.EqualTo(2));
+            Assert.That(SingletonChild.InstanceCount, Is.EqualTo(1));
             Assert.That(firstObject, Is.Not.SameAs(secondObject));
         }
 
@@ -165,6 +193,13 @@ namespace Spring.Context.Attributes
 
         [Definition]
         [Scope(ObjectScope.Prototype)]
+        public virtual PrototypeParent PrototypeParent()
+        {
+            return new PrototypeParent(SingletonChild());
+        }
+
+        [Definition]
+        [Scope(ObjectScope.Prototype)]
         public virtual PrototypeChild PrototypeChild()
         {
             return new PrototypeChild();
@@ -174,6 +209,12 @@ namespace Spring.Context.Attributes
         public virtual SingletonParent SingletonParent()
         {
             return new SingletonParent(PrototypeChild());
+        }
+
+        [Definition]
+        public virtual SingletonChild SingletonChild()
+        {
+            return new SingletonChild();
         }
 
         [Definition]
@@ -215,10 +256,12 @@ namespace Spring.Context.Attributes
 
     public class SingletonParent
     {
+        public static int InstanceCount = 0;
         private PrototypeChild _child;
 
         public SingletonParent(PrototypeChild child)
         {
+            InstanceCount++;
             _child = child;
         }
 
@@ -229,8 +272,45 @@ namespace Spring.Context.Attributes
                 return _child;
             }
         }
-
     }
 
-    public class PrototypeChild { }
+    public class SingletonChild
+    {
+        public static int InstanceCount = 0;
+
+        public SingletonChild()
+        {
+            InstanceCount++;
+        }
+    }
+
+    public class PrototypeParent
+    {
+        public static int InstanceCount = 0;
+        private SingletonChild _child;
+
+        public PrototypeParent(SingletonChild child)
+        {
+            InstanceCount++;
+            _child = child;
+        }
+
+        public SingletonChild Child
+        {
+            get
+            {
+                return _child;
+            }
+        }
+    }
+
+    public class PrototypeChild
+    {
+        public static int InstanceCount = 0;
+
+        public PrototypeChild()
+        {
+            InstanceCount++;
+        }
+    }
 }

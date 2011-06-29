@@ -257,6 +257,7 @@ namespace Spring.Context.Attributes
                 il.Emit(OpCodes.Ldloca_S, interceptedReturnValue);
                 il.EmitCall(OpCodes.Callvirt, ProcessDefinitionMethod, null);
                 Label jmpBaseCall = il.DefineLabel();
+                Label jmpEndIf = il.DefineLabel();
                 il.Emit(OpCodes.Brfalse_S, jmpBaseCall);
 
                 // if true
@@ -268,6 +269,7 @@ namespace Spring.Context.Attributes
                         il.Emit(OpCodes.Unbox_Any, method.ReturnType);
                     }
                     il.Emit(OpCodes.Stloc, returnValue);
+                    il.Emit(OpCodes.Br, jmpEndIf);
                 }
 
                 // if false
@@ -277,6 +279,9 @@ namespace Spring.Context.Attributes
                 {
                     il.Emit(OpCodes.Stloc, returnValue);
                 }
+
+                // end if
+                il.MarkLabel(jmpEndIf);
 
                 // return value
                 if (returnValue != null)

@@ -116,7 +116,7 @@ namespace Spring.Objects.Factory.Support
 
         private void AssertExpectedObjectsAreRegisteredWith(GenericApplicationContext context)
         {
-            if (context.DefaultListableObjectFactory.ObjectDefinitionCount != 13)
+            if (context.DefaultListableObjectFactory.ObjectDefinitionCount != 15)
             {
                 Console.WriteLine("Actual types registered with the container:");
                 foreach (var name in context.DefaultListableObjectFactory.GetObjectDefinitionNames())
@@ -126,7 +126,7 @@ namespace Spring.Objects.Factory.Support
             }
 
 
-            Assert.That(context.DefaultListableObjectFactory.ObjectDefinitionCount, Is.EqualTo(13));
+            Assert.That(context.DefaultListableObjectFactory.ObjectDefinitionCount, Is.EqualTo(15));
         }
 
     }
