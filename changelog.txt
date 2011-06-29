@@ -2,4 +2,7 @@ SPRING CODE CONFIG .NET CHANGELOG
 ==================================
 https://github.com/SpringSource/spring-net-codeconfig
 
-Release Version 1.0.0 April 4, 2011
+Release Version 1.0.2 June 29, 2011
+
+Changes:
+- Removed the built-in definition of the System.CompilerServices.ExtensionAttribute from non-.NET 2.0 builds

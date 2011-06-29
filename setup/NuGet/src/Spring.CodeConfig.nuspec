@@ -20,6 +20,9 @@
 			<file src="..\..\..\bin\net\2.0\Spring.Core.Configuration.dll" target="lib\net20" />
 			<file src="..\..\..\bin\net\2.0\Spring.Core.Configuration.pdb" target="lib\net20" />
 			<file src="..\..\..\bin\net\2.0\Spring.Core.Configuration.xml" target="lib\net20" />
+			<file src="..\..\..\bin\net\3.5\Spring.Core.Configuration.dll" target="lib\net35" />
+			<file src="..\..\..\bin\net\3.5\Spring.Core.Configuration.pdb" target="lib\net35" />
+			<file src="..\..\..\bin\net\3.5\Spring.Core.Configuration.xml" target="lib\net35" />
 			<file src="..\..\..\bin\net\4.0\Spring.Core.Configuration.dll" target="lib\net40" />
 			<file src="..\..\..\bin\net\4.0\Spring.Core.Configuration.pdb" target="lib\net40" />
 			<file src="..\..\..\bin\net\4.0\Spring.Core.Configuration.xml" target="lib\net40" />

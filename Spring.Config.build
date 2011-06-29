@@ -30,13 +30,11 @@
 	
 	
 	
-    <!-- force net-3.5 -->
-<!--    <property name="nant.settings.currentframework" value="net-3.5"/>-->
-
     <target name="build" depends="clean">
         <echo message="Current .NET Framework = ${nant.settings.currentframework}"/>
 		
 		<call target="build-net-2.0" />		
+		<call target="build-net-3.5" />		
 		<call target="build-net-4.0" />		
 		
         <!-- need to get the bins copied to the bin folder for reference by examples before they are compiled -->
@@ -50,6 +48,14 @@
       <copy todir="${root.dir}/bin/net/2.0/" flatten="true" verbose="true">
         <fileset>
           <include name="${build.dir}\net-2.0\Spring.Core.Config*.???"/>
+		  <exclude name="**\*Test*.*"/>
+        </fileset>
+      </copy>
+	
+		<echo message="Processing ${build.dir}\net-3.5"/>
+      <copy todir="${root.dir}/bin/net/3.5/" flatten="true" verbose="true">
+        <fileset>
+          <include name="${build.dir}\net-3.5\Spring.Core.Config*.???"/>
 		  <exclude name="**\*Test*.*"/>
         </fileset>
       </copy>
@@ -157,6 +163,19 @@
 		<call target="RebuildAllSolutions" />
 	</target>
 	
+	<target name="build-net-3.5">
+        <property name="nant.settings.currentframework" value="net-3.5"/>
+		<property name="nant.settings.targetframeworkstring" value="v3.5" />
+		<property name="framework-specific.lib.dir" value="..\..\lib\net\3.5" />
+        <property name="test.bin.dir" value="${build.dir}\${nant.settings.currentframework}" />
+		
+		<echo message="Compiling for .NET Framework Version: ${nant.settings.currentframework}" />
+		<call target="update-common-assemblyinfo" />
+		<call target="set-project-file-to-target-framework" />
+		<call target="set-assembly-hint-paths-for-target-framework" />
+		<call target="RebuildAllSolutions" />
+	</target>
+
 	
 	<target name="build-net-4.0">
         <property name="nant.settings.currentframework" value="net-4.0"/>
@@ -246,7 +265,14 @@
 		  <exclude name="**\*Test*.*" />
         </fileset>
       </copy>
-	<echo message="Processing ${build.dir}\net-4.0"/>
+	<echo message="Processing ${build.dir}\net-3.5"/>
+      <copy todir="${package.dir}/bin/net/3.5/" flatten="true" verbose="true">
+        <fileset>
+          <include name="${build.dir}\net-3.5\Spring.Core.Config*.???"/>
+		  <exclude name="**\*Test*.*" />
+        </fileset>
+      </copy>
+	  <echo message="Processing ${build.dir}\net-4.0"/>
       <copy todir="${package.dir}/bin/net/4.0/" flatten="true" verbose="true">
         <fileset>
           <include name="${build.dir}\net-4.0\Spring.Core.Config*.???"/>
@@ -520,7 +546,7 @@ ${tool.dir}       : dir for tools
             <arg line="/property:Configuration=${solutionconfiguration}"/>
 			<arg value="/property:DefineExtraConstants=STRONG" if="${project.sign and not compiling.examples}" />
 			<arg value="/property:SignAssembly=true" if="${project.sign and not compiling.examples}" />
-			<arg value="/property:DefineExtraConstants=NET_3_5" if="${nant.settings.currentframework == 'net-4.0'}" />
+			<arg value="/property:DefineExtraConstants=NET_3_5" if="${nant.settings.currentframework == 'net-3.5' or nant.settings.currentframework == 'net-4.0'}" />
 			<arg value="/property:AssemblyOriginatorKeyFile=..\..\Spring.Net.snk" if="${project.sign and not compiling.examples}" />
         </exec>
     </target>
