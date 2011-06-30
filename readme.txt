@@ -1,17 +1,17 @@
-The Spring.NET CodeConfig project, Release 1.0.2 (6/29/2011)
+The Spring.NET CodeConfig project, Release 1.0.3 (6/30/2011)
 --------------------------------------------------------------------
 https://github.com/SpringSource/spring-net-codeconfig
 
 
 1. INTRODUCTION
 
-The 1.0.2 release of Spring.NET CodeConfig provides:
+The 1.0.3 release of Spring.NET CodeConfig provides:
 
      * the ability to configure a Spring container using standard .NET code instead of or in addition to XML configuration
 
 2. SUPPORTED .NET FRAMEWORK VERSIONS
 
-Spring Code Config for .NET version 1.0.2 supports the .NET 2.0 and later framework runtimes (but REQUIRES Visual Studio 2008 or later, even when targeting .NET 2.0).
+Spring Code Config for .NET version 1.0.3 supports the .NET 2.0 and later framework runtimes (but REQUIRES Visual Studio 2008 or later, even when targeting .NET 2.0).
 
 3. KNOWN ISSUES/LIMITATIONS
 
