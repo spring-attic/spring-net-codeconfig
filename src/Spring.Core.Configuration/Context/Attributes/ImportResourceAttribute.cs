@@ -29,7 +29,7 @@ namespace Spring.Context.Attributes
     /// <summary>
     /// Supports providing one or more <see cref="IResource"/> implementations to import when creating <see cref="RootObjectDefinition"/>s.
     /// </summary>
-    [AttributeUsage(AttributeTargets.Class)]
+    [AttributeUsage(AttributeTargets.Class, AllowMultiple = true)]
     public class ImportResourceAttribute : Attribute
     {
         private Type _objectDefinitionReader = typeof(XmlObjectDefinitionReader);
