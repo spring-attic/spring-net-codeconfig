@@ -1,5 +1,9 @@
 build/
 package/
+deploy/
 doc/reference/target/
 *.snk
+*.docstates
+AutoTest.config
+mightymoose.ignore
 buildlog.txt
