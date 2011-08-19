@@ -33,7 +33,7 @@ namespace Spring.Context.Attributes
     /// imported, use <see cref="ImportResourceAttribute"/>
     /// </para>
     /// </summary>
-    [AttributeUsage(AttributeTargets.Class)]
+    [AttributeUsage(AttributeTargets.Class, AllowMultiple = true)]
     public class ImportAttribute : Attribute
     {
         private Type[] _types;

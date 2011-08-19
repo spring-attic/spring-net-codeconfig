@@ -72,7 +72,7 @@ namespace Spring.Objects.Factory.Support
             _context.ScanWithTypeFilter(type => ((Type)type).FullName.Contains(typeof(TheImportedConfigurationClass).Name));
             _context.Refresh();
 
-            Assert.That(_context.DefaultListableObjectFactory.ObjectDefinitionCount, Is.EqualTo(4));
+            Assert.That(_context.DefaultListableObjectFactory.ObjectDefinitionCount, Is.EqualTo(5));
         }
 
         [Test]
@@ -116,7 +116,7 @@ namespace Spring.Objects.Factory.Support
 
         private void AssertExpectedObjectsAreRegisteredWith(GenericApplicationContext context)
         {
-            if (context.DefaultListableObjectFactory.ObjectDefinitionCount != 15)
+            if (context.DefaultListableObjectFactory.ObjectDefinitionCount != 16)
             {
                 Console.WriteLine("Actual types registered with the container:");
                 foreach (var name in context.DefaultListableObjectFactory.GetObjectDefinitionNames())
@@ -126,7 +126,7 @@ namespace Spring.Objects.Factory.Support
             }
 
 
-            Assert.That(context.DefaultListableObjectFactory.ObjectDefinitionCount, Is.EqualTo(15));
+            Assert.That(context.DefaultListableObjectFactory.ObjectDefinitionCount, Is.EqualTo(16));
         }
 
     }

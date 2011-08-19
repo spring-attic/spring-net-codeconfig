@@ -160,6 +160,7 @@ namespace Spring.Context.Attributes
 
     [Configuration]
     [ImportResource("assembly://Spring.Core.Configuration.Tests/Spring.Context.Attributes/ObjectDefinitions.xml", DefinitionReader = typeof(XmlObjectDefinitionReader))]
+    [ImportResource("assembly://Spring.Core.Configuration.Tests/Spring.Context.Attributes/ObjectDefinitionsTwo.xml")]
     public class TheImportedConfigurationClass
     {
         [Definition]
@@ -241,7 +242,9 @@ namespace Spring.Context.Attributes
     }
 
     public class TypeRegisteredInXml { }
-
+    
+    public class TypeRegisteredInXmlTwo { }
+    
     public class AnImportedType { }
 
     public class ImplicitLazyInitObject { }

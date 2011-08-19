@@ -96,19 +96,37 @@ namespace Spring.Context.Attributes
 
         private void DoProcessConfigurationClass(ConfigurationClass configurationClass)
         {
-            if (Attribute.GetCustomAttribute(configurationClass.ConfigurationClassType, typeof(ImportAttribute)) != null)
+
+            Attribute[] importAttributes = Attribute.GetCustomAttributes(configurationClass.ConfigurationClassType, typeof(ImportAttribute));
+
+            if (importAttributes.Length > 0)
             {
-                ImportAttribute attrib = Attribute.GetCustomAttribute(configurationClass.ConfigurationClassType, typeof(ImportAttribute)) as ImportAttribute;
-                ProcessImport(configurationClass, attrib.Types);
+                foreach (Attribute importAttribute in importAttributes)
+                {
+                    ImportAttribute attrib = importAttribute as ImportAttribute;
+
+                    if (null != attrib)
+                    {
+                        ProcessImport(configurationClass, attrib.Types);
+                    }
+                }
             }
 
-            if (Attribute.GetCustomAttribute(configurationClass.ConfigurationClassType, typeof(ImportResourceAttribute)) != null)
-            {
-                ImportResourceAttribute attrib = Attribute.GetCustomAttribute(configurationClass.ConfigurationClassType, typeof(ImportResourceAttribute)) as ImportResourceAttribute;
+            Attribute[] importResourceAttributes = Attribute.GetCustomAttributes(configurationClass.ConfigurationClassType, typeof(ImportResourceAttribute));
 
-                foreach (string resource in attrib.Resources)
+            if (importResourceAttributes.Length > 0)
+            {
+                foreach (Attribute importResourceAttribute in importResourceAttributes)
                 {
-                    configurationClass.AddImportedResource(resource, attrib.DefinitionReader);
+                    ImportResourceAttribute attrib = importResourceAttribute as ImportResourceAttribute;
+
+                    if (null != attrib)
+                    {
+                        foreach (string resource in attrib.Resources)
+                        {
+                            configurationClass.AddImportedResource(resource, attrib.DefinitionReader);
+                        }
+                    }
                 }
             }
 
