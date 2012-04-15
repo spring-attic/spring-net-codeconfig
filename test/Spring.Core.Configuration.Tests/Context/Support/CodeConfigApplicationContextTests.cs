@@ -19,6 +19,7 @@
 #endregion
 
 using System;
+using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
 using NUnit.Framework;
@@ -116,17 +117,22 @@ namespace Spring.Objects.Factory.Support
 
         private void AssertExpectedObjectsAreRegisteredWith(GenericApplicationContext context)
         {
-            if (context.DefaultListableObjectFactory.ObjectDefinitionCount != 16)
+            // only check names that are not part of configuration namespace test
+            List<string> names = new List<string>(context.DefaultListableObjectFactory.GetObjectDefinitionNames());
+            names.RemoveAll(x => x.StartsWith("ConfigurationNameSpace"));
+
+
+            if (names.Count != 16)
             {
                 Console.WriteLine("Actual types registered with the container:");
-                foreach (var name in context.DefaultListableObjectFactory.GetObjectDefinitionNames())
+                foreach (var name in names)
                 {
                     Console.WriteLine(name);
                 }
             }
 
 
-            Assert.That(context.DefaultListableObjectFactory.ObjectDefinitionCount, Is.EqualTo(16));
+            Assert.That(names.Count, Is.EqualTo(16));
         }
 
     }
