@@ -127,7 +127,7 @@ namespace Spring.Context.Attributes
                 }
                 else
                 {
-                    if (definition.ObjectTypeName != null)
+                    if (definition.ObjectTypeName != null && !definition.IsAbstract)
                     {
                         objectType = TypeResolutionUtils.ResolveType(definition.ObjectTypeName);
                     }
