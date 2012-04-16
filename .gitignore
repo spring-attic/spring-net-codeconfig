@@ -1,3 +1,5 @@
+bin/
+obj/
 build/
 package/
 deploy/
@@ -7,3 +9,10 @@ doc/reference/target/
 AutoTest.config
 mightymoose.ignore
 buildlog.txt
+
+*.user
+*.suo
+_ReSharper*
+*.cache
+
+*.dotCover

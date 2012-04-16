@@ -50,6 +50,9 @@
     <Compile Include="AssemblyInfo.cs" />
     <Compile Include="Context\Attributes\AssemblyObjectDefinitionScannerTests.cs" />
     <Compile Include="Context\Attributes\AssemblyTypeScannerTests.cs" />
+    <Compile Include="Context\Attributes\CodeConfigApplicationContextTests.cs" />
+    <Compile Include="Context\Attributes\ConfigurationClassObjectDefinitionReaderTests.cs" />
+    <Compile Include="Context\Attributes\ConfigurationClassParserTests.cs" />
     <Compile Include="Context\Attributes\ScanningConfigurationClassPostProcessorTests.cs" />
     <Compile Include="Context\Attributes\AbstractConfigurationClassPostProcessorTests.cs" />
     <Compile Include="Context\Attributes\ConfigurationClassPostProcessorTests.cs" />
@@ -76,6 +79,9 @@
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="Context\Attributes\SimpleScanTest.xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Context\Attributes\ObjectDefinitionsTwo.xml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Properties\" />

@@ -148,7 +148,7 @@ namespace Spring.Context.Attributes
         /// </returns>
         public override bool Equals(object other)
         {
-            return this == other || (other is ConfigurationClass && ConfigurationClassType.Name.Equals(((ConfigurationClass)other).ConfigurationClassType.Name));
+            return this == other || (other is ConfigurationClass && ConfigurationClassType == ((ConfigurationClass)other).ConfigurationClassType);
         }
 
         /// <summary>
@@ -159,7 +159,7 @@ namespace Spring.Context.Attributes
         /// </returns>
         public override int GetHashCode()
         {
-            return ConfigurationClassType.Name.GetHashCode() * 14;
+            return ConfigurationClassType.GetHashCode() * 14;
         }
 
         /// <summary>

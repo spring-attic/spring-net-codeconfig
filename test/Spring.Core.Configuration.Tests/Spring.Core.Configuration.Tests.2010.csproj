@@ -51,6 +51,8 @@
     <Compile Include="Context\Attributes\AssemblyObjectDefinitionScannerTests.cs" />
     <Compile Include="Context\Attributes\AssemblyTypeScannerTests.cs" />
     <Compile Include="Context\Attributes\CodeConfigApplicationContextTests.cs" />
+    <Compile Include="Context\Attributes\ConfigurationClassObjectDefinitionReaderTests.cs" />
+    <Compile Include="Context\Attributes\ConfigurationClassParserTests.cs" />
     <Compile Include="Context\Attributes\ScanningConfigurationClassPostProcessorTests.cs" />
     <Compile Include="Context\Attributes\AbstractConfigurationClassPostProcessorTests.cs" />
     <Compile Include="Context\Attributes\ConfigurationClassPostProcessorTests.cs" />
