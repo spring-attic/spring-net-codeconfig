@@ -45,7 +45,7 @@ namespace Spring.Objects.Factory.Support
             _context.ScanWithAssemblyFilter(a => a.GetName().Name.StartsWith("Spring.Core.Configuration."));
             _context.Refresh();
 
-            AssertExpectedObjectsAreRegisteredWith(_context);
+            AssertExpectedObjectsAreRegisteredWith(_context, 19);
         }
 
         [Test]
@@ -64,7 +64,7 @@ namespace Spring.Objects.Factory.Support
             _context.ScanWithAssemblyFilter(assy => assy.GetTypes().Any(type => type.FullName.Contains(typeof(MarkerTypeForScannerToFind).Name)));
             _context.Refresh();
 
-            AssertExpectedObjectsAreRegisteredWith(_context);
+            AssertExpectedObjectsAreRegisteredWith(_context, 19);
         }
 
         [Test]
@@ -82,7 +82,7 @@ namespace Spring.Objects.Factory.Support
             _context.ScanWithTypeFilter(type => ((Type)type).FullName.Contains(typeof(TheImportedConfigurationClass).Name) || ((Type)type).FullName.Contains(typeof(TheConfigurationClass).Name));
             _context.Refresh();
 
-            AssertExpectedObjectsAreRegisteredWith(_context);
+            AssertExpectedObjectsAreRegisteredWith(_context, 16);
         }
 
         [Test]
@@ -95,7 +95,7 @@ namespace Spring.Objects.Factory.Support
             _context.Scan(scanner);
             _context.Refresh();
 
-            AssertExpectedObjectsAreRegisteredWith(_context);
+            AssertExpectedObjectsAreRegisteredWith(_context, 16);
         }
 
         [Test]
@@ -112,17 +112,17 @@ namespace Spring.Objects.Factory.Support
             _context.ScanAllAssemblies();
             _context.Refresh();
 
-            AssertExpectedObjectsAreRegisteredWith(_context);
+            AssertExpectedObjectsAreRegisteredWith(_context, 19);
         }
 
-        private void AssertExpectedObjectsAreRegisteredWith(GenericApplicationContext context)
+        private void AssertExpectedObjectsAreRegisteredWith(GenericApplicationContext context, int expectedDefinitionCount)
         {
             // only check names that are not part of configuration namespace test
             List<string> names = new List<string>(context.DefaultListableObjectFactory.GetObjectDefinitionNames());
             names.RemoveAll(x => x.StartsWith("ConfigurationNameSpace"));
 
 
-            if (names.Count != 16)
+            if (names.Count != expectedDefinitionCount)
             {
                 Console.WriteLine("Actual types registered with the container:");
                 foreach (var name in names)
@@ -132,7 +132,7 @@ namespace Spring.Objects.Factory.Support
             }
 
 
-            Assert.That(names.Count, Is.EqualTo(16));
+            Assert.That(names.Count, Is.EqualTo(expectedDefinitionCount));
         }
 
     }

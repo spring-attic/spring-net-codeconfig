@@ -18,14 +18,9 @@
 
 #endregion
 
-using System;
 using NUnit.Framework;
-using Spring.Context.Config;
 using Spring.Context.Support;
 using Spring.Objects.Factory.Support;
-using Spring.Context.Attributes;
-using Spring.Objects.Factory.Config;
-using Spring.Objects.Factory.Xml;
 
 namespace Spring.Context.Attributes
 {
@@ -50,6 +45,27 @@ namespace Spring.Context.Attributes
             _ctx = ctx;
         }
 
+
+        [Test]
+        public void ShouldAllowConfigurationClassInheritance()
+        {
+            var factory = new DefaultListableObjectFactory();
+            factory.RegisterObjectDefinition("DerivedConfiguration", new GenericObjectDefinition
+                                                                         {
+                                                                             ObjectType = typeof(DerivedConfiguration)
+                                                                         });
+
+            var processor = new ConfigurationClassPostProcessor();
+            
+            processor.PostProcessObjectFactory(factory);
+
+            // we should get singleton instances only
+            TestObject testObject = (TestObject) factory.GetObject("DerivedDefinition");
+            string singletonParent = (string) factory.GetObject("BaseDefinition");
+
+
+            Assert.That(testObject.Value, Is.SameAs(singletonParent));
+        }
     }
 
 }

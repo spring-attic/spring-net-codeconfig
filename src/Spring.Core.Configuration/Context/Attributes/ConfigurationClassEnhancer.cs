@@ -157,7 +157,7 @@ namespace Spring.Context.Attributes
                 }
 
                 this.Name = "ConfigurationClassProxy";
-                this.DeclaredMembersOnly = true;
+                this.DeclaredMembersOnly = false;
                 this.BaseType = configurationClassType;
                 this.TargetType = configurationClassType;
 
