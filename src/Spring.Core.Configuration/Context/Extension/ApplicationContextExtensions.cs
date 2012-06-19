@@ -18,23 +18,9 @@
 
 #endregion
 
+using System.Collections.Generic;
+
 using Spring.Objects.Factory;
-
-#if !NET_3_5
-
-namespace System.Runtime.CompilerServices
-{
-    /// <summary>
-    /// Manufactured Extension Attribute to permit .NET 2.0 to support extension methods
-    /// </summary>
-    [AttributeUsage(AttributeTargets.Method, AllowMultiple = false, Inherited = false)]
-    internal class ExtensionAttribute : Attribute
-    {
-    }
-}
-
-#endif
-
 
 namespace Spring.Context
 {
@@ -63,16 +49,12 @@ namespace Spring.Context
         /// <returns></returns>
         public static T GetObject<T>(this IApplicationContext context)
         {
-            string[] objectNamesForType = context.GetObjectNamesForType(typeof(T));
-            if ((objectNamesForType == null) || (objectNamesForType.Length == 0))
+            IList<string> objectNamesForType = context.GetObjectNamesForType(typeof(T));
+            if ((objectNamesForType == null) || (objectNamesForType.Count == 0))
             {
                 throw new NoSuchObjectDefinitionException(typeof(T).FullName, "Requested Type not Defined in the Context.");
             }
             return context.GetObject<T>(objectNamesForType[0]);
         }
     }
-}
-
-namespace Spring.Context.Support
-{
 }

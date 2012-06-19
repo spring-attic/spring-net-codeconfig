@@ -18,7 +18,6 @@
 
 #endregion
 
-using System;
 using Spring.Stereotype;
 
 namespace Spring.Example.Scannable

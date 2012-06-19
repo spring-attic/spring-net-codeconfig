@@ -19,6 +19,9 @@
 #endregion
 
 using System;
+using System.Collections.Generic;
+
+using Common.Logging;
 
 using Spring.Core;
 using Spring.Objects.Factory;
@@ -36,13 +39,13 @@ namespace Spring.Context.Attributes
     {
         #region Logging
 
-        private static readonly Common.Logging.ILog LOG = Common.Logging.LogManager.GetLogger(typeof(ConfigurationClassPostProcessor));
+        private static readonly ILog log = LogManager.GetLogger(typeof(ConfigurationClassPostProcessor));
 
         #endregion
 
-        private bool _postProcessObjectDefinitionRegistryCalled = false;
+        private bool _postProcessObjectDefinitionRegistryCalled;
 
-        private bool _postProcessObjectFactoryCalled = false;
+        private bool _postProcessObjectFactoryCalled;
 
         private IProblemReporter _problemReporter = new FailFastProblemReporter();
 
@@ -121,7 +124,7 @@ namespace Spring.Context.Attributes
         {
             ConfigurationClassEnhancer enhancer = new ConfigurationClassEnhancer(objectFactory);
 
-            string[] objectNames = objectFactory.GetObjectDefinitionNames();
+            IList<string> objectNames = objectFactory.GetObjectDefinitionNames();
 
             foreach (string name in objectNames)
             {
@@ -138,9 +141,9 @@ namespace Spring.Context.Attributes
 
                         #region Logging
 
-                        if (LOG.IsDebugEnabled)
+                        if (log.IsDebugEnabled)
                         {
-                            LOG.Debug(String.Format(
+                            log.Debug(String.Format(
                                 "Replacing object definition '{0}' existing class '{1}' with enhanced class", 
                                 name, configClass.FullName));
                         }
@@ -155,7 +158,7 @@ namespace Spring.Context.Attributes
 
         private void ProcessConfigObjectDefinitions(IObjectDefinitionRegistry registry)
         {
-            ISet<ObjectDefinitionHolder> configCandidates = new HashedSet<ObjectDefinitionHolder>();
+            Collections.Generic.ISet<ObjectDefinitionHolder> configCandidates = new HashedSet<ObjectDefinitionHolder>();
             foreach (string objectName in registry.GetObjectDefinitionNames())
             {
                 IObjectDefinition objectDef = registry.GetObjectDefinition(objectName);

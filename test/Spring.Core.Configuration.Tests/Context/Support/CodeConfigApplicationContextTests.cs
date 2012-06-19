@@ -20,9 +20,10 @@
 
 using System;
 using System.Collections.Generic;
-using System.Diagnostics;
 using System.Linq;
+
 using NUnit.Framework;
+
 using Spring.Context.Support;
 using Spring.Context.Attributes;
 
@@ -70,7 +71,7 @@ namespace Spring.Objects.Factory.Support
         [Test]
         public void Can_Filter_For_Specific_Type()
         {
-            _context.ScanWithTypeFilter(type => ((Type)type).FullName.Contains(typeof(TheImportedConfigurationClass).Name));
+            _context.ScanWithTypeFilter(type => type.FullName.Contains(typeof(TheImportedConfigurationClass).Name));
             _context.Refresh();
 
             Assert.That(_context.DefaultListableObjectFactory.ObjectDefinitionCount, Is.EqualTo(5));
@@ -79,7 +80,7 @@ namespace Spring.Objects.Factory.Support
         [Test]
         public void Can_Filter_For_Specific_Types_With_Compound_Predicate()
         {
-            _context.ScanWithTypeFilter(type => ((Type)type).FullName.Contains(typeof(TheImportedConfigurationClass).Name) || ((Type)type).FullName.Contains(typeof(TheConfigurationClass).Name));
+            _context.ScanWithTypeFilter(type => type.FullName.Contains(typeof(TheImportedConfigurationClass).Name) || type.FullName.Contains(typeof(TheConfigurationClass).Name));
             _context.Refresh();
 
             AssertExpectedObjectsAreRegisteredWith(_context, 16);

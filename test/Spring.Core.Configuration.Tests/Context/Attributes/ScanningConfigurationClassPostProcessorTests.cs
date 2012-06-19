@@ -18,8 +18,6 @@
 
 #endregion
 
-
-using System;
 using NUnit.Framework;
 using Spring.Context.Config;
 using Spring.Context.Support;
@@ -43,5 +41,4 @@ namespace Spring.Context.Attributes
             Assert.That(_ctx, Is.Not.Null);
         }
     }
-
 }

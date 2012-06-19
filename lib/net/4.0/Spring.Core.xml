@@ -5298,6 +5298,38 @@
             If the object could not be created.
             </exception>
         </member>
+        <member name="M:Spring.Objects.Factory.IObjectFactory.GetObject``1(System.String)">
+            <summary>
+            Return an instance (possibly shared or independent) of the given object name.
+            </summary>
+            <remarks>
+            <para>
+            This method allows an object factory to be used as a replacement for the
+            Singleton or Prototype design pattern.
+            </para>
+            <para>
+            Note that callers should retain references to returned objects. There is no
+            guarantee that this method will be implemented to be efficient. For example,
+            it may be synchronized, or may need to run an RDBMS query.
+            </para>
+            <para>
+            Will ask the parent factory if the object cannot be found in this factory
+            instance.
+            </para>
+            </remarks>
+            <typeparam name="T">The type of the object to return.</typeparam>
+            <param name="name">The name of the object to return.</param>
+            <returns>The instance of the object.</returns>
+            <exception cref="T:Spring.Objects.Factory.NoSuchObjectDefinitionException">
+            If there's no such object definition.
+            </exception>
+            <exception cref="T:Spring.Objects.Factory.ObjectNotOfRequiredTypeException">
+            If the object is not of the required type.
+            </exception>
+            <exception cref="T:Spring.Objects.ObjectsException">
+            If the object could not be created.
+            </exception>
+        </member>
         <member name="M:Spring.Objects.Factory.IObjectFactory.GetObject(System.String,System.Object[])">
             <summary>
             Return an instance (possibly shared or independent) of the given object name.
@@ -5330,6 +5362,46 @@
             </exception>
             <exception cref="T:Spring.Objects.ObjectsException">
             If the object could not be created.
+            </exception>
+            <exception cref="T:System.ArgumentNullException">
+            If the supplied <paramref name="name"/> is <see langword="null"/>.
+            </exception>
+        </member>
+        <member name="M:Spring.Objects.Factory.IObjectFactory.GetObject``1(System.String,System.Object[])">
+            <summary>
+            Return an instance (possibly shared or independent) of the given object name.
+            </summary>
+            <remarks>
+            <para>
+            This method allows an object factory to be used as a replacement for the
+            Singleton or Prototype design pattern.
+            </para>
+            <para>
+            Note that callers should retain references to returned objects. There is no
+            guarantee that this method will be implemented to be efficient. For example,
+            it may be synchronized, or may need to run an RDBMS query.
+            </para>
+            <para>
+            Will ask the parent factory if the object cannot be found in this factory
+            instance.
+            </para>
+            </remarks>
+            <param name="name">The name of the object to return.</param>
+            <param name="arguments">
+            The arguments to use if creating a prototype using explicit arguments to
+            a static factory method. If there is no factory method and the
+            arguments are not null, then match the argument values by type and
+            call the object's constructor.
+            </param>
+            <returns>The instance of the object.</returns>
+            <exception cref="T:Spring.Objects.Factory.NoSuchObjectDefinitionException">
+            If there's no such object definition.
+            </exception>
+            <exception cref="T:Spring.Objects.ObjectsException">
+            If the object could not be created.
+            </exception>
+            <exception cref="T:Spring.Objects.Factory.ObjectNotOfRequiredTypeException">
+            If the object is not of the required type.
             </exception>
             <exception cref="T:System.ArgumentNullException">
             If the supplied <paramref name="name"/> is <see langword="null"/>.
@@ -5443,6 +5515,24 @@
             <exception cref="T:Spring.Objects.Factory.NoSuchObjectDefinitionException">Ff there is no object with the given name
             </exception>
         </member>
+        <member name="M:Spring.Objects.Factory.IObjectFactory.IsTypeMatch``1(System.String)">
+            <summary>
+            Determines whether the object with the given name matches the specified type.
+            </summary>
+            <remarks>More specifically, check whether a GetObject call for the given name
+            would return an object that is assignable to the specified target type.
+            Translates aliases back to the corresponding canonical bean name.
+            Will ask the parent factory if the bean cannot be found in this factory instance.
+            </remarks>
+            <param name="name">The name of the object to query.</param>
+            <typeparam name="T">Type of the target to match against.</typeparam>
+            <returns>
+            	<c>true</c> if the object type matches; otherwise, <c>false</c>
+            if it doesn't match or cannot be determined yet.
+            </returns>
+            <exception cref="T:Spring.Objects.Factory.NoSuchObjectDefinitionException">Ff there is no object with the given name
+            </exception>
+        </member>
         <member name="M:Spring.Objects.Factory.IObjectFactory.CreateObject(System.String,System.Type,System.Object[])">
             <summary>
             Return an unconfigured(!) instance (possibly shared or independent) of the given object name.
@@ -5454,6 +5544,41 @@
             <see cref="T:System.Object"/> class, this method will succeed whatever the
             class of the returned instance.
             </param>
+            <param name="arguments">
+            The arguments to use if creating a prototype using explicit arguments to
+            a <see lang="static"/> factory method. If there is no factory method and the
+            supplied <paramref name="arguments"/> array is not <see lang="null"/>, then
+            match the argument values by type and call the object's constructor.
+            </param>
+            <returns>The unconfigured(!) instance of the object.</returns>
+            <exception cref="T:Spring.Objects.Factory.NoSuchObjectDefinitionException">
+            If there's no such object definition.
+            </exception>
+            <exception cref="T:Spring.Objects.ObjectsException">
+            If the object could not be created.
+            </exception>
+            <exception cref="T:Spring.Objects.Factory.ObjectNotOfRequiredTypeException">
+            If the object is not of the required type.
+            </exception>
+            <exception cref="T:System.ArgumentNullException">
+            If the supplied <paramref name="name"/> is <see langword="null"/>.
+            </exception>
+            <seealso cref="M:Spring.Objects.Factory.IObjectFactory.GetObject(System.String,System.Type,System.Object[])"/>
+            <remarks>
+             This method will only <b>instantiate</b> the requested object. It does <b>NOT</b> inject any dependencies!
+            </remarks>
+        </member>
+        <member name="M:Spring.Objects.Factory.IObjectFactory.CreateObject``1(System.String,System.Object[])">
+            <summary>
+            Return an unconfigured(!) instance (possibly shared or independent) of the given object name.
+            </summary>
+            <param name="name">The name of the object to return.</param>
+            <typeparam name="T">
+            The <see cref="T:System.Type"/> the object may match. Can be an interface or
+            superclass of the actual class. For example, if the value is the
+            <see cref="T:System.Object"/> class, this method will succeed whatever the
+            class of the returned instance.
+            </typeparam>
             <param name="arguments">
             The arguments to use if creating a prototype using explicit arguments to
             a <see lang="static"/> factory method. If there is no factory method and the
@@ -5628,6 +5753,31 @@
             are defined.
             </returns>
         </member>
+        <member name="M:Spring.Objects.Factory.IListableObjectFactory.GetObjectNames``1">
+            <summary>
+            Return the names of objects matching the given <see cref="T:System.Type"/>
+            (including subclasses), judging from the object definitions.
+            </summary>
+            <remarks>
+            <p>
+            Does consider objects created by <see cref="T:Spring.Objects.Factory.IFactoryObject"/>s,
+            or rather it considers the type of objects created by
+            <see cref="T:Spring.Objects.Factory.IFactoryObject"/> (which means that
+            <see cref="T:Spring.Objects.Factory.IFactoryObject"/>s will be instantiated).
+            </p>
+            <p>
+            Does not consider any hierarchy this factory may participate in.
+            </p>
+            </remarks>
+            <typeparam name="T">
+            The <see cref="T:System.Type"/> (class or interface) to match, or <see langword="null"/>
+            for all object names.
+            </typeparam>
+            <returns>
+            The names of all objects defined in this factory, or an empty array if none
+            are defined.
+            </returns>
+        </member>
         <member name="M:Spring.Objects.Factory.IListableObjectFactory.GetObjectNamesForType(System.Type,System.Boolean,System.Boolean)">
             <summary>
             Return the names of objects matching the given <see cref="T:System.Type"/>
@@ -5652,6 +5802,43 @@
             The <see cref="T:System.Type"/> (class or interface) to match, or <see langword="null"/>
             for all object names.
             </param>
+            <param name="includePrototypes">
+            Whether to include prototype objects too or just singletons (also applies to
+            <see cref="T:Spring.Objects.Factory.IFactoryObject"/>s).
+            </param>
+            <param name="includeFactoryObjects">
+            Whether to include <see cref="T:Spring.Objects.Factory.IFactoryObject"/>s too
+            or just normal objects.
+            </param>
+            <returns>
+            The names of all objects defined in this factory, or an empty array if none
+            are defined.
+            </returns>
+        </member>
+        <member name="M:Spring.Objects.Factory.IListableObjectFactory.GetObjectNames``1(System.Boolean,System.Boolean)">
+            <summary>
+            Return the names of objects matching the given <see cref="T:System.Type"/>
+            (including subclasses), judging from the object definitions.
+            </summary>
+            <remarks>
+            <p>
+            Does consider objects created by <see cref="T:Spring.Objects.Factory.IFactoryObject"/>s,
+            or rather it considers the type of objects created by
+            <see cref="T:Spring.Objects.Factory.IFactoryObject"/> (which means that
+            <see cref="T:Spring.Objects.Factory.IFactoryObject"/>s will be instantiated).
+            </p>
+            <p>
+            Does not consider any hierarchy this factory may participate in.
+            Use <see cref="M:Spring.Objects.Factory.ObjectFactoryUtils.ObjectNamesForTypeIncludingAncestors(Spring.Objects.Factory.IListableObjectFactory,System.Type,System.Boolean,System.Boolean)"/>
+            to include beans in ancestor factories too.
+            &lt;p&gt;Note: Does &lt;i&gt;not&lt;/i&gt; ignore singleton objects that have been registered
+            by other means than bean definitions.
+            </p>
+            </remarks>
+            <typeparam name="T">
+            The <see cref="T:System.Type"/> (class or interface) to match, or <see langword="null"/>
+            for all object names.
+            </typeparam>
             <param name="includePrototypes">
             Whether to include prototype objects too or just singletons (also applies to
             <see cref="T:Spring.Objects.Factory.IFactoryObject"/>s).
@@ -5694,6 +5881,35 @@
             If the objects could not be created.
             </exception>
         </member>
+        <member name="M:Spring.Objects.Factory.IListableObjectFactory.GetObjects``1">
+            <summary>
+            Return the object instances that match the given object
+            <see cref="T:System.Type"/> (including subclasses), judging from either object
+            definitions or the value of
+            <see cref="P:Spring.Objects.Factory.IFactoryObject.ObjectType"/> in the case of
+            <see cref="T:Spring.Objects.Factory.IFactoryObject"/>s.
+            </summary>
+            <remarks>
+            <p>
+            This version of the <see cref="M:Spring.Objects.Factory.IListableObjectFactory.GetObjectsOfType(System.Type,System.Boolean,System.Boolean)"/>
+            method matches all kinds of object definitions, be they singletons, prototypes, or
+            <see cref="T:Spring.Objects.Factory.IFactoryObject"/>s. Typically, the results
+            of this method call will be the same as a call to
+            <code>IListableObjectFactory.GetObjectsOfType(type,true,true)</code> .
+            </p>
+            </remarks>
+            <typeparam name="T">
+            The <see cref="T:System.Type"/> (class or interface) to match.
+            </typeparam>
+            <returns>
+            A <see cref="T:System.Collections.IDictionary"/> of the matching objects,
+            containing the object names as keys and the corresponding object instances
+            as values.
+            </returns>
+            <exception cref="T:Spring.Objects.ObjectsException">
+            If the objects could not be created.
+            </exception>
+        </member>
         <member name="M:Spring.Objects.Factory.IListableObjectFactory.GetObjectsOfType(System.Type,System.Boolean,System.Boolean)">
             <summary>
             Return the object instances that match the given object
@@ -5720,6 +5936,65 @@
             </returns>
             <exception cref="T:Spring.Objects.ObjectsException">
             If the objects could not be created.
+            </exception>
+        </member>
+        <member name="M:Spring.Objects.Factory.IListableObjectFactory.GetObjects``1(System.Boolean,System.Boolean)">
+            <summary>
+            Return the object instances that match the given object
+            <see cref="T:System.Type"/> (including subclasses), judging from either object
+            definitions or the value of
+            <see cref="P:Spring.Objects.Factory.IFactoryObject.ObjectType"/> in the case of
+            <see cref="T:Spring.Objects.Factory.IFactoryObject"/>s.
+            </summary>
+            <typeparam name="T">
+            The <see cref="T:System.Type"/> (class or interface) to match.
+            </typeparam>
+            <param name="includePrototypes">
+              Whether to include prototype objects too or just singletons (also applies to
+              <see cref="T:Spring.Objects.Factory.IFactoryObject"/>s).
+            </param>
+            <param name="includeFactoryObjects">
+              Whether to include <see cref="T:Spring.Objects.Factory.IFactoryObject"/>s too
+              or just normal objects.
+            </param>
+            <returns>
+            A <see cref="T:System.Collections.IDictionary"/> of the matching objects,
+            containing the object names as keys and the corresponding object instances
+            as values.
+            </returns>
+            <exception cref="T:Spring.Objects.ObjectsException">
+            If the objects could not be created.
+            </exception>
+        </member>
+        <member name="M:Spring.Objects.Factory.IListableObjectFactory.GetObject``1">
+            <summary>
+            Return an instance (possibly shared or independent) of the given object name.
+            </summary>
+            <remarks>
+            <para>
+            This method allows an object factory to be used as a replacement for the
+            Singleton or Prototype design pattern.
+            </para>
+            <para>
+            Note that callers should retain references to returned objects. There is no
+            guarantee that this method will be implemented to be efficient. For example,
+            it may be synchronized, or may need to run an RDBMS query.
+            </para>
+            <para>
+            Will ask the parent factory if the object cannot be found in this factory
+            instance.
+            </para>
+            </remarks>
+            <typeparam name="T">The type of the object to return.</typeparam>
+            <returns>The instance of the object.</returns>
+            <exception cref="T:Spring.Objects.Factory.NoSuchObjectDefinitionException">
+            If there's no such object definition.
+            </exception>
+            <exception cref="T:Spring.Objects.Factory.ObjectDefinitionStoreException">
+            If there is more than a single object of the requested type defined in the factory.
+            </exception>
+            <exception cref="T:Spring.Objects.ObjectsException">
+            If the object could not be created.
             </exception>
         </member>
         <member name="P:Spring.Objects.Factory.IListableObjectFactory.ObjectDefinitionCount">
@@ -6742,6 +7017,31 @@
             </returns>
             <seealso cref="M:Spring.Objects.Factory.IListableObjectFactory.GetObjectNamesForType(System.Type)"/>
         </member>
+        <member name="M:Spring.Context.Support.AbstractApplicationContext.GetObjectNames``1">
+            <summary>
+            Return the names of objects matching the given <see cref="T:System.Type"/>
+            (including subclasses), judging from the object definitions.
+            </summary>
+            <remarks>
+            <p>
+            Does consider objects created by <see cref="T:Spring.Objects.Factory.IFactoryObject"/>s,
+            or rather it considers the type of objects created by
+            <see cref="T:Spring.Objects.Factory.IFactoryObject"/> (which means that
+            <see cref="T:Spring.Objects.Factory.IFactoryObject"/>s will be instantiated).
+            </p>
+            <p>
+            Does not consider any hierarchy this factory may participate in.
+            </p>
+            </remarks>
+            <typeparam name="T">
+            The <see cref="T:System.Type"/> (class or interface) to match, or <see langword="null"/>
+            for all object names.
+            </typeparam>
+            <returns>
+            The names of all objects defined in this factory, or an empty array if none
+            are defined.
+            </returns>
+        </member>
         <member name="M:Spring.Context.Support.AbstractApplicationContext.GetObjectNamesForType(System.Type,System.Boolean,System.Boolean)">
             <summary>
             Return the names of objects matching the given <see cref="T:System.Type"/>
@@ -6764,6 +7064,43 @@
             are defined.
             </returns>
             <seealso cref="M:Spring.Objects.Factory.IListableObjectFactory.GetObjectNamesForType(System.Type,System.Boolean,System.Boolean)"/>
+        </member>
+        <member name="M:Spring.Context.Support.AbstractApplicationContext.GetObjectNames``1(System.Boolean,System.Boolean)">
+            <summary>
+            Return the names of objects matching the given <see cref="T:System.Type"/>
+            (including subclasses), judging from the object definitions.
+            </summary>
+            <remarks>
+            <p>
+            Does consider objects created by <see cref="T:Spring.Objects.Factory.IFactoryObject"/>s,
+            or rather it considers the type of objects created by
+            <see cref="T:Spring.Objects.Factory.IFactoryObject"/> (which means that
+            <see cref="T:Spring.Objects.Factory.IFactoryObject"/>s will be instantiated).
+            </p>
+            <p>
+            Does not consider any hierarchy this factory may participate in.
+            Use <see cref="M:Spring.Objects.Factory.ObjectFactoryUtils.ObjectNamesForTypeIncludingAncestors(Spring.Objects.Factory.IListableObjectFactory,System.Type,System.Boolean,System.Boolean)"/>
+            to include beans in ancestor factories too.
+            &lt;p&gt;Note: Does &lt;i&gt;not&lt;/i&gt; ignore singleton objects that have been registered
+            by other means than bean definitions.
+            </p>
+            </remarks>
+            <typeparam name="T">
+            The <see cref="T:System.Type"/> (class or interface) to match, or <see langword="null"/>
+            for all object names.
+            </typeparam>
+            <param name="includePrototypes">
+            Whether to include prototype objects too or just singletons (also applies to
+            <see cref="T:Spring.Objects.Factory.IFactoryObject"/>s).
+            </param>
+            <param name="includeFactoryObjects">
+            Whether to include <see cref="T:Spring.Objects.Factory.IFactoryObject"/>s too
+            or just normal objects.
+            </param>
+            <returns>
+            The names of all objects defined in this factory, or an empty array if none
+            are defined.
+            </returns>
         </member>
         <member name="M:Spring.Context.Support.AbstractApplicationContext.GetObjectDefinitionNames">
             <summary>
@@ -6835,6 +7172,35 @@
             </exception>
             <seealso cref="M:Spring.Objects.Factory.IListableObjectFactory.GetObjectsOfType(System.Type)"/>
         </member>
+        <member name="M:Spring.Context.Support.AbstractApplicationContext.GetObjects``1">
+            <summary>
+            Return the object instances that match the given object
+            <see cref="T:System.Type"/> (including subclasses), judging from either object
+            definitions or the value of
+            <see cref="P:Spring.Objects.Factory.IFactoryObject.ObjectType"/> in the case of
+            <see cref="T:Spring.Objects.Factory.IFactoryObject"/>s.
+            </summary>
+            <remarks>
+            <p>
+            This version of the <see cref="M:Spring.Objects.Factory.IListableObjectFactory.GetObjectsOfType(System.Type,System.Boolean,System.Boolean)"/>
+            method matches all kinds of object definitions, be they singletons, prototypes, or
+            <see cref="T:Spring.Objects.Factory.IFactoryObject"/>s. Typically, the results
+            of this method call will be the same as a call to
+            <code>IListableObjectFactory.GetObjectsOfType(type,true,true)</code> .
+            </p>
+            </remarks>
+            <typeparam name="T">
+            The <see cref="T:System.Type"/> (class or interface) to match.
+            </typeparam>
+            <returns>
+            A <see cref="T:System.Collections.IDictionary"/> of the matching objects,
+            containing the object names as keys and the corresponding object instances
+            as values.
+            </returns>
+            <exception cref="T:Spring.Objects.ObjectsException">
+            If the objects could not be created.
+            </exception>
+        </member>
         <member name="M:Spring.Context.Support.AbstractApplicationContext.GetObjectsOfType(System.Type,System.Boolean,System.Boolean)">
             <summary>
             Return the object instances that match the given object
@@ -6863,6 +7229,65 @@
             If the objects could not be created.
             </exception>
             <seealso cref="M:Spring.Objects.Factory.IListableObjectFactory.GetObjectsOfType(System.Type,System.Boolean,System.Boolean)"/>
+        </member>
+        <member name="M:Spring.Context.Support.AbstractApplicationContext.GetObjects``1(System.Boolean,System.Boolean)">
+            <summary>
+            Return the object instances that match the given object
+            <see cref="T:System.Type"/> (including subclasses), judging from either object
+            definitions or the value of
+            <see cref="P:Spring.Objects.Factory.IFactoryObject.ObjectType"/> in the case of
+            <see cref="T:Spring.Objects.Factory.IFactoryObject"/>s.
+            </summary>
+            <typeparam name="T">
+            The <see cref="T:System.Type"/> (class or interface) to match.
+            </typeparam>
+            <param name="includePrototypes">
+              Whether to include prototype objects too or just singletons (also applies to
+              <see cref="T:Spring.Objects.Factory.IFactoryObject"/>s).
+            </param>
+            <param name="includeFactoryObjects">
+              Whether to include <see cref="T:Spring.Objects.Factory.IFactoryObject"/>s too
+              or just normal objects.
+            </param>
+            <returns>
+            A <see cref="T:System.Collections.IDictionary"/> of the matching objects,
+            containing the object names as keys and the corresponding object instances
+            as values.
+            </returns>
+            <exception cref="T:Spring.Objects.ObjectsException">
+            If the objects could not be created.
+            </exception>
+        </member>
+        <member name="M:Spring.Context.Support.AbstractApplicationContext.GetObject``1">
+            <summary>
+            Return an instance (possibly shared or independent) of the given object name.
+            </summary>
+            <remarks>
+            <para>
+            This method allows an object factory to be used as a replacement for the
+            Singleton or Prototype design pattern.
+            </para>
+            <para>
+            Note that callers should retain references to returned objects. There is no
+            guarantee that this method will be implemented to be efficient. For example,
+            it may be synchronized, or may need to run an RDBMS query.
+            </para>
+            <para>
+            Will ask the parent factory if the object cannot be found in this factory
+            instance.
+            </para>
+            </remarks>
+            <typeparam name="T">The type of the object to return.</typeparam>
+            <returns>The instance of the object.</returns>
+            <exception cref="T:Spring.Objects.Factory.NoSuchObjectDefinitionException">
+            If there's no such object definition.
+            </exception>
+            <exception cref="T:Spring.Objects.Factory.ObjectDefinitionStoreException">
+            If there is more than a single object of the requested type defined in the factory.
+            </exception>
+            <exception cref="T:Spring.Objects.ObjectsException">
+            If the object could not be created.
+            </exception>
         </member>
         <member name="M:Spring.Context.Support.AbstractApplicationContext.ContainsObjectDefinition(System.String)">
             <summary>
@@ -6895,6 +7320,24 @@
             </exception>
             <seealso cref="M:Spring.Objects.Factory.IObjectFactory.GetAliases(System.String)"/>
         </member>
+        <member name="M:Spring.Context.Support.AbstractApplicationContext.IsTypeMatch``1(System.String)">
+            <summary>
+            Determines whether the object with the given name matches the specified type.
+            </summary>
+            <remarks>More specifically, check whether a GetObject call for the given name
+            would return an object that is assignable to the specified target type.
+            Translates aliases back to the corresponding canonical bean name.
+            Will ask the parent factory if the bean cannot be found in this factory instance.
+            </remarks>
+            <param name="name">The name of the object to query.</param>
+            <typeparam name="T">Type of the target to match against.</typeparam>
+            <returns>
+            	<c>true</c> if the object type matches; otherwise, <c>false</c>
+            if it doesn't match or cannot be determined yet.
+            </returns>
+            <exception cref="T:Spring.Objects.Factory.NoSuchObjectDefinitionException">Ff there is no object with the given name
+            </exception>
+        </member>
         <member name="M:Spring.Context.Support.AbstractApplicationContext.CreateObject(System.String,System.Type,System.Object[])">
             <summary>
             Return an unconfigured(!) instance (possibly shared or independent) of the given object name.
@@ -6926,6 +7369,41 @@
             If the supplied <paramref name="name"/> is <see langword="null"/>.
             </exception>
             <seealso cref="M:Spring.Objects.Factory.IObjectFactory.CreateObject(System.String,System.Type,System.Object[])"/>
+            <remarks>
+             This method will only <b>instantiate</b> the requested object. It does <b>NOT</b> inject any dependencies!
+            </remarks>
+        </member>
+        <member name="M:Spring.Context.Support.AbstractApplicationContext.CreateObject``1(System.String,System.Object[])">
+            <summary>
+            Return an unconfigured(!) instance (possibly shared or independent) of the given object name.
+            </summary>
+            <param name="name">The name of the object to return.</param>
+            <typeparam name="T">
+            The <see cref="T:System.Type"/> the object may match. Can be an interface or
+            superclass of the actual class. For example, if the value is the
+            <see cref="T:System.Object"/> class, this method will succeed whatever the
+            class of the returned instance.
+            </typeparam>
+            <param name="arguments">
+            The arguments to use if creating a prototype using explicit arguments to
+            a <see lang="static"/> factory method. If there is no factory method and the
+            supplied <paramref name="arguments"/> array is not <see lang="null"/>, then
+            match the argument values by type and call the object's constructor.
+            </param>
+            <returns>The unconfigured(!) instance of the object.</returns>
+            <exception cref="T:Spring.Objects.Factory.NoSuchObjectDefinitionException">
+            If there's no such object definition.
+            </exception>
+            <exception cref="T:Spring.Objects.ObjectsException">
+            If the object could not be created.
+            </exception>
+            <exception cref="T:Spring.Objects.Factory.ObjectNotOfRequiredTypeException">
+            If the object is not of the required type.
+            </exception>
+            <exception cref="T:System.ArgumentNullException">
+            If the supplied <paramref name="name"/> is <see langword="null"/>.
+            </exception>
+            <seealso cref="M:Spring.Objects.Factory.IObjectFactory.GetObject(System.String,System.Type,System.Object[])"/>
             <remarks>
              This method will only <b>instantiate</b> the requested object. It does <b>NOT</b> inject any dependencies!
             </remarks>
@@ -6967,6 +7445,38 @@
             </exception>
             <seealso cref="M:Spring.Objects.Factory.IObjectFactory.GetObject(System.String)"/>
         </member>
+        <member name="M:Spring.Context.Support.AbstractApplicationContext.GetObject``1(System.String)">
+            <summary>
+            Return an instance (possibly shared or independent) of the given object name.
+            </summary>
+            <remarks>
+            <para>
+            This method allows an object factory to be used as a replacement for the
+            Singleton or Prototype design pattern.
+            </para>
+            <para>
+            Note that callers should retain references to returned objects. There is no
+            guarantee that this method will be implemented to be efficient. For example,
+            it may be synchronized, or may need to run an RDBMS query.
+            </para>
+            <para>
+            Will ask the parent factory if the object cannot be found in this factory
+            instance.
+            </para>
+            </remarks>
+            <typeparam name="T">The type of the object to return.</typeparam>
+            <param name="name">The name of the object to return.</param>
+            <returns>The instance of the object.</returns>
+            <exception cref="T:Spring.Objects.Factory.NoSuchObjectDefinitionException">
+            If there's no such object definition.
+            </exception>
+            <exception cref="T:Spring.Objects.Factory.ObjectNotOfRequiredTypeException">
+            If the object is not of the required type.
+            </exception>
+            <exception cref="T:Spring.Objects.ObjectsException">
+            If the object could not be created.
+            </exception>
+        </member>
         <member name="M:Spring.Context.Support.AbstractApplicationContext.GetObject(System.String,System.Object[])">
             <summary>
             Return an instance (possibly shared or independent) of the given object name.
@@ -6999,6 +7509,46 @@
             </exception>
             <exception cref="T:Spring.Objects.ObjectsException">
             If the object could not be created.
+            </exception>
+            <exception cref="T:System.ArgumentNullException">
+            If the supplied <paramref name="name"/> is <see langword="null"/>.
+            </exception>
+        </member>
+        <member name="M:Spring.Context.Support.AbstractApplicationContext.GetObject``1(System.String,System.Object[])">
+            <summary>
+            Return an instance (possibly shared or independent) of the given object name.
+            </summary>
+            <remarks>
+            <para>
+            This method allows an object factory to be used as a replacement for the
+            Singleton or Prototype design pattern.
+            </para>
+            <para>
+            Note that callers should retain references to returned objects. There is no
+            guarantee that this method will be implemented to be efficient. For example,
+            it may be synchronized, or may need to run an RDBMS query.
+            </para>
+            <para>
+            Will ask the parent factory if the object cannot be found in this factory
+            instance.
+            </para>
+            </remarks>
+            <param name="name">The name of the object to return.</param>
+            <param name="arguments">
+            The arguments to use if creating a prototype using explicit arguments to
+            a static factory method. If there is no factory method and the
+            arguments are not null, then match the argument values by type and
+            call the object's constructor.
+            </param>
+            <returns>The instance of the object.</returns>
+            <exception cref="T:Spring.Objects.Factory.NoSuchObjectDefinitionException">
+            If there's no such object definition.
+            </exception>
+            <exception cref="T:Spring.Objects.ObjectsException">
+            If the object could not be created.
+            </exception>
+            <exception cref="T:Spring.Objects.Factory.ObjectNotOfRequiredTypeException">
+            If the object is not of the required type.
             </exception>
             <exception cref="T:System.ArgumentNullException">
             If the supplied <paramref name="name"/> is <see langword="null"/>.
@@ -8782,7 +9332,7 @@
             section.
             </returns>
         </member>
-        <member name="M:Spring.Context.Support.ContextHandler.CreateChildContexts(Spring.Context.IApplicationContext,System.Object,System.Xml.XmlNode[])">
+        <member name="M:Spring.Context.Support.ContextHandler.CreateChildContexts(Spring.Context.IApplicationContext,System.Object,System.Collections.Generic.IList{System.Xml.XmlNode})">
             <summary>
             Create all child-contexts in the given <see cref="T:System.Xml.XmlNodeList"/> for the given context.
             </summary>
@@ -8790,7 +9340,7 @@
             <param name="configContext">The current configContext <see cref="M:System.Configuration.IConfigurationSectionHandler.Create(System.Object,System.Object,System.Xml.XmlNode)"/></param>
             <param name="childContexts">The list of child context elements</param>
         </member>
-        <member name="M:Spring.Context.Support.ContextHandler.InstantiateContext(Spring.Context.IApplicationContext,System.Object,System.String,System.Type,System.Boolean,System.String[])">
+        <member name="M:Spring.Context.Support.ContextHandler.InstantiateContext(Spring.Context.IApplicationContext,System.Object,System.String,System.Type,System.Boolean,System.Collections.Generic.IList{System.String})">
             <summary>
             Instantiates a new context.
             </summary>
@@ -9142,7 +9692,7 @@
             The arguments used to resolve the supplied <paramref name="codes"/>.
             </param>
         </member>
-        <member name="M:Spring.Context.Support.DefaultMessageSourceResolvable.#ctor(System.String[],System.Object[],System.String)">
+        <member name="M:Spring.Context.Support.DefaultMessageSourceResolvable.#ctor(System.Collections.Generic.IList{System.String},System.Object[],System.String)">
             <summary>
             Creates a new instance of the
             <see cref="T:Spring.Context.Support.DefaultMessageSourceResolvable"/> class
@@ -16251,7 +16801,22 @@
             <author>Juergen Hoeller</author>
             <author>Aleksandar Seovic (.Net)</author>
         </member>
-        <member name="M:Spring.Core.OrderComparator.Compare(System.Object,System.Object)">
+        <member name="T:Spring.Core.OrderComparator`1">
+            <summary>
+            Comparator implementation for <see cref="T:Spring.Core.IOrdered"/> objects, sorting by
+            order value ascending (resp. by priority descending).
+            </summary>
+            <remarks>
+            <p>
+            Non-<see cref="T:Spring.Core.IOrdered"/> objects are treated as greatest order values,
+            thus ending up at the end of a list, in arbitrary order (just like same order values of
+            <see cref="T:Spring.Core.IOrdered"/> objects).
+            </p>
+            </remarks>
+            <author>Juergen Hoeller</author>
+            <author>Aleksandar Seovic (.Net)</author>
+        </member>
+        <member name="M:Spring.Core.OrderComparator`1.Compare(`0,`0)">
             <summary>
             Compares two objects and returns a value indicating whether one is less than,
             equal to or greater than the other.
@@ -16268,7 +16833,7 @@
             -1 if first object is less then second, 1 if it is greater, or 0 if they are equal.
             </returns>
         </member>
-        <member name="M:Spring.Core.OrderComparator.CompareEqualOrder(System.Object,System.Object)">
+        <member name="M:Spring.Core.OrderComparator`1.CompareEqualOrder(`0,`0)">
             <summary>
             Handle the case when both objects have equal sort order priority. By default returns 0, 
             but may be overriden for handling special cases.
@@ -16558,21 +17123,21 @@
             Validation errors collection that type conversion errors should be added to.
             </param>
         </member>
-        <member name="M:Spring.DataBinding.IBinding.BindSourceToTarget(System.Object,System.Object,Spring.Validation.IValidationErrors,System.Collections.IDictionary)">
+        <member name="M:Spring.DataBinding.IBinding.BindSourceToTarget(System.Object,System.Object,Spring.Validation.IValidationErrors,System.Collections.Generic.IDictionary{System.String,System.Object})">
             <summary>
             Binds source object to target object.
             </summary>
             <param name="source">
-            The source object.
+              The source object.
             </param>
             <param name="target">
-            The target object.
+              The target object.
             </param>
             <param name="validationErrors">
-            Validation errors collection that type conversion errors should be added to.
+              Validation errors collection that type conversion errors should be added to.
             </param>
             <param name="variables">
-            Variables that should be used during expression evaluation.
+              Variables that should be used during expression evaluation.
             </param>
         </member>
         <member name="M:Spring.DataBinding.IBinding.BindTargetToSource(System.Object,System.Object,Spring.Validation.IValidationErrors)">
@@ -16589,21 +17154,21 @@
             Validation errors collection that type conversion errors should be added to.
             </param>
         </member>
-        <member name="M:Spring.DataBinding.IBinding.BindTargetToSource(System.Object,System.Object,Spring.Validation.IValidationErrors,System.Collections.IDictionary)">
+        <member name="M:Spring.DataBinding.IBinding.BindTargetToSource(System.Object,System.Object,Spring.Validation.IValidationErrors,System.Collections.Generic.IDictionary{System.String,System.Object})">
             <summary>
             Binds target object to source object.
             </summary>
             <param name="source">
-            The source object.
+              The source object.
             </param>
             <param name="target">
-            The target object.
+              The target object.
             </param>
             <param name="validationErrors">
-            Validation errors collection that type conversion errors should be added to.
+              Validation errors collection that type conversion errors should be added to.
             </param>
             <param name="variables">
-            Variables that should be used during expression evaluation.
+              Variables that should be used during expression evaluation.
             </param>
         </member>
         <member name="M:Spring.DataBinding.IBinding.SetErrorMessage(System.String,System.String[])">
@@ -16673,38 +17238,38 @@
             Validation errors collection that type conversion errors should be added to.
             </param>
         </member>
-        <member name="M:Spring.DataBinding.AbstractBinding.BindSourceToTarget(System.Object,System.Object,Spring.Validation.IValidationErrors,System.Collections.IDictionary)">
+        <member name="M:Spring.DataBinding.AbstractBinding.BindSourceToTarget(System.Object,System.Object,Spring.Validation.IValidationErrors,System.Collections.Generic.IDictionary{System.String,System.Object})">
             <summary>
             Binds source object to target object.
             </summary>
             <param name="source">
-            The source object.
+              The source object.
             </param>
             <param name="target">
-            The target object.
+              The target object.
             </param>
             <param name="validationErrors">
-            Validation errors collection that type conversion errors should be added to.
+              Validation errors collection that type conversion errors should be added to.
             </param>
             <param name="variables">
-            Variables that should be used during expression evaluation.
+              Variables that should be used during expression evaluation.
             </param>
         </member>
-        <member name="M:Spring.DataBinding.AbstractBinding.BindTargetToSource(System.Object,System.Object,Spring.Validation.IValidationErrors,System.Collections.IDictionary)">
+        <member name="M:Spring.DataBinding.AbstractBinding.BindTargetToSource(System.Object,System.Object,Spring.Validation.IValidationErrors,System.Collections.Generic.IDictionary{System.String,System.Object})">
             <summary>
             Binds target object to source object.
             </summary>
             <param name="source">
-            The source object.
+              The source object.
             </param>
             <param name="target">
-            The target object.
+              The target object.
             </param>
             <param name="validationErrors">
-            Validation errors collection that type conversion errors should be added to.
+              Validation errors collection that type conversion errors should be added to.
             </param>
             <param name="variables">
-            Variables that should be used during expression evaluation.
+              Variables that should be used during expression evaluation.
             </param>
         </member>
         <member name="M:Spring.DataBinding.AbstractBinding.SetErrorMessage(System.String,System.String[])">
@@ -16775,122 +17340,122 @@
             specified <see cref="T:Spring.Globalization.IFormatter"/>.
             </summary>
         </member>
-        <member name="M:Spring.DataBinding.AbstractSimpleBinding.BindSourceToTarget(System.Object,System.Object,Spring.Validation.IValidationErrors,System.Collections.IDictionary)">
+        <member name="M:Spring.DataBinding.AbstractSimpleBinding.BindSourceToTarget(System.Object,System.Object,Spring.Validation.IValidationErrors,System.Collections.Generic.IDictionary{System.String,System.Object})">
             <summary>
             Binds source object to target object.
             </summary>
             <param name="source">
-            The source object.
+              The source object.
             </param>
             <param name="target">
-            The target object.
+              The target object.
             </param>
             <param name="validationErrors">
-            Validation errors collection that type conversion errors should be added to.
+              Validation errors collection that type conversion errors should be added to.
             </param>
             <param name="variables">
-            Variables that should be used during expression evaluation.
+              Variables that should be used during expression evaluation.
             </param>
         </member>
-        <member name="M:Spring.DataBinding.AbstractSimpleBinding.DoBindSourceToTarget(System.Object,System.Object,System.Collections.IDictionary)">
+        <member name="M:Spring.DataBinding.AbstractSimpleBinding.DoBindSourceToTarget(System.Object,System.Object,System.Collections.Generic.IDictionary{System.String,System.Object})">
             <summary>
             Concrete implementation if source to target binding.
             </summary>
             <param name="source">
-            The source object.
+              The source object.
             </param>
             <param name="target">
-            The target object.
+              The target object.
             </param>
             <param name="variables">
-            Variables that should be used during expression evaluation.
+              Variables that should be used during expression evaluation.
             </param>
         </member>
-        <member name="M:Spring.DataBinding.AbstractSimpleBinding.BindTargetToSource(System.Object,System.Object,Spring.Validation.IValidationErrors,System.Collections.IDictionary)">
+        <member name="M:Spring.DataBinding.AbstractSimpleBinding.BindTargetToSource(System.Object,System.Object,Spring.Validation.IValidationErrors,System.Collections.Generic.IDictionary{System.String,System.Object})">
             <summary>
             Binds target object to source object.
             </summary>
             <param name="source">
-            The source object.
+              The source object.
             </param>
             <param name="target">
-            The target object.
+              The target object.
             </param>
             <param name="validationErrors">
-            Validation errors collection that type conversion errors should be added to.
+              Validation errors collection that type conversion errors should be added to.
             </param>
             <param name="variables">
-            Variables that should be used during expression evaluation.
+              Variables that should be used during expression evaluation.
             </param>
         </member>
-        <member name="M:Spring.DataBinding.AbstractSimpleBinding.DoBindTargetToSource(System.Object,System.Object,System.Collections.IDictionary)">
+        <member name="M:Spring.DataBinding.AbstractSimpleBinding.DoBindTargetToSource(System.Object,System.Object,System.Collections.Generic.IDictionary{System.String,System.Object})">
             <summary>
             Concrete implementation of target to source binding.
             </summary>
             <param name="source">
-            The source object.
+              The source object.
             </param>
             <param name="target">
-            The target object.
+              The target object.
             </param>
             <param name="variables">
-            Variables that should be used during expression evaluation.
+              Variables that should be used during expression evaluation.
             </param>
         </member>
-        <member name="M:Spring.DataBinding.AbstractSimpleBinding.GetSourceValue(System.Object,System.Collections.IDictionary)">
+        <member name="M:Spring.DataBinding.AbstractSimpleBinding.GetSourceValue(System.Object,System.Collections.Generic.IDictionary{System.String,System.Object})">
             <summary>
             Gets the source value for the binding.
             </summary>
             <param name="source">
-            Source object to extract value from.
+              Source object to extract value from.
             </param>
             <param name="variables">
-            Variables for expression evaluation.
+              Variables for expression evaluation.
             </param>
             <returns>
             The source value for the binding.
             </returns>
         </member>
-        <member name="M:Spring.DataBinding.AbstractSimpleBinding.SetSourceValue(System.Object,System.Object,System.Collections.IDictionary)">
+        <member name="M:Spring.DataBinding.AbstractSimpleBinding.SetSourceValue(System.Object,System.Object,System.Collections.Generic.IDictionary{System.String,System.Object})">
             <summary>
             Sets the source value for the binding.
             </summary>
             <param name="source">
-            The source object to set the value on.
+              The source object to set the value on.
             </param>
             <param name="value">
-            The value to set.
+              The value to set.
             </param>
             <param name="variables">
-            Variables for expression evaluation.
+              Variables for expression evaluation.
             </param>
         </member>
-        <member name="M:Spring.DataBinding.AbstractSimpleBinding.GetTargetValue(System.Object,System.Collections.IDictionary)">
+        <member name="M:Spring.DataBinding.AbstractSimpleBinding.GetTargetValue(System.Object,System.Collections.Generic.IDictionary{System.String,System.Object})">
             <summary>
             Gets the target value for the binding.
             </summary>
             <param name="target">
-            Source object to extract value from.
+              Source object to extract value from.
             </param>
             <param name="variables">
-            Variables for expression evaluation.
+              Variables for expression evaluation.
             </param>
             <returns>
             The target value for the binding.
             </returns>
         </member>
-        <member name="M:Spring.DataBinding.AbstractSimpleBinding.SetTargetValue(System.Object,System.Object,System.Collections.IDictionary)">
+        <member name="M:Spring.DataBinding.AbstractSimpleBinding.SetTargetValue(System.Object,System.Object,System.Collections.Generic.IDictionary{System.String,System.Object})">
             <summary>
             Sets the target value for the binding.
             </summary>
             <param name="target">
-            The target object to set the value on.
+              The target object to set the value on.
             </param>
             <param name="value">
-            The value to set.
+              The value to set.
             </param>
             <param name="variables">
-            Variables for expression evaluation.
+              Variables for expression evaluation.
             </param>
         </member>
         <member name="P:Spring.DataBinding.AbstractSimpleBinding.Formatter">
@@ -17118,21 +17683,21 @@
             Validation errors collection that type conversion errors should be added to.
             </param>
         </member>
-        <member name="M:Spring.DataBinding.BaseBindingContainer.BindSourceToTarget(System.Object,System.Object,Spring.Validation.IValidationErrors,System.Collections.IDictionary)">
+        <member name="M:Spring.DataBinding.BaseBindingContainer.BindSourceToTarget(System.Object,System.Object,Spring.Validation.IValidationErrors,System.Collections.Generic.IDictionary{System.String,System.Object})">
             <summary>
             Binds source object to target object.
             </summary>
             <param name="source">
-            The source object.
+              The source object.
             </param>
             <param name="target">
-            The target object.
+              The target object.
             </param>
             <param name="validationErrors">
-            Validation errors collection that type conversion errors should be added to.
+              Validation errors collection that type conversion errors should be added to.
             </param>
             <param name="variables">
-            Variables that should be used during expression evaluation.
+              Variables that should be used during expression evaluation.
             </param>
         </member>
         <member name="M:Spring.DataBinding.BaseBindingContainer.BindTargetToSource(System.Object,System.Object,Spring.Validation.IValidationErrors)">
@@ -17149,21 +17714,21 @@
             Validation errors collection that type conversion errors should be added to.
             </param>
         </member>
-        <member name="M:Spring.DataBinding.BaseBindingContainer.BindTargetToSource(System.Object,System.Object,Spring.Validation.IValidationErrors,System.Collections.IDictionary)">
+        <member name="M:Spring.DataBinding.BaseBindingContainer.BindTargetToSource(System.Object,System.Object,Spring.Validation.IValidationErrors,System.Collections.Generic.IDictionary{System.String,System.Object})">
             <summary>
             Binds target object to source object.
             </summary>
             <param name="source">
-            The source object.
+              The source object.
             </param>
             <param name="target">
-            The target object.
+              The target object.
             </param>
             <param name="validationErrors">
-            Validation errors collection that type conversion errors should be added to.
+              Validation errors collection that type conversion errors should be added to.
             </param>
             <param name="variables">
-            Variables that should be used during expression evaluation.
+              Variables that should be used during expression evaluation.
             </param>
         </member>
         <member name="M:Spring.DataBinding.BaseBindingContainer.SetErrorMessage(System.String,System.String[])">
@@ -17398,38 +17963,38 @@
             </summary>
             <author>Aleksandar Seovic</author>
         </member>
-        <member name="M:Spring.DataBinding.ListBinding.BindSourceToTarget(System.Object,System.Object,Spring.Validation.IValidationErrors,System.Collections.IDictionary)">
+        <member name="M:Spring.DataBinding.ListBinding.BindSourceToTarget(System.Object,System.Object,Spring.Validation.IValidationErrors,System.Collections.Generic.IDictionary{System.String,System.Object})">
             <summary>
             Binds source object to target object.
             </summary>
             <param name="source">
-            The source object.
+              The source object.
             </param>
             <param name="target">
-            The target object.
+              The target object.
             </param>
             <param name="validationErrors">
-            Validation errors collection that type conversion errors should be added to.
+              Validation errors collection that type conversion errors should be added to.
             </param>
             <param name="variables">
-            Variables that should be used during expression evaluation.
+              Variables that should be used during expression evaluation.
             </param>
         </member>
-        <member name="M:Spring.DataBinding.ListBinding.BindTargetToSource(System.Object,System.Object,Spring.Validation.IValidationErrors,System.Collections.IDictionary)">
+        <member name="M:Spring.DataBinding.ListBinding.BindTargetToSource(System.Object,System.Object,Spring.Validation.IValidationErrors,System.Collections.Generic.IDictionary{System.String,System.Object})">
             <summary>
             Binds target object to source object.
             </summary>
             <param name="source">
-            The source object.
+              The source object.
             </param>
             <param name="target">
-            The target object.
+              The target object.
             </param>
             <param name="validationErrors">
-            Validation errors collection that type conversion errors should be added to.
+              Validation errors collection that type conversion errors should be added to.
             </param>
             <param name="variables">
-            Variables that should be used during expression evaluation.
+              Variables that should be used during expression evaluation.
             </param>
         </member>
         <member name="T:Spring.DataBinding.SimpleExpressionBinding">
@@ -17464,60 +18029,60 @@
             The formatter to use.
             </param>
         </member>
-        <member name="M:Spring.DataBinding.SimpleExpressionBinding.GetSourceValue(System.Object,System.Collections.IDictionary)">
+        <member name="M:Spring.DataBinding.SimpleExpressionBinding.GetSourceValue(System.Object,System.Collections.Generic.IDictionary{System.String,System.Object})">
             <summary>
             Gets the source value for the binding.
             </summary>
             <param name="source">
-            Source object to extract value from.
+              Source object to extract value from.
             </param>
             <param name="variables">
-            Variables for expression evaluation.
+              Variables for expression evaluation.
             </param>
             <returns>
             The source value for the binding.
             </returns>
         </member>
-        <member name="M:Spring.DataBinding.SimpleExpressionBinding.SetSourceValue(System.Object,System.Object,System.Collections.IDictionary)">
+        <member name="M:Spring.DataBinding.SimpleExpressionBinding.SetSourceValue(System.Object,System.Object,System.Collections.Generic.IDictionary{System.String,System.Object})">
             <summary>
             Sets the source value for the binding.
             </summary>
             <param name="source">
-            The source object to set the value on.
+              The source object to set the value on.
             </param>
             <param name="value">
-            The value to set.
+              The value to set.
             </param>
             <param name="variables">
-            Variables for expression evaluation.
+              Variables for expression evaluation.
             </param>
         </member>
-        <member name="M:Spring.DataBinding.SimpleExpressionBinding.GetTargetValue(System.Object,System.Collections.IDictionary)">
+        <member name="M:Spring.DataBinding.SimpleExpressionBinding.GetTargetValue(System.Object,System.Collections.Generic.IDictionary{System.String,System.Object})">
             <summary>
             Gets the target value for the binding.
             </summary>
             <param name="target">
-            Source object to extract value from.
+              Source object to extract value from.
             </param>
             <param name="variables">
-            Variables for expression evaluation.
+              Variables for expression evaluation.
             </param>
             <returns>
             The target value for the binding.
             </returns>
         </member>
-        <member name="M:Spring.DataBinding.SimpleExpressionBinding.SetTargetValue(System.Object,System.Object,System.Collections.IDictionary)">
+        <member name="M:Spring.DataBinding.SimpleExpressionBinding.SetTargetValue(System.Object,System.Object,System.Collections.Generic.IDictionary{System.String,System.Object})">
             <summary>
             Sets the target value for the binding.
             </summary>
             <param name="target">
-            The target object to set the value on.
+              The target object to set the value on.
             </param>
             <param name="value">
-            The value to set.
+              The value to set.
             </param>
             <param name="variables">
-            Variables for expression evaluation.
+              Variables for expression evaluation.
             </param>
         </member>
         <member name="P:Spring.DataBinding.SimpleExpressionBinding.SourceExpression">
@@ -19197,7 +19762,7 @@
             <param name="context">Object to evaluate expression against.</param>
             <returns>Value of the expression.</returns>
         </member>
-        <member name="M:Spring.Expressions.IExpression.GetValue(System.Object,System.Collections.IDictionary)">
+        <member name="M:Spring.Expressions.IExpression.GetValue(System.Object,System.Collections.Generic.IDictionary{System.String,System.Object})">
             <summary>
             Returns expression value.
             </summary>
@@ -19212,7 +19777,7 @@
             <param name="context">Object to evaluate expression against.</param>
             <param name="newValue">New value for the last node of the expression.</param>
         </member>
-        <member name="M:Spring.Expressions.IExpression.SetValue(System.Object,System.Collections.IDictionary,System.Object)">
+        <member name="M:Spring.Expressions.IExpression.SetValue(System.Object,System.Collections.Generic.IDictionary{System.String,System.Object},System.Object)">
             <summary>
             Sets expression value.
             </summary>
@@ -19243,7 +19808,7 @@
             <param name="context">Object to evaluate node against.</param>
             <returns>Node's value.</returns>
         </member>
-        <member name="M:Spring.Expressions.BaseNode.GetValue(System.Object,System.Collections.IDictionary)">
+        <member name="M:Spring.Expressions.BaseNode.GetValue(System.Object,System.Collections.Generic.IDictionary{System.String,System.Object})">
             <summary>
             Returns node's value for the given context.
             </summary>
@@ -19269,7 +19834,7 @@
             <param name="context">Object to evaluate node against.</param>
             <param name="newValue">New value for this node.</param>
         </member>
-        <member name="M:Spring.Expressions.BaseNode.SetValue(System.Object,System.Collections.IDictionary,System.Object)">
+        <member name="M:Spring.Expressions.BaseNode.SetValue(System.Object,System.Collections.Generic.IDictionary{System.String,System.Object},System.Object)">
             <summary>
             Sets node's value for the given context.
             </summary>
@@ -19327,7 +19892,7 @@
             Gets/Sets local variables of the current evaluation
             </summary>
         </member>
-        <member name="M:Spring.Expressions.BaseNode.EvaluationContext.#ctor(System.Object,System.Collections.IDictionary)">
+        <member name="M:Spring.Expressions.BaseNode.EvaluationContext.#ctor(System.Object,System.Collections.Generic.IDictionary{System.String,System.Object})">
             <summary>
             Initializes a new EvaluationContext instance.
             </summary>
@@ -19719,7 +20284,7 @@
             <param name="newValue">Value to set last node to.</param>
             <exception cref="T:System.NotSupportedException">If navigation expression is empty.</exception>
         </member>
-        <member name="M:Spring.Expressions.Expression.GetPropertyInfo(System.Object,System.Collections.IDictionary)">
+        <member name="M:Spring.Expressions.Expression.GetPropertyInfo(System.Object,System.Collections.Generic.IDictionary{System.String,System.Object})">
             <summary>
             Evaluates this expression for the specified root object and returns 
             <see cref="T:System.Reflection.PropertyInfo"/> of the last node, if possible.
@@ -19802,7 +20367,7 @@
             Methods in this class parse expression on every invocation.
             If you plan to reuse the same expression many times, you should prepare
             the expression once using the static <see cref="M:Spring.Expressions.Expression.Parse(System.String)"/> method,
-            and then call <see cref="M:Spring.Expressions.IExpression.GetValue(System.Object,System.Collections.IDictionary)"/> to evaluate it.
+            and then call <see cref="M:Spring.Expressions.IExpression.GetValue"/> to evaluate it.
             </p>
             <p>
             This can result in significant performance improvements as it avoids expression
@@ -19821,7 +20386,7 @@
             <param name="expression">Expression to evaluate.</param>
             <returns>Value of the last node in the expression.</returns>
         </member>
-        <member name="M:Spring.Expressions.ExpressionEvaluator.GetValue(System.Object,System.String,System.Collections.IDictionary)">
+        <member name="M:Spring.Expressions.ExpressionEvaluator.GetValue(System.Object,System.String,System.Collections.Generic.IDictionary{System.String,System.Object})">
             <summary>
             Parses and evaluates specified expression.
             </summary>
@@ -19839,7 +20404,7 @@
             <param name="expression">Expression to evaluate.</param>
             <param name="newValue">Value to set last node to.</param>
         </member>
-        <member name="M:Spring.Expressions.ExpressionEvaluator.SetValue(System.Object,System.String,System.Collections.IDictionary,System.Object)">
+        <member name="M:Spring.Expressions.ExpressionEvaluator.SetValue(System.Object,System.String,System.Collections.Generic.IDictionary{System.String,System.Object},System.Object)">
             <summary>
             Parses and specified expression and sets the value of the
             last node to the value of the <c>newValue</c> parameter.
@@ -19953,7 +20518,7 @@
             <param name="evalContext">Current expression evaluation context.</param>
             <param name="newValue">New value for this node.</param>
         </member>
-        <member name="M:Spring.Expressions.IndexerNode.GetPropertyInfo(System.Object,System.Collections.IDictionary)">
+        <member name="M:Spring.Expressions.IndexerNode.GetPropertyInfo(System.Object,System.Collections.Generic.IDictionary{System.String,System.Object})">
             <summary>
             Utility method that is needed by ObjectWrapper and AbstractAutowireCapableObjectFactory.
             </summary>
@@ -22272,7 +22837,7 @@
             <param name="culture">Resource culture.</param>
             <returns>A list of cached resources for the specified target object and culture.</returns>
         </member>
-        <member name="M:Spring.Globalization.IResourceCache.PutResources(System.Object,System.Globalization.CultureInfo,System.Collections.IList)">
+        <member name="M:Spring.Globalization.IResourceCache.PutResources(System.Object,System.Globalization.CultureInfo,System.Collections.Generic.IList{Spring.Globalization.Resource})">
             <summary>
             Puts the list of resources in the cache.
             </summary>
@@ -22289,7 +22854,7 @@
             <param name="culture">Resource culture.</param>
             <returns>A list of cached resources for the specified target object and culture.</returns>
         </member>
-        <member name="M:Spring.Globalization.AbstractResourceCache.PutResources(System.Object,System.Globalization.CultureInfo,System.Collections.IList)">
+        <member name="M:Spring.Globalization.AbstractResourceCache.PutResources(System.Object,System.Globalization.CultureInfo,System.Collections.Generic.IList{Spring.Globalization.Resource})">
             <summary>
             Puts the list of resources in the cache.
             </summary>
@@ -22312,7 +22877,7 @@
             <param name="cacheKey">Cache key to use for lookup.</param>
             <returns>A list of cached resources for the specified target object and culture.</returns>
         </member>
-        <member name="M:Spring.Globalization.AbstractResourceCache.PutResources(System.String,System.Collections.IList)">
+        <member name="M:Spring.Globalization.AbstractResourceCache.PutResources(System.String,System.Collections.Generic.IList{Spring.Globalization.Resource})">
             <summary>
             Puts the list of resources in the cache.
             </summary>
@@ -22333,7 +22898,7 @@
             <param name="cacheKey">Cache key to use for lookup.</param>
             <returns>Always returns <c>null</c>.</returns>
         </member>
-        <member name="M:Spring.Globalization.NullResourceCache.PutResources(System.String,System.Collections.IList)">
+        <member name="M:Spring.Globalization.NullResourceCache.PutResources(System.String,System.Collections.Generic.IList{Spring.Globalization.Resource})">
             <summary>
             Puts the list of resources in the cache.
             </summary>
@@ -22663,7 +23228,7 @@
             prevent any subsequent InstantiationAwareObjectPostProcessor instances from being 
             invoked on this object instance.</returns>
         </member>
-        <member name="M:Spring.Objects.Factory.Config.IInstantiationAwareObjectPostProcessor.PostProcessPropertyValues(Spring.Objects.IPropertyValues,System.Reflection.PropertyInfo[],System.Object,System.String)">
+        <member name="M:Spring.Objects.Factory.Config.IInstantiationAwareObjectPostProcessor.PostProcessPropertyValues(Spring.Objects.IPropertyValues,System.Collections.Generic.IList{System.Reflection.PropertyInfo},System.Object,System.String)">
             <summary>
             Post-process the given property values before the factory applies them
             to the given object.
@@ -22779,7 +23344,7 @@
             prevent any subsequent InstantiationAwareObjectPostProcessor instances from being 
             invoked on this object instance.</returns>
         </member>
-        <member name="M:Spring.Objects.Factory.Config.InstantiationAwareObjectPostProcessorAdapter.PostProcessPropertyValues(Spring.Objects.IPropertyValues,System.Reflection.PropertyInfo[],System.Object,System.String)">
+        <member name="M:Spring.Objects.Factory.Config.InstantiationAwareObjectPostProcessorAdapter.PostProcessPropertyValues(Spring.Objects.IPropertyValues,System.Collections.Generic.IList{System.Reflection.PropertyInfo},System.Object,System.String)">
             <summary>
             Post-process the given property values before the factory applies them
             to the given object.
@@ -22853,7 +23418,7 @@
             Cache for validated object names, skipping re-validation for the same object
             </summary>
         </member>
-        <member name="M:Spring.Objects.Factory.Attributes.RequiredAttributeObjectPostProcessor.PostProcessPropertyValues(Spring.Objects.IPropertyValues,System.Reflection.PropertyInfo[],System.Object,System.String)">
+        <member name="M:Spring.Objects.Factory.Attributes.RequiredAttributeObjectPostProcessor.PostProcessPropertyValues(Spring.Objects.IPropertyValues,System.Collections.Generic.IList{System.Reflection.PropertyInfo},System.Object,System.String)">
             <summary>
             Post-process the given property values before the factory applies them
             to the given object.  Checks for the attribute specified by this PostProcessor's RequiredAttributeType.
@@ -22885,7 +23450,7 @@
             not or if the supplied property does not have a setter method
             </returns>
         </member>
-        <member name="M:Spring.Objects.Factory.Attributes.RequiredAttributeObjectPostProcessor.BuildExceptionMessage(System.String[],System.ICloneable)">
+        <member name="M:Spring.Objects.Factory.Attributes.RequiredAttributeObjectPostProcessor.BuildExceptionMessage(System.Collections.Generic.IList{System.String},System.ICloneable)">
             <summary>
             Builds an exception message for the given list of invalid properties.
             </summary>
@@ -26795,7 +27360,7 @@
             The name of the object definition.
             </param>
         </member>
-        <member name="M:Spring.Objects.Factory.Config.ObjectDefinitionHolder.#ctor(Spring.Objects.Factory.Config.IObjectDefinition,System.String,System.String[])">
+        <member name="M:Spring.Objects.Factory.Config.ObjectDefinitionHolder.#ctor(Spring.Objects.Factory.Config.IObjectDefinition,System.String,System.Collections.Generic.IList{System.String})">
             <summary>
             Creates a new instance of the
             <see cref="T:Spring.Objects.Factory.Config.ObjectDefinitionHolder"/> class.
@@ -26878,21 +27443,21 @@
             </summary>
             <param name="objectDefinition">The object definition.</param>
         </member>
-        <member name="M:Spring.Objects.Factory.Config.ObjectDefinitionVisitor.VisitIndexedArgumentValues(System.Collections.IDictionary)">
+        <member name="M:Spring.Objects.Factory.Config.ObjectDefinitionVisitor.VisitIndexedArgumentValues(System.Collections.Generic.IDictionary{System.Int32,Spring.Objects.Factory.Config.ConstructorArgumentValues.ValueHolder})">
             <summary>
             Visits the indexed constructor argument values, replacing string values using the
             specified IVariableSource.
             </summary>
             <param name="ias">The indexed argument values.</param>
         </member>
-        <member name="M:Spring.Objects.Factory.Config.ObjectDefinitionVisitor.VisitNamedArgumentValues(System.Collections.IDictionary)">
+        <member name="M:Spring.Objects.Factory.Config.ObjectDefinitionVisitor.VisitNamedArgumentValues(System.Collections.Generic.IDictionary{System.String,System.Object})">
             <summary>
             Visits the named constructor argument values, replacing string values using the
             specified IVariableSource.
             </summary>
             <param name="nav">The named argument values.</param>
         </member>
-        <member name="M:Spring.Objects.Factory.Config.ObjectDefinitionVisitor.VisitGenericArgumentValues(System.Collections.IList)">
+        <member name="M:Spring.Objects.Factory.Config.ObjectDefinitionVisitor.VisitGenericArgumentValues(System.Collections.Generic.ICollection{Spring.Objects.Factory.Config.ConstructorArgumentValues.ValueHolder})">
             <summary>
             Visits the generic constructor argument values, replacing string values using
             the specified IVariableSource.
@@ -29609,6 +30174,46 @@
             Any parent object factory; may be <see lang="null"/>.
             </param>
         </member>
+        <member name="M:Spring.Objects.Factory.Support.AbstractObjectFactory.GetObject``1(System.String,System.Object[])">
+            <summary>
+            Return an instance (possibly shared or independent) of the given object name.
+            </summary>
+            <remarks>
+            <para>
+            This method allows an object factory to be used as a replacement for the
+            Singleton or Prototype design pattern.
+            </para>
+            <para>
+            Note that callers should retain references to returned objects. There is no
+            guarantee that this method will be implemented to be efficient. For example,
+            it may be synchronized, or may need to run an RDBMS query.
+            </para>
+            <para>
+            Will ask the parent factory if the object cannot be found in this factory
+            instance.
+            </para>
+            </remarks>
+            <param name="name">The name of the object to return.</param>
+            <param name="arguments">
+            The arguments to use if creating a prototype using explicit arguments to
+            a static factory method. If there is no factory method and the
+            arguments are not null, then match the argument values by type and
+            call the object's constructor.
+            </param>
+            <returns>The instance of the object.</returns>
+            <exception cref="T:Spring.Objects.Factory.NoSuchObjectDefinitionException">
+            If there's no such object definition.
+            </exception>
+            <exception cref="T:Spring.Objects.ObjectsException">
+            If the object could not be created.
+            </exception>
+            <exception cref="T:Spring.Objects.Factory.ObjectNotOfRequiredTypeException">
+            If the object is not of the required type.
+            </exception>
+            <exception cref="T:System.ArgumentNullException">
+            If the supplied <paramref name="name"/> is <see langword="null"/>.
+            </exception>
+        </member>
         <member name="M:Spring.Objects.Factory.Support.AbstractObjectFactory.GetObject(System.String,System.Type,System.Object[])">
             <summary>
             Return an instance (possibly shared or independent) of the given object name.
@@ -30120,6 +30725,24 @@
             <exception cref="T:Spring.Objects.Factory.NoSuchObjectDefinitionException">Ff there is no object with the given name
             </exception>
         </member>
+        <member name="M:Spring.Objects.Factory.Support.AbstractObjectFactory.IsTypeMatch``1(System.String)">
+            <summary>
+            Determines whether the object with the given name matches the specified type.
+            </summary>
+            <remarks>More specifically, check whether a GetObject call for the given name
+            would return an object that is assignable to the specified target type.
+            Translates aliases back to the corresponding canonical bean name.
+            Will ask the parent factory if the bean cannot be found in this factory instance.
+            </remarks>
+            <param name="name">The name of the object to query.</param>
+            <typeparam name="T">Type of the target to match against.</typeparam>
+            <returns>
+            	<c>true</c> if the object type matches; otherwise, <c>false</c>
+            if it doesn't match or cannot be determined yet.
+            </returns>
+            <exception cref="T:Spring.Objects.Factory.NoSuchObjectDefinitionException">Ff there is no object with the given name
+            </exception>
+        </member>
         <member name="M:Spring.Objects.Factory.Support.AbstractObjectFactory.GetType(System.String)">
             <summary>
             Determines the <see cref="T:System.Type"/> of the object with the
@@ -30340,11 +30963,78 @@
              This method will only <b>instantiate</b> the requested object. It does <b>NOT</b> inject any dependencies!
             </remarks>
         </member>
+        <member name="M:Spring.Objects.Factory.Support.AbstractObjectFactory.CreateObject``1(System.String,System.Object[])">
+            <summary>
+            Return an unconfigured(!) instance (possibly shared or independent) of the given object name.
+            </summary>
+            <param name="name">The name of the object to return.</param>
+            <typeparam name="T">
+            The <see cref="T:System.Type"/> the object may match. Can be an interface or
+            superclass of the actual class. For example, if the value is the
+            <see cref="T:System.Object"/> class, this method will succeed whatever the
+            class of the returned instance.
+            </typeparam>
+            <param name="arguments">
+            The arguments to use if creating a prototype using explicit arguments to
+            a <see lang="static"/> factory method. If there is no factory method and the
+            supplied <paramref name="arguments"/> array is not <see lang="null"/>, then
+            match the argument values by type and call the object's constructor.
+            </param>
+            <returns>The unconfigured(!) instance of the object.</returns>
+            <exception cref="T:Spring.Objects.Factory.NoSuchObjectDefinitionException">
+            If there's no such object definition.
+            </exception>
+            <exception cref="T:Spring.Objects.ObjectsException">
+            If the object could not be created.
+            </exception>
+            <exception cref="T:Spring.Objects.Factory.ObjectNotOfRequiredTypeException">
+            If the object is not of the required type.
+            </exception>
+            <exception cref="T:System.ArgumentNullException">
+            If the supplied <paramref name="name"/> is <see langword="null"/>.
+            </exception>
+            <seealso cref="M:Spring.Objects.Factory.IObjectFactory.GetObject(System.String,System.Type,System.Object[])"/>
+            <remarks>
+             This method will only <b>instantiate</b> the requested object. It does <b>NOT</b> inject any dependencies!
+            </remarks>
+        </member>
         <member name="M:Spring.Objects.Factory.Support.AbstractObjectFactory.GetObject(System.String)">
             <summary>
             Return an instance (possibly shared or independent) of the given object name.
             </summary>
             <see cref="M:Spring.Objects.Factory.IObjectFactory.GetObject(System.String)"/>.
+        </member>
+        <member name="M:Spring.Objects.Factory.Support.AbstractObjectFactory.GetObject``1(System.String)">
+            <summary>
+            Return an instance (possibly shared or independent) of the given object name.
+            </summary>
+            <remarks>
+            <para>
+            This method allows an object factory to be used as a replacement for the
+            Singleton or Prototype design pattern.
+            </para>
+            <para>
+            Note that callers should retain references to returned objects. There is no
+            guarantee that this method will be implemented to be efficient. For example,
+            it may be synchronized, or may need to run an RDBMS query.
+            </para>
+            <para>
+            Will ask the parent factory if the object cannot be found in this factory
+            instance.
+            </para>
+            </remarks>
+            <typeparam name="T">The type of the object to return.</typeparam>
+            <param name="name">The name of the object to return.</param>
+            <returns>The instance of the object.</returns>
+            <exception cref="T:Spring.Objects.Factory.NoSuchObjectDefinitionException">
+            If there's no such object definition.
+            </exception>
+            <exception cref="T:Spring.Objects.Factory.ObjectNotOfRequiredTypeException">
+            If the object is not of the required type.
+            </exception>
+            <exception cref="T:Spring.Objects.ObjectsException">
+            If the object could not be created.
+            </exception>
         </member>
         <member name="M:Spring.Objects.Factory.Support.AbstractObjectFactory.GetObject(System.String,System.Type)">
             <summary>
@@ -31241,7 +31931,7 @@
             </p>
             </remarks>
             <param name="requiredType">
-            The <see cref="T:System.Type"/> of the objects to look up.
+              The <see cref="T:System.Type"/> of the objects to look up.
             </param>
             <returns>
             An <see cref="T:System.Collections.IDictionary"/> of object names and object
@@ -32503,7 +33193,7 @@
             </summary>
             <returns>A SimpleAutowireCandidateResolver</returns>
         </member>
-        <member name="M:Spring.Objects.Factory.Support.AutowireUtils.GetUnsatisfiedDependencies(System.Reflection.PropertyInfo[],Spring.Objects.IPropertyValues,Spring.Objects.Factory.Support.DependencyCheckingMode)">
+        <member name="M:Spring.Objects.Factory.Support.AutowireUtils.GetUnsatisfiedDependencies(System.Collections.Generic.IList{System.Reflection.PropertyInfo},Spring.Objects.IPropertyValues,Spring.Objects.Factory.Support.DependencyCheckingMode)">
             <summary>
             Returns the list of <paramref name="propertyInfos"/> that are not satisfied by <paramref name="properties"/>.
             </summary>
@@ -32890,7 +33580,7 @@
             </p>
             </remarks>
             <param name="requiredType">
-            The type of the objects to look up.
+              The type of the objects to look up.
             </param>
             <returns>
             An <see cref="T:System.Collections.IDictionary"/> of object names and object
@@ -32938,12 +33628,6 @@
         <member name="F:Spring.Objects.Factory.Support.DefaultListableObjectFactory.log">
             <summary>
             The <see cref="T:Common.Logging.ILog"/> instance for this class.
-            </summary>
-        </member>
-        <member name="F:Spring.Objects.Factory.Support.DefaultListableObjectFactory.allowObjectDefinitionOverriding">
-            <summary>
-            Whether to allow re-registration of a different definition with the
-            same name.
             </summary>
         </member>
         <member name="F:Spring.Objects.Factory.Support.DefaultListableObjectFactory.objectDefinitionMap">
@@ -33102,6 +33786,31 @@
             </returns>
             <seealso cref="M:Spring.Objects.Factory.IListableObjectFactory.GetObjectNamesForType(System.Type)"/>
         </member>
+        <member name="M:Spring.Objects.Factory.Support.DefaultListableObjectFactory.GetObjectNames``1">
+            <summary>
+            Return the names of objects matching the given <see cref="T:System.Type"/>
+            (including subclasses), judging from the object definitions.
+            </summary>
+            <remarks>
+            <p>
+            Does consider objects created by <see cref="T:Spring.Objects.Factory.IFactoryObject"/>s,
+            or rather it considers the type of objects created by
+            <see cref="T:Spring.Objects.Factory.IFactoryObject"/> (which means that
+            <see cref="T:Spring.Objects.Factory.IFactoryObject"/>s will be instantiated).
+            </p>
+            <p>
+            Does not consider any hierarchy this factory may participate in.
+            </p>
+            </remarks>
+            <typeparam name="T">
+            The <see cref="T:System.Type"/> (class or interface) to match, or <see langword="null"/>
+            for all object names.
+            </typeparam>
+            <returns>
+            The names of all objects defined in this factory, or an empty array if none
+            are defined.
+            </returns>
+        </member>
         <member name="M:Spring.Objects.Factory.Support.DefaultListableObjectFactory.GetObjectNamesForType(System.Type,System.Boolean,System.Boolean)">
             <summary>
             Return the names of objects matching the given <see cref="T:System.Type"/>
@@ -33125,6 +33834,43 @@
             </returns>
             <seealso cref="M:Spring.Objects.Factory.IListableObjectFactory.GetObjectNamesForType(System.Type,System.Boolean,System.Boolean)"/>
         </member>
+        <member name="M:Spring.Objects.Factory.Support.DefaultListableObjectFactory.GetObjectNames``1(System.Boolean,System.Boolean)">
+            <summary>
+            Return the names of objects matching the given <see cref="T:System.Type"/>
+            (including subclasses), judging from the object definitions.
+            </summary>
+            <remarks>
+            <p>
+            Does consider objects created by <see cref="T:Spring.Objects.Factory.IFactoryObject"/>s,
+            or rather it considers the type of objects created by
+            <see cref="T:Spring.Objects.Factory.IFactoryObject"/> (which means that
+            <see cref="T:Spring.Objects.Factory.IFactoryObject"/>s will be instantiated).
+            </p>
+            <p>
+            Does not consider any hierarchy this factory may participate in.
+            Use <see cref="M:Spring.Objects.Factory.ObjectFactoryUtils.ObjectNamesForTypeIncludingAncestors(Spring.Objects.Factory.IListableObjectFactory,System.Type,System.Boolean,System.Boolean)"/>
+            to include beans in ancestor factories too.
+            &lt;p&gt;Note: Does &lt;i&gt;not&lt;/i&gt; ignore singleton objects that have been registered
+            by other means than bean definitions.
+            </p>
+            </remarks>
+            <typeparam name="T">
+            The <see cref="T:System.Type"/> (class or interface) to match, or <see langword="null"/>
+            for all object names.
+            </typeparam>
+            <param name="includePrototypes">
+            Whether to include prototype objects too or just singletons (also applies to
+            <see cref="T:Spring.Objects.Factory.IFactoryObject"/>s).
+            </param>
+            <param name="includeFactoryObjects">
+            Whether to include <see cref="T:Spring.Objects.Factory.IFactoryObject"/>s too
+            or just normal objects.
+            </param>
+            <returns>
+            The names of all objects defined in this factory, or an empty array if none
+            are defined.
+            </returns>
+        </member>
         <member name="M:Spring.Objects.Factory.Support.DefaultListableObjectFactory.GetObjectsOfType(System.Type)">
             <summary>
             Return the object instances that match the given object
@@ -33145,6 +33891,35 @@
             If the objects could not be created.
             </exception>
             <seealso cref="M:Spring.Objects.Factory.IListableObjectFactory.GetObjectsOfType(System.Type)"/>
+        </member>
+        <member name="M:Spring.Objects.Factory.Support.DefaultListableObjectFactory.GetObjects``1">
+            <summary>
+            Return the object instances that match the given object
+            <see cref="T:System.Type"/> (including subclasses), judging from either object
+            definitions or the value of
+            <see cref="P:Spring.Objects.Factory.IFactoryObject.ObjectType"/> in the case of
+            <see cref="T:Spring.Objects.Factory.IFactoryObject"/>s.
+            </summary>
+            <remarks>
+            <p>
+            This version of the <see cref="M:Spring.Objects.Factory.IListableObjectFactory.GetObjectsOfType(System.Type,System.Boolean,System.Boolean)"/>
+            method matches all kinds of object definitions, be they singletons, prototypes, or
+            <see cref="T:Spring.Objects.Factory.IFactoryObject"/>s. Typically, the results
+            of this method call will be the same as a call to
+            <code>IListableObjectFactory.GetObjectsOfType(type,true,true)</code> .
+            </p>
+            </remarks>
+            <typeparam name="T">
+            The <see cref="T:System.Type"/> (class or interface) to match.
+            </typeparam>
+            <returns>
+            A <see cref="T:System.Collections.IDictionary"/> of the matching objects,
+            containing the object names as keys and the corresponding object instances
+            as values.
+            </returns>
+            <exception cref="T:Spring.Objects.ObjectsException">
+            If the objects could not be created.
+            </exception>
         </member>
         <member name="M:Spring.Objects.Factory.Support.DefaultListableObjectFactory.GetObjectsOfType(System.Type,System.Boolean,System.Boolean)">
             <summary>
@@ -33171,6 +33946,65 @@
             If any of the objects could not be created.
             </exception>
             <seealso cref="M:Spring.Objects.Factory.IListableObjectFactory.GetObjectsOfType(System.Type,System.Boolean,System.Boolean)"/>
+        </member>
+        <member name="M:Spring.Objects.Factory.Support.DefaultListableObjectFactory.GetObjects``1(System.Boolean,System.Boolean)">
+            <summary>
+            Return the object instances that match the given object
+            <see cref="T:System.Type"/> (including subclasses), judging from either object
+            definitions or the value of
+            <see cref="P:Spring.Objects.Factory.IFactoryObject.ObjectType"/> in the case of
+            <see cref="T:Spring.Objects.Factory.IFactoryObject"/>s.
+            </summary>
+            <typeparam name="T">
+            The <see cref="T:System.Type"/> (class or interface) to match.
+            </typeparam>
+            <param name="includePrototypes">
+              Whether to include prototype objects too or just singletons (also applies to
+              <see cref="T:Spring.Objects.Factory.IFactoryObject"/>s).
+            </param>
+            <param name="includeFactoryObjects">
+              Whether to include <see cref="T:Spring.Objects.Factory.IFactoryObject"/>s too
+              or just normal objects.
+            </param>
+            <returns>
+            A <see cref="T:System.Collections.IDictionary"/> of the matching objects,
+            containing the object names as keys and the corresponding object instances
+            as values.
+            </returns>
+            <exception cref="T:Spring.Objects.ObjectsException">
+            If the objects could not be created.
+            </exception>
+        </member>
+        <member name="M:Spring.Objects.Factory.Support.DefaultListableObjectFactory.GetObject``1">
+            <summary>
+            Return an instance (possibly shared or independent) of the given object name.
+            </summary>
+            <remarks>
+            <para>
+            This method allows an object factory to be used as a replacement for the
+            Singleton or Prototype design pattern.
+            </para>
+            <para>
+            Note that callers should retain references to returned objects. There is no
+            guarantee that this method will be implemented to be efficient. For example,
+            it may be synchronized, or may need to run an RDBMS query.
+            </para>
+            <para>
+            Will ask the parent factory if the object cannot be found in this factory
+            instance.
+            </para>
+            </remarks>
+            <typeparam name="T">The type of the object to return.</typeparam>
+            <returns>The instance of the object.</returns>
+            <exception cref="T:Spring.Objects.Factory.NoSuchObjectDefinitionException">
+            If there's no such object definition.
+            </exception>
+            <exception cref="T:Spring.Objects.Factory.ObjectDefinitionStoreException">
+            If there is more than a single object of the requested type defined in the factory.
+            </exception>
+            <exception cref="T:Spring.Objects.ObjectsException">
+            If the object could not be created.
+            </exception>
         </member>
         <member name="M:Spring.Objects.Factory.Support.DefaultListableObjectFactory.DoGetObjectNamesForType(System.Type,System.Boolean,System.Boolean)">
             <summary>
@@ -35468,11 +36302,64 @@
             Map from object name to object instance.
             </summary>
         </member>
+        <member name="M:Spring.Objects.Factory.Support.StaticListableObjectFactory.IsTypeMatch``1(System.String)">
+            <summary>
+            Determines whether the object with the given name matches the specified type.
+            </summary>
+            <remarks>More specifically, check whether a GetObject call for the given name
+            would return an object that is assignable to the specified target type.
+            Translates aliases back to the corresponding canonical bean name.
+            Will ask the parent factory if the bean cannot be found in this factory instance.
+            </remarks>
+            <param name="name">The name of the object to query.</param>
+            <typeparam name="T">Type of the target to match against.</typeparam>
+            <returns>
+            	<c>true</c> if the object type matches; otherwise, <c>false</c>
+            if it doesn't match or cannot be determined yet.
+            </returns>
+            <exception cref="T:Spring.Objects.Factory.NoSuchObjectDefinitionException">Ff there is no object with the given name
+            </exception>
+        </member>
         <member name="M:Spring.Objects.Factory.Support.StaticListableObjectFactory.CreateObject(System.String,System.Type,System.Object[])">
             <summary>
             This method is not supported by <see cref="T:Spring.Objects.Factory.Support.StaticListableObjectFactory"/>.
             </summary>
             <exception cref="T:System.NotSupportedException"/>
+        </member>
+        <member name="M:Spring.Objects.Factory.Support.StaticListableObjectFactory.CreateObject``1(System.String,System.Object[])">
+            <summary>
+            Return an unconfigured(!) instance (possibly shared or independent) of the given object name.
+            </summary>
+            <param name="name">The name of the object to return.</param>
+            <typeparam name="T">
+            The <see cref="T:System.Type"/> the object may match. Can be an interface or
+            superclass of the actual class. For example, if the value is the
+            <see cref="T:System.Object"/> class, this method will succeed whatever the
+            class of the returned instance.
+            </typeparam>
+            <param name="arguments">
+            The arguments to use if creating a prototype using explicit arguments to
+            a <see lang="static"/> factory method. If there is no factory method and the
+            supplied <paramref name="arguments"/> array is not <see lang="null"/>, then
+            match the argument values by type and call the object's constructor.
+            </param>
+            <returns>The unconfigured(!) instance of the object.</returns>
+            <exception cref="T:Spring.Objects.Factory.NoSuchObjectDefinitionException">
+            If there's no such object definition.
+            </exception>
+            <exception cref="T:Spring.Objects.ObjectsException">
+            If the object could not be created.
+            </exception>
+            <exception cref="T:Spring.Objects.Factory.ObjectNotOfRequiredTypeException">
+            If the object is not of the required type.
+            </exception>
+            <exception cref="T:System.ArgumentNullException">
+            If the supplied <paramref name="name"/> is <see langword="null"/>.
+            </exception>
+            <seealso cref="M:Spring.Objects.Factory.IObjectFactory.GetObject(System.String,System.Type,System.Object[])"/>
+            <remarks>
+             This method will only <b>instantiate</b> the requested object. It does <b>NOT</b> inject any dependencies!
+            </remarks>
         </member>
         <member name="M:Spring.Objects.Factory.Support.StaticListableObjectFactory.GetObject(System.String)">
             <summary>
@@ -35484,6 +36371,38 @@
             <see cref="T:Spring.Objects.Factory.Config.IConfigurableFactoryObject"/> is not currently supported.
             </exception>
             <seealso cref="M:Spring.Objects.Factory.IObjectFactory.GetObject(System.String)"/>
+        </member>
+        <member name="M:Spring.Objects.Factory.Support.StaticListableObjectFactory.GetObject``1(System.String)">
+            <summary>
+            Return an instance (possibly shared or independent) of the given object name.
+            </summary>
+            <remarks>
+            <para>
+            This method allows an object factory to be used as a replacement for the
+            Singleton or Prototype design pattern.
+            </para>
+            <para>
+            Note that callers should retain references to returned objects. There is no
+            guarantee that this method will be implemented to be efficient. For example,
+            it may be synchronized, or may need to run an RDBMS query.
+            </para>
+            <para>
+            Will ask the parent factory if the object cannot be found in this factory
+            instance.
+            </para>
+            </remarks>
+            <typeparam name="T">The type of the object to return.</typeparam>
+            <param name="name">The name of the object to return.</param>
+            <returns>The instance of the object.</returns>
+            <exception cref="T:Spring.Objects.Factory.NoSuchObjectDefinitionException">
+            If there's no such object definition.
+            </exception>
+            <exception cref="T:Spring.Objects.Factory.ObjectNotOfRequiredTypeException">
+            If the object is not of the required type.
+            </exception>
+            <exception cref="T:Spring.Objects.ObjectsException">
+            If the object could not be created.
+            </exception>
         </member>
         <member name="M:Spring.Objects.Factory.Support.StaticListableObjectFactory.GetObject(System.String,System.Object[])">
             <summary>
@@ -35517,6 +36436,46 @@
             </exception>
             <exception cref="T:Spring.Objects.ObjectsException">
             If the object could not be created.
+            </exception>
+            <exception cref="T:System.ArgumentNullException">
+            If the supplied <paramref name="name"/> is <see langword="null"/>.
+            </exception>
+        </member>
+        <member name="M:Spring.Objects.Factory.Support.StaticListableObjectFactory.GetObject``1(System.String,System.Object[])">
+            <summary>
+            Return an instance (possibly shared or independent) of the given object name.
+            </summary>
+            <remarks>
+            <para>
+            This method allows an object factory to be used as a replacement for the
+            Singleton or Prototype design pattern.
+            </para>
+            <para>
+            Note that callers should retain references to returned objects. There is no
+            guarantee that this method will be implemented to be efficient. For example,
+            it may be synchronized, or may need to run an RDBMS query.
+            </para>
+            <para>
+            Will ask the parent factory if the object cannot be found in this factory
+            instance.
+            </para>
+            </remarks>
+            <param name="name">The name of the object to return.</param>
+            <param name="arguments">
+            The arguments to use if creating a prototype using explicit arguments to
+            a static factory method. If there is no factory method and the
+            arguments are not null, then match the argument values by type and
+            call the object's constructor.
+            </param>
+            <returns>The instance of the object.</returns>
+            <exception cref="T:Spring.Objects.Factory.NoSuchObjectDefinitionException">
+            If there's no such object definition.
+            </exception>
+            <exception cref="T:Spring.Objects.ObjectsException">
+            If the object could not be created.
+            </exception>
+            <exception cref="T:Spring.Objects.Factory.ObjectNotOfRequiredTypeException">
+            If the object is not of the required type.
             </exception>
             <exception cref="T:System.ArgumentNullException">
             If the supplied <paramref name="name"/> is <see langword="null"/>.
@@ -35741,6 +36700,31 @@
             are defined.
             </returns>
         </member>
+        <member name="M:Spring.Objects.Factory.Support.StaticListableObjectFactory.GetObjectNames``1">
+            <summary>
+            Return the names of objects matching the given <see cref="T:System.Type"/>
+            (including subclasses), judging from the object definitions.
+            </summary>
+            <remarks>
+            <p>
+            Does consider objects created by <see cref="T:Spring.Objects.Factory.IFactoryObject"/>s,
+            or rather it considers the type of objects created by
+            <see cref="T:Spring.Objects.Factory.IFactoryObject"/> (which means that
+            <see cref="T:Spring.Objects.Factory.IFactoryObject"/>s will be instantiated).
+            </p>
+            <p>
+            Does not consider any hierarchy this factory may participate in.
+            </p>
+            </remarks>
+            <typeparam name="T">
+            The <see cref="T:System.Type"/> (class or interface) to match, or <see langword="null"/>
+            for all object names.
+            </typeparam>
+            <returns>
+            The names of all objects defined in this factory, or an empty array if none
+            are defined.
+            </returns>
+        </member>
         <member name="M:Spring.Objects.Factory.Support.StaticListableObjectFactory.GetObjectNamesForType(System.Type,System.Boolean,System.Boolean)">
             <summary>
             Return the names of objects matching the given <see cref="T:System.Type"/>
@@ -35771,6 +36755,43 @@
             are defined.
             </returns>
             <seealso cref="M:Spring.Objects.Factory.IListableObjectFactory.GetObjectNamesForType(System.Type,System.Boolean,System.Boolean)"/>
+        </member>
+        <member name="M:Spring.Objects.Factory.Support.StaticListableObjectFactory.GetObjectNames``1(System.Boolean,System.Boolean)">
+            <summary>
+            Return the names of objects matching the given <see cref="T:System.Type"/>
+            (including subclasses), judging from the object definitions.
+            </summary>
+            <remarks>
+            <p>
+            Does consider objects created by <see cref="T:Spring.Objects.Factory.IFactoryObject"/>s,
+            or rather it considers the type of objects created by
+            <see cref="T:Spring.Objects.Factory.IFactoryObject"/> (which means that
+            <see cref="T:Spring.Objects.Factory.IFactoryObject"/>s will be instantiated).
+            </p>
+            <p>
+            Does not consider any hierarchy this factory may participate in.
+            Use <see cref="M:Spring.Objects.Factory.ObjectFactoryUtils.ObjectNamesForTypeIncludingAncestors(Spring.Objects.Factory.IListableObjectFactory,System.Type,System.Boolean,System.Boolean)"/>
+            to include beans in ancestor factories too.
+            &lt;p&gt;Note: Does &lt;i&gt;not&lt;/i&gt; ignore singleton objects that have been registered
+            by other means than bean definitions.
+            </p>
+            </remarks>
+            <typeparam name="T">
+            The <see cref="T:System.Type"/> (class or interface) to match, or <see langword="null"/>
+            for all object names.
+            </typeparam>
+            <param name="includePrototypes">
+            Whether to include prototype objects too or just singletons (also applies to
+            <see cref="T:Spring.Objects.Factory.IFactoryObject"/>s).
+            </param>
+            <param name="includeFactoryObjects">
+            Whether to include <see cref="T:Spring.Objects.Factory.IFactoryObject"/>s too
+            or just normal objects.
+            </param>
+            <returns>
+            The names of all objects defined in this factory, or an empty array if none
+            are defined.
+            </returns>
         </member>
         <member name="M:Spring.Objects.Factory.Support.StaticListableObjectFactory.ContainsObjectDefinition(System.String)">
             <summary>
@@ -35811,6 +36832,35 @@
             If the objects could not be created.
             </exception>
         </member>
+        <member name="M:Spring.Objects.Factory.Support.StaticListableObjectFactory.GetObjects``1">
+            <summary>
+            Return the object instances that match the given object
+            <see cref="T:System.Type"/> (including subclasses), judging from either object
+            definitions or the value of
+            <see cref="P:Spring.Objects.Factory.IFactoryObject.ObjectType"/> in the case of
+            <see cref="T:Spring.Objects.Factory.IFactoryObject"/>s.
+            </summary>
+            <remarks>
+            <p>
+            This version of the <see cref="M:Spring.Objects.Factory.IListableObjectFactory.GetObjectsOfType(System.Type,System.Boolean,System.Boolean)"/>
+            method matches all kinds of object definitions, be they singletons, prototypes, or
+            <see cref="T:Spring.Objects.Factory.IFactoryObject"/>s. Typically, the results
+            of this method call will be the same as a call to
+            <code>IListableObjectFactory.GetObjectsOfType(type,true,true)</code> .
+            </p>
+            </remarks>
+            <typeparam name="T">
+            The <see cref="T:System.Type"/> (class or interface) to match.
+            </typeparam>
+            <returns>
+            A <see cref="T:System.Collections.IDictionary"/> of the matching objects,
+            containing the object names as keys and the corresponding object instances
+            as values.
+            </returns>
+            <exception cref="T:Spring.Objects.ObjectsException">
+            If the objects could not be created.
+            </exception>
+        </member>
         <member name="M:Spring.Objects.Factory.Support.StaticListableObjectFactory.GetObjectsOfType(System.Type,System.Boolean,System.Boolean)">
             <summary>
             Return the object instances that match the given object
@@ -35837,6 +36887,65 @@
             </returns>
             <exception cref="T:Spring.Objects.ObjectsException">
             If the objects could not be created.
+            </exception>
+        </member>
+        <member name="M:Spring.Objects.Factory.Support.StaticListableObjectFactory.GetObjects``1(System.Boolean,System.Boolean)">
+            <summary>
+            Return the object instances that match the given object
+            <see cref="T:System.Type"/> (including subclasses), judging from either object
+            definitions or the value of
+            <see cref="P:Spring.Objects.Factory.IFactoryObject.ObjectType"/> in the case of
+            <see cref="T:Spring.Objects.Factory.IFactoryObject"/>s.
+            </summary>
+            <typeparam name="T">
+            The <see cref="T:System.Type"/> (class or interface) to match.
+            </typeparam>
+            <param name="includePrototypes">
+              Whether to include prototype objects too or just singletons (also applies to
+              <see cref="T:Spring.Objects.Factory.IFactoryObject"/>s).
+            </param>
+            <param name="includeFactoryObjects">
+              Whether to include <see cref="T:Spring.Objects.Factory.IFactoryObject"/>s too
+              or just normal objects.
+            </param>
+            <returns>
+            A <see cref="T:System.Collections.IDictionary"/> of the matching objects,
+            containing the object names as keys and the corresponding object instances
+            as values.
+            </returns>
+            <exception cref="T:Spring.Objects.ObjectsException">
+            If the objects could not be created.
+            </exception>
+        </member>
+        <member name="M:Spring.Objects.Factory.Support.StaticListableObjectFactory.GetObject``1">
+            <summary>
+            Return an instance (possibly shared or independent) of the given object name.
+            </summary>
+            <remarks>
+            <para>
+            This method allows an object factory to be used as a replacement for the
+            Singleton or Prototype design pattern.
+            </para>
+            <para>
+            Note that callers should retain references to returned objects. There is no
+            guarantee that this method will be implemented to be efficient. For example,
+            it may be synchronized, or may need to run an RDBMS query.
+            </para>
+            <para>
+            Will ask the parent factory if the object cannot be found in this factory
+            instance.
+            </para>
+            </remarks>
+            <typeparam name="T">The type of the object to return.</typeparam>
+            <returns>The instance of the object.</returns>
+            <exception cref="T:Spring.Objects.Factory.NoSuchObjectDefinitionException">
+            If there's no such object definition.
+            </exception>
+            <exception cref="T:Spring.Objects.Factory.ObjectDefinitionStoreException">
+            If there is more than a single object of the requested type defined in the factory.
+            </exception>
+            <exception cref="T:Spring.Objects.ObjectsException">
+            If the object could not be created.
             </exception>
         </member>
         <member name="M:Spring.Objects.Factory.Support.StaticListableObjectFactory.AddObject(System.String,System.Object)">
@@ -37568,7 +38677,7 @@
             </para>
             </remarks>
         </member>
-        <member name="M:Spring.Objects.Factory.Xml.ObjectDefinitionParserHelper.CreateObjectDefinitionHolder(System.Xml.XmlElement,Spring.Objects.Factory.Support.IConfigurableObjectDefinition,System.String,System.String[])">
+        <member name="M:Spring.Objects.Factory.Xml.ObjectDefinitionParserHelper.CreateObjectDefinitionHolder(System.Xml.XmlElement,Spring.Objects.Factory.Support.IConfigurableObjectDefinition,System.String,System.Collections.Generic.IList{System.String})">
             <summary>
             Create an <see cref="T:Spring.Objects.Factory.Config.ObjectDefinitionHolder"/> instance from the given <paramref name="definition"/> and <paramref name="objectName"/>.
             </summary>
@@ -37576,7 +38685,7 @@
             This method may be used as a last resort to post-process an object definition before it gets added to the registry.
             </remarks>
         </member>
-        <member name="M:Spring.Objects.Factory.Xml.ObjectDefinitionParserHelper.PostProcessObjectNameAndAliases(System.String,System.Collections.ArrayList,System.Xml.XmlElement,Spring.Objects.Factory.Config.IObjectDefinition)">
+        <member name="M:Spring.Objects.Factory.Xml.ObjectDefinitionParserHelper.PostProcessObjectNameAndAliases(System.String,System.Collections.Generic.List{System.String},System.Xml.XmlElement,Spring.Objects.Factory.Config.IObjectDefinition)">
             <summary>
             Allows deriving classes to post process the name and aliases for the current element. By default
             does nothing and returns the unmodified <paramref name="objectName"/>.
@@ -37590,7 +38699,7 @@
             <param name="containingDefinition">the containing object definition, may be <c>null</c></param>
             <returns>the new object name to be used.</returns>
         </member>
-        <member name="M:Spring.Objects.Factory.Xml.ObjectDefinitionParserHelper.CheckNameUniqueness(System.String,System.Collections.ArrayList,System.Xml.XmlElement)">
+        <member name="M:Spring.Objects.Factory.Xml.ObjectDefinitionParserHelper.CheckNameUniqueness(System.String,System.Collections.Generic.List{System.String},System.Xml.XmlElement)">
             <summary>
             Validate that the specified object name and aliases have not been used already.
             </summary>
@@ -37906,7 +39015,7 @@
             </p>
             </remarks>
         </member>
-        <member name="M:Spring.Objects.Factory.Xml.ObjectsNamespaceParser.CalculateId(System.Xml.XmlElement,System.Collections.ArrayList)">
+        <member name="M:Spring.Objects.Factory.Xml.ObjectsNamespaceParser.CalculateId(System.Xml.XmlElement,System.Collections.Generic.List{System.String})">
             <summary>
             Calculates an id for an object definition.
             </summary>
@@ -40847,8 +41956,8 @@
             <see cref="T:Spring.Objects.PropertyValue"/>s can be added with the various
             overloaded <see cref="M:Spring.Objects.MutablePropertyValues.Add(Spring.Objects.PropertyValue)"/>,
             <see cref="M:Spring.Objects.MutablePropertyValues.Add(System.String,System.Object)"/>,
-            <see cref="M:Spring.Objects.MutablePropertyValues.AddAll(System.Collections.IDictionary)"/>,
-            and <see cref="M:Spring.Objects.MutablePropertyValues.AddAll(System.Collections.IList)"/>
+            <see cref="M:Spring.Objects.MutablePropertyValues.AddAll(System.Collections.Generic.IDictionary{System.String,System.Object})"/>,
+            and <see cref="M:Spring.Objects.MutablePropertyValues.AddAll(System.Collections.Generic.IList{Spring.Objects.PropertyValue})"/>
             methods.
             </p>
             </remarks>
@@ -40868,7 +41977,7 @@
             </p>
             </remarks>
         </member>
-        <member name="M:Spring.Objects.MutablePropertyValues.#ctor(System.Collections.IDictionary)">
+        <member name="M:Spring.Objects.MutablePropertyValues.#ctor(System.Collections.Generic.IDictionary{System.String,System.Object})">
             <summary>
             Creates a new instance of the <see cref="T:Spring.Objects.MutablePropertyValues"/>
             class.
@@ -40908,7 +42017,7 @@
             <param name="currentPv">The current pv.</param>
             <returns>The possibly merged PropertyValue</returns>
         </member>
-        <member name="M:Spring.Objects.MutablePropertyValues.AddAll(System.Collections.IDictionary)">
+        <member name="M:Spring.Objects.MutablePropertyValues.AddAll(System.Collections.Generic.IDictionary{System.String,System.Object})">
             <summary>
             Add all property values from the given
             <see cref="T:System.Collections.IDictionary"/>.
@@ -40918,7 +42027,7 @@
             <see cref="T:System.String"/>s.
             </param>
         </member>
-        <member name="M:Spring.Objects.MutablePropertyValues.AddAll(System.Collections.IList)">
+        <member name="M:Spring.Objects.MutablePropertyValues.AddAll(System.Collections.Generic.IList{Spring.Objects.PropertyValue})">
             <summary>
             Add all property values from the given
             <see cref="T:System.Collections.IList"/>.
@@ -42552,7 +43661,7 @@
             otherwise <see langword="false"/>.
             </param>
         </member>
-        <member name="M:Spring.Proxy.AbstractProxyTypeBuilder.ImplementProperty(System.Reflection.Emit.TypeBuilder,System.Type,System.Reflection.PropertyInfo,System.Collections.IDictionary)">
+        <member name="M:Spring.Proxy.AbstractProxyTypeBuilder.ImplementProperty(System.Reflection.Emit.TypeBuilder,System.Type,System.Reflection.PropertyInfo,System.Collections.Generic.IDictionary{System.String,System.Reflection.Emit.MethodBuilder})">
             <summary>
             Implements the specified <paramref name="property"/>.
             </summary>
@@ -42561,7 +43670,7 @@
             <param name="property">The property to proxy.</param>
             <param name="methodMap">The implemented methods map.</param>
         </member>
-        <member name="M:Spring.Proxy.AbstractProxyTypeBuilder.ImplementEvent(System.Reflection.Emit.TypeBuilder,System.Type,System.Reflection.EventInfo,System.Collections.IDictionary)">
+        <member name="M:Spring.Proxy.AbstractProxyTypeBuilder.ImplementEvent(System.Reflection.Emit.TypeBuilder,System.Type,System.Reflection.EventInfo,System.Collections.Generic.IDictionary{System.String,System.Reflection.Emit.MethodBuilder})">
             <summary>
             Implements the specified event.
             </summary>
@@ -42570,7 +43679,7 @@
             <param name="evt">The event to proxy.</param>
             <param name="methodMap">The implemented methods map.</param>
         </member>
-        <member name="M:Spring.Proxy.AbstractProxyTypeBuilder.GetProxiableInterfaces(System.Type[])">
+        <member name="M:Spring.Proxy.AbstractProxyTypeBuilder.GetProxiableInterfaces(System.Collections.Generic.IList{System.Type})">
             <summary>
             Returns an array of <see cref="T:System.Type"/>s that represent 
             the proxiable interfaces.
@@ -46423,6 +47532,30 @@
             <returns>The target method.</returns>
             <seealso cref="M:Spring.Util.ReflectionUtils.MapInterfaceMethodToImplementationIfNecessary(System.Reflection.MethodInfo,System.Type)"/>
         </member>
+        <member name="M:Spring.Util.ReflectionUtils.GetMethod(System.Type,System.String,System.Type[],System.Int32)">
+            <summary>
+            Returns method for the specified <see cref="T:System.Type"/>, method
+            name and argument
+            <see cref="T:System.Type"/>s.
+            </summary>
+            <remarks>
+            <para>Searches with BindingFlags</para>
+            <para>When dealing with interface methods, you probable want to 'normalize' method references by calling 
+            <see cref="M:Spring.Util.ReflectionUtils.MapInterfaceMethodToImplementationIfNecessary(System.Reflection.MethodInfo,System.Type)"/>. 
+            </para>
+            </remarks>
+            <param name="targetType">
+            The target <see cref="T:System.Type"/> to find the method on.
+            </param>
+            <param name="method">The method to find.</param>
+            <param name="argumentTypes">
+            The argument <see cref="T:System.Type"/>s. May be
+            <see langword="null"/> if the method has no arguments.
+            </param>
+            <param name="genericArgumentsCount">Number of Generic Arguments in the method</param>
+            <returns>The target method.</returns>
+            <seealso cref="M:Spring.Util.ReflectionUtils.MapInterfaceMethodToImplementationIfNecessary(System.Reflection.MethodInfo,System.Type)"/>
+        </member>
         <member name="M:Spring.Util.ReflectionUtils.MapInterfaceMethodToImplementationIfNecessary(System.Reflection.MethodInfo,System.Type)">
             <summary>
             Resolves a given <paramref name="methodInfo"/> to the <see cref="T:System.Reflection.MethodInfo"/> representing the actual implementation.
@@ -46480,7 +47613,7 @@
             elements <paramref name="args"/> is <see langword="null"/>.
             </exception>
         </member>
-        <member name="M:Spring.Util.ReflectionUtils.GetMethodByArgumentValues(System.Reflection.MethodInfo[],System.Object[])">
+        <member name="M:Spring.Util.ReflectionUtils.GetMethodByArgumentValues``1(System.Collections.Generic.IEnumerable{``0},System.Object[])">
             <summary>
             From a given list of methods, selects the method having an exact match on the given <paramref name="argValues"/>' types.
             </summary>
@@ -46491,7 +47624,7 @@
             If more than 1 matching methods are found in the <paramref name="methods"/> list.
             </exception>
         </member>
-        <member name="M:Spring.Util.ReflectionUtils.GetMethodBaseByArgumentValues(System.String,System.Reflection.MethodBase[],System.Object[])">
+        <member name="M:Spring.Util.ReflectionUtils.GetMethodBaseByArgumentValues``1(System.String,System.Collections.Generic.IEnumerable{``0},System.Object[])">
             <summary>
             From a given list of methods, selects the method having an exact match on the given <paramref name="argValues"/>' types.
             </summary>
@@ -46503,7 +47636,7 @@
             If more than 1 matching methods are found in the <paramref name="methods"/> list.
             </exception>
         </member>
-        <member name="M:Spring.Util.ReflectionUtils.GetConstructorByArgumentValues(System.Reflection.ConstructorInfo[],System.Object[])">
+        <member name="M:Spring.Util.ReflectionUtils.GetConstructorByArgumentValues``1(System.Collections.Generic.IList{``0},System.Object[])">
             <summary>
             From a given list of constructors, selects the constructor having an exact match on the given <paramref name="argValues"/>' types.
             </summary>
@@ -47140,7 +48273,7 @@
             An array of the tokens in the list.
             </returns>
         </member>
-        <member name="M:Spring.Util.StringUtils.CollectionToDelimitedString(System.Collections.ICollection,System.String)">
+        <member name="M:Spring.Util.StringUtils.CollectionToDelimitedString``1(System.Collections.Generic.IEnumerable{``0},System.String)">
             <summary>
             Convenience method to return an
             <see cref="T:System.Collections.ICollection"/> as a delimited
@@ -47154,7 +48287,7 @@
             </param>
             <returns>The delimited string representation.</returns>
         </member>
-        <member name="M:Spring.Util.StringUtils.CollectionToCommaDelimitedString(System.Collections.ICollection)">
+        <member name="M:Spring.Util.StringUtils.CollectionToCommaDelimitedString``1(System.Collections.Generic.IEnumerable{``0})">
             <summary>
             Convenience method to return an
             <see cref="T:System.Collections.ICollection"/> as a CSV
@@ -47165,7 +48298,7 @@
             </param>
             <returns>The delimited string representation.</returns>
         </member>
-        <member name="M:Spring.Util.StringUtils.ArrayToCommaDelimitedString(System.Object[])">
+        <member name="M:Spring.Util.StringUtils.ArrayToCommaDelimitedString``1(System.Collections.Generic.IEnumerable{``0})">
             <summary>
             Convenience method to return an array as a CSV
             <see cref="T:System.String"/>.
@@ -47176,7 +48309,7 @@
             element).
             </param>
         </member>
-        <member name="M:Spring.Util.StringUtils.ArrayToDelimitedString(System.Object[],System.String)">
+        <member name="M:Spring.Util.StringUtils.ArrayToDelimitedString``1(System.Collections.Generic.IEnumerable{``0},System.String)">
             <summary>
             Convenience method to return a <see cref="T:System.String"/>
             array as a delimited (e.g. CSV) <see cref="T:System.String"/>.
@@ -47606,7 +48739,7 @@
             </remarks>
             <author>Aleksandar Seovic</author>
         </member>
-        <member name="M:Spring.Validation.IValidationAction.Execute(System.Boolean,System.Object,System.Collections.IDictionary,Spring.Validation.IValidationErrors)">
+        <member name="M:Spring.Validation.IValidationAction.Execute(System.Boolean,System.Object,System.Collections.Generic.IDictionary{System.String,System.Object},Spring.Validation.IValidationErrors)">
             <summary>
             Executes the action.
             </summary>
@@ -47620,7 +48753,7 @@
             Initializes a new instance of the <see cref="T:Spring.Validation.BaseValidationAction"/> class.
             </summary>
         </member>
-        <member name="M:Spring.Validation.BaseValidationAction.Execute(System.Boolean,System.Object,System.Collections.IDictionary,Spring.Validation.IValidationErrors)">
+        <member name="M:Spring.Validation.BaseValidationAction.Execute(System.Boolean,System.Object,System.Collections.Generic.IDictionary{System.String,System.Object},Spring.Validation.IValidationErrors)">
             <summary>
             Executes the action.
             </summary>
@@ -47629,7 +48762,7 @@
             <param name="contextParams">Additional context parameters.</param>
             <param name="errors">Validation errors container.</param>
         </member>
-        <member name="M:Spring.Validation.BaseValidationAction.OnValid(System.Object,System.Collections.IDictionary,Spring.Validation.IValidationErrors)">
+        <member name="M:Spring.Validation.BaseValidationAction.OnValid(System.Object,System.Collections.Generic.IDictionary{System.String,System.Object},Spring.Validation.IValidationErrors)">
             <summary>
             Called when associated validator is valid.
             </summary>
@@ -47637,7 +48770,7 @@
             <param name="contextParams">Additional context parameters.</param>
             <param name="errors">Validation errors container.</param>
         </member>
-        <member name="M:Spring.Validation.BaseValidationAction.OnInvalid(System.Object,System.Collections.IDictionary,Spring.Validation.IValidationErrors)">
+        <member name="M:Spring.Validation.BaseValidationAction.OnInvalid(System.Object,System.Collections.Generic.IDictionary{System.String,System.Object},Spring.Validation.IValidationErrors)">
             <summary>
             Called when associated validator is not valid.
             </summary>
@@ -47645,7 +48778,7 @@
             <param name="contextParams">Additional context parameters.</param>
             <param name="errors">Validation errors container.</param>
         </member>
-        <member name="M:Spring.Validation.BaseValidationAction.EvaluateWhen(System.Object,System.Collections.IDictionary)">
+        <member name="M:Spring.Validation.BaseValidationAction.EvaluateWhen(System.Object,System.Collections.Generic.IDictionary{System.String,System.Object})">
             <summary>
             Evaluates 'when' expression.
             </summary>
@@ -47666,7 +48799,7 @@
             <param name="messageId">Error message resource identifier.</param>
             <param name="providers">Names of the error providers this message should be added to.</param>
         </member>
-        <member name="M:Spring.Validation.Actions.ErrorMessageAction.OnInvalid(System.Object,System.Collections.IDictionary,Spring.Validation.IValidationErrors)">
+        <member name="M:Spring.Validation.Actions.ErrorMessageAction.OnInvalid(System.Object,System.Collections.Generic.IDictionary{System.String,System.Object},Spring.Validation.IValidationErrors)">
             <summary>
             Called when associated validator is invalid.
             </summary>
@@ -47674,7 +48807,7 @@
             <param name="contextParams">Additional context parameters.</param>
             <param name="errors">Validation errors container.</param>
         </member>
-        <member name="M:Spring.Validation.Actions.ErrorMessageAction.CreateErrorMessage(System.Object,System.Collections.IDictionary)">
+        <member name="M:Spring.Validation.Actions.ErrorMessageAction.CreateErrorMessage(System.Object,System.Collections.Generic.IDictionary{System.String,System.Object})">
             <summary>
             Resolves the error message.
             </summary>
@@ -47682,7 +48815,7 @@
             <param name="contextParams">Additional context parameters.</param>
             <returns>Resolved error message</returns>
         </member>
-        <member name="M:Spring.Validation.Actions.ErrorMessageAction.ResolveMessageParameters(System.Collections.IList,System.Object,System.Collections.IDictionary)">
+        <member name="M:Spring.Validation.Actions.ErrorMessageAction.ResolveMessageParameters(System.Collections.IList,System.Object,System.Collections.Generic.IDictionary{System.String,System.Object})">
             <summary>
             Resolves the message parameters.
             </summary>
@@ -47714,7 +48847,7 @@
             that defines the exception to throw. 
             </summary>
         </member>
-        <member name="M:Spring.Validation.Actions.ExceptionAction.OnInvalid(System.Object,System.Collections.IDictionary,Spring.Validation.IValidationErrors)">
+        <member name="M:Spring.Validation.Actions.ExceptionAction.OnInvalid(System.Object,System.Collections.Generic.IDictionary{System.String,System.Object},Spring.Validation.IValidationErrors)">
             <summary>
             Called when associated validator is invalid.
             </summary>
@@ -47755,7 +48888,7 @@
             <param name="onValid">Expression to execute when validator is valid.</param>
             <param name="onInvalid">Expression to execute when validator is not valid.</param>
         </member>
-        <member name="M:Spring.Validation.Actions.ExpressionAction.OnValid(System.Object,System.Collections.IDictionary,Spring.Validation.IValidationErrors)">
+        <member name="M:Spring.Validation.Actions.ExpressionAction.OnValid(System.Object,System.Collections.Generic.IDictionary{System.String,System.Object},Spring.Validation.IValidationErrors)">
             <summary>
             Called when associated validator is valid.
             </summary>
@@ -47763,7 +48896,7 @@
             <param name="contextParams">Additional context parameters.</param>
             <param name="errors">Validation errors container.</param>
         </member>
-        <member name="M:Spring.Validation.Actions.ExpressionAction.OnInvalid(System.Object,System.Collections.IDictionary,Spring.Validation.IValidationErrors)">
+        <member name="M:Spring.Validation.Actions.ExpressionAction.OnInvalid(System.Object,System.Collections.Generic.IDictionary{System.String,System.Object},Spring.Validation.IValidationErrors)">
             <summary>
             Called when associated validator is invalid.
             </summary>
@@ -47944,15 +49077,15 @@
             <see lang="true"/> if validation was successful.
             </returns>
         </member>
-        <member name="M:Spring.Validation.IValidator.Validate(System.Object,System.Collections.IDictionary,Spring.Validation.IValidationErrors)">
+        <member name="M:Spring.Validation.IValidator.Validate(System.Object,System.Collections.Generic.IDictionary{System.String,System.Object},Spring.Validation.IValidationErrors)">
             <summary>
             Validates the specified object.
             </summary>
             <param name="validationContext">The object to validate.</param>
             <param name="contextParams">Additional context parameters.</param>
             <param name="errors">
-            The <see cref="T:Spring.Validation.ValidationErrors"/> instance to add any error
-            messages to in the case of validation failure.
+              The <see cref="T:Spring.Validation.ValidationErrors"/> instance to add any error
+              messages to in the case of validation failure.
             </param>
             <returns>
             <see lang="true"/> if validation was successful.
@@ -47983,7 +49116,7 @@
             <param name="errors"><see cref="T:Spring.Validation.ValidationErrors"/> instance to add error messages to.</param>
             <returns><c>True</c> if validation was successful, <c>False</c> otherwise.</returns>
         </member>
-        <member name="M:Spring.Validation.BaseValidator.Validate(System.Object,System.Collections.IDictionary,Spring.Validation.IValidationErrors)">
+        <member name="M:Spring.Validation.BaseValidator.Validate(System.Object,System.Collections.Generic.IDictionary{System.String,System.Object},Spring.Validation.IValidationErrors)">
             <summary>
             Validates the specified object.
             </summary>
@@ -47992,7 +49125,7 @@
             <param name="errors"><see cref="T:Spring.Validation.ValidationErrors"/> instance to add error messages to.</param>
             <returns><c>True</c> if validation was successful, <c>False</c> otherwise.</returns>
         </member>
-        <member name="M:Spring.Validation.BaseValidator.EvaluateWhen(System.Object,System.Collections.IDictionary)">
+        <member name="M:Spring.Validation.BaseValidator.EvaluateWhen(System.Object,System.Collections.Generic.IDictionary{System.String,System.Object})">
             <summary>
             Evaluates when expression.
             </summary>
@@ -48000,7 +49133,7 @@
             <param name="contextParams">Additional context parameters.</param>
             <returns><c>True</c> if the condition is true, <c>False</c> otherwise.</returns>
         </member>
-        <member name="M:Spring.Validation.BaseValidator.ProcessActions(System.Boolean,System.Object,System.Collections.IDictionary,Spring.Validation.IValidationErrors)">
+        <member name="M:Spring.Validation.BaseValidator.ProcessActions(System.Boolean,System.Object,System.Collections.Generic.IDictionary{System.String,System.Object},Spring.Validation.IValidationErrors)">
             <summary>
             Processes the error messages.
             </summary>
@@ -48041,7 +49174,7 @@
             <param name="test">The expression to validate.</param>
             <param name="when">The expression that determines if this validator should be evaluated.</param>
         </member>
-        <member name="M:Spring.Validation.BaseSimpleValidator.Validate(System.Object,System.Collections.IDictionary,Spring.Validation.IValidationErrors)">
+        <member name="M:Spring.Validation.BaseSimpleValidator.Validate(System.Object,System.Collections.Generic.IDictionary{System.String,System.Object},Spring.Validation.IValidationErrors)">
             <summary>
             Validates the specified object.
             </summary>
@@ -48057,7 +49190,7 @@
             <param name="objectToValidate">Object to validate.</param>
             <returns><c>True</c> if specified object is valid, <c>False</c> otherwise.</returns>
         </member>
-        <member name="M:Spring.Validation.BaseSimpleValidator.EvaluateTest(System.Object,System.Collections.IDictionary)">
+        <member name="M:Spring.Validation.BaseSimpleValidator.EvaluateTest(System.Object,System.Collections.Generic.IDictionary{System.String,System.Object})">
             <summary>
             Evaluates test expression.
             </summary>
@@ -48607,7 +49740,7 @@
             </summary>
             <param name="when">The expression that determines if this validator should be evaluated.</param>
         </member>
-        <member name="M:Spring.Validation.BaseValidatorGroup.Validate(System.Object,System.Collections.IDictionary,Spring.Validation.IValidationErrors)">
+        <member name="M:Spring.Validation.BaseValidatorGroup.Validate(System.Object,System.Collections.Generic.IDictionary{System.String,System.Object},Spring.Validation.IValidationErrors)">
             <summary>
             Validates the specified object.
             </summary>
@@ -48616,13 +49749,13 @@
             <param name="errors"><see cref="T:Spring.Validation.ValidationErrors"/> instance to add error messages to.</param>
             <returns><c>True</c> if validation was successful, <c>False</c> otherwise.</returns>
         </member>
-        <member name="M:Spring.Validation.BaseValidatorGroup.ValidateGroup(System.Collections.IDictionary,Spring.Validation.IValidationErrors,System.Object)">
+        <member name="M:Spring.Validation.BaseValidatorGroup.ValidateGroup(System.Collections.Generic.IDictionary{System.String,System.Object},Spring.Validation.IValidationErrors,System.Object)">
             <summary>
             Actual implementation how to validate the specified object.
             </summary>
-            <param name="validationContext">The object to validate.</param>
             <param name="contextParams">Additional context parameters.</param>
             <param name="errors"><see cref="T:Spring.Validation.ValidationErrors"/> instance to add error messages to.</param>
+            <param name="validationContext">The object to validate.</param>
             <returns><c>True</c> if validation was successful, <c>False</c> otherwise.</returns>
         </member>
         <member name="P:Spring.Validation.BaseValidatorGroup.Validators">
@@ -48659,13 +49792,13 @@
             </summary>
             <param name="when">The expression that determines if this validator should be evaluated.</param>
         </member>
-        <member name="M:Spring.Validation.AnyValidatorGroup.ValidateGroup(System.Collections.IDictionary,Spring.Validation.IValidationErrors,System.Object)">
+        <member name="M:Spring.Validation.AnyValidatorGroup.ValidateGroup(System.Collections.Generic.IDictionary{System.String,System.Object},Spring.Validation.IValidationErrors,System.Object)">
             <summary>
             Validates the specified object.
             </summary>
-            <param name="validationContext">The object to validate.</param>
             <param name="contextParams">Additional context parameters.</param>
             <param name="errors"><see cref="T:Spring.Validation.ValidationErrors"/> instance to add error messages to.</param>
+            <param name="validationContext">The object to validate.</param>
             <returns><c>True</c> if validation was successful, <c>False</c> otherwise.</returns>
         </member>
         <member name="T:Spring.Validation.CollectionValidator">
@@ -48729,7 +49862,7 @@
             <param name="includeElementErrors">The bool that determines whether Validate method should collect 
             all error messages returned by the item validators</param>
         </member>
-        <member name="M:Spring.Validation.CollectionValidator.Validate(System.Object,System.Collections.IDictionary,Spring.Validation.IValidationErrors)">
+        <member name="M:Spring.Validation.CollectionValidator.Validate(System.Object,System.Collections.Generic.IDictionary{System.String,System.Object},Spring.Validation.IValidationErrors)">
             <summary>
             Validates the specified collection of objects.
             If the <c>IncludeElementErrors</c> property was set to <c>true</c>, 
@@ -48742,13 +49875,13 @@
             <param name="errors"><see cref="T:Spring.Validation.ValidationErrors"/> instance to add error messages to.</param>
             <returns><c>True</c> if validation was successful, <c>False</c> otherwise.</returns>
         </member>
-        <member name="M:Spring.Validation.CollectionValidator.ValidateGroup(System.Collections.IDictionary,Spring.Validation.IValidationErrors,System.Object)">
+        <member name="M:Spring.Validation.CollectionValidator.ValidateGroup(System.Collections.Generic.IDictionary{System.String,System.Object},Spring.Validation.IValidationErrors,System.Object)">
             <summary>
             Actual implementation how to validate the specified object.
             </summary>
-            <param name="validationContext">The object to validate.</param>
             <param name="contextParams">Additional context parameters.</param>
             <param name="errors"><see cref="T:Spring.Validation.ValidationErrors"/> instance to add error messages to.</param>
+            <param name="validationContext">The object to validate.</param>
             <returns><c>True</c> if validation was successful, <c>False</c> otherwise.</returns>
         </member>
         <member name="P:Spring.Validation.CollectionValidator.ValidateAll">
@@ -48807,13 +49940,13 @@
             </summary>
             <param name="when">The expression that determines if this validator should be evaluated.</param>
         </member>
-        <member name="M:Spring.Validation.ExclusiveValidatorGroup.ValidateGroup(System.Collections.IDictionary,Spring.Validation.IValidationErrors,System.Object)">
+        <member name="M:Spring.Validation.ExclusiveValidatorGroup.ValidateGroup(System.Collections.Generic.IDictionary{System.String,System.Object},Spring.Validation.IValidationErrors,System.Object)">
             <summary>
             Actual implementation how to validate the specified object.
             </summary>
-            <param name="validationContext">The object to validate.</param>
             <param name="contextParams">Additional context parameters.</param>
             <param name="errors"><see cref="T:Spring.Validation.ValidationErrors"/> instance to add error messages to.</param>
+            <param name="validationContext">The object to validate.</param>
             <returns><c>True</c> if validation was successful, <c>False</c> otherwise.</returns>
         </member>
         <member name="T:Spring.Validation.IValidationErrors">
@@ -49185,13 +50318,13 @@
             </summary>
             <param name="when">The expression that determines if this validator should be evaluated.</param>
         </member>
-        <member name="M:Spring.Validation.ValidatorGroup.ValidateGroup(System.Collections.IDictionary,Spring.Validation.IValidationErrors,System.Object)">
+        <member name="M:Spring.Validation.ValidatorGroup.ValidateGroup(System.Collections.Generic.IDictionary{System.String,System.Object},Spring.Validation.IValidationErrors,System.Object)">
             <summary>
             Actual implementation how to validate the specified object.
             </summary>
-            <param name="validationContext">The object to validate.</param>
             <param name="contextParams">Additional context parameters.</param>
             <param name="errors"><see cref="T:Spring.Validation.ValidationErrors"/> instance to add error messages to.</param>
+            <param name="validationContext">The object to validate.</param>
             <returns><c>True</c> if validation was successful, <c>False</c> otherwise.</returns>
         </member>
         <member name="T:Spring.Validation.ValidatorReference">
@@ -49239,7 +50372,7 @@
             <param name="errors"><see cref="T:Spring.Validation.ValidationErrors"/> instance to add error messages to.</param>
             <returns><c>True</c> if validation was successful, <c>False</c> otherwise.</returns>
         </member>
-        <member name="M:Spring.Validation.ValidatorReference.Validate(System.Object,System.Collections.IDictionary,Spring.Validation.IValidationErrors)">
+        <member name="M:Spring.Validation.ValidatorReference.Validate(System.Object,System.Collections.Generic.IDictionary{System.String,System.Object},Spring.Validation.IValidationErrors)">
             <summary>
             Validates the specified object.
             </summary>

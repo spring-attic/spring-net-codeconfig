@@ -53,8 +53,7 @@ namespace Spring.Context.Attributes
         public void Can_Ignore_Abstract_Configuration_Types()
         {
             ScanForAndRegisterSingleType(typeof(ConfigurationClassThatIsAbstract));
-            Assert.That(_context.GetObjectNamesForType(typeof(ConfigurationClassThatIsAbstract)).Length, Is.EqualTo(0),
-                        "Abstract Type erroneously registered with the Context.");
+            Assert.That(_context.GetObjectNamesForType(typeof(ConfigurationClassThatIsAbstract)).Count, Is.EqualTo(0), "Abstract Type erroneously registered with the Context.");
         }
 
         [Test]

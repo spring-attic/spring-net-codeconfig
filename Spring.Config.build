@@ -1,214 +1,190 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <project name="Spring.Config" default="test">
 
-    <property name="root.dir" value="${project::get-base-directory()}" overwrite="false" />
-    <property name="deploy.dir" value="${root.dir}\deploy" />
-    <property name="build.dir" value="${root.dir}\build" />
-    <property name="tool.dir" value="${root.dir}\tools" />
-    <property name="lib.dir" value="${root.dir}\lib" />
-    <property name="package.dir" value="${root.dir}\package" />
-    <property name="doc.dir" value="${root.dir}\doc" />
-	<property name="setup.dir" value="${root.dir}\setup" />
-	<property name="project.sign" value="false" overwrite="false" />
-	<property name="compiling.examples" value="false" overwrite="true" />
+  <property name="root.dir" value="${project::get-base-directory()}" overwrite="false" />
+  <property name="deploy.dir" value="${root.dir}\deploy" />
+  <property name="build.dir" value="${root.dir}\build" />
+  <property name="tool.dir" value="${root.dir}\tools" />
+  <property name="lib.dir" value="${root.dir}\lib" />
+  <property name="package.dir" value="${root.dir}\package" />
+  <property name="doc.dir" value="${root.dir}\doc" />
+  <property name="setup.dir" value="${root.dir}\setup" />
+  <property name="project.sign" value="false" overwrite="false" />
+  <property name="compiling.examples" value="false" overwrite="true" />
 
-	<if test="${project.sign and not(file::exists(root.dir + '/Spring.Net.snk'))}">
-		<fail message="project.sign='true' but keyfile ${root.dir+'/Spring.Net.snk'} is missing" />
-	</if>
-	
-    <property name="project.majorversion" value="1.0" />
-    <property name="project.patchversion" value="4" overwrite="false" />
-    <property name="project.buildnumber" value="${math::abs(math::floor(timespan::get-total-days(datetime::now() - datetime::parse('01/01/2000'))))}" />
-    <property name="project.version" value="${project.majorversion}.${project.patchversion}.${project.buildnumber}" overwrite="false" />
-    <!-- dev / alpha / beta# / rc# / release -->
-    <property name="project.releasetype" value="dev" overwrite="false" />
+  <if test="${project.sign and not(file::exists(root.dir + '/Spring.Net.snk'))}">
+    <fail message="project.sign='true' but keyfile ${root.dir+'/Spring.Net.snk'} is missing" />
+  </if>
 
-    <readregistry property="net40.install.dir" key="SOFTWARE\Microsoft\NET Framework Setup\NDP\v4\Full\InstallPath" hive="LocalMachine" failonerror="true"/>
-    <property name="msbuild.exe" value="${net40.install.dir}\msbuild.exe"/>
+  <property name="project.majorversion" value="1.0" />
+  <property name="project.patchversion" value="4" overwrite="false" />
+  <property name="project.buildnumber" value="${math::abs(math::floor(timespan::get-total-days(datetime::now() - datetime::parse('01/01/2000'))))}" />
+  <property name="project.version" value="${project.majorversion}.${project.patchversion}.${project.buildnumber}" overwrite="false" />
+  <!-- dev / alpha / beta# / rc# / release -->
+  <property name="project.releasetype" value="dev" overwrite="false" />
 
-    <property name="buildconfiguration" value="Debug" overwrite="false" />
-	
-	
-	
-    <target name="build" depends="clean">
-        <echo message="Current .NET Framework = ${nant.settings.currentframework}"/>
-		
-		<call target="build-net-2.0" />		
-		<call target="build-net-3.5" />		
-		<call target="build-net-4.0" />		
-		
-        <!-- need to get the bins copied to the bin folder for reference by examples before they are compiled -->
-		<call target="copy-to-bin-for-reference" />
-		
-		<call target="RebuildExampleSolutions" />
-    </target>
+  <readregistry property="net40.install.dir" key="SOFTWARE\Microsoft\NET Framework Setup\NDP\v4\Full\InstallPath" hive="LocalMachine" failonerror="true"/>
+  <property name="msbuild.exe" value="${net40.install.dir}\msbuild.exe"/>
 
-	<target name="copy-to-bin-for-reference">
-      <echo message="Processing ${build.dir}\net-2.0"/>
-      <copy todir="${root.dir}/bin/net/2.0/" flatten="true" verbose="true">
-        <fileset>
-          <include name="${build.dir}\net-2.0\Spring.Core.Config*.???"/>
-		  <exclude name="**\*Test*.*"/>
-        </fileset>
-      </copy>
-	
-		<echo message="Processing ${build.dir}\net-3.5"/>
-      <copy todir="${root.dir}/bin/net/3.5/" flatten="true" verbose="true">
-        <fileset>
-          <include name="${build.dir}\net-3.5\Spring.Core.Config*.???"/>
-		  <exclude name="**\*Test*.*"/>
-        </fileset>
-      </copy>
-	
-	<echo message="Processing ${build.dir}\net-4.0"/>
-      <copy todir="${root.dir}/bin/net/4.0/" flatten="true" verbose="true">
-        <fileset>
-          <include name="${build.dir}\net-4.0\Spring.Core.Config*.???"/>
-		  <exclude name="**\*Test*.*"/>
-        </fileset>
-      </copy>
+  <property name="buildconfiguration" value="Debug" overwrite="false" />
+
+
+
+  <target name="build" depends="clean">
+    <echo message="Current .NET Framework = ${nant.settings.currentframework}"/>
+
+    <call target="build-net-3.5" />
+    <call target="build-net-4.0" />
+
+    <!-- need to get the bins copied to the bin folder for reference by examples before they are compiled -->
+    <call target="copy-to-bin-for-reference" />
+
+    <call target="RebuildExampleSolutions" />
   </target>
-	
-	
-    <target name="update-common-assemblyinfo">
 
-      <!-- ensure src/CommonAssemblyInfo.cs is writable if it already exists -->
-      <attrib file="${root.dir}/src/CommonAssemblyInfo.cs" readonly="false" if="${file::exists('${root.dir}/src/CommonAssemblyInfo.cs')}" />
-      <!-- generate the source file holding the common assembly-level attributes -->
-      <asminfo output="${root.dir}/src/CommonAssemblyInfo.cs" language="CSharp">
-        <imports>
-          <import namespace="System" />
-          <import namespace="System.Reflection" />
-          <import namespace="System.Runtime.InteropServices" />
-          <import namespace="System.Security" />
-          <import namespace="System.Security.Permissions" />
-        </imports>
-        <attributes>
-          <attribute type="CLSCompliantAttribute" value="false" />
-          <attribute type="ComVisibleAttribute" value="false" />
-          <attribute type="AssemblyCompanyAttribute" value="http://www.springframework.net" />
-          <attribute type="AssemblyCopyrightAttribute" value="Copyright 2010-2011 Spring.NET Framework Team." />
-          <attribute type="AssemblyTrademarkAttribute" value="Apache License, Version 2.0" />
-          <attribute type="AssemblyCultureAttribute" value="" />
-          <attribute type="AssemblyVersionAttribute" value="${project.version}" />
-		  <attribute type="AssemblyFileVersionAttribute" value="${project.version}" />
-          <attribute type="AssemblyConfigurationAttribute" value="${nant.settings.currentframework}.${platform::get-name()}; ${project.releasetype}" />
-          <attribute type="AssemblyInformationalVersionAttribute" value="${project.version}" />
-          <attribute type="AssemblyDelaySignAttribute" value="false" />
-        </attributes>
-      </asminfo>
-    </target>
+  <target name="copy-to-bin-for-reference">
+    <echo message="Processing ${build.dir}\net-3.5"/>
+    <copy todir="${root.dir}/bin/net/3.5/" flatten="true" verbose="true">
+      <fileset>
+        <include name="${build.dir}\net-3.5\Spring.Core.Config*.???"/>
+        <exclude name="**\*Test*.*"/>
+      </fileset>
+    </copy>
 
-	<target name="set-project-file-to-target-framework">
-		<foreach item="File" property="filename">
-            <in>
-                <items basedir="${root.dir}/src">
-                    <include name="**/*.2010.csproj" />
-                </items>
-            </in>
-            <do>
-			
-			<echo message="Poking file ${filename} to set framework version to ${nant.settings.targetframeworkstring}" />
-			
-			<xmlpoke file="${filename}" xpath="/n:Project/n:PropertyGroup/n:TargetFrameworkVersion" value="${nant.settings.targetframeworkstring}">
-				<namespaces>
-					<namespace prefix="n" uri="http://schemas.microsoft.com/developer/msbuild/2003" />
-				</namespaces>
-			</xmlpoke>
-			</do>
-        </foreach>
-	</target>
-	
-	
-	<target name="set-assembly-hint-paths-for-target-framework">
-		<foreach item="File" property="filename">
-            <in>
-                <items basedir="${root.dir}/src">
-                    <include name="**/*.2010.csproj" />
-                </items>
-            </in>
-            <do>
+    <echo message="Processing ${build.dir}\net-4.0"/>
+    <copy todir="${root.dir}/bin/net/4.0/" flatten="true" verbose="true">
+      <fileset>
+        <include name="${build.dir}\net-4.0\Spring.Core.Config*.???"/>
+        <exclude name="**\*Test*.*"/>
+      </fileset>
+    </copy>
+  </target>
 
-			<property name="reference-name" value="Common.Logging" />
-			<echo message="Poking file ${filename} to set hint paths for ${reference-name}" />
-			<call target="set-assembly-hint-path" />
 
-			<property name="reference-name" value="Spring.Core" />
-			<echo message="Poking file ${filename} to set hint paths for ${reference-name}" />
-			<call target="set-assembly-hint-path" />
+  <target name="update-common-assemblyinfo">
 
-			</do>
-        </foreach>
-	</target>
-	
-	<target name="set-assembly-hint-path">
-		<xmlpoke file="${filename}" xpath="/n:Project/n:ItemGroup/n:Reference[@Include = '${reference-name}']/n:HintPath" value="${framework-specific.lib.dir}\${reference-name}.dll">
-			<namespaces>
-				<namespace prefix="n" uri="http://schemas.microsoft.com/developer/msbuild/2003" />
-			</namespaces>
-		</xmlpoke>
-	</target>
-	
-	
-	<target name="build-net-2.0">
-        <property name="nant.settings.currentframework" value="net-2.0"/>
-		<property name="nant.settings.targetframeworkstring" value="v2.0" />
-		<property name="framework-specific.lib.dir" value="..\..\lib\net\2.0" />
-        <property name="test.bin.dir" value="${build.dir}\${nant.settings.currentframework}" />
-		
-		<echo message="Compiling for .NET Framework Version: ${nant.settings.currentframework}" />
-		<call target="update-common-assemblyinfo" />
-		<call target="set-project-file-to-target-framework" />
-		<call target="set-assembly-hint-paths-for-target-framework" />
-		<call target="RebuildAllSolutions" />
-	</target>
-	
-	<target name="build-net-3.5">
-        <property name="nant.settings.currentframework" value="net-3.5"/>
-		<property name="nant.settings.targetframeworkstring" value="v3.5" />
-		<property name="framework-specific.lib.dir" value="..\..\lib\net\3.5" />
-        <property name="test.bin.dir" value="${build.dir}\${nant.settings.currentframework}" />
-		
-		<echo message="Compiling for .NET Framework Version: ${nant.settings.currentframework}" />
-		<call target="update-common-assemblyinfo" />
-		<call target="set-project-file-to-target-framework" />
-		<call target="set-assembly-hint-paths-for-target-framework" />
-		<call target="RebuildAllSolutions" />
-	</target>
+    <!-- ensure src/CommonAssemblyInfo.cs is writable if it already exists -->
+    <attrib file="${root.dir}/src/CommonAssemblyInfo.cs" readonly="false" if="${file::exists('${root.dir}/src/CommonAssemblyInfo.cs')}" />
+    <!-- generate the source file holding the common assembly-level attributes -->
+    <asminfo output="${root.dir}/src/CommonAssemblyInfo.cs" language="CSharp">
+      <imports>
+        <import namespace="System" />
+        <import namespace="System.Reflection" />
+        <import namespace="System.Runtime.InteropServices" />
+        <import namespace="System.Security" />
+        <import namespace="System.Security.Permissions" />
+      </imports>
+      <attributes>
+        <attribute type="CLSCompliantAttribute" value="false" />
+        <attribute type="ComVisibleAttribute" value="false" />
+        <attribute type="AssemblyCompanyAttribute" value="http://www.springframework.net" />
+        <attribute type="AssemblyCopyrightAttribute" value="Copyright 2010-2011 Spring.NET Framework Team." />
+        <attribute type="AssemblyTrademarkAttribute" value="Apache License, Version 2.0" />
+        <attribute type="AssemblyCultureAttribute" value="" />
+        <attribute type="AssemblyVersionAttribute" value="${project.version}" />
+        <attribute type="AssemblyFileVersionAttribute" value="${project.version}" />
+        <attribute type="AssemblyConfigurationAttribute" value="${nant.settings.currentframework}.${platform::get-name()}; ${project.releasetype}" />
+        <attribute type="AssemblyInformationalVersionAttribute" value="${project.version}" />
+        <attribute type="AssemblyDelaySignAttribute" value="false" />
+      </attributes>
+    </asminfo>
+  </target>
 
-	
-	<target name="build-net-4.0">
-        <property name="nant.settings.currentframework" value="net-4.0"/>
-		<property name="nant.settings.targetframeworkstring" value="v4.0" />
-		<property name="framework-specific.lib.dir" value="..\..\lib\net\4.0" />
-        <property name="test.bin.dir" value="${build.dir}\${nant.settings.currentframework}" />
-		
-		<echo message="Compiling for .NET Framework Version: ${nant.settings.currentframework}" />
-		<call target="update-common-assemblyinfo" />
-		<call target="set-project-file-to-target-framework" />
-		<call target="set-assembly-hint-paths-for-target-framework" />
-		<call target="RebuildAllSolutions" />
-	</target>
-	
-    <target name="test" depends="build">
-        <call target="TestAllAssemblies" />
-    </target>
+  <target name="set-project-file-to-target-framework">
+    <foreach item="File" property="filename">
+      <in>
+        <items basedir="${root.dir}/src">
+          <include name="**/*.2010.csproj" />
+        </items>
+      </in>
+      <do>
 
-    <target name="test-integration" depends="test">
-        <delete>
-            <fileset basedir="${build.dir}">
-                <include name="*.dll-TestCoverage.xml" />
-            </fileset>
-        </delete>
-        <call target="IntegrationTestAllAssemblies" />
-    </target>
+        <echo message="Poking file ${filename} to set framework version to ${nant.settings.targetframeworkstring}" />
 
-    <target name="daily" depends="test,doc-reference">
-    </target>
+        <xmlpoke file="${filename}" xpath="/n:Project/n:PropertyGroup/n:TargetFrameworkVersion" value="${nant.settings.targetframeworkstring}">
+          <namespaces>
+            <namespace prefix="n" uri="http://schemas.microsoft.com/developer/msbuild/2003" />
+          </namespaces>
+        </xmlpoke>
+      </do>
+    </foreach>
+  </target>
 
-    <target name="clean">
-        <delete dir="${build.dir}" />
-    </target>
+
+  <target name="set-assembly-hint-paths-for-target-framework">
+    <foreach item="File" property="filename">
+      <in>
+        <items basedir="${root.dir}/src">
+          <include name="**/*.2010.csproj" />
+        </items>
+      </in>
+      <do>
+
+        <property name="reference-name" value="Common.Logging" />
+        <echo message="Poking file ${filename} to set hint paths for ${reference-name}" />
+        <call target="set-assembly-hint-path" />
+
+        <property name="reference-name" value="Spring.Core" />
+        <echo message="Poking file ${filename} to set hint paths for ${reference-name}" />
+        <call target="set-assembly-hint-path" />
+
+      </do>
+    </foreach>
+  </target>
+
+  <target name="set-assembly-hint-path">
+    <xmlpoke file="${filename}" xpath="/n:Project/n:ItemGroup/n:Reference[@Include = '${reference-name}']/n:HintPath" value="${framework-specific.lib.dir}\${reference-name}.dll">
+      <namespaces>
+        <namespace prefix="n" uri="http://schemas.microsoft.com/developer/msbuild/2003" />
+      </namespaces>
+    </xmlpoke>
+  </target>
+
+  <target name="build-net-3.5">
+    <property name="nant.settings.currentframework" value="net-3.5"/>
+    <property name="nant.settings.targetframeworkstring" value="v3.5" />
+    <property name="framework-specific.lib.dir" value="..\..\lib\net\3.5" />
+    <property name="test.bin.dir" value="${build.dir}\${nant.settings.currentframework}" />
+
+    <echo message="Compiling for .NET Framework Version: ${nant.settings.currentframework}" />
+    <call target="update-common-assemblyinfo" />
+    <call target="set-project-file-to-target-framework" />
+    <call target="set-assembly-hint-paths-for-target-framework" />
+    <call target="RebuildAllSolutions" />
+  </target>
+
+  <target name="build-net-4.0">
+    <property name="nant.settings.currentframework" value="net-4.0"/>
+    <property name="nant.settings.targetframeworkstring" value="v4.0" />
+    <property name="framework-specific.lib.dir" value="..\..\lib\net\4.0" />
+    <property name="test.bin.dir" value="${build.dir}\${nant.settings.currentframework}" />
+
+    <echo message="Compiling for .NET Framework Version: ${nant.settings.currentframework}" />
+    <call target="update-common-assemblyinfo" />
+    <call target="set-project-file-to-target-framework" />
+    <call target="set-assembly-hint-paths-for-target-framework" />
+    <call target="RebuildAllSolutions" />
+  </target>
+
+  <target name="test" depends="build">
+    <call target="TestAllAssemblies" />
+  </target>
+
+  <target name="test-integration" depends="test">
+    <delete>
+      <fileset basedir="${build.dir}">
+        <include name="*.dll-TestCoverage.xml" />
+      </fileset>
+    </delete>
+    <call target="IntegrationTestAllAssemblies" />
+  </target>
+
+  <target name="daily" depends="test,doc-reference">
+  </target>
+
+  <target name="clean">
+    <delete dir="${build.dir}" />
+  </target>
 
 
   <target name="package-zip" depends="package" description="Build Package distribution as .zip file">
@@ -258,27 +234,20 @@
   </target>
 
   <target name="package.binaries" depends="build">
-      <echo message="Processing ${build.dir}\net-2.0"/>
-      <copy todir="${package.dir}/bin/net/2.0/" flatten="true" verbose="true">
-        <fileset>
-          <include name="${build.dir}\net-2.0\Spring.Core.Config*.???"/>
-		  <exclude name="**\*Test*.*" />
-        </fileset>
-      </copy>
-	<echo message="Processing ${build.dir}\net-3.5"/>
-      <copy todir="${package.dir}/bin/net/3.5/" flatten="true" verbose="true">
-        <fileset>
-          <include name="${build.dir}\net-3.5\Spring.Core.Config*.???"/>
-		  <exclude name="**\*Test*.*" />
-        </fileset>
-      </copy>
-	  <echo message="Processing ${build.dir}\net-4.0"/>
-      <copy todir="${package.dir}/bin/net/4.0/" flatten="true" verbose="true">
-        <fileset>
-          <include name="${build.dir}\net-4.0\Spring.Core.Config*.???"/>
-		  <exclude name="**\*Test*.*" />
-        </fileset>
-      </copy>
+    <echo message="Processing ${build.dir}\net-3.5"/>
+    <copy todir="${package.dir}/bin/net/3.5/" flatten="true" verbose="true">
+      <fileset>
+        <include name="${build.dir}\net-3.5\Spring.Core.Config*.???"/>
+        <exclude name="**\*Test*.*" />
+      </fileset>
+    </copy>
+    <echo message="Processing ${build.dir}\net-4.0"/>
+    <copy todir="${package.dir}/bin/net/4.0/" flatten="true" verbose="true">
+      <fileset>
+        <include name="${build.dir}\net-4.0\Spring.Core.Config*.???"/>
+        <exclude name="**\*Test*.*" />
+      </fileset>
+    </copy>
   </target>
 
   <target name="package.sources">
@@ -290,7 +259,7 @@
         <exclude name="*.suo"/>
         <exclude name="*.user"/>
         <exclude name="*.cache"/>
-		<exclude name="Spring.Config.build" />
+        <exclude name="Spring.Config.build" />
       </fileset>
     </copy>
 
@@ -305,17 +274,17 @@
         <include name="test/**/*.*"/>
         <include name="examples/**/*.*"/>
         <exclude name="**/*.user"/>
-		<exclude name="**/*.suo"/>
-		<exclude name="**/*.cache"/>
+        <exclude name="**/*.suo"/>
+        <exclude name="**/*.cache"/>
         <exclude name="src/**/bin/**" />
-		<exclude name="src/**/obj/**" />
+        <exclude name="src/**/obj/**" />
         <exclude name="test/**/bin/**" />
-		<exclude name="test/**/obj/**" />
+        <exclude name="test/**/obj/**" />
         <exclude name="examples/**/bin/**" />
-		<exclude name="examples/**/obj/**" />
-		<exclude name="**/_ReSharper*/**" />
-		<exclude name="**/CommonAssemblyInfo.cs.template" />
-		<exclude name="Spring.Config.build" />
+        <exclude name="examples/**/obj/**" />
+        <exclude name="**/_ReSharper*/**" />
+        <exclude name="**/CommonAssemblyInfo.cs.template" />
+        <exclude name="Spring.Config.build" />
       </fileset>
     </copy>
   </target>
@@ -353,16 +322,16 @@
     <nant buildfile="${doc.dir}/reference/docbook.build" target="all" />
   </target>
 
-    <target name="common.run-tests">
+  <target name="common.run-tests">
     <!--
 	<call target="common.run-tests.nunit" />
 	-->
-	
-	<call target="common.run-tests.ncover" />
-	
-    </target>
 
-    <!--
+    <call target="common.run-tests.ncover" />
+
+  </target>
+
+  <!--
 *******************************************************************************
 Runs NUnit unit test configuration of the current ${project::get-name()}.dll
 
@@ -371,25 +340,25 @@ ${build.dir}: the binary directory to pick the assembly + app.config from
 ${test.assemblyname}   : (optional), the name of the assembly, if not specified uses "project:get-name()"
 ${tool.dir}       : dir for tools
     -->
-    <target name="common.run-tests.nunit">
+  <target name="common.run-tests.nunit">
 
-        <property name="test.assemblyname" value="${project::get-name()}" overwrite="false" />
-        <property name="test.assemblyfile" value="${test.assemblyname}.dll" overwrite="true" />
+    <property name="test.assemblyname" value="${project::get-name()}" overwrite="false" />
+    <property name="test.assemblyfile" value="${test.assemblyname}.dll" overwrite="true" />
 
-        <property name="test.bin.dir" value="${build.dir}" if="${not property::exists('test.bin.dir')}" />
-        <echo message="Unit Testing ${test.assemblyname} in ${test.bin.dir}" />
+    <property name="test.bin.dir" value="${build.dir}" if="${not property::exists('test.bin.dir')}" />
+    <echo message="Unit Testing ${test.assemblyname} in ${test.bin.dir}" />
 
-        <exec program="${tool.dir}/nunit/net-2.0/nunit-console-x86.exe" workingdir="${test.bin.dir}" verbose="true">
-            <arg line="${test.assemblyfile}" />
-            <arg value="/xml:${test.assemblyname}.dll-TestResults.xml" />
-            <arg value="/nologo" />
-            <arg value="/noshadow" />
-            <arg value="/framework:${nant.settings.currentframework}" />
-        </exec>
+    <exec program="${tool.dir}/nunit/net-2.0/nunit-console-x86.exe" workingdir="${test.bin.dir}" verbose="true">
+      <arg line="${test.assemblyfile}" />
+      <arg value="/xml:${test.assemblyname}.dll-TestResults.xml" />
+      <arg value="/nologo" />
+      <arg value="/noshadow" />
+      <arg value="/framework:${nant.settings.currentframework}" />
+    </exec>
 
-    </target>
+  </target>
 
-    <!--
+  <!--
 *******************************************************************************
 Runs coverage unit test configuration of the current ${project::get-name()}.dll
 
@@ -398,69 +367,70 @@ ${current.bin.dir}: the binary directory to pick the assembly + app.config from
 ${project.name}   : (optional), the name of the assembly
 ${tool.dir}       : dir for tools
     -->
-    <target name="common.run-tests.ncover" description="Run NUnit tests">
+  <target name="common.run-tests.ncover" description="Run NUnit tests">
 
-        <property name="test.assemblyname" value="${project::get-name()}" overwrite="false" />
-        <property name="test.assemblyfile" value="${test.assemblyname}.dll" overwrite="true" />
-        <property name="test.bin.dir" value="${build.dir}" if="${not property::exists('test.bin.dir')}" />
+    <property name="test.assemblyname" value="${project::get-name()}" overwrite="false" />
+    <property name="test.assemblyfile" value="${test.assemblyname}.dll" overwrite="true" />
+    <property name="test.bin.dir" value="${build.dir}" if="${not property::exists('test.bin.dir')}" />
 
-        <echo message="Coverage Testing ${test.assemblyname} from ${test.bin.dir}/${test.assemblyfile}" />
+    <echo message="Coverage Testing ${test.assemblyname} from ${test.bin.dir}/${test.assemblyfile}" />
 
-        <property name="test.assemblyname.tocover" value="${string::substring(test.assemblyname,0,string::last-index-of(test.assemblyname, '.Tests') )}" overwrite="false" />
+    <property name="test.assemblyname.tocover" value="${string::substring(test.assemblyname,0,string::last-index-of(test.assemblyname, '.Tests') )}" overwrite="false" />
 
-        <exec program="${tool.dir}/ncover/ncover.console.exe" workingdir="${test.bin.dir}" verbose="true">
-            <arg value="//q" />
-            <arg value="//reg" />
-            <arg value="//w" />
-            <arg path="${test.bin.dir}" />
-            <arg value="//x" />
-            <arg path="${test.bin.dir}/${test.assemblyname}.dll-TestCoverage.xml" />
-            <arg value="//a" />
-            <arg value="${test.assemblyname.tocover}" />
-            <arg value="//ea" />
-            <arg value="CoverageExcludeAttribute" />
-            <arg value="//q" />
-            <arg path="${tool.dir}/nunit/net-2.0/nunit-console-x86.exe" />
-            <arg line="${test.assemblyfile}" />
-            <arg value="/xml:${test.assemblyname}.dll-TestResults.xml" />
-            <arg value="/nologo" />
-            <arg value="/noshadow" />
-	    
-            <arg value="/framework:${nant.settings.currentframework}" />
-	    
-            <!-- <arg value="/framework:net-2.0" /> -->
-        </exec>
+    <exec program="${tool.dir}/ncover/ncover.console.exe" workingdir="${test.bin.dir}" verbose="true">
+      <arg value="//q" />
+      <arg value="//reg" />
+      <arg value="//w" />
+      <arg path="${test.bin.dir}" />
+      <arg value="//x" />
+      <arg path="${test.bin.dir}/${test.assemblyname}.dll-TestCoverage.xml" />
+      <arg value="//a" />
+      <arg value="${test.assemblyname.tocover}" />
+      <arg value="//ea" />
+      <arg value="CoverageExcludeAttribute" />
+      <arg value="//q" />
+      <arg path="${tool.dir}/nunit/net-2.0/nunit-console-x86.exe" />
+      <arg line="${test.assemblyfile}" />
+      <arg value="/xml:${test.assemblyname}.dll-TestResults.xml" />
+      <arg value="/nologo" />
+      <arg value="/noshadow" />
 
-    </target>
+      <arg value="/framework:${nant.settings.currentframework}" />
 
-    <target name="TestAllAssemblies">
+      <!-- <arg value="/framework:net-2.0" /> -->
+    </exec>
 
-		<!-- have to delete the INVALID test ass'y otherwise the VALID tests will find the INVALID config types that support the INVALID tests -->
-		<delete>
-            <fileset basedir="${build.dir}">
-                <include name="**\*Invalid*.*" />
-            </fileset>
-        </delete>
-	
-        <foreach item="File" property="filename">
-            <in>
-                <items basedir="${build.dir}">
-                    <include name="**\*.Tests.dll" />
-					<exclude name="**\Spring.Core.Tests.dll" /> <!--have to exclude this b/c it contains all the CORE tests (that we don't want to run here! -->
-                </items>
-            </in>
-            <do>
-                <property name="test.assemblyname" value="${path::get-file-name-without-extension(filename)}" />
-				
-				
-				
-		<property name="test.bin.dir" value="${build.dir}\${nant.settings.currentframework}"/>
-                <call target="common.run-tests" />
-            </do>
-        </foreach>
+  </target>
 
-        <!-- build coverage summary -->
-	<!--
+  <target name="TestAllAssemblies">
+
+    <!-- have to delete the INVALID test ass'y otherwise the VALID tests will find the INVALID config types that support the INVALID tests -->
+    <delete>
+      <fileset basedir="${build.dir}">
+        <include name="**\*Invalid*.*" />
+      </fileset>
+    </delete>
+
+    <foreach item="File" property="filename">
+      <in>
+        <items basedir="${build.dir}">
+          <include name="**\*.Tests.dll" />
+          <exclude name="**\Spring.Core.Tests.dll" />
+          <!--have to exclude this b/c it contains all the CORE tests (that we don't want to run here! -->
+        </items>
+      </in>
+      <do>
+        <property name="test.assemblyname" value="${path::get-file-name-without-extension(filename)}" />
+
+
+
+        <property name="test.bin.dir" value="${build.dir}\${nant.settings.currentframework}"/>
+        <call target="common.run-tests" />
+      </do>
+    </foreach>
+
+    <!-- build coverage summary -->
+    <!--
         <exec program="${tool.dir}/ncoverexplorer/ncoverexplorer.console.exe" workingdir="${build.dir}" failonerror="false">
             <arg value="/xml:&quot;${build.dir}/TestCoverageSummary.xml&quot;" />
             <arg value="/report:ModuleClassFunctionSummary" />
@@ -470,100 +440,101 @@ ${tool.dir}       : dir for tools
             <arg path="${build.dir}/*-TestCoverage.xml" />
         </exec>
 	-->
-    </target>
+  </target>
 
-    <target name="IntegrationTestAllAssemblies">
-        <foreach item="File" property="filename">
-            <in>
-                <items basedir="${build.dir}">
-                    <include name="*.Tests.Integration.dll" />
-                </items>
-            </in>
-            <do>
-                <property name="test.assemblyname" value="${path::get-file-name-without-extension(filename)}" />
-                <call target="common.run-tests" />
-            </do>
-        </foreach>
+  <target name="IntegrationTestAllAssemblies">
+    <foreach item="File" property="filename">
+      <in>
+        <items basedir="${build.dir}">
+          <include name="*.Tests.Integration.dll" />
+        </items>
+      </in>
+      <do>
+        <property name="test.assemblyname" value="${path::get-file-name-without-extension(filename)}" />
+        <call target="common.run-tests" />
+      </do>
+    </foreach>
 
-        <!-- build coverage summary -->
-        <exec program="${tool.dir}/ncoverexplorer/ncoverexplorer.console.exe" workingdir="${build.dir}" failonerror="false">
-            <arg value="/xml:&quot;${build.dir}/TestCoverageSummary.xml&quot;" />
-            <arg value="/html:&quot;${build.dir}/TestCoverageSummary.html&quot;" />
-            <arg value="/report:ModuleClassFunctionSummary" />
-            <arg value="/sort:4" />
-            <arg value="/minCoverage:80" />
-            <arg value="/q" />
-            <arg path="${build.dir}/*-TestCoverage.xml" />
-        </exec>
-    </target>
+    <!-- build coverage summary -->
+    <exec program="${tool.dir}/ncoverexplorer/ncoverexplorer.console.exe" workingdir="${build.dir}" failonerror="false">
+      <arg value="/xml:&quot;${build.dir}/TestCoverageSummary.xml&quot;" />
+      <arg value="/html:&quot;${build.dir}/TestCoverageSummary.html&quot;" />
+      <arg value="/report:ModuleClassFunctionSummary" />
+      <arg value="/sort:4" />
+      <arg value="/minCoverage:80" />
+      <arg value="/q" />
+      <arg path="${build.dir}/*-TestCoverage.xml" />
+    </exec>
+  </target>
 
-    <target name="RebuildAllSolutions" > <!-- depends="clean"> -->
-        <foreach item="File" property="filename">
-            <in>
-                <items basedir="${root.dir}">
-                    <exclude name="**/tools/**" />
-					<exclude name="**/examples/**" />
-					<exclude name="**/package/**" />
-                    <include name="**/*2010.sln" />
-                </items>
-            </in>
-            <do>
-                <property name="solutionfile" value="${filename}" />
-                <property name="solutionconfiguration" value="${buildconfiguration}" />
-                <call target="RebuildSolution" />
-            </do>
-        </foreach>
-    </target>
-	
-	<target name="RebuildExampleSolutions" > <!-- depends="buildRebuildAllSolutions"> -->
-        <!-- never sign/stong-name the example solutions, even when the we're signing the main binaries  -->
-		<property name="compiling.examples" value="true" />
-		
-		<foreach item="File" property="filename">
-            <in>
-                <items basedir="${root.dir}/examples">
-					<include name="**/*.sln" />
-                </items>
-            </in>z
-            <do>
-                <property name="solutionfile" value="${filename}" />
-                <property name="solutionconfiguration" value="${buildconfiguration}" />
-                <call target="RebuildSolution" />
-            </do>
-        </foreach>
-    </target>
+  <target name="RebuildAllSolutions" >
+    <!-- depends="clean"> -->
+    <foreach item="File" property="filename">
+      <in>
+        <items basedir="${root.dir}">
+          <exclude name="**/tools/**" />
+          <exclude name="**/examples/**" />
+          <exclude name="**/package/**" />
+          <include name="**/*2010.sln" />
+        </items>
+      </in>
+      <do>
+        <property name="solutionfile" value="${filename}" />
+        <property name="solutionconfiguration" value="${buildconfiguration}" />
+        <call target="RebuildSolution" />
+      </do>
+    </foreach>
+  </target>
 
-    <target name="RebuildSolution" description="rebuilds a given solution file">
-        <echo message="Rebuilding Solution ${solutionfile}" />
+  <target name="RebuildExampleSolutions" >
+    <!-- depends="buildRebuildAllSolutions"> -->
+    <!-- never sign/stong-name the example solutions, even when the we're signing the main binaries  -->
+    <property name="compiling.examples" value="true" />
 
-        <exec program="${msbuild.exe}">
-            <!--
+    <foreach item="File" property="filename">
+      <in>
+        <items basedir="${root.dir}/examples">
+          <include name="**/*.sln" />
+        </items>
+      </in>z
+      <do>
+        <property name="solutionfile" value="${filename}" />
+        <property name="solutionconfiguration" value="${buildconfiguration}" />
+        <call target="RebuildSolution" />
+      </do>
+    </foreach>
+  </target>
+
+  <target name="RebuildSolution" description="rebuilds a given solution file">
+    <echo message="Rebuilding Solution ${solutionfile}" />
+
+    <exec program="${msbuild.exe}">
+      <!--
       <arg value="/property:OutDir=${output.dir}/"/>
 -->
-            <arg value="${solutionfile}"/>
-            <arg line="/nologo" />
-			<arg value="/property:OutputPath=${build.dir}\${nant.settings.currentframework}" if="${not compiling.examples}" />
-            <arg line="/property:Configuration=${solutionconfiguration}"/>
-			<arg value="/property:DefineExtraConstants=STRONG" if="${project.sign and not compiling.examples}" />
-			<arg value="/property:SignAssembly=true" if="${project.sign and not compiling.examples}" />
-			<arg value="/property:DefineExtraConstants=NET_3_5" if="${nant.settings.currentframework == 'net-3.5' or nant.settings.currentframework == 'net-4.0'}" />
-			<arg value="/property:AssemblyOriginatorKeyFile=..\..\Spring.Net.snk" if="${project.sign and not compiling.examples}" />
-        </exec>
-    </target>
+      <arg value="${solutionfile}"/>
+      <arg line="/nologo" />
+      <arg value="/property:OutputPath=${build.dir}\${nant.settings.currentframework}" if="${not compiling.examples}" />
+      <arg line="/property:Configuration=${solutionconfiguration}"/>
+      <arg value="/property:DefineExtraConstants=STRONG" if="${project.sign and not compiling.examples}" />
+      <arg value="/property:SignAssembly=true" if="${project.sign and not compiling.examples}" />
+      <arg value="/property:AssemblyOriginatorKeyFile=..\..\Spring.Net.snk" if="${project.sign and not compiling.examples}" />
+    </exec>
+  </target>
 
-	 <target name="nuget" depends="package-zip">
+  <target name="nuget" depends="package-zip">
     <echo message="Generating NuGet package..." />
 
     <mkdir dir="${deploy.dir}"/>
     <exec program="${setup.dir}\NuGet\lib\NuGet.exe" workingdir="${build.dir}" verbose="true">
       <arg value="pack" />
       <arg value="${setup.dir}\NuGet\src\Spring.CodeConfig.nuspec" />
-	  <arg value="-Version" />
-	  <arg value="${project.majorversion}.${project.patchversion}" />
-	  <arg value="-OutputDirectory" />
-	  <arg value="${deploy.dir}" />
+      <arg value="-Version" />
+      <arg value="${project.majorversion}.${project.patchversion}" />
+      <arg value="-OutputDirectory" />
+      <arg value="${deploy.dir}" />
     </exec>
   </target>
-	
-	
+
+
 </project>
