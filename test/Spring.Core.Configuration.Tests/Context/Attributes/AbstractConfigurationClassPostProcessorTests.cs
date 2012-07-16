@@ -241,6 +241,26 @@ namespace Spring.Context.Attributes
 
     }
 
+
+    [Configuration]
+    public class DerivedConfiguration : BaseConfigurationClass
+    {
+        [Definition]
+        public virtual TestObject DerivedDefinition()
+        {
+            return new TestObject(BaseDefinition());
+        }
+    }
+
+    public class BaseConfigurationClass
+    {
+        [Definition]
+        public virtual string BaseDefinition()
+        {
+            return Guid.NewGuid().ToString();
+        }
+    }
+
     public class TypeRegisteredInXml { }
     
     public class TypeRegisteredInXmlTwo { }
@@ -314,6 +334,21 @@ namespace Spring.Context.Attributes
         public PrototypeChild()
         {
             InstanceCount++;
+        }
+    }
+
+    public class TestObject
+    {
+        private readonly string _value;
+
+        public TestObject(string value)
+        {
+            _value = value;
+        }
+
+        public string Value
+        {
+            get { return _value; }
         }
     }
 }

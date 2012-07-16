@@ -18,10 +18,6 @@
 
 #endregion
 
-using System;
-using System.Reflection;
-using Spring.Context.Attributes;
-using Spring.Objects.Factory.Config;
 using Spring.Objects.Factory.Support;
 
 namespace Spring.Context.Support

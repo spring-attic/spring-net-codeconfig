@@ -157,7 +157,7 @@ namespace Spring.Context.Attributes
                 }
 
                 this.Name = "ConfigurationClassProxy";
-                this.DeclaredMembersOnly = true;
+                this.DeclaredMembersOnly = false;
                 this.BaseType = configurationClassType;
                 this.TargetType = configurationClassType;
 
@@ -191,7 +191,7 @@ namespace Spring.Context.Attributes
                 foreach (DictionaryEntry entry in targetMethods)
                 {
                     FieldInfo targetMethodFieldInfo = proxyType.GetField((string)entry.Key, BindingFlags.NonPublic | BindingFlags.Static);
-                    targetMethodFieldInfo.SetValue(proxyType, (MethodInfo)entry.Value);
+                    targetMethodFieldInfo.SetValue(proxyType, entry.Value);
                 }
 
                 // set interceptor
