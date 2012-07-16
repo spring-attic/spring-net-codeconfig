@@ -19,7 +19,7 @@
 #endregion
 
 using System;
-using Spring.Objects.Factory.Config;
+
 using Spring.Util;
 
 namespace Spring.Context.Attributes

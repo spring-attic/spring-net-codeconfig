@@ -19,7 +19,6 @@
 #endregion
 
 using NUnit.Framework;
-using Spring.Context.Support;
 
 namespace Spring.Context.Attributes
 {
@@ -28,7 +27,4 @@ namespace Spring.Context.Attributes
     {
       
     }
-
-    
 }
-

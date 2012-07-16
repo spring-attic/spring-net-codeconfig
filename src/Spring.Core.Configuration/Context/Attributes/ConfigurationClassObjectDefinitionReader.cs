@@ -23,8 +23,9 @@
 using System;
 using System.Collections.Generic;
 using System.Reflection;
+
 using Common.Logging;
-using Spring.Collections.Generic;
+
 using Spring.Core.TypeResolution;
 using Spring.Objects.Factory.Config;
 using Spring.Objects.Factory.Parsing;
