@@ -35,14 +35,17 @@
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="Spring.Core">
-      <HintPath>..\..\..\..\lib\net\2.0\Spring.Core.dll</HintPath>
+      <HintPath>..\..\..\..\lib\net\3.5\Spring.Core.dll</HintPath>
     </Reference>
     <Reference Include="Spring.Core.Configuration, Version=1.0.0.0, Culture=neutral, PublicKeyToken=65e474d141e25e07, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\..\..\bin\net\2.0\Spring.Core.Configuration.dll</HintPath>
+      <HintPath>..\..\..\..\bin\net\3.5\Spring.Core.Configuration.dll</HintPath>
+    </Reference>
+    <Reference Include="Spring.Web">
+      <HintPath>..\..\lib\net\3.5\Spring.Web.dll</HintPath>
     </Reference>
     <Reference Include="Spring.Web.Mvc">
-      <HintPath>..\..\..\..\lib\net\3.5\Spring.Web.Mvc.dll</HintPath>
+      <HintPath>..\..\lib\net\3.5\Spring.Web.Mvc.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Data" />
