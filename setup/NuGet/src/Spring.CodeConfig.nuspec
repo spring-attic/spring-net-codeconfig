@@ -13,13 +13,10 @@
 		<summary>Provides the ability to configure a Spring container using standard .NET code instead of or in addition to XML</summary>
 		<language>en-US</language>
 		<dependencies>
-			<dependency id="Spring.Core" version="1.3.2" />
+			<dependency id="Spring.Core" version="2.0.0" />
 		</dependencies>
 	</metadata>
 		<files>
-			<file src="..\..\..\bin\net\2.0\Spring.Core.Configuration.dll" target="lib\net20" />
-			<file src="..\..\..\bin\net\2.0\Spring.Core.Configuration.pdb" target="lib\net20" />
-			<file src="..\..\..\bin\net\2.0\Spring.Core.Configuration.xml" target="lib\net20" />
 			<file src="..\..\..\bin\net\3.5\Spring.Core.Configuration.dll" target="lib\net35" />
 			<file src="..\..\..\bin\net\3.5\Spring.Core.Configuration.pdb" target="lib\net35" />
 			<file src="..\..\..\bin\net\3.5\Spring.Core.Configuration.xml" target="lib\net35" />
