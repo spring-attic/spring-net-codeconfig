@@ -2,9 +2,18 @@ SPRING CODE CONFIG .NET CHANGELOG
 ==================================
 https://github.com/SpringSource/spring-net-codeconfig
 
+*** Release Version 2.0.0 August 31, 2012 ***
+Enhancements:
+
+Changes:
+
+Bug Fixes:
+
+
 *** Release Version 1.0.4 August 18, 2011 ***
 Changes:
 - Update to Spring.NET 1.3.2 dependency
+
 
 
 *** Release Version 1.0.3 June 30, 2011 ***
@@ -12,9 +21,11 @@ Changes:
 - Properly respect explicit Prototype scope with Singleton dependency
 
 
+
 *** Release Version 1.0.2 June 29, 2011 ***
 Changes:
 - Removed the built-in definition of the System.CompilerServices.ExtensionAttribute from non-.NET 2.0 builds
+
 
 
 *** Release Version 1.0.0 April 4, 2011 ***
