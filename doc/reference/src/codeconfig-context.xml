@@ -94,7 +94,7 @@
       <programlisting language="myxml">&lt;objects xmlns="http://www.springframework.net"
          xmlns:context="http://www.springframework.net/context"&gt;
   
-  &lt;context:code-config/&gt;
+  &lt;context:component-scan base-assemblies=""/&gt;
 
   &lt;!-- &lt;object/&gt; definitions here --&gt;
 
@@ -102,8 +102,9 @@
 &lt;/objects&gt;
 </programlisting>
 
-      <para>The current XML namespace does not yet allow you to express
-      contraints to limit the scope of the scanning.</para>
+      <para>The base-assemblies attribute allows you to express limitations
+	  of Assemblies to scan via a comma seperated list of assembly names.
+	  The filter is a startsWith filter</para>
 
       <para>You will also need to configure the context namespace parser in
       the main .NET application configuraiton file as shown below</para>

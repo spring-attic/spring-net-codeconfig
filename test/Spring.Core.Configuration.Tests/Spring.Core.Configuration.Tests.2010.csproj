@@ -50,6 +50,7 @@
     </Compile>
     <Compile Include="Context\Attributes\AssemblyObjectDefinitionScannerTests.cs" />
     <Compile Include="Context\Attributes\AssemblyTypeScannerTests.cs" />
+    <Compile Include="Context\Attributes\BaseAssemblyFilterTest.cs" />
     <Compile Include="Context\Attributes\CodeConfigApplicationContextTests.cs" />
     <Compile Include="Context\Attributes\ConfigurationClassObjectDefinitionReaderTests.cs" />
     <Compile Include="Context\Attributes\ConfigurationClassParserTests.cs" />
@@ -85,6 +86,18 @@
       <Project>{7B65D538-E863-4F57-8DDC-2C38E4150045}</Project>
       <Name>Spring.Core.Configuration.2010</Name>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Context\Attributes\ConfigFiles\BaseAssemblyTestSingle.xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Context\Attributes\ConfigFiles\BaseAssemblyTestMultiple.xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Context\Attributes\ConfigFiles\BaseAssemblyTestNegative.xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Context\Attributes\ConfigFiles\BaseAssemblyTestWithout.xml" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

@@ -54,17 +54,9 @@ namespace Spring.Context.Config
 			// Actually scan for objects definitions and register them.
 			scanner.ScanAndRegisterTypes(registry);
 
-			// Register attribute config processors, if necessary.
-			bool attributeConfig = true;
-			if (element.HasAttribute("attribute-config"))
-			{
-				attributeConfig = bool.Parse(element.GetAttribute("attribute-config"));
-			}
-			if (attributeConfig)
-			{
-				AttributeConfigUtils.RegisterAttributeConfigProcessors(registry);
-			}
-			return null;
+			AttributeConfigUtils.RegisterAttributeConfigProcessors(registry);
+
+            return null;
 		}
 
         /// <summary>
@@ -75,18 +67,25 @@ namespace Spring.Context.Config
         /// <returns></returns>
 		protected virtual AssemblyObjectDefinitionScanner ConfigureScanner(ParserContext parserContext, XmlElement element)
 		{
-			XmlReaderContext readerContext = parserContext.ReaderContext;
-			bool useDefaultFilters = true;
-			if (element.HasAttribute("use-default-filters")) 
-			{
-				useDefaultFilters = bool.Parse(element.GetAttribute("use-default-filters"));
-			}
+			var scanner = new AssemblyObjectDefinitionScanner();
 
-			AssemblyObjectDefinitionScanner scanner = new AssemblyObjectDefinitionScanner();
+            ConfigureBaseAssemblies(scanner, element);
 			
 			return scanner;
 		}
 
+        private void ConfigureBaseAssemblies(AssemblyObjectDefinitionScanner scanner, XmlElement element)
+        {
+            var baseAssemblies = element.GetAttribute("base-assemblies");
+
+            if (string.IsNullOrEmpty(baseAssemblies))
+                return;
+
+            foreach (var baseAssembly in baseAssemblies.Split(','))
+            {
+                scanner.WithAssemblyFilter(assy => assy.FullName.StartsWith(baseAssembly));
+            }
+        }
 
 	}
 }

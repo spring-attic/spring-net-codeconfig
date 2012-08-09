@@ -26,17 +26,15 @@
 Scans assemblies for [Configuration] attributes that provide Spring object definitions.
 			]]></xsd:documentation>
 		</xsd:annotation>    
-    <!--
 		<xsd:complexType>
-			<xsd:attribute name="assemblies" type="xsd:string">
+			<xsd:attribute name="base-assemblies" type="xsd:string" use="required">
 				<xsd:annotation>
 					<xsd:documentation><![CDATA[
-The names of assemblies to be scanned.
+:ost of comma seperated assemblies to be included in scan. Names are compared with startsWith.
 					]]></xsd:documentation>
 				</xsd:annotation>
 			</xsd:attribute>
 		</xsd:complexType>
-    -->
 	</xsd:element>
 
 
