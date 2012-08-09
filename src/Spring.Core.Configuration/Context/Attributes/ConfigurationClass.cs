@@ -168,8 +168,8 @@ namespace Spring.Context.Attributes
         /// <param name="problemReporter">The problem reporter.</param>
         public void Validate(IProblemReporter problemReporter)
         {
-            // A [Definition] method may only be overloaded through inheritance. No single
-            // [Configuration] class may declare two [Definition] methods with the same name.
+            // A [ObjectDef] method may only be overloaded through inheritance. No single
+            // [Configuration] class may declare two [ObjectDef] methods with the same name.
             const char hashDelim = '#';
             Dictionary<String, int> methodNameCounts = new Dictionary<String, int>();
             foreach (ConfigurationClassMethod method in _methods)
@@ -237,13 +237,13 @@ namespace Spring.Context.Attributes
 
         }
 
-        //This class is for future use when parameterized [Definition] methods are supported in the future.
-        //Until then, the test for only permitting zero-param [Definition] methods would fail first, previnting this error from ever being reported
+        //This class is for future use when parameterized [ObjectDef] methods are supported in the future.
+        //Until then, the test for only permitting zero-param [ObjectDef] methods would fail first, previnting this error from ever being reported
         private class ObjectMethodOverloadingProblem : Problem
         {
             public ObjectMethodOverloadingProblem(string methodName, int count, IResource resource, Type configurationClassType)
                 : base(String.Format("[Configuration] class '{0}' has {1} overloaded [Definiton] methods named '{2}'. " +
-                    "Only one [Definition] method of a given name is allowed within each [Configuration] class.", configurationClassType.Name, count, methodName), new Location(resource, configurationClassType))
+                    "Only one [ObjectDef] method of a given name is allowed within each [Configuration] class.", configurationClassType.Name, count, methodName), new Location(resource, configurationClassType))
             { }
 
         }

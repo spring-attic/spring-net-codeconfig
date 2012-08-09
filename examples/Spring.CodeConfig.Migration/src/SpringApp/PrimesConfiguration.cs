@@ -8,7 +8,7 @@ namespace SpringApp
     [Configuration]
     public class PrimesConfiguration
     {
-        [Definition]
+        [ObjectDef]
         public virtual ConsoleReport ConsoleReport()
         {
             ConsoleReport report = new ConsoleReport(OutputFormatter(), PrimeGenerator());
@@ -17,13 +17,13 @@ namespace SpringApp
             return report;
         }
 
-        [Definition]
+        [ObjectDef]
         public virtual IOutputFormatter OutputFormatter()
         {
             return new OutputFormatter();
         }
 
-        [Definition]
+        [ObjectDef]
         public virtual IPrimeGenerator PrimeGenerator()
         {
             return new PrimeGenerator(new PrimeEvaluationEngine());

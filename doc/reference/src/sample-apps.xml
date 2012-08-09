@@ -113,7 +113,7 @@
     public class MovieFinderConfiguration
     {
 
-        [Definition]
+        [ObjectDef]
         public virtual MovieLister MyMovieLister()
         {
             MovieLister movieLister =  new MovieLister();
@@ -122,7 +122,7 @@
 
         }
 
-        [Definition]
+        [ObjectDef]
         public virtual IMovieFinder FileBasedMovieFinder()
         {
             return new ColonDelimitedMovieFinder(new FileInfo("movies.txt"));
@@ -132,7 +132,7 @@
       <para>Using a combination of <literal><link
       linkend="configuration-attribute-reference">[Configuration]</link></literal>
       and <link
-      linkend="definition-attribute-reference"><literal>[Definition]</literal></link>
+      linkend="objectdef-attribute-reference"><literal>[ObjectDef]</literal></link>
       attributes, this class faithfully reproduces the same Object Definition
       configuration as had been described by the
       <literal>Appcontext.xml</literal> file in the iniitial sample
@@ -232,7 +232,7 @@
       <programlisting language="csharp">    [Configuration]
     public class ControllerConfiguration
     {
-        [Definition]
+        [ObjectDef]
         [Scope(ObjectScope.Prototype)]
         public virtual HomeController HomeController()
         {
@@ -245,7 +245,7 @@
       <para>Using a combination of <literal><link
       linkend="configuration-attribute-reference">[Configuration]</link></literal>
       and <link
-      linkend="definition-attribute-reference"><literal>[Definition]</literal></link>
+      linkend="objectdef-attribute-reference"><literal>[ObjectDef]</literal></link>
       attributes, this class faithfully reproduces the same Object Definition
       configuration as had been described by the
       <literal>controllers.xml</literal> file in the iniitial sample

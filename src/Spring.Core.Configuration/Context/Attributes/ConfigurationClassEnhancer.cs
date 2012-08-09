@@ -68,13 +68,13 @@ namespace Spring.Context.Attributes
         }
 
         /// <summary>
-        /// Intercepts the invocation of any <see cref="DefinitionAttribute"/>-decorated methods in order 
+        /// Intercepts the invocation of any <see cref="ObjectDefAttribute"/>-decorated methods in order 
         /// to ensure proper handling of object semantics such as scoping and AOP proxying.
         /// </summary>
         public interface IConfigurationClassInterceptor
         {
             /// <summary>
-            /// Process the <see cref="DefinitionAttribute"/>-decorated method to check 
+            /// Process the <see cref="ObjectDefAttribute"/>-decorated method to check 
             /// for the existence of this object.
             /// </summary>
             /// <param name="method">The method providing the object definition.</param>
@@ -109,7 +109,7 @@ namespace Spring.Context.Attributes
                     return false;
                 }
 
-                object[] attribs = method.GetCustomAttributes(typeof(DefinitionAttribute), true);
+                object[] attribs = method.GetCustomAttributes(typeof(ObjectDefAttribute), true);
                 if (attribs.Length == 0)
                 {
                     return false;

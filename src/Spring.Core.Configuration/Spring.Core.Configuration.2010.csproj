@@ -64,7 +64,7 @@
     <Compile Include="Context\Attributes\ConfigurationClassObjectDefinitionReader.cs" />
     <Compile Include="Context\Attributes\ConfigurationClassParser.cs" />
     <Compile Include="Context\Attributes\ConfigurationClassPostProcessor.cs" />
-    <Compile Include="Context\Attributes\DefinitionAttribute.cs" />
+    <Compile Include="Context\Attributes\ObjectDefAttribute.cs" />
     <Compile Include="Context\Attributes\DependsOnAttribute.cs" />
     <Compile Include="Context\Attributes\IAssemblyTypeScanner.cs" />
     <Compile Include="Context\Attributes\ImportAttribute.cs" />

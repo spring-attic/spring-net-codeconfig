@@ -137,7 +137,7 @@ namespace Spring.Context.Attributes
                         return true;
                     }
                     if (Attribute.GetCustomAttribute(objectType, typeof(ComponentAttribute)) != null ||
-                        HasAttributeOnMethods(objectType, typeof(DefinitionAttribute)))
+                        HasAttributeOnMethods(objectType, typeof(ObjectDefAttribute)))
                     {
                         return true;
                     }
@@ -181,11 +181,11 @@ namespace Spring.Context.Attributes
 
             // consider name and any aliases
             //Dictionary<String, Object> ObjectAttributes = metadata.getAnnotationAttributes(Object.class.getName());
-            object[] objectAttributes = metadata.GetCustomAttributes(typeof(DefinitionAttribute), true);
+            object[] objectAttributes = metadata.GetCustomAttributes(typeof(ObjectDefAttribute), true);
             List<string> names = new List<string>();
             foreach (object t in objectAttributes)
             {
-                string[] namesAndAliases = ((DefinitionAttribute)t).NamesToArray;
+                string[] namesAndAliases = ((ObjectDefAttribute)t).NamesToArray;
 
                 if (namesAndAliases != null)
                 {
@@ -246,13 +246,13 @@ namespace Spring.Context.Attributes
             //	ObjectDef.setAutowireMode(autowire.value());
             //}
 
-            if (Attribute.GetCustomAttribute(metadata, typeof(DefinitionAttribute)) != null)
+            if (Attribute.GetCustomAttribute(metadata, typeof(ObjectDefAttribute)) != null)
             {
                 objDef.InitMethodName =
-                    (Attribute.GetCustomAttribute(metadata, typeof(DefinitionAttribute)) as DefinitionAttribute).
+                    (Attribute.GetCustomAttribute(metadata, typeof(ObjectDefAttribute)) as ObjectDefAttribute).
                         InitMethod;
                 objDef.DestroyMethodName =
-                    (Attribute.GetCustomAttribute(metadata, typeof(DefinitionAttribute)) as DefinitionAttribute).
+                    (Attribute.GetCustomAttribute(metadata, typeof(ObjectDefAttribute)) as ObjectDefAttribute).
                         DestroyMethod;
             }
 
@@ -263,7 +263,7 @@ namespace Spring.Context.Attributes
                     (Attribute.GetCustomAttribute(metadata, typeof(ScopeAttribute)) as ScopeAttribute).ObjectScope.ToString();
             }
 
-            Logger.Debug(m => m("Registering Object definition for [Definition] method {0}.{1}()",
+            Logger.Debug(m => m("Registering Object definition for [ObjectDef] method {0}.{1}()",
                                             configClass.ConfigurationClassType.Name, objectName));
 
             _registry.RegisterObjectDefinition(objectName, objDef);

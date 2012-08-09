@@ -134,7 +134,7 @@
 [ImportResource("assembly://MyApp/MyApp.MyNamespace.MyConfig/ObjectDefinitions.xml"))]
 public class DataModuleConfigurationClass
 {
-    [Definition]
+    [ObjectDef]
     public virtual SomeType SomeType()
     {
         return new SomeType();

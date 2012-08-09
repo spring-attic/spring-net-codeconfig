@@ -52,7 +52,7 @@ namespace ConfigurationNameSpace1
     [Configuration]
     public class SpringConfiguration
     {
-        [Definition]
+        [ObjectDef]
         public virtual string ConfigurationNameSpaceObjectA()
         {
             return "A";
@@ -65,7 +65,7 @@ namespace ConfigurationNameSpace2
     [Configuration]
     public class SpringConfiguration
     {
-        [Definition]
+        [ObjectDef]
         public virtual string ConfigurationNameSpaceObjectB()
         {
             return "B";

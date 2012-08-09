@@ -19,7 +19,7 @@
     <para>The <literal><link
     linkend="configuration-attribute-reference">[Configuration]</link></literal>
     attribute is applied to classes that contain one or more <literal><link
-    linkend="definition-attribute-reference">[Definition]</link></literal>
+    linkend="objectdef-attribute-reference">[ObjectDef]</link></literal>
     attributed-methods. During scanning by the
     <literal>CodeConfigApplicationContext</literal>, only types having the
     <literal><link
@@ -45,7 +45,7 @@
         language="csharp">[Configuration]
 public class MyConfigurationClass
 {
-  //[Definition] methods here
+  //[ObjectDef] methods here
 }</programlisting></para>
       </sect3>
 
@@ -62,27 +62,27 @@ public class MyConfigurationClass
         language="csharp">[Configuration("MySpecialConfigurationClass")]
 public class MyConfigurationClass
 {
-  //[Definition] methods here
+  //[ObjectDef] methods here
 }</programlisting></para>
       </sect3>
     </sect2>
   </sect1>
 
-  <sect1 xml:id="definition-attribute-reference">
-    <title>[Definition] Attribute</title>
+  <sect1 xml:id="objectdef-attribute-reference">
+    <title>[ObjectDef] Attribute</title>
 
     <para>The <literal><link
-    linkend="definition-attribute-reference">[Definition]</link></literal>
+    linkend="objectdef-attribute-reference">[ObjectDef]</link></literal>
     attribute is applied to one or more methods within any class to which the
     <literal><link
     linkend="configuration-attribute-reference">[Configuration]</link></literal>
     attribute has been applied. During scanning, any <literal>public
     virtual</literal> method having the <literal><link
-    linkend="definition-attribute-reference">[Definition]</link></literal>
+    linkend="objectdef-attribute-reference">[ObjectDef]</link></literal>
     attribute is considered to contain Object Definition metadata.</para>
 
     <sect2>
-      <title>Using the Definition Attribute</title>
+      <title>Using the ObjectDef Attribute</title>
 
       <para></para>
 
@@ -90,14 +90,14 @@ public class MyConfigurationClass
         <title>Simple Usage</title>
 
         <para>The first usage of the <literal><link
-        linkend="definition-attribute-reference">[Definition]</link></literal>
+        linkend="objectdef-attribute-reference">[ObjectDef]</link></literal>
         attribute simply applies the attribute to the method. The name of the
         of the Object to be registered with the
         <literal>CodeConfigApplicationContext</literal>, will be the name of
         the method itself.<programlisting language="csharp">[Configuration]
 public class MyConfigurationClass
 {
-  [Definition]
+  [ObjectDef]
   public virtual HomeController HomeController()
   {
     return new HomeController();
@@ -111,20 +111,20 @@ public class MyConfigurationClass
         <para>If you need to control the name of the Object registered with
         the <literal>CodeConfigApplicationContext</literal>, the
         <literal><link
-        linkend="definition-attribute-reference">[Definition]</link></literal>
+        linkend="objectdef-attribute-reference">[ObjectDef]</link></literal>
         attribute accepts one or more comma-delimited names as aliases for the
         Object when registered.</para>
 
         <programlisting language="csharp">[Configuration]
 public class MyConfigurationClass
 {
-  [Definition(Names="TheHomeController")]
+  [ObjectDef(Names="TheHomeController")]
   public virtual HomeController HomeController()
   {
     return new HomeController();
   }
 
-  [Definition(Names="TheSpecialNameForAboutController,AliasForAboutController")]
+  [ObjectDef(Names="TheSpecialNameForAboutController,AliasForAboutController")]
   public virtual AboutController AboutController()
   {
     return new AboutController();
@@ -137,7 +137,7 @@ public class MyConfigurationClass
 
         <para>If you need to declare an Initialization Method for the object
         definition, the <literal><link
-        linkend="definition-attribute-reference">[Definition]</link></literal>
+        linkend="objectdef-attribute-reference">[ObjectDef]</link></literal>
         attribute accepts a method name to be invoked at the appropriate stage
         in the object's creation by the
         <literal>CodeConfigApplicationContext</literal>.</para>
@@ -145,7 +145,7 @@ public class MyConfigurationClass
         <programlisting language="csharp">[Configuration]
 public class MyConfigurationClass 
 {
-  [Definition(InitMethod="AfterCreation")] //assumes a public method on the HomeController type named 'AfterCreation()'
+  [ObjectDef(InitMethod="AfterCreation")] //assumes a public method on the HomeController type named 'AfterCreation()'
   public virtual HomeController HomeController()
   {
     return new HomeController();
@@ -163,7 +163,7 @@ public class MyConfigurationClass
 
         <para>If you need to declare a Destroy Method for the object
         definition, the <literal><link
-        linkend="definition-attribute-reference">[Definition]</link></literal>
+        linkend="objectdef-attribute-reference">[ObjectDef]</link></literal>
         attribute accepts a method name to be invoked at the appropriate stage
         in the object's destruction by the
         <literal>CodeConfigApplicationContext</literal>.</para>
@@ -171,7 +171,7 @@ public class MyConfigurationClass
         <programlisting language="csharp">[Configuration]
 public class MyConfigurationClass
 {
-  [Definition(DestroyMethod="CleanupResources")] //assumes a public method on the HomeController type named 'CleanupResources()'
+  [ObjectDef(DestroyMethod="CleanupResources")] //assumes a public method on the HomeController type named 'CleanupResources()'
   public virtual HomeController HomeController()
   {
     return new HomeController();
@@ -186,7 +186,7 @@ public class MyConfigurationClass
 
     <para>The <literal>[DependsOn]</literal> attribute can be applied to any
     <literal><link
-    linkend="definition-attribute-reference">[Definition]</link></literal>-attributed
+    linkend="objectdef-attribute-reference">[ObjectDef]</link></literal>-attributed
     method to declare a construction sequence dependency upon one or more
     objects that the <literal>CodeConfigApplicationContext</literal> will
     ensure are created prior to the creation of the current object. This is
@@ -208,14 +208,14 @@ public class MyConfigurationClass
         <programlisting language="csharp">[Configuration]
 public class MyConfigurationClass
 {
-  [Definition]
+  [ObjectDef]
   [DependsOn("Dependency1")] //HomeController requires "Dependency1" to be created first
   public virtual HomeController HomeController()
   {
     return new HomeController();
   }
 
-  [Definition]
+  [ObjectDef]
   [DependsOn("Dependency1", "Dependency2")] //AboutController requires "Dependency1" and "Dependency2" to be created first
   public virtual AboutController AboutController()
   {
@@ -255,7 +255,7 @@ public class MyConfigurationClass
 [Import(typeof(MySecondConfiguration), typeof(MyThirdConfiguration))]
 public class MyConfigurationClass
 {
-  [Definition]
+  [ObjectDef]
   public virtual HomeController HomeController()
   {
     return new HomeController();
@@ -265,7 +265,7 @@ public class MyConfigurationClass
 [Configuration]
 public class MySecondConfiguration
 {
-  [Definition]
+  [ObjectDef]
   public virtual AboutController AboutController()
   {
     return new AboutController();
@@ -275,7 +275,7 @@ public class MySecondConfiguration
 [Configuration]
 public class MyThirdConfiguration
 {
-  [Definition]
+  [ObjectDef]
   public virtual SomeOtherController SomeOtherController()
   {
     return new SomeOtherController();
@@ -305,7 +305,7 @@ public class MyThirdConfiguration
 [Import(typeof(MySecondConfiguration))]
 public class MyConfigurationClass
 {
-  [Definition]
+  [ObjectDef]
   public virtual HomeController HomeController()
   {
     return new HomeController();
@@ -316,7 +316,7 @@ public class MyConfigurationClass
 [Import(typeof(MyThirdConfiguration))]
 public class MySecondConfiguration
 {
-  [Definition]
+  [ObjectDef]
   public virtual AboutController AboutController()
   {
     return new AboutController();
@@ -326,7 +326,7 @@ public class MySecondConfiguration
 [Configuration]
 public class MyThirdConfiguration
 {
-  [Definition]
+  [ObjectDef]
   public virtual SomeOtherController SomeOtherController()
   {
     return new SomeOtherController();
@@ -338,12 +338,12 @@ public class MyThirdConfiguration
         <literal>CodeConfigApplicationContext</literal> would only need to be
         told to scan the single <literal>MyConfigurationClass</literal> type
         in order to effectively scan and discover the <literal><link
-        linkend="definition-attribute-reference">[Definition]</link></literal>
+        linkend="objectdef-attribute-reference">[ObjectDef]</link></literal>
         methods contained all three <literal><link
         linkend="configuration-attribute-reference">[Configuration]</link></literal>
         types. Using this approach, its possible to use a compositional
         approach to segregate <literal><link
-        linkend="definition-attribute-reference">[Definition]</link></literal>
+        linkend="objectdef-attribute-reference">[ObjectDef]</link></literal>
         methods into multiple<literal> <link
         linkend="configuration-attribute-reference">[Configuration]</link></literal>
         classes and then chain them together just as one might do with XML
@@ -389,7 +389,7 @@ public class MyThirdConfiguration
 [ImportResource("assembly://MyApplication.Config/MyCompany.MyApplication.Config/ObjectDefinitions.xml")]
 public class MyConfigurationClass
 {
-  [Definition]
+  [ObjectDef]
   public virtual HomeController HomeController()
   {
     return new HomeController();
@@ -412,7 +412,7 @@ public class MyConfigurationClass
 [ImportResource("file://c:/MySpecialConfigLocation/Deployment/SiteB/RepositoryObjectDefinitions.xml")]
 public class MyConfigurationClass
 {
-  [Definition]
+  [ObjectDef]
   public virtual HomeController HomeController()
   {
     return new HomeController();
@@ -440,7 +440,7 @@ public class MyConfigurationClass
 [ImportResource("assembly://MyApplication.Config/MyCompany.MyApplication.Config/ObjectDefinitions.CSV", DefinitionReader = typeof(MyCommaSeparatedValueObjectDefinitionReader))]
 public class MyConfigurationClass
 {
-  [Definition]
+  [ObjectDef]
   public virtual HomeController HomeController()
   {
     return new HomeController();
@@ -455,7 +455,7 @@ public class MyConfigurationClass
 
     <para>The <literal>[Lazy]</literal> attribute allows you to specify that
     the object described by the <literal><link
-    linkend="definition-attribute-reference">[Definition]</link></literal>
+    linkend="objectdef-attribute-reference">[ObjectDef]</link></literal>
     should either be be lazily or eagerly instantiated.</para>
 
     <sect2>
@@ -469,7 +469,7 @@ public class MyConfigurationClass
         <para>To specify Lazy Instantiation of any singleton object by the
         <literal>CodeConfigApplicationContext</literal>, apply the<literal>
         [Lazy] </literal>attribute to any <literal><link
-        linkend="definition-attribute-reference">[Definition]</link></literal>-attributed
+        linkend="objectdef-attribute-reference">[ObjectDef]</link></literal>-attributed
         method as in the following example. Note that the default usage of
         the<literal>[Lazy]</literal> attribute sets Lazy = true and so
         <literal>[Lazy]</literal> and <literal>[Lazy(true)]</literal> are
@@ -477,21 +477,21 @@ public class MyConfigurationClass
         lazy instantiation is only valid for Singleton-scoped objects; any
         attempt to apply the <literal>[Lazy]</literal> attribute to a
         non-singleton-scoped <literal><link
-        linkend="definition-attribute-reference">[Definition]</link></literal>
+        linkend="objectdef-attribute-reference">[ObjectDef]</link></literal>
         method will result in an exception thrown by the underlying
         ApplicationContext.</para>
 
         <programlisting language="csharp">[Configuration]
 public class MyConfigurationClass
 {
-  [Definition]
+  [ObjectDef]
   [Lazy] //functionally equivalent to [Lazy(true)]
   public virtual HomeController HomeController()
   {
     return new HomeController();
   }
 
-  [Definition]
+  [ObjectDef]
   [Lazy] //invalid here because the scope is non-Singleton
   [Scope(ObjectScope.Prototype)]
   public virtual InvalidController InvalidController()
@@ -512,13 +512,13 @@ public class MyConfigurationClass
         <literal>bool</literal> value of <literal>false</literal> if you
         desire to be explicit about the <literal>[Lazy]</literal> setting for
         the <literal><link
-        linkend="definition-attribute-reference">[Definition]</link>
+        linkend="objectdef-attribute-reference">[ObjectDef]</link>
         </literal>as shown in the following code snippet.</para>
 
         <programlisting language="csharp">[Configuration]
 public class MyConfigurationClass
 {
-  [Definition]
+  [ObjectDef]
   [Lazy(false)] //functionally equivalent to simply not applying the [Lazy] attribute at all
   public virtual HomeController HomeController()
   {
@@ -535,7 +535,7 @@ public class MyConfigurationClass
     <para>The [Scope] attribute permits you to declare the lifetime of the
     object managed by the <literal>CodeConfigApplicationContext</literal> for
     each <literal><link
-    linkend="definition-attribute-reference">[Definition]</link></literal>-attributed
+    linkend="objectdef-attribute-reference">[ObjectDef]</link></literal>-attributed
     method.</para>
 
     <sect2>
@@ -548,21 +548,21 @@ public class MyConfigurationClass
       <programlisting language="csharp">[Configuration]
 public class MyConfigurationClass
 {
-  [Definition]
+  [ObjectDef]
   [Scope(ObjectScope.Prototype)]
   public virtual HomeController HomeController()
   {
     return new HomeController();
   }
 
-  [Definition]
+  [ObjectDef]
   [Scope(ObjectScope.Singleton)] //technically redundant since all types default to Singleton ObjectScope
   public virtual CustomerRepository CustomerRepository()
   {
     return new CustomerRepository();
   }
 
-  [Definition]
+  [ObjectDef]
   [Scope(ObjectScope.Session)]
   public virtual UserSettings UserSettings()
   {

@@ -56,7 +56,7 @@
     <Compile Include="Context\Attributes\ScanningConfigurationClassPostProcessorTests.cs" />
     <Compile Include="Context\Attributes\AbstractConfigurationClassPostProcessorTests.cs" />
     <Compile Include="Context\Attributes\ConfigurationClassPostProcessorTests.cs" />
-    <Compile Include="Context\Attributes\DefinitionAttributeTests.cs" />
+    <Compile Include="Context\Attributes\ObjectDefAttributeTests.cs" />
     <Compile Include="Context\Attributes\ImportResourceAttributeTests.cs" />
     <Compile Include="Context\Attributes\SimpleScanTests.cs" />
     <Compile Include="Context\Config\ContextNamespaceParserTests.cs" />
