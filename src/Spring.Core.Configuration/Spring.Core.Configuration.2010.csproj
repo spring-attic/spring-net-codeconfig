@@ -82,7 +82,7 @@
     <Compile Include="AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Context\Config\spring-context-1.3.xsd">
+    <EmbeddedResource Include="Context\Config\spring-context-2.0.xsd">
       <SubType>Designer</SubType>
     </EmbeddedResource>
   </ItemGroup>

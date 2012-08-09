@@ -18,6 +18,7 @@
 
 #endregion
 
+using System.Text.RegularExpressions;
 using System.Xml;
 using Spring.Context.Attributes;
 using Spring.Objects.Factory.Config;
@@ -31,6 +32,13 @@ namespace Spring.Context.Config
     /// </summary>
 	public class ComponentScanObjectDefinitionParser : IObjectDefinitionParser
 	{
+        private const string BASE_ASSEMBLIES_ATTRIBUTE = "base-assemblies";
+
+        private const string EXCLUDE_FILTER_ELEMENT = "exclude-filter";
+
+	    private const string INCLUDE_FILTER_ELEMENT = "include-filter";
+
+
         /// <summary>
         /// Parse the specified XmlElement and register the resulting
         /// ObjectDefinitions with the <see cref="P:Spring.Objects.Factory.Xml.ParserContext.Registry"/> IObjectDefinitionRegistry
@@ -69,14 +77,15 @@ namespace Spring.Context.Config
 		{
 			var scanner = new AssemblyObjectDefinitionScanner();
 
-            ConfigureBaseAssemblies(scanner, element);
-			
+            ParseBaseAssembliesAttribute(scanner, element);
+            ParseTypeFilters(scanner, element);
+
 			return scanner;
 		}
 
-        private void ConfigureBaseAssemblies(AssemblyObjectDefinitionScanner scanner, XmlElement element)
+        private void ParseBaseAssembliesAttribute(AssemblyObjectDefinitionScanner scanner, XmlElement element)
         {
-            var baseAssemblies = element.GetAttribute("base-assemblies");
+            var baseAssemblies = element.GetAttribute(BASE_ASSEMBLIES_ATTRIBUTE);
 
             if (string.IsNullOrEmpty(baseAssemblies))
                 return;
@@ -85,6 +94,34 @@ namespace Spring.Context.Config
             {
                 scanner.WithAssemblyFilter(assy => assy.FullName.StartsWith(baseAssembly));
             }
+        }
+
+        private void ParseTypeFilters(AssemblyObjectDefinitionScanner scanner, XmlElement element)
+        {
+            foreach (XmlNode node in element.ChildNodes)
+            {
+                if (node.Name.Contains(INCLUDE_FILTER_ELEMENT))
+                    CreateTypeFilter(scanner, node, true);
+                else if (node.Name.Contains(EXCLUDE_FILTER_ELEMENT))
+                    CreateTypeFilter(scanner, node, false);
+            }
+        }
+
+        private void CreateTypeFilter(AssemblyObjectDefinitionScanner scanner, XmlNode node, bool include)
+        {
+            var type = node.Attributes["type"].Value;
+            var expression = node.Attributes["expression"].Value;
+
+            switch (type)
+            {
+                case "regex":
+                    if (include)
+                        scanner.WithIncludeFilter(t => Regex.IsMatch(t.FullName, expression));
+                    else
+                        scanner.WithExcludeFilter(t => Regex.IsMatch(t.FullName, expression));
+                    break;
+            }
+            
         }
 
 	}

@@ -60,6 +60,7 @@
     <Compile Include="Context\Attributes\ObjectDefAttributeTests.cs" />
     <Compile Include="Context\Attributes\ImportResourceAttributeTests.cs" />
     <Compile Include="Context\Attributes\SimpleScanTests.cs" />
+    <Compile Include="Context\Attributes\XmlAssemblyTypeScannerTest.cs" />
     <Compile Include="Context\Config\ContextNamespaceParserTests.cs" />
     <Compile Include="Example\Scannable\StubFooDao.cs" />
     <Compile Include="Example\Scannable\FooService.cs" />
@@ -98,6 +99,15 @@
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="Context\Attributes\ConfigFiles\BaseAssemblyTestWithout.xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Context\Attributes\ConfigFiles\TypeScannerTestRegExInclude.xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Context\Attributes\ConfigFiles\TypeScannerTestRegExExclude.xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Context\Attributes\ConfigFiles\TypeScannerTestRegExInclude2.xml" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

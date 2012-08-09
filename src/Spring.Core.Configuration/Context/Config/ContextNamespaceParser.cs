@@ -37,7 +37,7 @@ namespace Spring.Context.Config
         NamespaceParser(
             Namespace = "http://www.springframework.net/context",
             SchemaLocationAssemblyHint = typeof(ContextNamespaceParser),
-            SchemaLocation = "/Spring.Context.Config/spring-context-1.3.xsd"
+            SchemaLocation = "/Spring.Context.Config/spring-context-2.0.xsd"
         )
     ]
     public class ContextNamespaceParser : NamespaceParserSupport
