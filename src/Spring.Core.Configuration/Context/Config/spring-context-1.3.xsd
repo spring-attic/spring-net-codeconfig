@@ -20,7 +20,7 @@
 	</xsd:annotation>
 
 
-	<xsd:element name="code-config">
+	<xsd:element name="component-scan">
 		<xsd:annotation>
 			<xsd:documentation><![CDATA[
 Scans assemblies for [Configuration] attributes that provide Spring object definitions.

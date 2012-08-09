@@ -48,7 +48,7 @@ namespace Spring.Context.Config
         /// </summary>
         public override void Init()
         {
-            RegisterObjectDefinitionParser("code-config", new ComponentScanObjectDefinitionParser());
+            RegisterObjectDefinitionParser("component-scan", new ComponentScanObjectDefinitionParser());
         }
     }
 }

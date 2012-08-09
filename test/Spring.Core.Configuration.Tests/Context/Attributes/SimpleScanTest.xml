@@ -2,7 +2,7 @@
 <objects xmlns="http://www.springframework.net"
          xmlns:context="http://www.springframework.net/context">
   
-  <context:code-config/>
+  <context:component-scan />
   
 </objects>
 
