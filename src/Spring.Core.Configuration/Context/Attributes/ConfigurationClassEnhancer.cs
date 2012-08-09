@@ -26,6 +26,7 @@ using System.Reflection.Emit;
 using Spring.Objects.Factory.Config;
 using Spring.Util;
 using Spring.Proxy;
+using Common.Logging;
 
 namespace Spring.Context.Attributes
 {
@@ -86,7 +87,7 @@ namespace Spring.Context.Attributes
         {
             #region Logging
 
-            private static readonly Common.Logging.ILog LOG = Common.Logging.LogManager.GetLogger(typeof(ConfigurationClassInterceptor));
+            private static readonly ILog Logger = LogManager.GetLogger<ConfigurationClassInterceptor>();
             
             #endregion
 
@@ -116,25 +117,12 @@ namespace Spring.Context.Attributes
 
                 if (this._configurableListableObjectFactory.IsCurrentlyInCreation(objectName))
                 {
-                    #region Logging
-
-                    if (LOG.IsDebugEnabled)
-                    {
-                        LOG.Debug(String.Format("Object '{0}' currently in creation, created one", objectName));
-                    }
-
-                    #endregion
+                    Logger.Debug(m => m("Object '{0}' currently in creation, created one", objectName));
 
                     return false;
                 }
-                #region Logging
 
-                if (LOG.IsDebugEnabled)
-                {
-                    LOG.Debug(String.Format("Object '{0}' not in creation, asked the application context for one", objectName));
-                }
-
-                #endregion
+                Logger.Debug(m => m("Object '{0}' not in creation, asked the application context for one", objectName)); 
 
                 instance = this._configurableListableObjectFactory.GetObject(objectName);
                 return true;

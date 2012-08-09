@@ -41,7 +41,7 @@ namespace Spring.Context.Attributes
     /// </summary>
     public class ConfigurationClassObjectDefinitionReader
     {
-        private readonly ILog _logger = LogManager.GetLogger(typeof(ConfigurationClassObjectDefinitionReader));
+        private static readonly ILog Logger = LogManager.GetLogger<ConfigurationClassObjectDefinitionReader>();
 
         private IProblemReporter _problemReporter;
 
@@ -103,11 +103,8 @@ namespace Spring.Context.Attributes
                 String configObjectName = ObjectDefinitionReaderUtils.RegisterWithGeneratedName(configObjectDef,
                                                                                                 _registry);
                 configClass.ObjectName = configObjectName;
-                if (_logger.IsDebugEnabled)
-                {
-                    _logger.Debug(String.Format("Registered object definition for imported [Configuration] class {0}",
-                                                configObjectName));
-                }
+                Logger.Debug(m => m("Registered object definition for imported [Configuration] class {0}",
+                                         configObjectName));
             }
         }
 
@@ -217,13 +214,9 @@ namespace Spring.Context.Attributes
                 {
                     // no -> then it's an external override, probably XML
                     // overriding is legal, return immediately
-                    if (_logger.IsDebugEnabled)
-                    {
-                        _logger.Debug(
-                            String.Format("Skipping loading Object definition for {0}: a definition for object " +
+                    Logger.Debug(m => m("Skipping loading Object definition for {0}: a definition for object " +
                                           "'{1}' already exists. This is likely due to an override in XML.", method,
                                           objectName));
-                    }
                     return;
                 }
             }
@@ -270,11 +263,8 @@ namespace Spring.Context.Attributes
                     (Attribute.GetCustomAttribute(metadata, typeof(ScopeAttribute)) as ScopeAttribute).ObjectScope.ToString();
             }
 
-            if (_logger.IsDebugEnabled)
-            {
-                _logger.Debug(String.Format("Registering Object definition for [Definition] method {0}.{1}()",
+            Logger.Debug(m => m("Registering Object definition for [Definition] method {0}.{1}()",
                                             configClass.ConfigurationClassType.Name, objectName));
-            }
 
             _registry.RegisterObjectDefinition(objectName, objDef);
         }

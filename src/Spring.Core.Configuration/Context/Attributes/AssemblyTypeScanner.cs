@@ -36,7 +36,7 @@ namespace Spring.Context.Attributes
         /// <summary>
         /// Logger Instance.
         /// </summary>
-        protected static ILog Logger = LogManager.GetLogger(typeof(AssemblyTypeScanner));
+        protected static readonly ILog Logger = LogManager.GetLogger<AssemblyTypeScanner>();
 
         /// <summary>
         /// Names of Assemblies to exclude from being loaded for scanning.
@@ -185,11 +185,8 @@ namespace Spring.Context.Attributes
             assemblies.AddRange(DiscoverAssemblies(folderPath, "*.dll"));
             assemblies.AddRange(DiscoverAssemblies(folderPath, "*.exe"));
 
-
-            if (Logger.IsDebugEnabled)
-            {
-                Logger.Debug(string.Format("Assemblies to be scanned: {0}", StringUtils.ArrayToCommaDelimitedString(assemblies.ToArray())));
-            }
+            Logger.Debug(m => m("Assemblies to be scanned: {0}", StringUtils.ArrayToCommaDelimitedString(assemblies.ToArray())));
+            
             return assemblies;
         }
 
@@ -226,9 +223,7 @@ namespace Spring.Context.Attributes
             catch (Exception ex)
             {
                 //log and swallow everything that might go wrong here...
-                if (Logger.IsDebugEnabled)
-                    Logger.Debug(
-                        string.Format("Failed to load assembly {0} to inspect for [Configuration] types!", filename), ex);
+                Logger.Debug(m => m("Failed to load assembly {0} to inspect for [Configuration] types!", filename), ex);
             }
 
             return assembly;

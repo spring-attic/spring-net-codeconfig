@@ -39,7 +39,7 @@ namespace Spring.Context.Attributes
     {
         #region Logging
 
-        private static readonly ILog log = LogManager.GetLogger(typeof(ConfigurationClassPostProcessor));
+        private static readonly ILog Logger = LogManager.GetLogger<ConfigurationClassPostProcessor>();
 
         #endregion
 
@@ -139,16 +139,7 @@ namespace Spring.Context.Attributes
                         Type configClass = objDef.ObjectType;
                         Type enhancedClass = enhancer.Enhance(configClass);
 
-                        #region Logging
-
-                        if (log.IsDebugEnabled)
-                        {
-                            log.Debug(String.Format(
-                                "Replacing object definition '{0}' existing class '{1}' with enhanced class", 
-                                name, configClass.FullName));
-                        }
-
-                        #endregion
+                        Logger.Debug(m => m("Replacing object definition '{0}' existing class '{1}' with enhanced class", name, configClass.FullName));
 
                         ((IConfigurableObjectDefinition)objDef).ObjectType = enhancedClass;
                     }
