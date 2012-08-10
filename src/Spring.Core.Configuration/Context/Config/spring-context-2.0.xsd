@@ -82,6 +82,8 @@
 					<![CDATA[
     Controls the type of filtering to apply to the expression.
 
+    "attribute" indicates an attribute to be present or excluded at the type level in target components;
+    "assignable" indicates a class (or interface) that the target components are assignable to (extend/implement);
     "regex" indicates a regex expression to be matched by the target components' class names;
 
     Note: This attribute will not be inherited by child bean definitions.
@@ -91,6 +93,7 @@
 			</xsd:annotation>
 			<xsd:simpleType>
 				<xsd:restriction base="xsd:string">
+					<xsd:enumeration value="assignable" />
 					<xsd:enumeration value="attribute" />
 					<xsd:enumeration value="regex" />
 				</xsd:restriction>

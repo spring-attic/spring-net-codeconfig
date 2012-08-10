@@ -136,6 +136,16 @@ namespace Spring.Context.Config
                             scanner.WithExcludeFilter(t => ((Attribute.GetCustomAttribute(t, requiredAttribute) != null) ? true : false));
                     }
                     break;
+                case "assignable":
+                    Type requiredAssignable = LoadType(expression);
+                    if (requiredAssignable != null)
+                    {
+                        if (include)
+                            scanner.WithIncludeFilter(t => t.GetInterfaces().Any(i => i.Equals(requiredAssignable)) || requiredAssignable.Equals(t.BaseType));
+                        else
+                            scanner.WithExcludeFilter(t => t.GetInterfaces().Any(i => i.Equals(requiredAssignable)) || requiredAssignable.Equals(t.BaseType));
+                    }
+                    break;
             }
         }
 
@@ -155,7 +165,6 @@ namespace Spring.Context.Config
 
             return null;
         }
-
-
+        
 	}
 }

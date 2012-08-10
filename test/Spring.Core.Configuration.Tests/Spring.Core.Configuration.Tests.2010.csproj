@@ -115,6 +115,12 @@
   <ItemGroup>
     <EmbeddedResource Include="Context\Attributes\ConfigFiles\TypeScannerTestAttributeExclude.xml" />
   </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Context\Attributes\ConfigFiles\TypeScannerTestAssignableInclude.xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Context\Attributes\ConfigFiles\TypeScannerTestAssignableExclude.xml" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

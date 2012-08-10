@@ -75,6 +75,27 @@ namespace Spring.Context.Attributes
             Assert.That(delegate { _applicationContext.GetObject("SomeIncludeType1"); }, Throws.Exception.TypeOf<NoSuchObjectDefinitionException>());
         }
 
+        [Test]
+        public void IncludeAssignableExpressionFilter()
+        {
+            _applicationContext = new XmlApplicationContext(ReadOnlyXmlTestResource.GetFilePath("ConfigFiles.TypeScannerTestAssignableInclude.xml", GetType()));
+
+            Assert.That(_applicationContext.GetObjectDefinitionNames().Count, Is.EqualTo(5));
+            Assert.That(_applicationContext.GetObject("SomeIncludeType1"), Is.Not.Null);
+            Assert.That(_applicationContext.GetObject("SomeIncludeType2"), Is.Not.Null);
+            Assert.That(delegate { _applicationContext.GetObject("SomeExcludeType"); }, Throws.Exception.TypeOf<NoSuchObjectDefinitionException>());
+        }
+
+        [Test]
+        public void ExcludeAssignableExpressionFilter()
+        {
+            _applicationContext = new XmlApplicationContext(ReadOnlyXmlTestResource.GetFilePath("ConfigFiles.TypeScannerTestAssignableExclude.xml", GetType()));
+
+            Assert.That(_applicationContext.GetObjectDefinitionNames().Count, Is.EqualTo(5));
+            Assert.That(_applicationContext.GetObject("SomeIncludeType1"), Is.Not.Null);
+            Assert.That(_applicationContext.GetObject("SomeExcludeType"), Is.Not.Null);
+            Assert.That(delegate { _applicationContext.GetObject("SomeIncludeType2"); }, Throws.Exception.TypeOf<NoSuchObjectDefinitionException>());
+        }
 
     }
 }
@@ -83,7 +104,7 @@ namespace XmlAssemblyTypeScanner.Test.Include1
 {
     [Service]
     [Configuration]
-    public class SomeIncludeConfiguration
+    public class SomeIncludeConfiguration : IFunny
     {
         [ObjectDef]
         public virtual SomeIncludeType1 SomeIncludeType1()
@@ -95,14 +116,19 @@ namespace XmlAssemblyTypeScanner.Test.Include1
     public class SomeIncludeType1
     {
     }
+
+    public interface IFunny
+    {}
 }
 
 namespace XmlAssemblyTypeScanner.Test.Include2
 {
     [Repository]
     [Configuration]
-    public class SomeIncludeConfiguration
+    public class SomeIncludeConfiguration : FunnyAbstract
     {
+        public override void Test() { }
+
         [ObjectDef]
         public virtual SomeIncludeType2 SomeIncludeType2()
         {
@@ -112,6 +138,11 @@ namespace XmlAssemblyTypeScanner.Test.Include2
 
     public class SomeIncludeType2
     {
+    }
+
+    public abstract class FunnyAbstract
+    {
+        public abstract void Test();
     }
 }
 
