@@ -18,8 +18,11 @@
 
 #endregion
 
+using System;
+using System.Reflection;
 using System.Text.RegularExpressions;
 using System.Xml;
+using Common.Logging;
 using Spring.Context.Attributes;
 using Spring.Objects.Factory.Config;
 using Spring.Objects.Factory.Support;
@@ -31,7 +34,10 @@ namespace Spring.Context.Config
     /// Parses ObjectDefinitions from classes identified by an <see cref="AssemblyObjectDefinitionScanner"/>.
     /// </summary>
 	public class ComponentScanObjectDefinitionParser : IObjectDefinitionParser
-	{
+    {
+        private static readonly ILog Logger = LogManager.GetLogger<ComponentScanObjectDefinitionParser>();
+
+
         private const string BASE_ASSEMBLIES_ATTRIBUTE = "base-assemblies";
 
         private const string EXCLUDE_FILTER_ELEMENT = "exclude-filter";
@@ -120,9 +126,36 @@ namespace Spring.Context.Config
                     else
                         scanner.WithExcludeFilter(t => Regex.IsMatch(t.FullName, expression));
                     break;
+                case "attribute":
+                    Type requiredAttribute = LoadType(expression);
+                    if (requiredAttribute != null)
+                    {
+                        if (include)
+                            scanner.WithIncludeFilter(t => ((Attribute.GetCustomAttribute(t, requiredAttribute) != null) ? true : false));
+                        else
+                            scanner.WithExcludeFilter(t => ((Attribute.GetCustomAttribute(t, requiredAttribute) != null) ? true : false));
+                    }
+                    break;
             }
-            
         }
+
+        private Type LoadType(string expression)
+        {
+            try
+            {
+                var typeSplit = expression.Split(',');
+
+                var assembly = Assembly.Load(typeSplit[1].Trim());
+                return assembly.GetType(typeSplit[0], true);
+            }
+            catch (Exception)
+            {
+                Logger.Error("Expression type can't be loaded: " + expression);
+            }
+
+            return null;
+        }
+
 
 	}
 }

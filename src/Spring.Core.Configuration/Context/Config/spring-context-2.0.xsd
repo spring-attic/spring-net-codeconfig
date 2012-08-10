@@ -27,7 +27,7 @@
 	Spring objects. By default, the Spring-provided [Component], [Repository],
 	[Service], and [Controller] stereotypes will be detected.
 
-	Note: This tag implies the effects of the 'annotation-config' tag, activating [Required],
+	Note: This tag implies the effects of the 'attribute-config' tag, activating [Required],
 	[Autowired], [PostConstruct], [PreDestroy]
 	attributes in the component classes, which is usually desired for autodetected components
 	(without external configuration). Turn off the 'annotation-config' attribute to deactivate
@@ -91,6 +91,7 @@
 			</xsd:annotation>
 			<xsd:simpleType>
 				<xsd:restriction base="xsd:string">
+					<xsd:enumeration value="attribute" />
 					<xsd:enumeration value="regex" />
 				</xsd:restriction>
 			</xsd:simpleType>
