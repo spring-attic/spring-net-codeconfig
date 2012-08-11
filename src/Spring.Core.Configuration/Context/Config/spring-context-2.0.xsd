@@ -95,6 +95,7 @@
 				<xsd:restriction base="xsd:string">
 					<xsd:enumeration value="assignable" />
 					<xsd:enumeration value="attribute" />
+					<xsd:enumeration value="custom" />
 					<xsd:enumeration value="regex" />
 				</xsd:restriction>
 			</xsd:simpleType>

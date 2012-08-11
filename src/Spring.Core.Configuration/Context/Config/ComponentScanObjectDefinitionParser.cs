@@ -18,12 +18,11 @@
 
 #endregion
 
-using System;
-using System.Reflection;
-using System.Text.RegularExpressions;
+using System.ComponentModel;
 using System.Xml;
 using Common.Logging;
 using Spring.Context.Attributes;
+using Spring.Context.Attributes.TypeFilters;
 using Spring.Objects.Factory.Config;
 using Spring.Objects.Factory.Support;
 using Spring.Objects.Factory.Xml;
@@ -107,13 +106,13 @@ namespace Spring.Context.Config
             foreach (XmlNode node in element.ChildNodes)
             {
                 if (node.Name.Contains(INCLUDE_FILTER_ELEMENT))
-                    CreateTypeFilter(scanner, node, true);
+                    scanner.WithIncludeFilter(CreateTypeFilter(node));
                 else if (node.Name.Contains(EXCLUDE_FILTER_ELEMENT))
-                    CreateTypeFilter(scanner, node, false);
+                    scanner.WithExcludeFilter(CreateTypeFilter(node));
             }
         }
 
-        private void CreateTypeFilter(AssemblyObjectDefinitionScanner scanner, XmlNode node, bool include)
+        private ITypeFilter CreateTypeFilter(XmlNode node)
         {
             var type = node.Attributes["type"].Value;
             var expression = node.Attributes["expression"].Value;
@@ -121,50 +120,17 @@ namespace Spring.Context.Config
             switch (type)
             {
                 case "regex":
-                    if (include)
-                        scanner.WithIncludeFilter(t => Regex.IsMatch(t.FullName, expression));
-                    else
-                        scanner.WithExcludeFilter(t => Regex.IsMatch(t.FullName, expression));
-                    break;
+                    return new RegexPatternTypeFilter(expression);
                 case "attribute":
-                    Type requiredAttribute = LoadType(expression);
-                    if (requiredAttribute != null)
-                    {
-                        if (include)
-                            scanner.WithIncludeFilter(t => ((Attribute.GetCustomAttribute(t, requiredAttribute) != null) ? true : false));
-                        else
-                            scanner.WithExcludeFilter(t => ((Attribute.GetCustomAttribute(t, requiredAttribute) != null) ? true : false));
-                    }
-                    break;
+                    return new AttributeTypeFilter(expression);
                 case "assignable":
-                    Type requiredAssignable = LoadType(expression);
-                    if (requiredAssignable != null)
-                    {
-                        if (include)
-                            scanner.WithIncludeFilter(t => t.GetInterfaces().Any(i => i.Equals(requiredAssignable)) || requiredAssignable.Equals(t.BaseType));
-                        else
-                            scanner.WithExcludeFilter(t => t.GetInterfaces().Any(i => i.Equals(requiredAssignable)) || requiredAssignable.Equals(t.BaseType));
-                    }
-                    break;
+                    return new AssignableTypeFilter(expression);
+                case "custom":
+                    return CustomTypeFilterFactory.GetCustomTypeFilter(expression);
+                default:
+                    throw new InvalidEnumArgumentException(string.Format("Filter type {0} is not defined", type));
             }
         }
 
-        private Type LoadType(string expression)
-        {
-            try
-            {
-                var typeSplit = expression.Split(',');
-
-                var assembly = Assembly.Load(typeSplit[1].Trim());
-                return assembly.GetType(typeSplit[0], true);
-            }
-            catch (Exception)
-            {
-                Logger.Error("Expression type can't be loaded: " + expression);
-            }
-
-            return null;
-        }
-        
-	}
+    }
 }

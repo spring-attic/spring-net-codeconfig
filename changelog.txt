@@ -4,10 +4,17 @@ https://github.com/SpringSource/spring-net-codeconfig
 
 *** Release Version 2.0.0 August 31, 2012 ***
 Enhancements:
+- Added possibility to filter assemblies via XML Namespace with StartWith filter
+- Added possibility to filter type by include-filter and exclude-filter element within component-scan element 
+     (attribute, assignable, regex and custom)
+
 
 Changes:
+- Renamed XML Namespace from code-config to component-scan
+
 
 Bug Fixes:
+
 
 
 *** Release Version 1.0.4 August 18, 2011 ***

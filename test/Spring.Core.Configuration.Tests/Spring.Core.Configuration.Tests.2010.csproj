@@ -119,7 +119,17 @@
     <EmbeddedResource Include="Context\Attributes\ConfigFiles\TypeScannerTestAssignableInclude.xml" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Context\Attributes\ConfigFiles\TypeScannerTestAssignableExclude.xml" />
+    <EmbeddedResource Include="Context\Attributes\ConfigFiles\TypeScannerTestAssignableExclude.xml">
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Context\Attributes\ConfigFiles\TypeScannerTestCustomExclude.xml">
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Context\Attributes\ConfigFiles\TypeScannerTestCustomInclude.xml" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

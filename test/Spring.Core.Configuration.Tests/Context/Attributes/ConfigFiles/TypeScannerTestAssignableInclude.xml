@@ -3,6 +3,9 @@
          xmlns:context="http://www.springframework.net/context">
 
 	<context:component-scan base-assemblies="Spring.Core.Configuration.Tests">
+		<!-- to test type load exception -->
+		<context:include-filter type="assignable" expression="XmlAssemblyTypeScanner.Test.Include1.NotValid, Spring.Core.Configuration.Tests"/>
+		
 		<context:include-filter type="assignable" expression="XmlAssemblyTypeScanner.Test.Include1.IFunny, Spring.Core.Configuration.Tests"/>
 		<context:include-filter type="assignable" expression="XmlAssemblyTypeScanner.Test.Include2.FunnyAbstract, Spring.Core.Configuration.Tests"/>
 	</context:component-scan>

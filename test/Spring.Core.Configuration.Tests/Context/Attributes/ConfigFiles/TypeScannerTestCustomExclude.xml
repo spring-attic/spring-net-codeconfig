@@ -3,10 +3,8 @@
          xmlns:context="http://www.springframework.net/context">
 
 	<context:component-scan base-assemblies="Spring.Core.Configuration.Tests">
-		<!-- to test type load exception -->
-		<context:include-filter type="attribute" expression="Spring.Stereotype.ServiceAttribute, notvalid"/>
-
-		<context:include-filter type="attribute" expression="Spring.Stereotype.ServiceAttribute, Spring.Core"/>
+		<context:include-filter type="regex" expression=".*Test.*"/>
+		<context:exclude-filter type="custom" expression="XmlAssemblyTypeScanner.Test.Include1.TestFilter, Spring.Core.Configuration.Tests"/>
 	</context:component-scan>
   
 </objects>

@@ -1,14 +1,13 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using NUnit.Framework;
 using Spring.Context.Attributes;
+using Spring.Context.Attributes.TypeFilters;
 using Spring.Context.Config;
 using Spring.Objects.Factory;
 using Spring.Objects.Factory.Xml;
 using Spring.Context.Support;
 using Spring.Stereotype;
+
 
 namespace Spring.Context.Attributes
 {
@@ -97,6 +96,27 @@ namespace Spring.Context.Attributes
             Assert.That(delegate { _applicationContext.GetObject("SomeIncludeType2"); }, Throws.Exception.TypeOf<NoSuchObjectDefinitionException>());
         }
 
+        [Test]
+        public void IncludeCustomExpressionFilter()
+        {
+            _applicationContext = new XmlApplicationContext(ReadOnlyXmlTestResource.GetFilePath("ConfigFiles.TypeScannerTestCustomInclude.xml", GetType()));
+
+            Assert.That(_applicationContext.GetObjectDefinitionNames().Count, Is.EqualTo(3));
+            Assert.That(_applicationContext.GetObject("SomeIncludeType1"), Is.Not.Null);
+            Assert.That(delegate { _applicationContext.GetObject("SomeIncludeType2"); }, Throws.Exception.TypeOf<NoSuchObjectDefinitionException>());
+        }
+
+        [Test]
+        public void ExcludeCustomExpressionFilter()
+        {
+            _applicationContext = new XmlApplicationContext(ReadOnlyXmlTestResource.GetFilePath("ConfigFiles.TypeScannerTestCustomExclude.xml", GetType()));
+
+            Assert.That(_applicationContext.GetObjectDefinitionNames().Count, Is.EqualTo(5));
+            Assert.That(_applicationContext.GetObject("SomeIncludeType2"), Is.Not.Null);
+            Assert.That(_applicationContext.GetObject("SomeExcludeType"), Is.Not.Null);
+            Assert.That(delegate { _applicationContext.GetObject("SomeIncludeType1"); }, Throws.Exception.TypeOf<NoSuchObjectDefinitionException>());
+        }
+
     }
 }
 
@@ -104,7 +124,7 @@ namespace XmlAssemblyTypeScanner.Test.Include1
 {
     [Service]
     [Configuration]
-    public class SomeIncludeConfiguration : IFunny
+    public class SomeIncludeConfiguration1 : IFunny
     {
         [ObjectDef]
         public virtual SomeIncludeType1 SomeIncludeType1()
@@ -119,13 +139,23 @@ namespace XmlAssemblyTypeScanner.Test.Include1
 
     public interface IFunny
     {}
+
+
+    public class TestFilter : ITypeFilter
+    {
+        public bool Match(Type type)
+        {
+            return type.Name.Equals("SomeIncludeConfiguration1");
+        }
+    }
+
 }
 
 namespace XmlAssemblyTypeScanner.Test.Include2
 {
     [Repository]
     [Configuration]
-    public class SomeIncludeConfiguration : FunnyAbstract
+    public class SomeIncludeConfiguration2 : FunnyAbstract
     {
         public override void Test() { }
 
@@ -149,7 +179,7 @@ namespace XmlAssemblyTypeScanner.Test.Include2
 namespace XmlAssemblyTypeScanner.Test.Include
 {
     [Configuration]
-    public class SomeExcludeConfiguration
+    public class SomeExcludeConfiguration3
     {
         
         [ObjectDef]

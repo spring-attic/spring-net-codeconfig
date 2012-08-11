@@ -74,6 +74,12 @@
     <Compile Include="Context\Attributes\ReflectionOnlyUtils.cs" />
     <Compile Include="Context\Attributes\RequiredConstraintAssemblyTypeScanner.cs" />
     <Compile Include="Context\Attributes\ScopeAttribute.cs" />
+    <Compile Include="Context\Attributes\TypeFilters\AbstractLoadTypeFilter.cs" />
+    <Compile Include="Context\Attributes\TypeFilters\AssignableTypeFilter.cs" />
+    <Compile Include="Context\Attributes\TypeFilters\AttributeTypeFilter.cs" />
+    <Compile Include="Context\Attributes\TypeFilters\CustomTypeFilterFactory.cs" />
+    <Compile Include="Context\Attributes\TypeFilters\ITypeFilter.cs" />
+    <Compile Include="Context\Attributes\TypeFilters\RegexPatternTypeFilter.cs" />
     <Compile Include="Context\Config\AttributeConfigObjectDefinitionParser.cs" />
     <Compile Include="Context\Config\ComponentScanObjectDefinitionParser.cs" />
     <Compile Include="Context\Config\ContextNamespaceParser.cs" />

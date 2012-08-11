@@ -82,14 +82,12 @@
     <sect2>
       <title>Mixing and matching configuration metadata formats</title>
 
-      <para>You can also use a combination of XML and Code base configuration
-      metadata to configure the Spring.NET container. If you are an existing
-      user of Spring.NET, incrementally adopting the code base configuration
-      model will be a common use-case. In this scenario you should use the
-      code-config XML namespace to reference configuration metadata. Using the
-      code-config namespace requires you to register a custom namespace parser
-      in App.config. Below is an example showing the use of the code config
-      namespace</para>
+      <para>You can also use a combination of XML and Code base configuration metadata to configure
+        the Spring.NET container. If you are an existing user of Spring.NET, incrementally adopting
+        the code base configuration model will be a common use-case. In this scenario you should use
+        the component-scan XML namespace to reference configuration metadata. Using the
+        component-scan namespace requires you to register a custom namespace parser in App.config.
+        Below is an example showing the use of the code config namespace</para>
 
       <programlisting language="myxml">&lt;objects xmlns="http://www.springframework.net"
          xmlns:context="http://www.springframework.net/context"&gt;
@@ -104,7 +102,7 @@
 
       <para>The base-assemblies attribute allows you to express limitations
 	  of Assemblies to scan via a comma seperated list of assembly names.
-	  The filter is a startsWith filter</para>
+	  The filter is a StartsWith filter</para>
 
       <para>You will also need to configure the context namespace parser in
       the main .NET application configuraiton file as shown below</para>
@@ -125,6 +123,8 @@
   &lt;/spring&gt;
 
 &lt;/configuration&gt;</programlisting>
+
+
 
       <para>You can also start from a CodeConfig class and import XML based
       object defintions. The example below shows loading of an embedded XML
@@ -469,5 +469,68 @@ var ctx = new CodeConfigApplicationContext();
 ctx.Scan(scanner);</programlisting>
       </sect3>
     </sect2>
+  </sect1>
+  <sect1>
+    <title>Use of XML Namespace and scanning</title>
+    <para> By default, classes attributed with  [Component] ,  [Repository] ,  [Service] ,
+      [Controller] , [Configuration] or a custom attribute that extends [Component]  are the only
+      detected candidate components. However, you can modify and extend this behavior simply by
+      applying custom filters. Add them as  <emphasis role="italic">include-filter</emphasis>  or 
+        <emphasis role="italic">exclude-filter</emphasis>  sub-elements of the  component-scan
+      element. Each filter element requires the  type  and  expression  attributes. The following
+      table describes the filtering options. </para>
+    <para>
+      <table frame="all">
+        <title>Table Filter Types</title>
+        <tgroup cols="3">
+          <colspec colname="c1" colnum="1" colwidth="1*"/>
+          <colspec colname="c2" colnum="2" colwidth="4.24*"/>
+          <colspec colname="c3" colnum="3" colwidth="3.85*"/>
+          <thead>
+            <row>
+              <entry>Filter Type</entry>
+              <entry>Example Expression</entry>
+              <entry>Description</entry>
+            </row>
+          </thead>
+          <tbody>
+            <row>
+              <entry>attribute</entry>
+              <entry><literal>Spring.Stereotype.RepositoryAttribute, Spring.Core</literal></entry>
+              <entry> An attribute to be present at the type level in target components. </entry>
+            </row>
+            <row>
+              <entry>assignable</entry>
+              <entry><literal>My.Namespace.IFoo, My.Assembly</literal></entry>
+              <entry> A class (or interface) that the target components are assignable to
+                (extend/implement). </entry>
+            </row>
+            <row>
+              <entry>regex</entry>
+              <entry><literal>My.NameSpace.*.*Dao</literal></entry>
+              <entry> A regex expression to be matched by the target components class names.
+              </entry>
+            </row>
+            <row>
+              <entry>custom</entry>
+              <entry><literal>My.Namespace.MyTypeFilter, My.Assembly</literal></entry>
+              <entry> A custom implementation of the
+                  <literal>Spring.Context.Attributes.TypeFilters.ITypeFilter</literal> interface. </entry>
+            </row>
+          </tbody>
+        </tgroup>
+      </table>
+    </para>
+    <para> The following example shows the XML configuration ignoring all [Repository]  attributed
+      classes and only scanning types with names that end with Dao using "stub" repositories
+      instead. </para>
+    <programlisting>&lt;objects>
+
+   &lt;context:component-scan base-assemblies="My.Namespace">
+      &lt;context:include-filter type="regex" expression=".*Dao"/>
+      &lt;context:exclude-filter type="annotation" expression="Spring.Stereotype.RepositoryAttribute, Spring.Core"/>
+   &lt;/context:component-scan>
+
+&lt;/beans>  </programlisting>
   </sect1>
 </chapter>
