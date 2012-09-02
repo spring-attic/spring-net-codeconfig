@@ -41,7 +41,26 @@ namespace Spring.Context.Attributes
         /// <summary>
         ///  The object name of the internally managed Configuration attribute processor.
         /// </summary>
-        public static readonly string CONFIGURATION_ATTRIBUTE_PROCESSOR_OBJECT_NAME = "Spring.Context.Attributes.InternalConfigurationClassPostProcessor";
+        public static readonly string CONFIGURATION_ATTRIBUTE_PROCESSOR_OBJECT_NAME =
+            "Spring.Context.Attributes.InternalConfigurationClassPostProcessor";
+
+        /// <summary>
+        /// The object name of the internally managed Autowire attribute processor
+        /// </summary>
+        public static readonly string AUTOWIRED_ATTRIBUTE_PROCESSOR_OBJECT_NAME =
+            "Spring.Context.Attributes.InternalAutowiredClassPostProcessor";
+
+	    /// <summary>
+	    ///The object name of the internally managed Required attribute processor.
+	    /// </summary>
+        public static readonly string REQUIRED_ATTRIBUTE_PROCESSOR_OBJECT_NAME =
+                "Spring.Context.Attributes.InternalRequiredClassPostProcessor";
+
+        /// <summary>
+        ///The object name of the internally managed InitDestroy attribute processor.
+        /// </summary>
+        public static readonly string INITDESTROY_ATTRIBUTE_PROCESSOR_OBJECT_NAME =
+                "Spring.Context.Attributes.InternalInitDestroyClassPostProcessor";
 
 
         /// <summary>
@@ -56,10 +75,23 @@ namespace Spring.Context.Attributes
                 RegisterPostProcessor(registry, objectDefinition, CONFIGURATION_ATTRIBUTE_PROCESSOR_OBJECT_NAME);             
             }
 
-            //AUTOWIRED_ATTRIBUTE_PROCESSOR_OBJECT_NAME
+            if (!registry.ContainsObjectDefinition(AUTOWIRED_ATTRIBUTE_PROCESSOR_OBJECT_NAME))
+            {
+                RootObjectDefinition objectDefinition = new RootObjectDefinition(typeof(AutowiredAttributeObjectPostProcessor));
+                RegisterPostProcessor(registry, objectDefinition, AUTOWIRED_ATTRIBUTE_PROCESSOR_OBJECT_NAME);
+            }
 
-            //REQUIRED_ATTRIBUTE_PROCESSOR_OBJECT_NAME
+            if (!registry.ContainsObjectDefinition(REQUIRED_ATTRIBUTE_PROCESSOR_OBJECT_NAME))
+            {
+                RootObjectDefinition objectDefinition = new RootObjectDefinition(typeof(RequiredAttributeObjectPostProcessor));
+                RegisterPostProcessor(registry, objectDefinition, REQUIRED_ATTRIBUTE_PROCESSOR_OBJECT_NAME);
+            }
 
+            if (!registry.ContainsObjectDefinition(INITDESTROY_ATTRIBUTE_PROCESSOR_OBJECT_NAME))
+            {
+                RootObjectDefinition objectDefinition = new RootObjectDefinition(typeof(InitDestroyAttributeObjectPostProcessor));
+                RegisterPostProcessor(registry, objectDefinition, INITDESTROY_ATTRIBUTE_PROCESSOR_OBJECT_NAME);
+            }
         }
 
         private static void RegisterPostProcessor(IObjectDefinitionRegistry registry, IConfigurableObjectDefinition objectDefinition, string objectName)

@@ -1,16 +1,11 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using NUnit.Framework;
-using Spring.Context.Config;
+﻿using NUnit.Framework;
 using Spring.Context.Support;
 using Spring.Objects.Factory.Xml;
 
-namespace Spring.Context.Attributes
+namespace Spring.Context.Config
 {
     [TestFixture]
-    public class BaseAssemblyFilterTest
+    public class ComponentScanObjectDefinitionParserAssemblyFilterTests
     {
         private IApplicationContext _applicationContext;
 
@@ -47,7 +42,7 @@ namespace Spring.Context.Attributes
         {
             _applicationContext = new XmlApplicationContext(ReadOnlyXmlTestResource.GetFilePath("ConfigFiles.BaseAssemblyTestNegative.xml", GetType()));
 
-            Assert.That(_applicationContext.GetObjectDefinitionNames().Count, Is.EqualTo(1));
+            Assert.That(_applicationContext.GetObjectDefinitionNames().Count, Is.EqualTo(4));
         }
 
     }

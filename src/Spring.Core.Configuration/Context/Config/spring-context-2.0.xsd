@@ -19,7 +19,22 @@
 		]]></xsd:documentation>
 	</xsd:annotation>
 
-	<xsd:element name="component-scan">
+  <xsd:element name="attribute-config">
+    <xsd:annotation>
+      <xsd:documentation>
+        <![CDATA[
+	Activates various attributes to be detected in object classes: Spring's [Required],
+	[Autowired], [Value] as well [PostConstruct], [PreDestroy]. Alternatively, you may
+	choose to activate the individual BeanPostProcessors for those annotations.
+
+	Note: This tag does not activate processing of Spring's [Transactional].
+  Consider the use of the <tx:annotation-driven> tag for that purpose.
+			]]>
+      </xsd:documentation>
+    </xsd:annotation>
+  </xsd:element>
+
+  <xsd:element name="component-scan">
 		<xsd:annotation>
 			<xsd:documentation>
 				<![CDATA[
@@ -72,7 +87,16 @@
 					</xsd:documentation>
 				</xsd:annotation>
 			</xsd:attribute>
-		</xsd:complexType>
+      <xsd:attribute name="attribute-config" type="xsd:boolean" default="true">
+        <xsd:annotation>
+          <xsd:documentation>
+            <![CDATA[
+	Indicates if attribte driven post processors will be registered, default is true.
+					]]>
+          </xsd:documentation>
+        </xsd:annotation>
+      </xsd:attribute>
+    </xsd:complexType>
 	</xsd:element>
 
 	<xsd:complexType name="filterType">

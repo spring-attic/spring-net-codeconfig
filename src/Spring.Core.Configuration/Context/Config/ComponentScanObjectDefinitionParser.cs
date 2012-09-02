@@ -36,6 +36,7 @@ namespace Spring.Context.Config
     {
         private static readonly ILog Logger = LogManager.GetLogger<ComponentScanObjectDefinitionParser>();
 
+        private const string ATTRIBUTE_CONFIG_ATTRIBUTE = "attribute-config";
 
         private const string BASE_ASSEMBLIES_ATTRIBUTE = "base-assemblies";
 
@@ -66,8 +67,7 @@ namespace Spring.Context.Config
 			
 			// Actually scan for objects definitions and register them.
 			scanner.ScanAndRegisterTypes(registry);
-
-			AttributeConfigUtils.RegisterAttributeConfigProcessors(registry);
+            RegisterComponents(element, registry);
 
             return null;
 		}
@@ -87,6 +87,16 @@ namespace Spring.Context.Config
 
 			return scanner;
 		}
+
+        private void RegisterComponents(XmlElement element, IObjectDefinitionRegistry registry)
+        {
+            bool attributeConfig = true;
+            var attr = element.GetAttribute(ATTRIBUTE_CONFIG_ATTRIBUTE);
+            if (attr != null)
+                bool.TryParse(attr, out attributeConfig);
+            if (attributeConfig)
+                AttributeConfigUtils.RegisterAttributeConfigProcessors(registry);
+        }
 
         private void ParseBaseAssembliesAttribute(AssemblyObjectDefinitionScanner scanner, XmlElement element)
         {

@@ -23,7 +23,7 @@ using Spring.Objects.Factory.Xml;
 namespace Spring.Context.Config
 {
     /// <summary>
-    /// 	<code>NamespaceParser</code> allowing for the configuration of
+    /// <code>NamespaceParser</code> allowing for the configuration of
     /// declarative transaction management using either XML or using attributes.
     /// This namespace handler is the central piece of functionality in the
     /// Spring transaction management facilities and offers two appraoches
@@ -48,6 +48,7 @@ namespace Spring.Context.Config
         /// </summary>
         public override void Init()
         {
+            RegisterObjectDefinitionParser("attribute-config", new AttributeConfigObjectDefinitionParser());
             RegisterObjectDefinitionParser("component-scan", new ComponentScanObjectDefinitionParser());
         }
     }

@@ -50,7 +50,7 @@
     </Compile>
     <Compile Include="Context\Attributes\AssemblyObjectDefinitionScannerTests.cs" />
     <Compile Include="Context\Attributes\AssemblyTypeScannerTests.cs" />
-    <Compile Include="Context\Attributes\BaseAssemblyFilterTest.cs" />
+    <Compile Include="Context\Config\ComponentScanObjectDefinitionParserAssemblyFilterTests.cs" />
     <Compile Include="Context\Attributes\CodeConfigApplicationContextTests.cs" />
     <Compile Include="Context\Attributes\ConfigurationClassObjectDefinitionReaderTests.cs" />
     <Compile Include="Context\Attributes\ConfigurationClassParserTests.cs" />
@@ -60,7 +60,9 @@
     <Compile Include="Context\Attributes\ObjectDefAttributeTests.cs" />
     <Compile Include="Context\Attributes\ImportResourceAttributeTests.cs" />
     <Compile Include="Context\Attributes\SimpleScanTests.cs" />
-    <Compile Include="Context\Attributes\XmlAssemblyTypeScannerTest.cs" />
+    <Compile Include="Context\Config\AttributeConfigObjectDefinitionParserTests.cs" />
+    <Compile Include="Context\Config\ComponentScanObjectDefinitionParserTypeFilterTests.cs" />
+    <Compile Include="Context\Config\ComponentScanObjectDefinitionParserTests.cs" />
     <Compile Include="Context\Config\ContextNamespaceParserTests.cs" />
     <Compile Include="Example\Scannable\StubFooDao.cs" />
     <Compile Include="Example\Scannable\FooService.cs" />
@@ -89,47 +91,56 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Context\Attributes\ConfigFiles\BaseAssemblyTestSingle.xml" />
+    <EmbeddedResource Include="Context\Config\ConfigFiles\BaseAssemblyTestSingle.xml" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Context\Attributes\ConfigFiles\BaseAssemblyTestMultiple.xml" />
+    <EmbeddedResource Include="Context\Config\ConfigFiles\BaseAssemblyTestMultiple.xml" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Context\Attributes\ConfigFiles\BaseAssemblyTestNegative.xml" />
+    <EmbeddedResource Include="Context\Config\ConfigFiles\BaseAssemblyTestNegative.xml" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Context\Attributes\ConfigFiles\BaseAssemblyTestWithout.xml" />
+    <EmbeddedResource Include="Context\Config\ConfigFiles\BaseAssemblyTestWithout.xml" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Context\Attributes\ConfigFiles\TypeScannerTestRegExInclude.xml" />
+    <EmbeddedResource Include="Context\Config\ConfigFiles\TypeScannerTestRegExInclude.xml" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Context\Attributes\ConfigFiles\TypeScannerTestRegExExclude.xml" />
+    <EmbeddedResource Include="Context\Config\ConfigFiles\TypeScannerTestRegExExclude.xml" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Context\Attributes\ConfigFiles\TypeScannerTestRegExInclude2.xml" />
+    <EmbeddedResource Include="Context\Config\ConfigFiles\TypeScannerTestRegExInclude2.xml" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Context\Attributes\ConfigFiles\TypeScannerTestAttributeInclude.xml" />
+    <EmbeddedResource Include="Context\Config\ConfigFiles\TypeScannerTestAttributeInclude.xml" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Context\Attributes\ConfigFiles\TypeScannerTestAttributeExclude.xml" />
+    <EmbeddedResource Include="Context\Config\ConfigFiles\TypeScannerTestAttributeExclude.xml" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Context\Attributes\ConfigFiles\TypeScannerTestAssignableInclude.xml" />
+    <EmbeddedResource Include="Context\Config\ConfigFiles\TypeScannerTestAssignableInclude.xml" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Context\Attributes\ConfigFiles\TypeScannerTestAssignableExclude.xml">
+    <EmbeddedResource Include="Context\Config\ConfigFiles\TypeScannerTestAssignableExclude.xml">
       <SubType>Designer</SubType>
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Context\Attributes\ConfigFiles\TypeScannerTestCustomExclude.xml">
+    <EmbeddedResource Include="Context\Config\ConfigFiles\TypeScannerTestCustomExclude.xml">
       <SubType>Designer</SubType>
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Context\Attributes\ConfigFiles\TypeScannerTestCustomInclude.xml" />
+    <EmbeddedResource Include="Context\Config\ConfigFiles\TypeScannerTestCustomInclude.xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Context\Config\ConfigFiles\AttributeConfigParser.xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Context\Config\ConfigFiles\ComponentScanAttributeConfigFalse.xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Context\Config\ConfigFiles\ComponentScanAttributeConfigTrue.xml" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

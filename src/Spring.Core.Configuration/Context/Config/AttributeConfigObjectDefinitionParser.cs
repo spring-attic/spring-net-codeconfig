@@ -34,14 +34,6 @@ namespace Spring.Context.Config
     public class AttributeConfigObjectDefinitionParser : IObjectDefinitionParser
     {
         /// <summary>
-        ///  The object name of the internally managed configuration attribute processor
-        /// </summary>
-        public static readonly string CONFIGURATION_ATTRIBUTE_PROCESSOR_OBJECT_NAME =
-            "Spring.Context.Attributes.InternalConfigurationAttributeProcessor";
-
-        private static readonly Type ConfigurationClassPostProcessorType = typeof (ConfigurationClassPostProcessor);
-
-        /// <summary>
         /// Parse the specified XmlElement and register the resulting
         /// ObjectDefinitions with the <see cref="P:Spring.Objects.Factory.Xml.ParserContext.Registry"/> IObjectDefinitionRegistry
         /// embedded in the supplied <see cref="T:Spring.Objects.Factory.Xml.ParserContext"/>
@@ -59,15 +51,9 @@ namespace Spring.Context.Config
         public IObjectDefinition ParseElement(XmlElement element, ParserContext parserContext)
         {
             IObjectDefinitionRegistry registry = parserContext.ReaderContext.Registry;
-
             AssertUtils.ArgumentNotNull(registry, "registry");
 
-            if (!registry.ContainsObjectDefinition(CONFIGURATION_ATTRIBUTE_PROCESSOR_OBJECT_NAME))
-            {
-                var objectDefinition = new RootObjectDefinition(ConfigurationClassPostProcessorType);
-                objectDefinition.Role = ObjectRole.ROLE_INFRASTRUCTURE;
-                registry.RegisterObjectDefinition(CONFIGURATION_ATTRIBUTE_PROCESSOR_OBJECT_NAME, objectDefinition);
-            }
+            AttributeConfigUtils.RegisterAttributeConfigProcessors(registry);
 
             return null;
         }
