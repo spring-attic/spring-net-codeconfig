@@ -22,7 +22,7 @@
     <DefineConstants>DEBUG;TRACE;$(DefineExtraConstants)</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
-    <DocumentationFile>..\..\build\net-2.0\Spring.Core.Configuration.XML</DocumentationFile>
+    <DocumentationFile>..\..\build\net-4.0\Spring.Core.Configuration.XML</DocumentationFile>
     <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
     <NoWarn>1685</NoWarn>
     <RunCodeAnalysis>false</RunCodeAnalysis>
@@ -95,7 +95,8 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Context\Config\spring-context-2.0.xsd">
       <SubType>Designer</SubType>
-    </EmbeddedResource>  </ItemGroup>
+    </EmbeddedResource>
+  </ItemGroup>
   <ItemGroup>
     <Folder Include="Properties\" />
   </ItemGroup>

@@ -20,9 +20,9 @@ using System.Security.Permissions;
 [assembly: AssemblyCopyrightAttribute("Copyright 2010-2011 Spring.NET Framework Team.")]
 [assembly: AssemblyTrademarkAttribute("Apache License, Version 2.0")]
 [assembly: AssemblyCultureAttribute("")]
-[assembly: AssemblyVersionAttribute("2.0.0.4604")]
-[assembly: AssemblyFileVersionAttribute("2.0.0.4604")]
+[assembly: AssemblyVersionAttribute("2.0.0.4629")]
+[assembly: AssemblyFileVersionAttribute("2.0.0.4629")]
 [assembly: AssemblyConfigurationAttribute("net-4.0.win32; dev")]
-[assembly: AssemblyInformationalVersionAttribute("2.0.0.4604")]
+[assembly: AssemblyInformationalVersionAttribute("2.0.0.4629")]
 [assembly: AssemblyDelaySignAttribute(false)]
 
