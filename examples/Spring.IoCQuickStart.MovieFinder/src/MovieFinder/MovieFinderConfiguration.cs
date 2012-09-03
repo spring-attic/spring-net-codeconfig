@@ -32,7 +32,7 @@ namespace Spring.IocQuickStart.MovieFinder
     public class MovieFinderConfiguration
     {
 
-        [Definition]
+        [ObjectDef]
         public virtual MovieLister MyMovieLister()
         {
             MovieLister movieLister =  new MovieLister();
@@ -41,7 +41,7 @@ namespace Spring.IocQuickStart.MovieFinder
 
         }
 
-        [Definition]
+        [ObjectDef]
         public virtual IMovieFinder FileBasedMovieFinder()
         {
             return new ColonDelimitedMovieFinder(new FileInfo("movies.txt"));

@@ -2,9 +2,33 @@ SPRING CODE CONFIG .NET CHANGELOG
 ==================================
 https://github.com/SpringSource/spring-net-codeconfig
 
+*** Release Version 2.0.0 September 7, 2012 ***
+Enhancements:
+- Added possibility to filter assemblies via XML Namespace with StartWith filter
+- Added possibility to filter type by include-filter and exclude-filter element within component-scan element 
+     (attribute, assignable, regex and custom)
+- Added possibility to scan and add type annotated with [Component] or any derived attribute
+- Added possibility to define a [Component] class as LazyInit via attribute
+- Added possibility to define scope of a [Component] via attribute
+- Added possibility to define Qulifiers via attribute to be used for [Autowired] injection
+- Added possibility to define Meta attributes via derived [Qualifier] attributes
+- Added possibility to define a name generator for scanned components
+- Added possibility to define attribute configuration via <context:attribute-config />: Configuration, Autowired, Required, InitDestroy
+
+
+Changes:
+- Renamed XML Namespace from code-config to component-scan
+- Update to Spring.Net 2.0.0 dependency 
+- Update context schema version to 2.0
+
+Bug Fixes:
+
+
+
 *** Release Version 1.0.4 August 18, 2011 ***
 Changes:
 - Update to Spring.NET 1.3.2 dependency
+
 
 
 *** Release Version 1.0.3 June 30, 2011 ***
@@ -12,9 +36,11 @@ Changes:
 - Properly respect explicit Prototype scope with Singleton dependency
 
 
+
 *** Release Version 1.0.2 June 29, 2011 ***
 Changes:
 - Removed the built-in definition of the System.CompilerServices.ExtensionAttribute from non-.NET 2.0 builds
+
 
 
 *** Release Version 1.0.0 April 4, 2011 ***

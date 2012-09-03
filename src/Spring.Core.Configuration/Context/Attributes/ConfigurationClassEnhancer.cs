@@ -26,6 +26,7 @@ using System.Reflection.Emit;
 using Spring.Objects.Factory.Config;
 using Spring.Util;
 using Spring.Proxy;
+using Common.Logging;
 
 namespace Spring.Context.Attributes
 {
@@ -67,13 +68,13 @@ namespace Spring.Context.Attributes
         }
 
         /// <summary>
-        /// Intercepts the invocation of any <see cref="DefinitionAttribute"/>-decorated methods in order 
+        /// Intercepts the invocation of any <see cref="ObjectDefAttribute"/>-decorated methods in order 
         /// to ensure proper handling of object semantics such as scoping and AOP proxying.
         /// </summary>
         public interface IConfigurationClassInterceptor
         {
             /// <summary>
-            /// Process the <see cref="DefinitionAttribute"/>-decorated method to check 
+            /// Process the <see cref="ObjectDefAttribute"/>-decorated method to check 
             /// for the existence of this object.
             /// </summary>
             /// <param name="method">The method providing the object definition.</param>
@@ -86,7 +87,7 @@ namespace Spring.Context.Attributes
         {
             #region Logging
 
-            private static readonly Common.Logging.ILog LOG = Common.Logging.LogManager.GetLogger(typeof(ConfigurationClassInterceptor));
+            private static readonly ILog Logger = LogManager.GetLogger<ConfigurationClassInterceptor>();
             
             #endregion
 
@@ -108,7 +109,7 @@ namespace Spring.Context.Attributes
                     return false;
                 }
 
-                object[] attribs = method.GetCustomAttributes(typeof(DefinitionAttribute), true);
+                object[] attribs = method.GetCustomAttributes(typeof(ObjectDefAttribute), true);
                 if (attribs.Length == 0)
                 {
                     return false;
@@ -116,25 +117,12 @@ namespace Spring.Context.Attributes
 
                 if (this._configurableListableObjectFactory.IsCurrentlyInCreation(objectName))
                 {
-                    #region Logging
-
-                    if (LOG.IsDebugEnabled)
-                    {
-                        LOG.Debug(String.Format("Object '{0}' currently in creation, created one", objectName));
-                    }
-
-                    #endregion
+                    Logger.Debug(m => m("Object '{0}' currently in creation, created one", objectName));
 
                     return false;
                 }
-                #region Logging
 
-                if (LOG.IsDebugEnabled)
-                {
-                    LOG.Debug(String.Format("Object '{0}' not in creation, asked the application context for one", objectName));
-                }
-
-                #endregion
+                Logger.Debug(m => m("Object '{0}' not in creation, asked the application context for one", objectName)); 
 
                 instance = this._configurableListableObjectFactory.GetObject(objectName);
                 return true;

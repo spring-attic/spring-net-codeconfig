@@ -38,7 +38,10 @@ namespace Spring.Context.Support
         /// <param name="scanner">The scanner.</param>
         public static void Scan(this GenericApplicationContext context, AssemblyObjectDefinitionScanner scanner)
         {
-            scanner.ScanAndRegisterTypes((IObjectDefinitionRegistry)context.ObjectFactory);
+            var registry = context.ObjectFactory as IObjectDefinitionRegistry;
+            scanner.ScanAndRegisterTypes(registry);
+
+            AttributeConfigUtils.RegisterAttributeConfigProcessors(registry);
         }
 
         /// <summary>

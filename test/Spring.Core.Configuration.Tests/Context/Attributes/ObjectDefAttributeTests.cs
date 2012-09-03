@@ -23,12 +23,12 @@ using NUnit.Framework;
 namespace Spring.Context.Attributes
 {
     [TestFixture]
-    public class DefinitionAttributeTests
+    public class ObjectDefAttributeTests
     {
         [Test]
         public void Can_Accept_Single_Name()
         {
-            var def = new DefinitionAttribute();
+            var def = new ObjectDefAttribute();
 
             def.Names = "Steve";
 
@@ -39,7 +39,7 @@ namespace Spring.Context.Attributes
         [Test]
         public void Can_Accept_Multiple_Names()
         {
-            var def = new DefinitionAttribute();
+            var def = new ObjectDefAttribute();
             var names = "Name1,Name2,Name3";
 
             def.Names = names;

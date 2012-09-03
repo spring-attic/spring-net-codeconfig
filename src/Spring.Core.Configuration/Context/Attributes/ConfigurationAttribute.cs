@@ -24,7 +24,7 @@ using Spring.Stereotype;
 namespace Spring.Context.Attributes
 {
     /// <summary>
-    /// Indicates that a class declares one or more <see cref="DefinitionAttribute"/> methods and may be processed
+    /// Indicates that a class declares one or more <see cref="ObjectDefAttribute"/> methods and may be processed
     /// by the Spring container to generate object definitions and service requests for those objects
     /// at runtime.
     ///

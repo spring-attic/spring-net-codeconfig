@@ -22,6 +22,7 @@ using System;
 using System.Collections.Generic;
 using System.Reflection;
 using Spring.Objects.Factory.Support;
+using Spring.Stereotype;
 
 namespace Spring.Context.Attributes
 {
@@ -56,6 +57,17 @@ namespace Spring.Context.Attributes
                                                                              "Spring.Web.Mvc",
                                                                 };
 
+        private IObjectNameGenerator _objectNameGenerator = new AttributeObjectNameGenerator();
+
+        /// <summary>
+        /// Provides the name generator for all scanned objects.
+        /// Default is <see cref="AttributeObjectNameGenerator"/>
+        /// </summary>
+        public IObjectNameGenerator ObjectNameGenerator
+        {
+            get { return _objectNameGenerator; }
+            set { _objectNameGenerator = value; }
+        }
 
         /// <summary>
         /// Registers the defintions for types.
@@ -66,9 +78,9 @@ namespace Spring.Context.Attributes
         {
             foreach (Type type in typesToRegister)
             {
-                ObjectDefinitionBuilder definition = ObjectDefinitionBuilder.GenericObjectDefinition(type);
-                registry.RegisterObjectDefinition(definition.ObjectDefinition.ObjectTypeName,
-                                                  definition.ObjectDefinition);
+                var definition = new ScannedGenericObjectDefinition(type, Defaults);
+                string objectName = ObjectNameGenerator.GenerateObjectName(definition, registry);
+                registry.RegisterObjectDefinition(objectName, definition);
             }
         }
 
@@ -107,15 +119,23 @@ namespace Spring.Context.Attributes
         {
             if (!type.Assembly.ReflectionOnly)
             {
-                return Attribute.GetCustomAttribute(type, typeof(ConfigurationAttribute), true) != null &&
-                       !type.IsAbstract;
+                try
+                {
+                    return Attribute.GetCustomAttribute(type, typeof(ComponentAttribute), true) != null &&
+                           !type.IsAbstract;                    
+                }
+                catch (AmbiguousMatchException)
+                {
+                    Logger.Error(m => m("Type {0} has more than one ComponentAttributes assigned to it.", type.FullName));
+                    return false;
+                }
             }
 
             bool satisfied = false;
 
             foreach (CustomAttributeData customAttributeData in CustomAttributeData.GetCustomAttributes(type))
             {
-                if (customAttributeData.Constructor.DeclaringType.FullName == typeof(ConfigurationAttribute).FullName &&
+                if (customAttributeData.Constructor.DeclaringType.FullName == typeof(ComponentAttribute).FullName &&
                     !type.IsAbstract)
                 {
                     satisfied = true;
@@ -150,13 +170,6 @@ namespace Spring.Context.Attributes
         public virtual void ScanAndRegisterTypes(IObjectDefinitionRegistry registry)
         {
             IEnumerable<Type> configTypes = base.Scan();
-
-            //if we have at least one config class, ensure the post-processor is registered
-            if (configTypes.Count() > 0)
-            {
-                AttributeConfigUtils.RegisterAttributeConfigProcessors(registry);
-            }
-
             RegisterDefinitionsForTypes(registry, configTypes);
         }
 
