@@ -38,6 +38,8 @@ namespace Spring.Context.Config
 
         private const string ATTRIBUTE_CONFIG_ATTRIBUTE = "attribute-config";
 
+        private const string NAME_GENERATOR_ATTRIBUTE = "name-generator";
+
         private const string BASE_ASSEMBLIES_ATTRIBUTE = "base-assemblies";
 
         private const string EXCLUDE_FILTER_ELEMENT = "exclude-filter";
@@ -83,20 +85,13 @@ namespace Spring.Context.Config
 			var scanner = new AssemblyObjectDefinitionScanner();
 
             ParseBaseAssembliesAttribute(scanner, element);
+            ParseNameGeneratorAttribute(scanner, element);
             ParseTypeFilters(scanner, element);
 
-			return scanner;
-		}
+            scanner.Defaults = parserContext.ParserHelper.Defaults;
 
-        private void RegisterComponents(XmlElement element, IObjectDefinitionRegistry registry)
-        {
-            bool attributeConfig = true;
-            var attr = element.GetAttribute(ATTRIBUTE_CONFIG_ATTRIBUTE);
-            if (attr != null)
-                bool.TryParse(attr, out attributeConfig);
-            if (attributeConfig)
-                AttributeConfigUtils.RegisterAttributeConfigProcessors(registry);
-        }
+            return scanner;
+		}
 
         private void ParseBaseAssembliesAttribute(AssemblyObjectDefinitionScanner scanner, XmlElement element)
         {
@@ -111,6 +106,14 @@ namespace Spring.Context.Config
             }
         }
 
+        private void ParseNameGeneratorAttribute(AssemblyObjectDefinitionScanner scanner, XmlElement element)
+        {
+            var nameGeneratorString = element.GetAttribute(NAME_GENERATOR_ATTRIBUTE);
+            var nameGenerator = CustomTypeFactory.GetNameGenerator(nameGeneratorString);
+            if (nameGenerator != null)
+                scanner.ObjectNameGenerator = nameGenerator;
+        }
+
         private void ParseTypeFilters(AssemblyObjectDefinitionScanner scanner, XmlElement element)
         {
             foreach (XmlNode node in element.ChildNodes)
@@ -120,6 +123,16 @@ namespace Spring.Context.Config
                 else if (node.Name.Contains(EXCLUDE_FILTER_ELEMENT))
                     scanner.WithExcludeFilter(CreateTypeFilter(node));
             }
+        }
+
+        private void RegisterComponents(XmlElement element, IObjectDefinitionRegistry registry)
+        {
+            bool attributeConfig = true;
+            var attr = element.GetAttribute(ATTRIBUTE_CONFIG_ATTRIBUTE);
+            if (attr != null)
+                bool.TryParse(attr, out attributeConfig);
+            if (attributeConfig)
+                AttributeConfigUtils.RegisterAttributeConfigProcessors(registry);
         }
 
         private ITypeFilter CreateTypeFilter(XmlNode node)
@@ -136,7 +149,7 @@ namespace Spring.Context.Config
                 case "assignable":
                     return new AssignableTypeFilter(expression);
                 case "custom":
-                    return CustomTypeFilterFactory.GetCustomTypeFilter(expression);
+                    return CustomTypeFactory.GetTypeFilter(expression);
                 default:
                     throw new InvalidEnumArgumentException(string.Format("Filter type {0} is not defined", type));
             }

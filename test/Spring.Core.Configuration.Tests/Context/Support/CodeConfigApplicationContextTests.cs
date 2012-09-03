@@ -43,7 +43,7 @@ namespace Spring.Context.Support
             _context.ScanWithAssemblyFilter(a => a.GetName().Name.StartsWith("Spring.Core.Configuration."));
             _context.Refresh();
 
-            AssertExpectedObjectsAreRegisteredWith(_context, 28);
+            AssertExpectedObjectsAreRegisteredWith(_context, 45);
         }
 
         [Test]
@@ -53,7 +53,7 @@ namespace Spring.Context.Support
             _context.ScanWithAssemblyFilter(assy => assy.GetTypes().Any(type => type.FullName.Contains(typeof(Spring.Core.IOrdered).Name)));
             _context.Refresh();
 
-            Assert.That(_context.DefaultListableObjectFactory.ObjectDefinitionCount, Is.EqualTo(0));
+            Assert.That(_context.DefaultListableObjectFactory.ObjectDefinitionCount, Is.EqualTo(4));
         }
 
         [Test]
@@ -62,7 +62,7 @@ namespace Spring.Context.Support
             _context.ScanWithAssemblyFilter(assy => assy.GetTypes().Any(type => type.FullName.Contains(typeof(MarkerTypeForScannerToFind).Name)));
             _context.Refresh();
 
-            AssertExpectedObjectsAreRegisteredWith(_context, 28);
+            AssertExpectedObjectsAreRegisteredWith(_context, 45);
         }
 
         [Test]
@@ -110,7 +110,7 @@ namespace Spring.Context.Support
             _context.ScanAllAssemblies();
             _context.Refresh();
 
-            AssertExpectedObjectsAreRegisteredWith(_context, 28);
+            AssertExpectedObjectsAreRegisteredWith(_context, 45);
         }
 
         private void AssertExpectedObjectsAreRegisteredWith(GenericApplicationContext context, int expectedDefinitionCount)

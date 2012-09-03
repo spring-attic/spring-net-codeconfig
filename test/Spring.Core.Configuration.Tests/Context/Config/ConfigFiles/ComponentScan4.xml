@@ -3,8 +3,7 @@
          xmlns:context="http://www.springframework.net/context">
 
 	<context:component-scan base-assemblies="Spring.Core.Configuration.Tests">
-		<context:include-filter type="regex" expression=".*Test.*"/>
-		<context:exclude-filter type="attribute" expression="XmlAssemblyTypeScanner.Test.Include1.DoNotIncludeAttribute, Spring.Core.Configuration.Tests"/>
+		<context:include-filter type="regex" expression="ComponentScan.ComponentsAttributeLoad.*"/>
 	</context:component-scan>
   
 </objects>

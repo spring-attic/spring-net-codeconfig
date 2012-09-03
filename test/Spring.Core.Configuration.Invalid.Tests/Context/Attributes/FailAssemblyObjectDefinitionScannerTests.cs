@@ -23,6 +23,7 @@ using NUnit.Framework;
 using Spring.Context.Support;
 using Spring.Objects.Factory;
 using Spring.Objects.Factory.Parsing;
+using Spring.Objects.Factory.Support;
 
 namespace Spring.Context.Attributes
 {
@@ -44,6 +45,7 @@ namespace Spring.Context.Attributes
         {
             _scanner.WithIncludeFilter(t => t.Name == type.Name);
             _scanner.ScanAndRegisterTypes(_context.DefaultListableObjectFactory);
+            AttributeConfigUtils.RegisterAttributeConfigProcessors((IObjectDefinitionRegistry)_context.ObjectFactory);
         }
 
         private CodeConfigApplicationContext _context;

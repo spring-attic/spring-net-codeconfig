@@ -6,7 +6,7 @@
 		<!-- to test type load exception -->
 		<context:include-filter type="attribute" expression="Spring.Stereotype.ServiceAttribute, notvalid"/>
 
-		<context:include-filter type="attribute" expression="Spring.Stereotype.ServiceAttribute, Spring.Core"/>
+		<context:include-filter type="attribute" expression="XmlAssemblyTypeScanner.Test.Include2.DoIncludeAttribute, Spring.Core.Configuration.Tests"/>
 	</context:component-scan>
   
 </objects>

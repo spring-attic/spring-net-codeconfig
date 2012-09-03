@@ -78,7 +78,7 @@ namespace Spring.Context.Config
             _applicationContext = new XmlApplicationContext(ReadOnlyXmlTestResource.GetFilePath("ConfigFiles.TypeScannerTestAttributeInclude.xml", GetType()));
 
             Assert.That(_applicationContext.GetObjectDefinitionNames().Count, Is.EqualTo(6));
-            Assert.That(_applicationContext.GetObject("SomeIncludeType1"), Is.Not.Null);
+            Assert.That(_applicationContext.GetObject("SomeIncludeType2"), Is.Not.Null);
             Assert.That(delegate { _applicationContext.GetObject("SomeExcludeType"); }, Throws.Exception.TypeOf<NoSuchObjectDefinitionException>());
         }
 
@@ -141,8 +141,13 @@ namespace Spring.Context.Config
 
 namespace XmlAssemblyTypeScanner.Test.Include1
 {
-    [Service]
+    [AttributeUsage(AttributeTargets.Class)]
+    public class DoNotIncludeAttribute : Attribute
+    {
+    }
+
     [Configuration]
+    [DoNotInclude]
     public class SomeIncludeConfiguration1 : IFunny
     {
         [ObjectDef]
@@ -172,8 +177,13 @@ namespace XmlAssemblyTypeScanner.Test.Include1
 
 namespace XmlAssemblyTypeScanner.Test.Include2
 {
-    [Repository]
+    [AttributeUsage(AttributeTargets.Class)]
+    public class DoIncludeAttribute : Attribute
+    {
+    }
+
     [Configuration]
+    [DoInclude]
     public class SomeIncludeConfiguration2 : FunnyAbstract
     {
         public override void Test() { }

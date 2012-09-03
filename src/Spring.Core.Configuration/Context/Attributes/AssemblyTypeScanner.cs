@@ -25,6 +25,7 @@ using System.Reflection;
 using Common.Logging;
 using Spring.Context.Attributes.TypeFilters;
 using Spring.Util;
+using Spring.Objects.Factory.Xml;
 
 namespace Spring.Context.Attributes
 {
@@ -73,6 +74,16 @@ namespace Spring.Context.Attributes
         /// Assemblies to scan.
         /// </summary>
         protected readonly List<IEnumerable<Type>> TypeSources = new List<IEnumerable<Type>>();
+
+        /// <summary>
+        /// Stores the object default definitons defined in the XML configuration documnet
+        /// </summary>
+        protected DocumentDefaultsDefinition _defaults;
+
+        /// <summary>
+        /// Stores the object default definitons defined in the XML configuration documnet
+        /// </summary>
+        public DocumentDefaultsDefinition Defaults { get { return _defaults; } set { _defaults = value; } }
 
         #region IAssemblyTypeScanner Members
 

@@ -20,45 +20,61 @@
 
 using System;
 using Common.Logging;
-using Spring.Context.Attributes.TypeFilters;
 using Spring.Core.TypeResolution;
 using Spring.Util;
+using Spring.Objects.Factory.Support;
 
 namespace Spring.Context.Attributes.TypeFilters
 {
     /// <summary>
-    /// Creates a new Type Filter based on given type name
+    /// Creates a new instance of a givin type string
     /// </summary>
-    public static class CustomTypeFilterFactory
+    public static class CustomTypeFactory
     {
-        private static readonly ILog Logger = LogManager.GetLogger<AbstractLoadTypeFilter>();
+        private static readonly ILog Logger = LogManager.GetLogger(typeof(CustomTypeFactory).FullName);
 
         /// <summary>
-        /// Creates a new instance of given Type Filter name
+        /// Creates a new instance of given type filter type string
         /// </summary>
         /// <param name="expression">Custom type filter to create</param>
         /// <returns>An instance of ITypeFilter or NULL if no instance can be created</returns>
-        public static ITypeFilter GetCustomTypeFilter(string expression)
+        public static ITypeFilter GetTypeFilter(string expression)
         {
-            var customTypeFilterType = LoadTypeFilter(expression);
+            return GetCustomType(expression) as ITypeFilter;
+        }
+
+
+        /// <summary>
+        /// Creates a new instance of given name generator type string
+        /// </summary>
+        /// <param name="expression">Custom type name generator string to create</param>
+        /// <returns>An instance of IObjectNameGenerator or NULL if no instance can be created</returns>
+        public static IObjectNameGenerator GetNameGenerator(string expression)
+        {
+            return GetCustomType(expression) as IObjectNameGenerator;
+        }
+
+        private static object GetCustomType(string expression)
+        {
+            var customTypeFilterType = LoadType(expression);
             if (customTypeFilterType == null)
                 return null;
 
             try
             {
-                var typeFilter = ObjectUtils.InstantiateType(customTypeFilterType) as ITypeFilter;
-                return typeFilter;
+                var instance = ObjectUtils.InstantiateType(customTypeFilterType);
+                return instance;
             }
             catch
             {
                 Logger.Error(string.Format("Can't instatiate {0}. Type needs to have a non arg constructor.", expression));
             }
 
-            return null;
+            return null;            
         }
 
 
-        private static Type LoadTypeFilter(string typeToLoad)
+        private static Type LoadType(string typeToLoad)
         {
             try
             {
