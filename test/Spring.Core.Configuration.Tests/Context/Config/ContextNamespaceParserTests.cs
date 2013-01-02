@@ -31,7 +31,6 @@ namespace Spring.Context.Config
         public void Setup()
         {
             NamespaceParserRegistry.RegisterParser(typeof(ContextNamespaceParser));
-
         }
         
         [Test]

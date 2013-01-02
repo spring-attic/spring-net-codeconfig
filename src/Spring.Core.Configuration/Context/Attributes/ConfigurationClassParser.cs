@@ -130,7 +130,7 @@ namespace Spring.Context.Attributes
                 }
             }
 
-            Collections.Generic.ISet<MethodInfo> definitionMethods = GetAllMethodsWithCustomAttributeForClass(configurationClass.ConfigurationClassType, typeof(DefinitionAttribute));
+            Collections.Generic.ISet<MethodInfo> definitionMethods = GetAllMethodsWithCustomAttributeForClass(configurationClass.ConfigurationClassType, typeof(ObjectDefAttribute));
             foreach (MethodInfo definitionMethod in definitionMethods)
             {
                 configurationClass.Methods.Add(new ConfigurationClassMethod(definitionMethod, configurationClass));

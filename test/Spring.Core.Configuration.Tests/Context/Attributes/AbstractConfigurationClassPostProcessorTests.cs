@@ -163,7 +163,7 @@ namespace Spring.Context.Attributes
     [ImportResource("assembly://Spring.Core.Configuration.Tests/Spring.Context.Attributes/ObjectDefinitionsTwo.xml")]
     public class TheImportedConfigurationClass
     {
-        [Definition]
+        [ObjectDef]
         public virtual AnImportedType AnImportedType()
         {
             return new AnImportedType();
@@ -174,65 +174,65 @@ namespace Spring.Context.Attributes
     [Import(typeof(TheImportedConfigurationClass))]
     public class TheConfigurationClass
     {
-        [Definition(Names = "TheName")]
+        [ObjectDef(Names = "TheName")]
         public virtual SingleNamedObject NamedObject()
         {
             return new SingleNamedObject();
         }
 
-        [Definition(DestroyMethod = "CallToDestroy", InitMethod = "CallToInit")]
+        [ObjectDef(DestroyMethod = "CallToDestroy", InitMethod = "CallToInit")]
         public virtual ObjectWithInitAndDestroyMethods ObjectWithInitAndDestroyMethods()
         {
             return new ObjectWithInitAndDestroyMethods();
         }
 
-        [Definition(Names = "TheFirstAlias,TheSecondAlias")]
+        [ObjectDef(Names = "TheFirstAlias,TheSecondAlias")]
         public virtual ObjectWithAnAlias ObjectWithAnAlias()
         {
             return new ObjectWithAnAlias();
         }
 
-        [Definition]
+        [ObjectDef]
         [Scope(ObjectScope.Prototype)]
         public virtual PrototypeParent PrototypeParent()
         {
             return new PrototypeParent(SingletonChild());
         }
 
-        [Definition]
+        [ObjectDef]
         [Scope(ObjectScope.Prototype)]
         public virtual PrototypeChild PrototypeChild()
         {
             return new PrototypeChild();
         }
 
-        [Definition]
+        [ObjectDef]
         public virtual SingletonParent SingletonParent()
         {
             return new SingletonParent(PrototypeChild());
         }
 
-        [Definition]
+        [ObjectDef]
         public virtual SingletonChild SingletonChild()
         {
             return new SingletonChild();
         }
 
-        [Definition]
+        [ObjectDef]
         [Lazy]
         public virtual ImplicitLazyInitObject ImplicitLazyInitObject()
         {
             return new ImplicitLazyInitObject();
         }
 
-        [Definition]
+        [ObjectDef]
         [Lazy(true)]
         public virtual ExplicitLazyInitObject ExplicitLazyInitObject()
         {
             return new ExplicitLazyInitObject();
         }
 
-        [Definition]
+        [ObjectDef]
         [Lazy(false)]
         public virtual ExplicitNonLazyInitObject ExplicitNonLazyInitObject()
         {
@@ -245,7 +245,7 @@ namespace Spring.Context.Attributes
     [Configuration]
     public class DerivedConfiguration : BaseConfigurationClass
     {
-        [Definition]
+        [ObjectDef]
         public virtual TestObject DerivedDefinition()
         {
             return new TestObject(BaseDefinition());
@@ -254,7 +254,7 @@ namespace Spring.Context.Attributes
 
     public class BaseConfigurationClass
     {
-        [Definition]
+        [ObjectDef]
         public virtual string BaseDefinition()
         {
             return Guid.NewGuid().ToString();

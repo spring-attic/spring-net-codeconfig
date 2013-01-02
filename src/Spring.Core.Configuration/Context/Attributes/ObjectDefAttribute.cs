@@ -28,7 +28,7 @@ namespace Spring.Context.Attributes
     /// Identifies the Method as providing and Object Definition.
     /// </summary>
     [AttributeUsage(AttributeTargets.Method)]
-    public class DefinitionAttribute : Attribute
+    public class ObjectDefAttribute : Attribute
     {
         //private AutoWiringMode _autoWire = AutoWiringMode.No;
 

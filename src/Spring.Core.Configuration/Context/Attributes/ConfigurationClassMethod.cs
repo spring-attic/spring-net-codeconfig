@@ -25,7 +25,7 @@ using Spring.Objects.Factory.Parsing;
 namespace Spring.Context.Attributes
 {
     /// <summary>
-    /// Represents a <see cref="ConfigurationAttribute"/> class method marked with the <see cref="DefinitionAttribute"/>.
+    /// Represents a <see cref="ConfigurationAttribute"/> class method marked with the <see cref="ObjectDefAttribute"/>.
     /// </summary>
     public class ConfigurationClassMethod
     {
@@ -89,7 +89,7 @@ namespace Spring.Context.Attributes
         /// <param name="problemReporter">The problem reporter.</param>
         public void Validate(IProblemReporter problemReporter)
         {
-            //TODO: investigate whether this should be "if method has Definition attribute" instead of "if class has Configuration attribute"
+            //TODO: investigate whether this should be "if method has ObjectDef attribute" instead of "if class has Configuration attribute"
             if (
                 Attribute.GetCustomAttribute(ConfigurationClass.ConfigurationClassType, typeof (ConfigurationAttribute)) !=
                 null)

@@ -23,7 +23,9 @@ using System.Collections.Generic;
 using System.IO;
 using System.Reflection;
 using Common.Logging;
+using Spring.Context.Attributes.TypeFilters;
 using Spring.Util;
+using Spring.Objects.Factory.Xml;
 
 namespace Spring.Context.Attributes
 {
@@ -36,7 +38,7 @@ namespace Spring.Context.Attributes
         /// <summary>
         /// Logger Instance.
         /// </summary>
-        protected static ILog Logger = LogManager.GetLogger(typeof(AssemblyTypeScanner));
+        protected static readonly ILog Logger = LogManager.GetLogger<AssemblyTypeScanner>();
 
         /// <summary>
         /// Names of Assemblies to exclude from being loaded for scanning.
@@ -54,14 +56,34 @@ namespace Spring.Context.Attributes
         protected readonly List<Predicate<Type>> TypeExclusionPredicates = new List<Predicate<Type>>();
 
         /// <summary>
+        /// Type Exclusion Predicates.
+        /// </summary>
+        protected readonly List<ITypeFilter> TypeExclusionTypeFilters = new List<ITypeFilter>();
+
+        /// <summary>
         /// Type Inclusion Predicates.
         /// </summary>
         protected readonly List<Predicate<Type>> TypeInclusionPredicates = new List<Predicate<Type>>();
 
         /// <summary>
+        /// Type Inclusion TypeFilters.
+        /// </summary>
+        protected readonly List<ITypeFilter> TypeInclusionTypeFilter = new List<ITypeFilter>();
+
+        /// <summary>
         /// Assemblies to scan.
         /// </summary>
         protected readonly List<IEnumerable<Type>> TypeSources = new List<IEnumerable<Type>>();
+
+        /// <summary>
+        /// Stores the object default definitons defined in the XML configuration documnet
+        /// </summary>
+        protected DocumentDefaultsDefinition _defaults;
+
+        /// <summary>
+        /// Stores the object default definitons defined in the XML configuration documnet
+        /// </summary>
+        public DocumentDefaultsDefinition Defaults { get { return _defaults; } set { _defaults = value; } }
 
         #region IAssemblyTypeScanner Members
 
@@ -164,6 +186,19 @@ namespace Spring.Context.Attributes
         }
 
         /// <summary>
+        /// Adds the exclude filter.
+        /// </summary>
+        /// <param name="filter">The type filter.</param>
+        /// <returns></returns>
+        public IAssemblyTypeScanner WithExcludeFilter(ITypeFilter filter)
+        {
+            if (filter != null)
+                TypeExclusionTypeFilters.Add(filter);
+
+            return this;
+        }
+
+        /// <summary>
         /// Adds the include filter.
         /// </summary>
         /// <param name="predicate">The predicate.</param>
@@ -171,6 +206,19 @@ namespace Spring.Context.Attributes
         public IAssemblyTypeScanner WithIncludeFilter(Predicate<Type> predicate)
         {
             TypeInclusionPredicates.Add(predicate);
+            return this;
+        }
+
+        /// <summary>
+        /// Adds the include filter.
+        /// </summary>
+        /// <param name="filter">The filter type.</param>
+        /// <returns></returns>
+        public IAssemblyTypeScanner WithIncludeFilter(ITypeFilter filter)
+        {
+            if (filter != null)
+                TypeInclusionTypeFilter.Add(filter);
+
             return this;
         }
 
@@ -185,11 +233,8 @@ namespace Spring.Context.Attributes
             assemblies.AddRange(DiscoverAssemblies(folderPath, "*.dll"));
             assemblies.AddRange(DiscoverAssemblies(folderPath, "*.exe"));
 
-
-            if (Logger.IsDebugEnabled)
-            {
-                Logger.Debug(string.Format("Assemblies to be scanned: {0}", StringUtils.ArrayToCommaDelimitedString(assemblies.ToArray())));
-            }
+            Logger.Debug(m => m("Assemblies to be scanned: {0}", StringUtils.ArrayToCommaDelimitedString(assemblies.ToArray())));
+            
             return assemblies;
         }
 
@@ -226,9 +271,7 @@ namespace Spring.Context.Attributes
             catch (Exception ex)
             {
                 //log and swallow everything that might go wrong here...
-                if (Logger.IsDebugEnabled)
-                    Logger.Debug(
-                        string.Format("Failed to load assembly {0} to inspect for [Configuration] types!", filename), ex);
+                Logger.Debug(m => m("Failed to load assembly {0} to inspect for [Configuration] types!", filename), ex);
             }
 
             return assembly;
@@ -271,7 +314,15 @@ namespace Spring.Context.Attributes
         /// </returns>
         protected virtual bool IsExcludedType(Type type)
         {
-            return TypeExclusionPredicates.Any(delegate(Predicate<Type> exclude) { return exclude(type); });
+            if (TypeExclusionPredicates.Count > 0 && TypeExclusionPredicates.Any(delegate(Predicate<Type> exclude) { return exclude(type); }))
+                return true;
+
+            foreach(var filter in TypeExclusionTypeFilters)
+            {
+                if (filter.Match(type))
+                    return true;
+            }
+            return false;
         }
 
         /// <summary>
@@ -295,7 +346,15 @@ namespace Spring.Context.Attributes
         /// </returns>
         protected virtual bool IsIncludedType(Type type)
         {
-            return TypeInclusionPredicates.Any(delegate(Predicate<Type> include) { return include(type); });
+            if (TypeInclusionPredicates.Count > 0 && TypeInclusionPredicates.Any(delegate(Predicate<Type> include) { return include(type); }))
+                return true;
+
+            foreach(var filter in TypeInclusionTypeFilter)
+            {
+                if (filter.Match(type))
+                    return true;
+            }
+            return false;
         }
 
         /// <summary>
@@ -303,10 +362,10 @@ namespace Spring.Context.Attributes
         /// </summary>
         protected virtual void SetDefaultFilters()
         {
-            if (TypeInclusionPredicates.Count == 0)
+            if (TypeInclusionPredicates.Count == 0 && TypeInclusionTypeFilter.Count == 0)
                 TypeInclusionPredicates.Add(delegate { return true; });
 
-            if (TypeExclusionPredicates.Count == 0)
+            if (TypeExclusionPredicates.Count == 0 && TypeExclusionTypeFilters.Count == 0)
                 TypeExclusionPredicates.Add(delegate { return false; });
 
             if (AssemblyInclusionPredicates.Count == 0)

@@ -7,7 +7,7 @@ namespace Spring.MvcQuickStart.Config
     [Configuration]
     public class ControllerConfiguration
     {
-        [Definition]
+        [ObjectDef]
         [Scope(ObjectScope.Prototype)]
         public virtual HomeController HomeController()
         {

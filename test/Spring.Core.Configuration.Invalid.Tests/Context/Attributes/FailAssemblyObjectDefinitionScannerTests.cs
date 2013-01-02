@@ -23,6 +23,7 @@ using NUnit.Framework;
 using Spring.Context.Support;
 using Spring.Objects.Factory;
 using Spring.Objects.Factory.Parsing;
+using Spring.Objects.Factory.Support;
 
 namespace Spring.Context.Attributes
 {
@@ -44,6 +45,7 @@ namespace Spring.Context.Attributes
         {
             _scanner.WithIncludeFilter(t => t.Name == type.Name);
             _scanner.ScanAndRegisterTypes(_context.DefaultListableObjectFactory);
+            AttributeConfigUtils.RegisterAttributeConfigProcessors((IObjectDefinitionRegistry)_context.ObjectFactory);
         }
 
         private CodeConfigApplicationContext _context;
@@ -116,7 +118,7 @@ namespace Spring.Context.Attributes
     [Configuration]
     public class ConfigurationClassWithNonVirtualMethod
     {
-        [Definition]
+        [ObjectDef]
         public SomeType MethodThatRegistersSomeType()
         {
             return new SomeType();
@@ -126,7 +128,7 @@ namespace Spring.Context.Attributes
     [Configuration]
     public class ConfigurationClassWithStaticMethod
     {
-        [Definition]
+        [ObjectDef]
         public static SomeType MethodThatRegistersSomeType()
         {
             return new SomeType();
@@ -136,13 +138,13 @@ namespace Spring.Context.Attributes
     [Configuration]
     public class ConfigurationClassWithOverloadedMethods
     {
-        [Definition]
+        [ObjectDef]
         public virtual SomeType MethodThatRegistersSomeType()
         {
             return new SomeType();
         }
 
-        [Definition]
+        [ObjectDef]
         public virtual SomeType MethodThatRegistersSomeType(int i)
         {
             return new SomeType();
@@ -153,7 +155,7 @@ namespace Spring.Context.Attributes
     [Import(typeof(SecondConfigurationClassWithCircularReference))]
     public class FirstConfigurationClassWithCircularReference
     {
-        [Definition]
+        [ObjectDef]
         public virtual SomeType MethodThatRegistersSomeType()
         {
             return new SomeType();
@@ -164,7 +166,7 @@ namespace Spring.Context.Attributes
     [Import(typeof(FirstConfigurationClassWithCircularReference))]
     public class SecondConfigurationClassWithCircularReference
     {
-        [Definition]
+        [ObjectDef]
         public virtual SomeType MethodThatRegistersSomeType()
         {
             return new SomeType();
@@ -175,7 +177,7 @@ namespace Spring.Context.Attributes
     [Configuration]
     public class ConfigurationClassWithMethodHavingParameters
     {
-        [Definition]
+        [ObjectDef]
         public virtual SomeType MethodThatRegistersSomeType(int i)
         {
             return new SomeType();
@@ -186,7 +188,7 @@ namespace Spring.Context.Attributes
     [Configuration]
     public abstract class ConfigurationClassThatIsAbstract
     {
-        [Definition]
+        [ObjectDef]
         public virtual SomeType MethodThatRegistersSomeType()
         {
             return new SomeType();
@@ -196,7 +198,7 @@ namespace Spring.Context.Attributes
     [Configuration]
     public sealed class ConfigurationClassThatIsSealed
     {
-        [Definition]
+        [ObjectDef]
         public SomeType MethodThatRegistersSomeType()
         {
             return new SomeType();
