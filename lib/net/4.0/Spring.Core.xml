@@ -5270,6 +5270,37 @@
             If there's no such object definition.
             </exception>
         </member>
+        <member name="M:Spring.Objects.Factory.IObjectFactory.GetObject``1">
+            <summary>
+            Return an instance (possibly shared or independent) of the given object name.
+            </summary>
+            <remarks>
+            <para>
+            This method allows an object factory to be used as a replacement for the
+            Singleton or Prototype design pattern.
+            </para>
+            <para>
+            Note that callers should retain references to returned objects. There is no
+            guarantee that this method will be implemented to be efficient. For example,
+            it may be synchronized, or may need to run an RDBMS query.
+            </para>
+            <para>
+            Will ask the parent factory if the object cannot be found in this factory
+            instance.
+            </para>
+            </remarks>
+            <typeparam name="T">The type of the object to return.</typeparam>
+            <returns>The instance of the object.</returns>
+            <exception cref="T:Spring.Objects.Factory.NoSuchObjectDefinitionException">
+            If there's no such object definition.
+            </exception>
+            <exception cref="T:Spring.Objects.Factory.ObjectDefinitionStoreException">
+            If there is more than a single object of the requested type defined in the factory.
+            </exception>
+            <exception cref="T:Spring.Objects.ObjectsException">
+            If the object could not be created.
+            </exception>
+        </member>
         <member name="M:Spring.Objects.Factory.IObjectFactory.GetObject(System.String)">
             <summary>
             Return an instance (possibly shared or independent) of the given object name.
@@ -5964,37 +5995,6 @@
             </returns>
             <exception cref="T:Spring.Objects.ObjectsException">
             If the objects could not be created.
-            </exception>
-        </member>
-        <member name="M:Spring.Objects.Factory.IListableObjectFactory.GetObject``1">
-            <summary>
-            Return an instance (possibly shared or independent) of the given object name.
-            </summary>
-            <remarks>
-            <para>
-            This method allows an object factory to be used as a replacement for the
-            Singleton or Prototype design pattern.
-            </para>
-            <para>
-            Note that callers should retain references to returned objects. There is no
-            guarantee that this method will be implemented to be efficient. For example,
-            it may be synchronized, or may need to run an RDBMS query.
-            </para>
-            <para>
-            Will ask the parent factory if the object cannot be found in this factory
-            instance.
-            </para>
-            </remarks>
-            <typeparam name="T">The type of the object to return.</typeparam>
-            <returns>The instance of the object.</returns>
-            <exception cref="T:Spring.Objects.Factory.NoSuchObjectDefinitionException">
-            If there's no such object definition.
-            </exception>
-            <exception cref="T:Spring.Objects.Factory.ObjectDefinitionStoreException">
-            If there is more than a single object of the requested type defined in the factory.
-            </exception>
-            <exception cref="T:Spring.Objects.ObjectsException">
-            If the object could not be created.
             </exception>
         </member>
         <member name="P:Spring.Objects.Factory.IListableObjectFactory.ObjectDefinitionCount">
@@ -15416,6 +15416,66 @@
             If the supplied <paramref name="pattern"/> is invalid.
             </exception>
         </member>
+        <member name="T:Spring.Core.AttributeAccessorSupport">
+            <summary>
+            Support class for <see cref="T:Spring.Core.IAttributeAccessor"/>, providing
+            a base implementation of all methods. To be extended by subclasses.
+            </summary>
+        </member>
+        <member name="T:Spring.Core.IAttributeAccessor">
+            <summary>
+            Interface defining a generic contract for attaching and accessing metadata
+            to/from arbitrary objects.
+            </summary>
+        </member>
+        <member name="M:Spring.Core.IAttributeAccessor.SetAttribute(System.String,System.Object)">
+            <summary>
+            Set the attribute defined by <code>name</code> to the supplied	<code>value</code>.
+            In general, users should take care to prevent overlaps with other
+            metadata attributes by using fully-qualified names, perhaps using
+            class or package names as prefix.
+            </summary>
+            <param name="name">the unique attribute key</param>
+            <param name="value">the attribute value to be attached</param>
+        </member>
+        <member name="M:Spring.Core.IAttributeAccessor.GetAttribute(System.String)">
+            <summary>
+            Get the value of the attribute identified by <code>name</code>.
+            Return <code>null</code> if the attribute doesn't exist.
+            </summary>
+            <param name="name">the unique attribute key</param>
+            <returns>the current value of the attribute, if any</returns>
+        </member>
+        <member name="M:Spring.Core.IAttributeAccessor.RemoveAttribute(System.String)">
+            <summary>
+            Remove the attribute identified by <code>name</code> and return its value.
+            Return <code>null</code> if no attribute under <code>name</code> is found.
+            </summary>
+            <param name="name">the unique attribute key</param>
+            <returns>The last value of the attribute, if any</returns>
+        </member>
+        <member name="M:Spring.Core.IAttributeAccessor.HasAttribute(System.String)">
+            <summary>
+            Checks weather a specific attributes exists
+            </summary>
+            <param name="name">The unique attribute key</param>
+            <returns>
+            <code>true</code> if the attribute identified by <code>name</code> exists.
+            Otherwise return <code>false</code>
+            </returns>
+        </member>
+        <member name="P:Spring.Core.IAttributeAccessor.AttributeNames">
+            <summary>
+            Return the names of all attributes.
+            </summary>
+        </member>
+        <member name="F:Spring.Core.AttributeAccessorSupport._attributes">
+            Map with String keys and Object values 
+        </member>
+        <member name="M:Spring.Core.AttributeAccessorSupport.CopyAttributesFrom(Spring.Core.IAttributeAccessor)">
+            Copy the attributes from the supplied AttributeAccessor to this accessor.
+            @param source the AttributeAccessor to copy from
+        </member>
         <member name="T:Spring.Core.CannotLoadObjectTypeException">
             <summary>
             Exception thrown when the ObjectFactory cannot load the specified type of a given object.
@@ -16377,6 +16437,16 @@
             Gets wrapped ConstructorInfo, if any.  Note Either MethodInfo or ConstructorInfo is available.
             </summary>
             <value>The ConstructorInfo, or <code>null</code> if none</value>
+        </member>
+        <member name="P:Spring.Core.MethodParameter.ParameterAttributes">
+            <summary>
+            Return the annotations associated with the specific method/constructor parameter.
+            </summary>
+        </member>
+        <member name="P:Spring.Core.MethodParameter.MethodAttributes">
+            <summary>
+            Return the annotations associated with the target method/constructor itself.
+            </summary>
         </member>
         <member name="T:Spring.Core.MethodParametersCountCriteria">
             <summary>
@@ -23078,42 +23148,81 @@
             </p>
             </remarks>
         </member>
-        <member name="T:Spring.Objects.Factory.Attributes.RequiredAttribute">
+        <member name="T:Spring.Objects.Factory.Attributes.AutowiredAttribute">
             <summary>
-            Marks a property as being 'required': that is, the setter property 
-            must be configured to be dependency-injected with a value.
+            Marks a constructor, field, propery or config method as to be
+            autowired by Spring's dependency injection facilities.
+            
+            Only one constructor (at max) of any given bean class may carry this
+            annotation, indicating the constructor to autowire when used as a Spring
+            bean. Such a constructor does not have to be public.
+            
+            Fields are injected right after construction of a object, before any
+            config methods are invoked. Such a config field does not have to be public.
+            
+            Config methods may have an arbitrary name and any number of arguments;
+            each of those arguments will be autowired with a matching bean in the
+            Spring container. Object property setter methods are effectively just
+            a special case of such a general config method. Such config methods
+            do not have to be public.
+            
+            In the case of multiple argument methods, the 'required' parameter is
+            applicable for all arguments.
+            
+            In case of a {@link java.util.Collection} or {@link java.util.Map}
+            dependency type, the container will autowire all beans matching the
+            declared value type. In case of a Map, the keys must be declared as
+            type String and will be resolved to the corresponding bean names.
+            
+            Note that actual injection is performed through a
+            {@link org.springframework.beans.factory.config.BeanPostProcessor
+            BeanPostProcessor} which in turn means that you <em>cannot</em>
+            use {@code @Autowired} to inject references into
+            {@link org.springframework.beans.factory.config.BeanPostProcessor
+            BeanPostProcessor} or
+            {@link org.springframework.beans.factory.config.BeanFactoryPostProcessor BeanFactoryPostProcessor}
+            types. Please consult the javadoc for the {@link AutowiredAnnotationBeanPostProcessor}
+            class (which, by default, checks for the presence of this annotation).
             </summary>
-            <remarks>Consult the SDK documentation for <see cref="T:Spring.Objects.Factory.Attributes.RequiredAttributeObjectPostProcessor"/>, 
-            which, by default, checks for the presence of this annotation.
-            </remarks>
-            <author>Rob Harrop</author>
-            <author>Mark Pollack</author>
         </member>
-        <member name="T:Spring.Objects.Factory.Attributes.RequiredAttributeObjectPostProcessor">
+        <member name="P:Spring.Objects.Factory.Attributes.AutowiredAttribute.Required">
             <summary>
-             A <see cref="T:Spring.Objects.Factory.Config.IObjectPostProcessor"/> implementation that enforces required properties to have been configured.
-            Required properties are detected through an attribute, by default, Spring's <see cref="T:Spring.Objects.Factory.Attributes.RequiredAttribute"/>
-            attribute.
+            Defines it Autowired PostProcessor should fail if object is not set
             </summary>
-            <remarks>
-            <para>The motivation for the existence of this IObjectPostProcessor is to allow
-            developers to annotate the setter properties of their own classes with an
-            arbitrary attribute to indicate that the container must check
-            for the configuration of a dependency injected value. This neatly pushes
-            responsibility for such checking onto the container (where it arguably belongs),
-            and obviates the need (<b>in part</b>) for a developer to code a method that
-            simply checks that all required properties have actually been set.
-            </para>
-            <para>Please note that an 'init' method may still need to implemented (and may
-            still be desirable), because all that this class does is enforce that a
-            'required' property has actually been configured with a value. It does
-            <b>not</b> check anything else... In particular, it does not check that a
-            configured value is not <code>null</code>.
-            </para>
-            </remarks>
-            <author>Rob Harrop</author>
-            <author>Juergen Hoeller</author>
-            <author>Mark Pollack (.NET)</author>
+        </member>
+        <member name="T:Spring.Objects.Factory.Attributes.AutowiredAttributeObjectPostProcessor">
+            <summary>
+            <see cref="T:Spring.Objects.Factory.Config.IInstantiationAwareObjectPostProcessor"/> implementation
+            that autowires annotated fields, properties and arbitrary config methods.
+            Such members to be injected are detected through an attribute: by default,
+            Spring's <see cref="T:Spring.Objects.Factory.Attributes.AutowiredAttribute"/>.
+            
+            Only one constructor (at max) of any given bean class may carry this
+            annotation with the 'required' parameter set to <code>true</code>, 
+            indicating <i>the</i> constructor to autowire when used as a Spring bean. 
+            If multiple <i>non-required</i> constructors carry the annotation, they 
+            will be considered as candidates for autowiring. The constructor with 
+            the greatest number of dependencies that can be satisfied by matching
+            beans in the Spring container will be chosen. If none of the candidates
+            can be satisfied, then a default constructor (if present) will be used.
+            An annotated constructor does not have to be public.
+            
+            Fields are injected right after construction of a bean, before any
+            config methods are invoked. Such a config field does not have to be public.
+            
+            Config methods may have an arbitrary name and any number of arguments; each of
+            those arguments will be autowired with a matching bean in the Spring container.
+            Bean property setter methods are effectively just a special case of such a
+            general config method. Config methods do not have to be public.
+            
+            Note: A default AutowiredAttributeObjectPostProcessor will be registered
+            by the "context:annotation-config" and "context:component-scan" XML tags.
+            Remove or turn off the default annotation configuration there if you intend
+            to specify a custom AutowiredAnnotationBeanPostProcessor bean definition.
+            <b>NOTE:</b> Annotation injection will be performed <i>before</i> XML injection;
+            thus the latter configuration will override the former for properties wired through
+            both approaches.
+            </summary>
         </member>
         <member name="T:Spring.Objects.Factory.Config.InstantiationAwareObjectPostProcessorAdapter">
             <summary>
@@ -23412,6 +23521,530 @@
             <exception cref="T:Spring.Objects.ObjectsException">
             In case of errors.
             </exception>
+        </member>
+        <member name="T:Spring.Objects.Factory.IObjectFactoryAware">
+            <summary>
+            Interface to be implemented by objects that wish to be aware of their owning
+            <see cref="T:Spring.Objects.Factory.IObjectFactory"/>.
+            </summary>
+            <remarks>
+            <p>
+            For example, objects can look up collaborating objects via the factory.
+            </p>
+            <p>
+            Note that most objects will choose to receive references to collaborating
+            objects via respective properties and / or an appropriate constructor.
+            </p>
+            <p>
+            For a list of all object lifecycle methods, see the
+            <see cref="T:Spring.Objects.Factory.IObjectFactory"/> API documentation.
+            </p>
+            </remarks>
+            <author>Rod Johnson</author>
+            <author>Rick Evans (.NET)</author>
+        </member>
+        <member name="P:Spring.Objects.Factory.IObjectFactoryAware.ObjectFactory">
+            <summary>
+            Callback that supplies the owning factory to an object instance.
+            </summary>
+            <value>
+            Owning <see cref="T:Spring.Objects.Factory.IObjectFactory"/>
+            (may not be <see langword="null"/>). The object can immediately
+            call methods on the factory.
+            </value>
+            <remarks>
+            <p>
+            Invoked after population of normal object properties but before an init
+            callback like <see cref="T:Spring.Objects.Factory.IInitializingObject"/>'s
+            <see cref="M:Spring.Objects.Factory.IInitializingObject.AfterPropertiesSet"/>
+            method or a custom init-method.
+            </p>
+            </remarks>
+            <exception cref="T:Spring.Objects.ObjectsException">
+            In case of initialization errors.
+            </exception>
+        </member>
+        <member name="M:Spring.Objects.Factory.Attributes.AutowiredAttributeObjectPostProcessor.AddAutowiredType(System.Type)">
+            <summary>
+            Add a Autowired Attribute Type
+            </summary>
+        </member>
+        <member name="M:Spring.Objects.Factory.Attributes.AutowiredAttributeObjectPostProcessor.#ctor">
+            <summary>
+            Create a new instance of an Autowire Post Processor
+            with standard attributes of <see cref="T:Spring.Objects.Factory.Attributes.AutowiredAttribute"/> 
+            and <see cref="T:Spring.Objects.Factory.Attributes.ValueAttribute"/>
+            </summary>
+        </member>
+        <member name="M:Spring.Objects.Factory.Attributes.AutowiredAttributeObjectPostProcessor.DetermineCandidateConstructors(System.Type,System.String)">
+            <summary>
+            Determines the candidate constructors to use for the given object.
+            </summary>
+            <param name="objectType">The raw Type of the object.</param>
+            <param name="objectName">Name of the object.</param>
+            <returns>The candidate constructors, or <code>null</code> if none specified</returns>
+            <exception cref="T:Spring.Objects.ObjectsException">in case of errors</exception>
+        </member>
+        <member name="M:Spring.Objects.Factory.Attributes.AutowiredAttributeObjectPostProcessor.PostProcessBeforeInstantiation(System.Type,System.String)">
+            <summary>
+            Finds autowire candidates and verifies them
+            </summary>
+            <param name="objectType">
+            The <see cref="T:System.Type"/> of the target object that is to be
+            instantiated.
+            </param>
+            <param name="objectName">
+            The name of the target object.
+            </param>
+            <returns>
+            The object to expose instead of a default instance of the target
+            object.
+            </returns>
+            <exception cref="T:Spring.Objects.ObjectsException">
+            In the case of any errors.
+            </exception>
+            <seealso cref="P:Spring.Objects.Factory.Support.AbstractObjectDefinition.HasObjectType"/>
+            <seealso cref="P:Spring.Objects.Factory.Support.IConfigurableObjectDefinition.FactoryMethodName"/>
+        </member>
+        <member name="M:Spring.Objects.Factory.Attributes.AutowiredAttributeObjectPostProcessor.PostProcessPropertyValues(Spring.Objects.IPropertyValues,System.Collections.Generic.IList{System.Reflection.PropertyInfo},System.Object,System.String)">
+            <summary>
+            Injects autoried annotated properties, fields, methods into objectInstance
+            </summary>
+            <param name="pvs"></param>
+            <param name="pis"></param>
+            <param name="objectInstance"></param>
+            <param name="objectName">Name of the object.</param>
+            <returns>The actual property values to apply to the given object (can be the 
+            passed-in PropertyValues instances0 or null to skip property population.</returns>
+        </member>
+        <member name="M:Spring.Objects.Factory.Attributes.AutowiredAttributeObjectPostProcessor.RegisterDependentObjects(System.String,System.Collections.IList)">
+            <summary>
+            Register the specified bean as dependent on the autowired beans.
+            </summary>
+        </member>
+        <member name="P:Spring.Objects.Factory.Attributes.AutowiredAttributeObjectPostProcessor.Order">
+            <summary>
+            Return the order value of this object, where a higher value means greater in
+                        terms of sorting.
+            </summary>
+            <remarks>
+            <p>Normally starting with 0 or 1, with <see cref="F:System.Int32.MaxValue"/> indicating
+                        greatest. Same order values will result in arbitrary positions for the affected
+                        objects.
+                        </p><p>Higher value can be interpreted as lower priority, consequently the first object
+                        has highest priority.
+                        </p>
+            </remarks>
+            <returns>
+            The order value.
+            </returns>
+        </member>
+        <member name="P:Spring.Objects.Factory.Attributes.AutowiredAttributeObjectPostProcessor.ObjectFactory">
+            <summary>
+            Callback that supplies the owning factory to an object instance.
+            </summary>
+            <value>
+            Owning <see cref="T:Spring.Objects.Factory.IObjectFactory"/>
+                        (may not be <see langword="null"/>). The object can immediately
+                        call methods on the factory.
+            </value>
+            <remarks>
+            <p>Invoked after population of normal object properties but before an init
+                        callback like <see cref="T:Spring.Objects.Factory.IInitializingObject"/>'s
+                        <see cref="M:Spring.Objects.Factory.IInitializingObject.AfterPropertiesSet"/>
+                        method or a custom init-method.
+                        </p>
+            </remarks>
+            <exception cref="T:Spring.Objects.ObjectsException">In case of initialization errors.
+                        </exception>
+        </member>
+        <member name="T:Spring.Objects.Factory.Attributes.AutowiredAttributeObjectPostProcessor.AutowiredPropertyElement">
+            <summary>
+            Class representing injection information about an annotated field.
+            </summary>
+        </member>
+        <member name="T:Spring.Objects.Factory.Attributes.InjectionMetadata.InjectedElement">
+            <summary>
+            Represents an element that needs to be injected
+            </summary>
+        </member>
+        <member name="T:Spring.Objects.Factory.Attributes.InjectionMetadata">
+            <summary>
+            Internal class for managing injection metadata.
+            Not intended for direct use in applications.
+            </summary>
+        </member>
+        <member name="M:Spring.Objects.Factory.Attributes.InjectionMetadata.#ctor(System.Type,System.Collections.Generic.IList{Spring.Objects.Factory.Attributes.InjectionMetadata.InjectedElement})">
+            <summary>
+            </summary>
+            <param name="targetType"></param>
+            <param name="elements"></param>
+        </member>
+        <member name="M:Spring.Objects.Factory.Attributes.InjectionMetadata.CheckConfigMembers(Spring.Objects.Factory.Support.RootObjectDefinition)">
+            <summary>
+            </summary>
+            <param name="objectDefinition"></param>
+        </member>
+        <member name="M:Spring.Objects.Factory.Attributes.InjectionMetadata.Inject(System.Object,System.String,Spring.Objects.IPropertyValues)">
+            <summary>
+            Inject values for members into object instance
+            </summary>
+            <param name="instance"></param>
+            <param name="objectName"></param>
+            <param name="pvs"></param>
+        </member>
+        <member name="T:Spring.Objects.Factory.Attributes.InjectionMetadata.InjectedElement">
+            <summary>
+            Represents an element that needs to be injected
+            </summary>
+        </member>
+        <member name="F:Spring.Objects.Factory.Attributes.InjectionMetadata.InjectedElement._member">
+            <summary>
+            The Property, field, method or constructor info
+            </summary>
+        </member>
+        <member name="M:Spring.Objects.Factory.Attributes.InjectionMetadata.InjectedElement.#ctor(System.Reflection.MemberInfo)">
+            <summary>
+            Instantiates a new inject element
+            </summary>
+            <param name="member"></param>
+        </member>
+        <member name="M:Spring.Objects.Factory.Attributes.InjectionMetadata.InjectedElement.Inject(System.Object,System.String,Spring.Objects.IPropertyValues)">
+            <summary>
+            Ececuted to inject value to associated memeber info
+            </summary>
+            <param name="target"></param>
+            <param name="requestingObjectName"></param>
+            <param name="pvs"></param>
+        </member>
+        <member name="T:Spring.Objects.Factory.Attributes.AutowiredAttributeObjectPostProcessor.AutowiredFieldElement">
+            <summary>
+            Class representing injection information about an annotated field.
+            </summary>
+        </member>
+        <member name="T:Spring.Objects.Factory.Attributes.AutowiredAttributeObjectPostProcessor.AutowiredMethodElement">
+            
+             Class representing injection information about an annotated method.
+            
+        </member>
+        <member name="T:Spring.Objects.Factory.Attributes.InitDestroyAttributeObjectPostProcessor">
+            <summary>
+            <see cref="T:Spring.Objects.Factory.Attributes.InitDestroyAttributeObjectPostProcessor"/> implementation
+            that invokes attributed init and destroy methods. Allows for an attributation
+            alternative to Spring's <see cref="T:Spring.Objects.Factory.IInitializingObject"/> and 
+            <see cref="T:System.IDisposable"/> callback interfaces.
+            
+            Invoke and destroy annotations may be applied to methods of any visibility:
+            public, protected, or private. Multiple such methods
+            may be annotated, but it is recommended to only annotate one single
+            init method and destroy method, respectively.
+            </summary>
+        </member>
+        <member name="T:Spring.Objects.Factory.Config.IDestructionAwareObjectPostProcessor">
+            <summary>
+            Subinterface of
+            <see cref="T:Spring.Objects.Factory.Config.IObjectPostProcessor"/> that adds
+            a before-destruction callback.
+            </summary>
+            <remarks>
+            The typical usage will be to invoke custom destruction callbacks on
+            specific object types, matching corresponding initialization callbacks.
+            </remarks>
+            <author>Juergen Hoeller</author>
+            <author>Simon White (.NET)</author>
+        </member>
+        <member name="M:Spring.Objects.Factory.Config.IDestructionAwareObjectPostProcessor.PostProcessBeforeDestruction(System.Object,System.String)">
+            <summary>
+            Apply this
+            <see cref="T:Spring.Objects.Factory.Config.IObjectPostProcessor"/> to the
+            given new object instance before its destruction. Can invoke custom
+            destruction callbacks.
+            </summary>
+            <param name="instance">The new object instance.</param>
+            <param name="name">The name of the object.</param>
+            <exception cref="T:Spring.Objects.ObjectsException">
+            In case of errors.
+            </exception>
+        </member>
+        <member name="M:Spring.Objects.Factory.Attributes.InitDestroyAttributeObjectPostProcessor.#ctor">
+            <summary>
+            Creates InitDestroy Post Processor with default attribute types of
+            <see cref="T:Spring.Objects.Factory.Attributes.PostConstructAttribute"/>
+            </summary>
+        </member>
+        <member name="M:Spring.Objects.Factory.Attributes.InitDestroyAttributeObjectPostProcessor.PostProcessBeforeInitialization(System.Object,System.String)">
+            <summary>
+            Applies PostConstruct init method initialisation if instance is attributed
+            </summary>
+            <param name="instance">The new object instance.
+                        </param><param name="name">The name of the object.
+                        </param>
+            <returns>
+            The object instance to use, either the original or a wrapped one.
+            </returns>
+            <exception cref="T:Spring.Objects.ObjectsException">In case of errors.
+                        </exception>
+        </member>
+        <member name="M:Spring.Objects.Factory.Attributes.InitDestroyAttributeObjectPostProcessor.PostProcessAfterInitialization(System.Object,System.String)">
+            <summary>
+            No special post processing after initialization
+            </summary>
+        </member>
+        <member name="M:Spring.Objects.Factory.Attributes.InitDestroyAttributeObjectPostProcessor.PostProcessBeforeDestruction(System.Object,System.String)">
+            <summary>
+            Executed PreDestroy methods in given order for provided instance
+            </summary>
+            <param name="instance">The new object instance.</param><param name="name">The name of the object.</param><exception cref="T:Spring.Objects.ObjectsException">In case of errors.
+                        </exception>
+        </member>
+        <member name="P:Spring.Objects.Factory.Attributes.InitDestroyAttributeObjectPostProcessor.Order">
+            <summary>
+            Return the order value of this object, where a higher value means greater in
+                        terms of sorting.
+            </summary>
+            <remarks>
+            <p>Normally starting with 0 or 1, with <see cref="F:System.Int32.MaxValue"/> indicating
+                        greatest. Same order values will result in arbitrary positions for the affected
+                        objects.
+                        </p><p>Higher value can be interpreted as lower priority, consequently the first object
+                        has highest priority.
+                        </p>
+            </remarks>
+            <returns>
+            The order value.
+            </returns>
+        </member>
+        <member name="P:Spring.Objects.Factory.Attributes.InitDestroyAttributeObjectPostProcessor.InitAttributeType">
+            <summary>
+            Specify the init attribute to check for, indicating initialization
+            methods to call after configuration of an object.
+            </summary>
+        </member>
+        <member name="P:Spring.Objects.Factory.Attributes.InitDestroyAttributeObjectPostProcessor.DestroyAttributeType">
+            <summary>
+            Specify the destroy attribute to check for, indicating disposal
+            methods to call before object is destroyed
+            </summary>
+        </member>
+        <member name="P:Spring.Objects.Factory.Attributes.InitDestroyAttributeObjectPostProcessor.ObjectFactory">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="T:Spring.Objects.Factory.Attributes.PostConstructAttribute">
+            <summary>
+            Defines a method that will be called during the intantiation of an instance
+            </summary>
+        </member>
+        <member name="M:Spring.Objects.Factory.Attributes.PostConstructAttribute.#ctor">
+            <summary>
+            Initializes a new instance of the PostConstruct class with order = 1
+            </summary>
+        </member>
+        <member name="M:Spring.Objects.Factory.Attributes.PostConstructAttribute.#ctor(System.Int32)">
+            <summary>
+            Initializes a new instance of the PostConstruct class with defined order
+            </summary>
+            <param name="order">Order in which the PostContruct method is called</param>
+        </member>
+        <member name="P:Spring.Objects.Factory.Attributes.PostConstructAttribute.Order">
+            <summary>
+            Defined the order in which the PostContruct methods are called
+            </summary>
+        </member>
+        <member name="T:Spring.Objects.Factory.Attributes.PreDestroyAttribute">
+            <summary>
+            Defines a method that will be called prior to the destruction of the object instance
+            </summary>
+        </member>
+        <member name="M:Spring.Objects.Factory.Attributes.PreDestroyAttribute.#ctor">
+            <summary>
+            Initializes a new instance of the PreDestroy attribute with order = 1
+            </summary>
+        </member>
+        <member name="M:Spring.Objects.Factory.Attributes.PreDestroyAttribute.#ctor(System.Int32)">
+            <summary>
+            Initializes a new instance of the PreDestroy attribute with defined order
+            </summary>
+            <param name="order">Order in which the PostContruct method is called</param>
+        </member>
+        <member name="P:Spring.Objects.Factory.Attributes.PreDestroyAttribute.Order">
+            <summary>
+            Defined the order in which the PreDestroy methods are called
+            </summary>
+        </member>
+        <member name="T:Spring.Objects.Factory.Attributes.QualifierAnnotationAutowireCandidateResolver">
+            <summary>
+            <see cref="T:Spring.Objects.Factory.Support.IAutowireCandidateResolver"/> implementation that matches bean definition qualifier
+            against <see cref="T:Spring.Objects.Factory.Attributes.QualifierAttribute"/> on the field or parameter to be autowired.
+            Also supports suggested expression values through a <see cref="T:Spring.Objects.Factory.Attributes.ValueAttribute"/> attribute.
+            </summary>
+        </member>
+        <member name="T:Spring.Objects.Factory.Support.IAutowireCandidateResolver">
+            <summary>
+            Strategy interface for determining whether a specific object definition
+            qualifies as an autowire candidate for a specific dependency.
+            </summary>
+            <author>Mark Fisher</author>
+            <author>Juergen hoeller</author>
+            <author>Mark Pollack (.NET)</author>
+        </member>
+        <member name="M:Spring.Objects.Factory.Support.IAutowireCandidateResolver.IsAutowireCandidate(Spring.Objects.Factory.Config.ObjectDefinitionHolder,Spring.Objects.Factory.Config.DependencyDescriptor)">
+            <summary>
+            Determines whether the given object definition qualifies as an 
+            autowire candidate for the given dependency.
+            </summary>
+            <param name="odHolder">The object definition including object name and aliases.</param>
+            <param name="descriptor">The descriptor for the target method parameter or field.</param>
+            <returns>
+            	<c>true</c> if the object definition qualifies as autowire candidate; otherwise, <c>false</c>.
+            </returns>
+        </member>
+        <member name="M:Spring.Objects.Factory.Support.IAutowireCandidateResolver.GetSuggestedValue(Spring.Objects.Factory.Config.DependencyDescriptor)">
+            <summary>
+            Determine whether a default value is suggested for the given dependency.
+            </summary>
+            <param name="descriptor">The descriptor for the target method parameter or field</param>
+            <returns>The value suggested (typically an expression String),
+            or <c>null</c> if none found
+            </returns>
+        </member>
+        <member name="M:Spring.Objects.Factory.Attributes.QualifierAnnotationAutowireCandidateResolver.#ctor">
+            <summary>
+            Create a new QualifierAnnotationAutowireCandidateResolver
+            for Spring's standard <see cref="T:Spring.Objects.Factory.Attributes.QualifierAttribute"/> attribute.
+            </summary>
+        </member>
+        <member name="M:Spring.Objects.Factory.Attributes.QualifierAnnotationAutowireCandidateResolver.#ctor(System.Type)">
+            <summary>
+            Create a new QualifierAnnotationAutowireCandidateResolver
+            for the given qualifier attribute type.
+            </summary>
+            <param name="qualifierType">the qualifier attribute to look for</param>
+        </member>
+        <member name="M:Spring.Objects.Factory.Attributes.QualifierAnnotationAutowireCandidateResolver.#ctor(Spring.Collections.Generic.ISet{System.Type})">
+            <summary>
+            Create a new QualifierAnnotationAutowireCandidateResolver
+            for the given qualifier attribute types.
+            </summary>
+            <param name="qualifierTypes">the qualifier annotations to look for</param>
+        </member>
+        <member name="M:Spring.Objects.Factory.Attributes.QualifierAnnotationAutowireCandidateResolver.AddQualifierType(System.Type)">
+            <summary>
+            Register the given type to be used as a qualifier when autowiring.
+            <p>This identifies qualifier annotations for direct use (on fields,
+            method parameters and constructor parameters) as well as meta
+            annotations that in turn identify actual qualifier annotations.</p>
+            <p>This implementation only supports annotations as qualifier types.
+            The default is Spring's <see cref="T:Spring.Objects.Factory.Attributes.QualifierAttribute"/> attribute which serves
+            as a qualifier for direct use and also as a meta attribute.</p>
+            </summary>
+            <param name="qualifierType">the attribute type to register</param>
+        </member>
+        <member name="M:Spring.Objects.Factory.Attributes.QualifierAnnotationAutowireCandidateResolver.IsAutowireCandidate(Spring.Objects.Factory.Config.ObjectDefinitionHolder,Spring.Objects.Factory.Config.DependencyDescriptor)">
+            <summary>
+            Determine whether the provided object definition is an autowire candidate.
+            <p>To be considered a candidate the object's <em>autowire-candidate</em>
+            attribute must not have been set to 'false'. Also, if an attribute on
+            the field or parameter to be autowired is recognized by this bean factory
+            as a <em>qualifier</em>, the object must 'match' against the attribute as
+            well as any attributes it may contain. The bean definition must contain
+            the same qualifier or match by meta attributes. A "value" attribute will
+            fallback to match against the bean name or an alias if a qualifier or
+            attribute does not match.</p>
+            </summary>
+        </member>
+        <member name="M:Spring.Objects.Factory.Attributes.QualifierAnnotationAutowireCandidateResolver.CheckQualifiers(Spring.Objects.Factory.Config.ObjectDefinitionHolder,System.Attribute[])">
+            <summary>
+            Match the given qualifier annotations against the candidate bean definition.
+            </summary>
+        </member>
+        <member name="M:Spring.Objects.Factory.Attributes.QualifierAnnotationAutowireCandidateResolver.IsQualifier(System.Type)">
+            <summary>
+            Checks whether the given attribute type is a recognized qualifier type.
+            </summary>
+        </member>
+        <member name="M:Spring.Objects.Factory.Attributes.QualifierAnnotationAutowireCandidateResolver.CheckQualifier(Spring.Objects.Factory.Config.ObjectDefinitionHolder,System.Attribute)">
+            <summary>
+            Match the given qualifier attribute against the candidate bean definition.
+            </summary>
+        </member>
+        <member name="M:Spring.Objects.Factory.Attributes.QualifierAnnotationAutowireCandidateResolver.GetSuggestedValue(Spring.Objects.Factory.Config.DependencyDescriptor)">
+            <summary>
+            Determine whether the given dependency carries a value attribute.
+            </summary>
+        </member>
+        <member name="M:Spring.Objects.Factory.Attributes.QualifierAnnotationAutowireCandidateResolver.FindValue(System.Attribute[])">
+            <summary>
+            Determine a suggested value from any of the given candidate annotations.
+            </summary>
+        </member>
+        <member name="T:Spring.Objects.Factory.Attributes.QualifierAttribute">
+            <summary>
+            This annotation may be used on a field or parameter as a qualifier for
+            candidate beans when autowiring. It may also be used to annotate other
+            custom annotations that can then in turn be used as qualifiers.
+            </summary>
+        </member>
+        <member name="M:Spring.Objects.Factory.Attributes.QualifierAttribute.#ctor">
+            <summary>
+            Instantiate a new qualifier with an empty name
+            </summary>
+        </member>
+        <member name="M:Spring.Objects.Factory.Attributes.QualifierAttribute.#ctor(System.String)">
+            <summary>
+            Instantiate a new qualifier with a givin name
+            </summary>
+            <param name="value">name to use as qualifier</param>
+        </member>
+        <member name="M:Spring.Objects.Factory.Attributes.QualifierAttribute.Equals(System.Object)">
+            <summary>
+            Checks weather the attribute is the same
+            </summary>
+            <param name="obj"></param>
+            <returns></returns>
+        </member>
+        <member name="P:Spring.Objects.Factory.Attributes.QualifierAttribute.Value">
+            <summary>
+            Gets the name associated with this qualifier
+            </summary>
+        </member>
+        <member name="T:Spring.Objects.Factory.Attributes.RequiredAttribute">
+            <summary>
+            Marks a property as being 'required': that is, the setter property 
+            must be configured to be dependency-injected with a value.
+            </summary>
+            <remarks>Consult the SDK documentation for <see cref="T:Spring.Objects.Factory.Attributes.RequiredAttributeObjectPostProcessor"/>, 
+            which, by default, checks for the presence of this annotation.
+            </remarks>
+            <author>Rob Harrop</author>
+            <author>Mark Pollack</author>
+        </member>
+        <member name="T:Spring.Objects.Factory.Attributes.RequiredAttributeObjectPostProcessor">
+            <summary>
+             A <see cref="T:Spring.Objects.Factory.Config.IObjectPostProcessor"/> implementation that enforces required properties to have been configured.
+            Required properties are detected through an attribute, by default, Spring's <see cref="T:Spring.Objects.Factory.Attributes.RequiredAttribute"/>
+            attribute.
+            </summary>
+            <remarks>
+            <para>The motivation for the existence of this IObjectPostProcessor is to allow
+            developers to annotate the setter properties of their own classes with an
+            arbitrary attribute to indicate that the container must check
+            for the configuration of a dependency injected value. This neatly pushes
+            responsibility for such checking onto the container (where it arguably belongs),
+            and obviates the need (<b>in part</b>) for a developer to code a method that
+            simply checks that all required properties have actually been set.
+            </para>
+            <para>Please note that an 'init' method may still need to implemented (and may
+            still be desirable), because all that this class does is enforce that a
+            'required' property has actually been configured with a value. It does
+            <b>not</b> check anything else... In particular, it does not check that a
+            configured value is not <code>null</code>.
+            </para>
+            </remarks>
+            <author>Rob Harrop</author>
+            <author>Juergen Hoeller</author>
+            <author>Mark Pollack (.NET)</author>
         </member>
         <member name="F:Spring.Objects.Factory.Attributes.RequiredAttributeObjectPostProcessor.validatedObjectNames">
             <summary>
@@ -25012,6 +25645,40 @@
             <param name="eager">if set to <c>true</c> the dependency is 'eager' in the sense of
             eagerly resolving potential target objects for type matching.</param>
         </member>
+        <member name="M:Spring.Objects.Factory.Config.DependencyDescriptor.#ctor(System.Reflection.PropertyInfo,System.Boolean)">
+            <summary>
+            Create a new descriptor for a property.
+            Considers the dependency as 'eager'.
+            <param name="property">property to wrap</param>
+            <param name="required">required whether the dependency is required</param>
+            </summary>
+        </member>
+        <member name="M:Spring.Objects.Factory.Config.DependencyDescriptor.#ctor(System.Reflection.PropertyInfo,System.Boolean,System.Boolean)">
+            <summary>
+            Create a new descriptor for a property.
+            <param name="property">property to wrap</param>
+            <param name="required ">whether the dependency is required</param>
+            <param name="eager">whether this dependency is 'eager' in the sense of</param>
+            eagerly resolving potential target beans for type matching
+            </summary>
+        </member>
+        <member name="M:Spring.Objects.Factory.Config.DependencyDescriptor.#ctor(System.Reflection.FieldInfo,System.Boolean)">
+            <summary>
+            Create a new descriptor for a field.
+            Considers the dependency as 'eager'.
+            <param name="field">field to wrap</param>
+            <param name="required">whether the dependency is required</param>
+            </summary>
+        </member>
+        <member name="M:Spring.Objects.Factory.Config.DependencyDescriptor.#ctor(System.Reflection.FieldInfo,System.Boolean,System.Boolean)">
+            <summary>
+            Create a new descriptor for a field.
+            <param name="field">field to wrap</param>
+            <param name="required ">whether the dependency is required</param>
+            <param name="eager">whether this dependency is 'eager' in the sense of</param>
+            eagerly resolving potential target beans for type matching
+            </summary>
+        </member>
         <member name="P:Spring.Objects.Factory.Config.DependencyDescriptor.Required">
             <summary>
             Gets a value indicating whether this dependency is required.
@@ -25036,6 +25703,16 @@
             Gets the wrapped MethodParameter, if any.
             </summary>
             <value>The method parameter.</value>
+        </member>
+        <member name="P:Spring.Objects.Factory.Config.DependencyDescriptor.Attributes">
+            <summary>
+            Gets the Attributes assigned to Field, Property or Paramater
+            </summary>
+        </member>
+        <member name="P:Spring.Objects.Factory.Config.DependencyDescriptor.DependencyName">
+            <summary>
+            Gets the name of the member info
+            </summary>
         </member>
         <member name="T:Spring.Objects.Factory.Config.DictionaryFactoryObject">
             <summary>
@@ -25878,6 +26555,19 @@
             The <see cref="T:System.ComponentModel.TypeConverter"/> to register.
             </param>
         </member>
+        <member name="M:Spring.Objects.Factory.Config.IConfigurableObjectFactory.AddEmbeddedValueResolver(Spring.Util.IStringValueResolver)">
+            <summary>
+            Add a String resolver for embedded values such as annotation attributes.
+            </summary>
+            <param name="valueResolver">the String resolver to apply to embedded values</param>
+        </member>
+        <member name="M:Spring.Objects.Factory.Config.IConfigurableObjectFactory.ResolveEmbeddedValue(System.String)">
+            <summary>
+            Resolve the given embedded value, e.g. an annotation attribute.
+            </summary>
+            <param name="value">the value to resolve</param>
+            <returns>the resolved value (may be the original value as-is)</returns>
+        </member>
         <member name="P:Spring.Objects.Factory.Config.IConfigurableObjectFactory.ParentObjectFactory">
             <summary>
             Set the parent of this object factory.
@@ -26061,32 +26751,6 @@
             <param name="argumentValue">
             The value of the property that is being resolved.
             </param>
-        </member>
-        <member name="T:Spring.Objects.Factory.Config.IDestructionAwareObjectPostProcessor">
-            <summary>
-            Subinterface of
-            <see cref="T:Spring.Objects.Factory.Config.IObjectPostProcessor"/> that adds
-            a before-destruction callback.
-            </summary>
-            <remarks>
-            The typical usage will be to invoke custom destruction callbacks on
-            specific object types, matching corresponding initialization callbacks.
-            </remarks>
-            <author>Juergen Hoeller</author>
-            <author>Simon White (.NET)</author>
-        </member>
-        <member name="M:Spring.Objects.Factory.Config.IDestructionAwareObjectPostProcessor.PostProcessBeforeDestruction(System.Object,System.String)">
-            <summary>
-            Apply this
-            <see cref="T:Spring.Objects.Factory.Config.IObjectPostProcessor"/> to the
-            given new object instance before its destruction. Can invoke custom
-            destruction callbacks.
-            </summary>
-            <param name="instance">The new object instance.</param>
-            <param name="name">The name of the object.</param>
-            <exception cref="T:Spring.Objects.ObjectsException">
-            In case of errors.
-            </exception>
         </member>
         <member name="T:Spring.Objects.Factory.Config.IManagedCollection">
             <summary>
@@ -26419,6 +27083,13 @@
             <value>
             	<c>true</c> if this instance is autowire candidate; otherwise, <c>false</c>.
             </value>
+        </member>
+        <member name="P:Spring.Objects.Factory.Config.IObjectDefinition.IsPrimary">
+            <summary>
+            Return whether this bean is a primary autowire candidate.
+            If this value is true for exactly one bean among multiple
+            matching candidates, it will serve as a tie-breaker.
+            </summary>
         </member>
         <member name="T:Spring.Objects.Factory.Config.ListFactoryObject">
             <summary>
@@ -27373,6 +28044,13 @@
             Any aliases for the supplied <paramref name="definition"/>
             </param>
         </member>
+        <member name="M:Spring.Objects.Factory.Config.ObjectDefinitionHolder.MatchesName(System.String)">
+            <summary>
+            Checks wether a givin candidate name has a defined object or alias
+            </summary>
+            <param name="candidateName">name to check if exists</param>
+            <returns></returns>
+        </member>
         <member name="P:Spring.Objects.Factory.Config.ObjectDefinitionHolder.ObjectDefinition">
             <summary>
             The <see cref="T:Spring.Objects.Factory.Config.IObjectDefinition"/> held by this
@@ -27557,48 +28235,6 @@
             </example>
             <author>Colin Sampaleanu</author>
             <author>Simon White (.NET)</author>
-        </member>
-        <member name="T:Spring.Objects.Factory.IObjectFactoryAware">
-            <summary>
-            Interface to be implemented by objects that wish to be aware of their owning
-            <see cref="T:Spring.Objects.Factory.IObjectFactory"/>.
-            </summary>
-            <remarks>
-            <p>
-            For example, objects can look up collaborating objects via the factory.
-            </p>
-            <p>
-            Note that most objects will choose to receive references to collaborating
-            objects via respective properties and / or an appropriate constructor.
-            </p>
-            <p>
-            For a list of all object lifecycle methods, see the
-            <see cref="T:Spring.Objects.Factory.IObjectFactory"/> API documentation.
-            </p>
-            </remarks>
-            <author>Rod Johnson</author>
-            <author>Rick Evans (.NET)</author>
-        </member>
-        <member name="P:Spring.Objects.Factory.IObjectFactoryAware.ObjectFactory">
-            <summary>
-            Callback that supplies the owning factory to an object instance.
-            </summary>
-            <value>
-            Owning <see cref="T:Spring.Objects.Factory.IObjectFactory"/>
-            (may not be <see langword="null"/>). The object can immediately
-            call methods on the factory.
-            </value>
-            <remarks>
-            <p>
-            Invoked after population of normal object properties but before an init
-            callback like <see cref="T:Spring.Objects.Factory.IInitializingObject"/>'s
-            <see cref="M:Spring.Objects.Factory.IInitializingObject.AfterPropertiesSet"/>
-            method or a custom init-method.
-            </p>
-            </remarks>
-            <exception cref="T:Spring.Objects.ObjectsException">
-            In case of initialization errors.
-            </exception>
         </member>
         <member name="M:Spring.Objects.Factory.Config.ObjectFactoryCreatingFactoryObject.CreateInstance">
             <summary>
@@ -28593,6 +29229,18 @@
             enumeration for the available options.
             </p>
             </remarks>
+        </member>
+        <member name="T:Spring.Util.IStringValueResolver">
+            <summary>
+            Simple strategy interface for resolving a String value.
+            </summary>
+        </member>
+        <member name="M:Spring.Util.IStringValueResolver.ParseAndResolveVariables(System.String)">
+            <summary>
+            Resolve the given String value, for example parsing placeholders.
+            </summary>
+            <param name="value">the original String value</param>
+            <returns>the resolved String value</returns>
         </member>
         <member name="T:Spring.Objects.Factory.Config.PropertyRetrievingFactoryObject">
             <summary>
@@ -30125,6 +30773,26 @@
             Cache of singleton objects created by <see cref="T:Spring.Objects.Factory.IFactoryObject"/>s: FactoryObject name -&gt; product
             </summary>
         </member>
+        <member name="F:Spring.Objects.Factory.Support.AbstractObjectFactory.disposableObjects">
+            <summary>
+            Disposable object instances: object name --> disposable instance
+            </summary>
+        </member>
+        <member name="F:Spring.Objects.Factory.Support.AbstractObjectFactory.mergedObjectDefinitions">
+            <summary>
+            root object definitons: object name --> Root Object Definition
+            </summary>
+        </member>
+        <member name="F:Spring.Objects.Factory.Support.AbstractObjectFactory.cacheObjectMetadata">
+            <summary>
+            Whether to cache object metadata or rather reobtain it for every access
+            </summary>
+        </member>
+        <member name="F:Spring.Objects.Factory.Support.AbstractObjectFactory.alreadyCreated">
+            <summary>
+            Names of object that have already been created at least once
+            </summary>
+        </member>
         <member name="M:Spring.Objects.Factory.Support.AbstractObjectFactory.#ctor">
             <summary>
             Creates a new instance of the
@@ -30449,9 +31117,40 @@
             Return a <see cref="T:Spring.Objects.Factory.Support.RootObjectDefinition"/>,
             even by traversing parent if the parameter is a child definition.
             </summary>
+            <param name="name">The name.</param>
+            <param name="od">The od.</param>
             <returns>
             A merged <see cref="T:Spring.Objects.Factory.Support.RootObjectDefinition"/>
             with overridden properties.
+            </returns>
+        </member>
+        <member name="M:Spring.Objects.Factory.Support.AbstractObjectFactory.GetMergedObjectDefinitionInternal(System.String,Spring.Objects.Factory.Config.IObjectDefinition)">
+            <summary>
+            Return a <see cref="T:Spring.Objects.Factory.Support.RootObjectDefinition"/>,
+            even by traversing parent if the parameter is a child definition.
+            </summary>
+            <returns>
+            A merged <see cref="T:Spring.Objects.Factory.Support.RootObjectDefinition"/>
+            with overridden properties.
+            </returns>
+        </member>
+        <member name="M:Spring.Objects.Factory.Support.AbstractObjectFactory.GetMergedLocalObjectDefinition(System.String)">
+            <summary>
+            Gets the merged local object definition.
+            </summary>
+            <param name="objectName">Name of the object.</param>
+            <returns>
+            Merged RootBeanDefinition, traversing the parent bean definition
+            if the specified bean corresponds to a child bean definition.
+            </returns>
+        </member>
+        <member name="M:Spring.Objects.Factory.Support.AbstractObjectFactory.IsObjectEligibleForMetadataCaching(System.String)">
+            <summary>
+            Determines whether the metadata for the specified object name is eligible for caching.
+            </summary>
+            <param name="beanName">Name of the bean.</param>
+            <returns>
+            	<c>true</c> if [is object eligible for metadata caching] [the specified bean name]; otherwise, <c>false</c>.
             </returns>
         </member>
         <member name="M:Spring.Objects.Factory.Support.AbstractObjectFactory.CreateRootObjectDefinition(Spring.Objects.Factory.Config.IObjectDefinition)">
@@ -30713,8 +31412,8 @@
             </summary>
             <remarks>More specifically, check whether a GetObject call for the given name
             would return an object that is assignable to the specified target type.
-            Translates aliases back to the corresponding canonical bean name.
-            Will ask the parent factory if the bean cannot be found in this factory instance.
+            Translates aliases back to the corresponding canonical instance name.
+            Will ask the parent factory if the instance cannot be found in this factory instance.
             </remarks>
             <param name="name">The name of the object to query.</param>
             <param name="targetType">Type of the target to match against.</param>
@@ -30731,8 +31430,8 @@
             </summary>
             <remarks>More specifically, check whether a GetObject call for the given name
             would return an object that is assignable to the specified target type.
-            Translates aliases back to the corresponding canonical bean name.
-            Will ask the parent factory if the bean cannot be found in this factory instance.
+            Translates aliases back to the corresponding canonical instance name.
+            Will ask the parent factory if the instance cannot be found in this factory instance.
             </remarks>
             <param name="name">The name of the object to query.</param>
             <typeparam name="T">Type of the target to match against.</typeparam>
@@ -30880,6 +31579,11 @@
             ObjectPostProcessors to apply in CreateObject
             </summary>
         </member>
+        <member name="F:Spring.Objects.Factory.Support.AbstractObjectFactory.embeddedValueResolvers">
+            <summary>
+            String Resolver applied to Autowired value injections
+            </summary>
+        </member>
         <member name="F:Spring.Objects.Factory.Support.AbstractObjectFactory.hasInstantiationAwareBeanPostProcessors">
             <summary>
             Indicates whether any IInstantiationAwareBeanPostProcessors have been registered
@@ -30892,7 +31596,7 @@
         </member>
         <member name="F:Spring.Objects.Factory.Support.AbstractObjectFactory.registeredSingletons">
             <summary>
-            Set of registered singletons, containing the bean names in registration order 
+            Set of registered singletons, containing the instance names in registration order 
             </summary>
         </member>
         <member name="F:Spring.Objects.Factory.Support.AbstractObjectFactory.disposableInnerObjects">
@@ -30903,7 +31607,7 @@
         </member>
         <member name="M:Spring.Objects.Factory.Support.AbstractObjectFactory.ContainsLocalObject(System.String)">
             <summary>
-            Determines whether the local object factory contains a bean of the given name,
+            Determines whether the local object factory contains a instance of the given name,
             ignoring object defined in ancestor contexts.
             This is an alternative to <code>ContainsObject</code>, ignoring an object
             of the given name from an ancestor object factory.
@@ -31003,6 +31707,37 @@
             Return an instance (possibly shared or independent) of the given object name.
             </summary>
             <see cref="M:Spring.Objects.Factory.IObjectFactory.GetObject(System.String)"/>.
+        </member>
+        <member name="M:Spring.Objects.Factory.Support.AbstractObjectFactory.GetObject``1">
+            <summary>
+            Return an instance (possibly shared or independent) of the given object name.
+            </summary>
+            <remarks>
+            <para>
+            This method allows an object factory to be used as a replacement for the
+            Singleton or Prototype design pattern.
+            </para>
+            <para>
+            Note that callers should retain references to returned objects. There is no
+            guarantee that this method will be implemented to be efficient. For example,
+            it may be synchronized, or may need to run an RDBMS query.
+            </para>
+            <para>
+            Will ask the parent factory if the object cannot be found in this factory
+            instance.
+            </para>
+            </remarks>
+            <typeparam name="T">The type of the object to return.</typeparam>
+            <returns>The instance of the object.</returns>
+            <exception cref="T:Spring.Objects.Factory.NoSuchObjectDefinitionException">
+            If there's no such object definition.
+            </exception>
+            <exception cref="T:Spring.Objects.Factory.ObjectDefinitionStoreException">
+            If there is more than a single object of the requested type defined in the factory.
+            </exception>
+            <exception cref="T:Spring.Objects.ObjectsException">
+            If the object could not be created.
+            </exception>
         </member>
         <member name="M:Spring.Objects.Factory.Support.AbstractObjectFactory.GetObject``1(System.String)">
             <summary>
@@ -31114,6 +31849,16 @@
             <seealso cref="M:Spring.Objects.Factory.IObjectFactory.CreateObject(System.String,System.Type,System.Object[])"/>
             <seealso cref="M:Spring.Objects.Factory.IObjectFactory.GetObject(System.String,System.Type,System.Object[])"/>
         </member>
+        <member name="M:Spring.Objects.Factory.Support.AbstractObjectFactory.RequiresDestruction(System.Object,Spring.Objects.Factory.Support.RootObjectDefinition)">
+            <summary>
+            Requireses the destruction.
+            </summary>
+            <param name="instance">The instance to check.</param>
+            <param name="od">The corresponding instance definition.</param>
+            <returns>
+            Boolean indicating whether destruction is required.
+            </returns>
+        </member>
         <member name="M:Spring.Objects.Factory.Support.AbstractObjectFactory.EnsureObjectIsOfRequiredType(System.String,System.Object,System.Type)">
             <summary>
             Checks, if the passed instance is of the required type.
@@ -31176,6 +31921,19 @@
             	<c>true</c> if the specified object name is currently in creation; otherwise, <c>false</c>.
             </returns>
         </member>
+        <member name="M:Spring.Objects.Factory.Support.AbstractObjectFactory.AddEmbeddedValueResolver(Spring.Util.IStringValueResolver)">
+            <summary>
+            Add a String resolver for embedded values such as annotation attributes.
+            </summary>
+            <param name="valueResolver">the String resolver to apply to embedded values</param>
+        </member>
+        <member name="M:Spring.Objects.Factory.Support.AbstractObjectFactory.ResolveEmbeddedValue(System.String)">
+            <summary>
+            Resolve the given embedded value, e.g. an annotation attribute.
+            </summary>
+            <param name="value">the value to resolve</param>
+            <returns>the resolved value (may be the original value as-is)</returns>
+        </member>
         <member name="M:Spring.Objects.Factory.Support.AbstractObjectFactory.AddObjectPostProcessor(Spring.Objects.Factory.Config.IObjectPostProcessor)">
             <summary>
             Add a new <see cref="T:Spring.Objects.Factory.Config.IObjectPostProcessor"/>
@@ -31220,6 +31978,18 @@
             </summary>
             <param name="objectName">Teh object name to look for.</param>
             <returns>The cached object if found, <see langword="null"/> otherwise.</returns>
+        </member>
+        <member name="M:Spring.Objects.Factory.Support.AbstractObjectFactory.RegisterDisposableObject(System.String,System.IDisposable)">
+            <summary>
+            Registers the disposable object.
+            </summary>
+            <param name="objectName">Name of the instance.</param>
+            <param name="instance">The instance.</param>
+            Add the given instance to the list of disposable beans in this registry.
+            Disposable beans usually correspond to registered singletons,
+            matching the instance name but potentially being a different instance
+            (for example, a DisposableBean adapter for a singleton that does not
+            naturally implement <see cref="T:System.IDisposable"/>).
         </member>
         <member name="M:Spring.Objects.Factory.Support.AbstractObjectFactory.IsObjectNameInUse(System.String)">
             <summary>
@@ -31317,7 +32087,7 @@
             <remarks>
             	<para>
             Only checks already instantiated singletons; does not return names
-            for singleton bean definitions which have not been instantiated yet.
+            for singleton instance definitions which have not been instantiated yet.
             </para>
             	<para>
             The main purpose of this method is to check manually registered singletons
@@ -31488,6 +32258,21 @@
             <exception cref="T:Spring.Objects.ObjectsException">
             In case of errors.
             </exception>
+        </member>
+        <member name="M:Spring.Objects.Factory.Support.AbstractAutowireCapableObjectFactory.ApplyObjectPostProcessBeforeDestruction(System.Object,System.String)">
+            <summary>
+            Apply <see cref="T:Spring.Objects.Factory.Config.IDestructionAwareObjectPostProcessor"/>s
+            to the given existing object instance, invoking their
+            <see cref="M:Spring.Objects.Factory.Config.IDestructionAwareObjectPostProcessor.PostProcessBeforeDestruction(System.Object,System.String)"/>
+            methods.
+            </summary>
+            <param name="instance">
+            The existing object instance.
+            </param>
+            <param name="name">
+            The name of the object.
+            </param>
+            <seealso cref="M:Spring.Objects.Factory.Config.IDestructionAwareObjectPostProcessor.PostProcessBeforeDestruction(System.Object,System.String)"/>
         </member>
         <member name="M:Spring.Objects.Factory.Support.AbstractAutowireCapableObjectFactory.ApplyPropertyValues(System.String,Spring.Objects.Factory.Support.RootObjectDefinition,Spring.Objects.IObjectWrapper,Spring.Objects.IPropertyValues)">
             <summary>
@@ -32265,6 +33050,46 @@
             <author>Juergen Hoeller</author>
             <author>Rick Evans (.NET)</author>
         </member>
+        <member name="T:Spring.Objects.ObjectMetadataAttributeAccessor">
+            <summary>
+            Extension of <see cref="T:Spring.Core.AttributeAccessorSupport"/>,
+            holding attributes as <see cref="T:Spring.Objects.IObjectMetadataElement"/> objects in order
+            to keep track of the definition source.
+            </summary>
+        </member>
+        <member name="T:Spring.Objects.IObjectMetadataElement">
+            <summary>
+            Interface to be implemented by bean metadata elements
+            that carry a configuration source object.
+            </summary>
+        </member>
+        <member name="P:Spring.Objects.IObjectMetadataElement.Source">
+            <summary>
+            Return the configuration source <code>Object</code> for this metadata element
+            (may be <code>null</code>).
+            </summary>
+        </member>
+        <member name="M:Spring.Objects.ObjectMetadataAttributeAccessor.AddMetadataAttribute(Spring.Objects.ObjectMetadataAttribute)">
+            <summary>
+            Add the given BeanMetadataAttribute to this accessor's set of attributes.
+            </summary>
+            <param name="attribute">The BeanMetadataAttribute object to register</param>
+        </member>
+        <member name="M:Spring.Objects.ObjectMetadataAttributeAccessor.GetMetadataAttribute(System.String)">
+            <summary>
+            Look up the given BeanMetadataAttribute in this accessor's set of attributes.
+            </summary>
+            <param name="name">the name of the attribute</param>
+            <returns>the corresponding BeanMetadataAttribute object,
+            or <code>null</code> if no such attribute defined
+            </returns>
+        </member>
+        <member name="P:Spring.Objects.ObjectMetadataAttributeAccessor.Source">
+            <summary>
+            Set the configuration source <code>object</code> for this metadata element.
+            <p>The exact type of the object will depend on the configuration mechanism used.</p>
+            </summary>
+        </member>
         <member name="T:Spring.Objects.Factory.Support.IConfigurableObjectDefinition">
             <summary>
             Describes a configurable object instance, which has property values,
@@ -32487,6 +33312,35 @@
             public constructors.
             </p>
             </remarks>
+        </member>
+        <member name="M:Spring.Objects.Factory.Support.AbstractObjectDefinition.AddQualifier(Spring.Objects.Factory.Support.AutowireCandidateQualifier)">
+            <summary>
+            Register a qualifier to be used for autowire candidate resolution,
+            keyed by the qualifier's type name.
+            <see cref="T:Spring.Objects.Factory.Support.AutowireCandidateQualifier"/>
+            </summary>
+        </member>
+        <member name="M:Spring.Objects.Factory.Support.AbstractObjectDefinition.HasQualifier(System.String)">
+            <summary>
+            Return whether this bean has the specified qualifier.
+            </summary>
+        </member>
+        <member name="M:Spring.Objects.Factory.Support.AbstractObjectDefinition.GetQualifier(System.String)">
+            <summary>
+            Return the qualifier mapped to the provided type name.
+            </summary>
+        </member>
+        <member name="M:Spring.Objects.Factory.Support.AbstractObjectDefinition.GetQualifiers">
+            <summary>
+            Return all registered qualifiers.
+            </summary>
+            <returns>the Set of <see cref="T:Spring.Objects.Factory.Support.AutowireCandidateQualifier"/> objects.</returns>
+        </member>
+        <member name="M:Spring.Objects.Factory.Support.AbstractObjectDefinition.CopyQualifiersFrom(Spring.Objects.Factory.Support.AbstractObjectDefinition)">
+            <summary>
+            Copy the qualifiers from the supplied AbstractBeanDefinition to this bean definition.
+            </summary>
+            <param name="source">the AbstractBeanDefinition to copy from</param>
         </member>
         <member name="M:Spring.Objects.Factory.Support.AbstractObjectDefinition.ResolveObjectType">
             <summary>
@@ -32799,6 +33653,13 @@
             	<c>true</c> if this instance is autowire candidate; otherwise, <c>false</c>.
             </value>
         </member>
+        <member name="P:Spring.Objects.Factory.Support.AbstractObjectDefinition.IsPrimary">
+            <summary>
+            Set whether this bean is a primary autowire candidate.
+            If this value is true for exactly one bean among multiple
+            matching candidates, it will serve as a tie-breaker.
+            </summary>
+        </member>
         <member name="P:Spring.Objects.Factory.Support.AbstractObjectDefinition.InitMethodName">
             <summary>
             The name of the initializer method.
@@ -33059,6 +33920,56 @@
             Gets or sets the resource loader to use for resource locations.
             </summary>
             <value>The resource loader.</value>
+        </member>
+        <member name="T:Spring.Objects.Factory.Support.AutowireCandidateQualifier">
+            <summary>
+            Qualifier for resolving autowire candidates. A bean definition that
+            includes one or more such qualifiers enables fine-grained matching
+            against annotations on a field or parameter to be autowired.
+            </summary>
+        </member>
+        <member name="M:Spring.Objects.Factory.Support.AutowireCandidateQualifier.#ctor(System.Type)">
+            <summary>
+            Construct a qualifier to match against an annotation of the
+            given type.
+            </summary>
+            <param name="type">type the annotation type</param>
+        </member>
+        <member name="M:Spring.Objects.Factory.Support.AutowireCandidateQualifier.#ctor(System.String)">
+            <summary>
+            Construct a qualifier to match against an annotation of the
+            given type name.
+            <p>The type name may match the fully-qualified class name of
+            the annotation or the short class name (without the package).</p>
+            </summary>
+            <param name="typeName">the name of the annotation type</param>
+        </member>
+        <member name="M:Spring.Objects.Factory.Support.AutowireCandidateQualifier.#ctor(System.Type,System.Object)">
+            <summary>
+            Construct a qualifier to match against an annotation of the
+            given type whose <code>value</code> attribute also matches
+            the specified value.
+            </summary>
+            <param name="type">the annotation type</param>
+            <param name="value">the annotation value to match</param>
+        </member>
+        <member name="M:Spring.Objects.Factory.Support.AutowireCandidateQualifier.#ctor(System.String,System.Object)">
+            <summary>
+            Construct a qualifier to match against an annotation of the
+            given type name whose <code>value</code> attribute also matches
+            the specified value.
+            <p>The type name may match the fully-qualified class name of
+            the annotation or the short class name (without the package).</p>
+            </summary>
+            <param name="typeName">the name of the annotation type</param>
+            <param name="value">the annotation value to match</param>
+        </member>
+        <member name="P:Spring.Objects.Factory.Support.AutowireCandidateQualifier.TypeName">
+            <summary>
+            Retrieve the type name. This value will be the same as the
+            type name provided to the constructor or the fully-qualified
+            class name if a Class instance was provided to the constructor.
+            </summary>
         </member>
         <member name="T:Spring.Objects.Factory.Support.AutowireUtils">
             <summary>
@@ -33752,7 +34663,7 @@
             </summary>
             <returns>
             The names of all objects defined in this factory, or an empty array if none
-            are defined.
+            are defined.  Respects any Parent-Child hierarchy the factory is participating in.
             </returns>
             <seealso cref="M:Spring.Objects.Factory.IListableObjectFactory.GetObjectDefinitionNames"/>
         </member>
@@ -34060,6 +34971,30 @@
             </returns>
             <exception cref="T:Spring.Objects.ObjectsException">if dependency resolution failed</exception>
         </member>
+        <member name="M:Spring.Objects.Factory.Support.DefaultListableObjectFactory.DeterminePrimaryCandidate(System.Collections.IDictionary,Spring.Objects.Factory.Config.DependencyDescriptor)">
+            <summary>
+            Determine the primary autowire candidate in the given set of beans.
+            </summary>
+            <param name="candidateObjects">a Map of candidate names and candidate instances
+            that match the required type</param>
+            <param name="descriptor">the target dependency to match against</param>
+            <returns>the name of the primary candidate, or <code>null</code> if none found</returns>
+        </member>
+        <member name="M:Spring.Objects.Factory.Support.DefaultListableObjectFactory.IsPrimary(System.String,System.Object)">
+            <summary>
+            Return whether the object definition for the given object name has been
+            marked as a primary object.
+            </summary>
+            <param name="objectName">the name of the bean</param>
+            <param name="objectInstance">the corresponding bean instance</param>
+            <returns>whether the given bean qualifies as primary</returns>
+        </member>
+        <member name="M:Spring.Objects.Factory.Support.DefaultListableObjectFactory.MatchesObjectName(System.String,System.String)">
+             <summary>
+             Determine whether the given candidate name matches the bean name or the aliases
+            stored in this bean definition.
+             </summary>
+        </member>
         <member name="M:Spring.Objects.Factory.Support.DefaultListableObjectFactory.RaiseNoSuchObjectDefinitionException(System.Type,System.String,Spring.Objects.Factory.Config.DependencyDescriptor)">
             <summary>
             Raises the no such object definition exception for an unresolvable dependency
@@ -34235,6 +35170,56 @@
             supposed to be registerd with</param>
             <returns>the generated object name</returns>
         </member>
+        <member name="T:Spring.Objects.Factory.Support.DelegateInvokingFactoryObject`1">
+            <summary>
+            Convenience implementation of the <see cref="T:Spring.Objects.Factory.IFactoryObject"/> interface that
+            delegates to an arbitrary object + method to perform the object construction.
+            </summary>
+            <remarks>
+            <para>
+            Because this <see cref="T:Spring.Objects.Factory.IFactoryObject"/> implementation requires a delegate
+            passed to its ctor, its only possible to configure this object and register
+            it with the <see cref="T:Spring.Objects.Factory.IObjectFactory"/> via code rather than via XML.
+            </para>
+            </remarks>
+            <typeparam name="T"></typeparam>
+        </member>
+        <member name="M:Spring.Objects.Factory.Support.DelegateInvokingFactoryObject`1.#ctor(System.Func{`0},System.Boolean)">
+            <summary>
+            Initializes a new instance of the <see cref="T:Spring.Objects.Factory.Support.DelegateInvokingFactoryObject`1"/> class.
+            </summary>
+            <param name="builderDelegate">The builder delegate.</param>
+            <param name="isSingleton">if set to <c>true</c> [is singleton].</param>
+        </member>
+        <member name="M:Spring.Objects.Factory.Support.DelegateInvokingFactoryObject`1.GetObject">
+            <summary>
+            Return an instance (possibly shared or independent) of the object
+                        managed by this factory.
+            </summary>
+            <remarks>
+            <note type="caution">If this method is being called in the context of an enclosing IoC container and
+                        returns <see langword="null"/>, the IoC container will consider this factory
+                        object as not being fully initialized and throw a corresponding (and most
+                        probably fatal) exception.
+                        </note>
+            </remarks>
+            <returns>
+            An instance (possibly shared or independent) of the object managed by
+                        this factory.
+            </returns>
+        </member>
+        <member name="P:Spring.Objects.Factory.Support.DelegateInvokingFactoryObject`1.ObjectType">
+            <summary>
+            Return the <see cref="T:System.Type"/> of object that this
+                        <see cref="T:Spring.Objects.Factory.IFactoryObject"/> creates, or
+                        <see langword="null"/> if not known in advance.
+            </summary>
+        </member>
+        <member name="P:Spring.Objects.Factory.Support.DelegateInvokingFactoryObject`1.IsSingleton">
+            <summary>
+            Is the object managed by this factory a singleton or a prototype?
+            </summary>
+        </member>
         <member name="T:Spring.Objects.Factory.Support.DelegatingMethodReplacer">
             <summary>
             An <see cref="T:Spring.Objects.Factory.Support.IMethodReplacer"/>
@@ -34312,6 +35297,37 @@
             Check everything.
             </summary>
         </member>
+        <member name="M:Spring.Objects.Factory.Support.DisposableObjectAdapter.#ctor(System.Object,System.String,Spring.Objects.Factory.Support.RootObjectDefinition,Spring.Collections.ISet)">
+            <summary>
+            Create a new DisposableBeanAdapter for the given bean.
+            </summary>
+            <param name="instance">The bean instance (never <code>null</code>).</param>
+            <param name="objectName">Name of the bean.</param>
+            <param name="objectDefinition">The merged bean definition.</param>
+            <param name="postProcessors">the List of BeanPostProcessors (potentially IDestructionAwareBeanPostProcessor), if any.</param>
+        </member>
+        <member name="M:Spring.Objects.Factory.Support.DisposableObjectAdapter.FilterPostProcessors(Spring.Collections.ISet)">
+            <summary>
+            Search for all <see cref="T:Spring.Objects.Factory.Config.IDestructionAwareObjectPostProcessor"/>s in the List.
+            </summary>
+            <param name="postProcessors">The List to search.</param>
+            <returns>the filtered List of IDestructionAwareObjectPostProcessors.</returns>
+        </member>
+        <member name="M:Spring.Objects.Factory.Support.DisposableObjectAdapter.Dispose">
+            <summary>
+            Performs application-defined tasks associated with freeing, releasing, or resetting unmanaged resources.
+            </summary>
+        </member>
+        <member name="M:Spring.Objects.Factory.Support.DisposableObjectAdapter.InvokeCustomDestroyMethod(System.Reflection.MethodInfo)">
+            <summary>
+            Invokes the custom destroy method.
+            </summary>
+            <param name="customDestroyMethod">The custom destroy method.</param>
+            Invoke the specified custom destroy method on the given bean.
+            This implementation invokes a no-arg method if found, else checking
+            for a method with a single boolean argument (passing in "true",
+            assuming a "force" parameter), else logging an error.
+        </member>
         <member name="T:Spring.Objects.Factory.Support.GenericObjectDefinition">
             <summary>
             GenericObjectDefinition is a one-stop shop for standard object definition purposes.
@@ -34359,26 +35375,6 @@
             <value>
             The name of the parent object definition.
             </value>
-        </member>
-        <member name="T:Spring.Objects.Factory.Support.IAutowireCandidateResolver">
-            <summary>
-            Strategy interface for determining whether a specific object definition
-            qualifies as an autowire candidate for a specific dependency.
-            </summary>
-            <author>Mark Fisher</author>
-            <author>Juergen hoeller</author>
-            <author>Mark Pollack (.NET)</author>
-        </member>
-        <member name="M:Spring.Objects.Factory.Support.IAutowireCandidateResolver.IsAutowireCandidate(Spring.Objects.Factory.Config.ObjectDefinitionHolder,Spring.Objects.Factory.Config.DependencyDescriptor)">
-            <summary>
-            Determines whether the given object definition qualifies as an 
-            autowire candidate for the given dependency.
-            </summary>
-            <param name="odHolder">The object definition including object name and aliases.</param>
-            <param name="descriptor">The descriptor for the target method parameter or field.</param>
-            <returns>
-            	<c>true</c> if the object definition qualifies as autowire candidate; otherwise, <c>false</c>.
-            </returns>
         </member>
         <member name="T:Spring.Objects.Factory.Support.IInstantiationStrategy">
             <summary>
@@ -35380,6 +36376,20 @@
             <param name="autowireMode">The autowire mode.</param>
             <returns>The current <code>ObjectDefinitionBuilder</code>.</returns>
         </member>
+        <member name="M:Spring.Objects.Factory.Support.ObjectDefinitionBuilder.SetAutowireCandidate(System.Boolean)">
+            <summary>
+            Sets the autowire candidate value for this definition.
+            </summary>
+            <param name="autowireCandidate">The autowire candidate value</param>
+            <returns></returns>
+        </member>
+        <member name="M:Spring.Objects.Factory.Support.ObjectDefinitionBuilder.SetPrimary(System.Boolean)">
+            <summary>
+            Sets the primary value for this definition.
+            </summary>
+            <param name="primary">If object is primary</param>
+            <returns></returns>
+        </member>
         <member name="M:Spring.Objects.Factory.Support.ObjectDefinitionBuilder.SetDependencyCheck(Spring.Objects.Factory.Support.DependencyCheckingMode)">
             <summary>
             Sets the dependency check mode for this definition.
@@ -36271,6 +37281,15 @@
             <param name="descriptor">The descriptor for the target method parameter or field.</param>
             <returns>
             	<c>true</c> if the object definition qualifies as autowire candidate; otherwise, <c>false</c>.
+            </returns>
+        </member>
+        <member name="M:Spring.Objects.Factory.Support.SimpleAutowireCandidateResolver.GetSuggestedValue(Spring.Objects.Factory.Config.DependencyDescriptor)">
+            <summary>
+            Determine whether a default value is suggested for the given dependency.
+            </summary>
+            <param name="descriptor">The descriptor for the target method parameter or field</param>
+            <returns>The value suggested (typically an expression String),
+            or <c>null</c> if none found
             </returns>
         </member>
         <member name="T:Spring.Objects.Factory.Support.StaticListableObjectFactory">
@@ -37504,6 +38523,24 @@
             </summary>
             <value>The merge.</value>
         </member>
+        <member name="P:Spring.Objects.Factory.Xml.DocumentDefaultsDefinition.InitMethod">
+            <summary>
+            Get or sets the init method for the document that's currently parsed.
+            </summary>
+            <value>The init method</value>
+        </member>
+        <member name="P:Spring.Objects.Factory.Xml.DocumentDefaultsDefinition.DestroyMethod">
+            <summary>
+            Gets or sets the destroy method for the document that's currently parsed.
+            </summary>
+            <value>The destroy methood</value>
+        </member>
+        <member name="P:Spring.Objects.Factory.Xml.DocumentDefaultsDefinition.AutowireCandidates">
+            <summary>
+            Gets or sets autowire candidates for the document that's currently parsed
+            </summary>
+            <value>The Autowire Candidates</value>
+        </member>
         <member name="T:Spring.Objects.Factory.Xml.INamespaceParser">
             <summary>
             Strategy interface for parsing XML object definitions. Equivalent to Spring/Java's <c>NamespaceHandler</c> interface.
@@ -37866,6 +38903,12 @@
             </p>
             </remarks>
         </member>
+        <member name="F:Spring.Objects.Factory.Xml.ObjectDefinitionConstants.FalseValue">
+            <summary>
+            Value of a boolean attribute that represents
+            <see langword="false"/>.
+            </summary>
+        </member>
         <member name="F:Spring.Objects.Factory.Xml.ObjectDefinitionConstants.DefaultValue">
             <summary>
             Signifies that a default value is to be applied.
@@ -37907,9 +38950,24 @@
             Specifies the default autowire mode.
             </summary>
         </member>
+        <member name="F:Spring.Objects.Factory.Xml.ObjectDefinitionConstants.DefaultAutowireCandidatesAttribute">
+            <summary>
+            Specifies the default autowire candidates.
+            </summary>
+        </member>
         <member name="F:Spring.Objects.Factory.Xml.ObjectDefinitionConstants.DefaultMergeAttribute">
             <summary>
             Specifies the default collection merge mode.
+            </summary>
+        </member>
+        <member name="F:Spring.Objects.Factory.Xml.ObjectDefinitionConstants.DefaultInitMethodAttribute">
+            <summary>
+            Specifies the default init method.
+            </summary>
+        </member>
+        <member name="F:Spring.Objects.Factory.Xml.ObjectDefinitionConstants.DefaultDestroyMethodAttribute">
+            <summary>
+            Specifies the default destroy method.
             </summary>
         </member>
         <member name="F:Spring.Objects.Factory.Xml.ObjectDefinitionConstants.ObjectElement">
@@ -38114,6 +39172,11 @@
             collections.
             </p>
             </remarks>
+        </member>
+        <member name="F:Spring.Objects.Factory.Xml.ObjectDefinitionConstants.QualifierElement">
+            <summary>
+            A qualifier definition used for fine grained autowiring
+            </summary>
         </member>
         <member name="F:Spring.Objects.Factory.Xml.ObjectDefinitionConstants.RefElement">
             <summary>
@@ -38397,6 +39460,21 @@
             The autowiring mode for an individual object definition.
             </summary>
         </member>
+        <member name="F:Spring.Objects.Factory.Xml.ObjectDefinitionConstants.AutowireCandidateAttribute">
+            <summary>
+            The autowiring mode for an individual object definition.
+            </summary>
+        </member>
+        <member name="F:Spring.Objects.Factory.Xml.ObjectDefinitionConstants.AttributeElement">
+            <summary>
+            Attribute element to farther deifne the qualifier of an object
+            </summary>
+        </member>
+        <member name="F:Spring.Objects.Factory.Xml.ObjectDefinitionConstants.PrimaryAttribute">
+            <summary>
+            The primary object for autwired injection
+            </summary>
+        </member>
         <member name="F:Spring.Objects.Factory.Xml.ObjectDefinitionConstants.DictionaryKeyRefShortcutAttribute">
             <summary>
             Shortcut alternative to specifying a key element in a
@@ -38412,6 +39490,11 @@
         <member name="F:Spring.Objects.Factory.Xml.ObjectDefinitionConstants.MergeAttribute">
             <summary>
             Specify if the collection values should be merged with the parent.
+            </summary>
+        </member>
+        <member name="F:Spring.Objects.Factory.Xml.ObjectDefinitionConstants.MetaElement">
+            <summary>
+            Defined meta attributes to be used for Autowire objects
             </summary>
         </member>
         <member name="F:Spring.Objects.Factory.Xml.ObjectDefinitionConstants.ObjectNameDelimiters">
@@ -39068,6 +40151,21 @@
         <member name="M:Spring.Objects.Factory.Xml.ObjectsNamespaceParser.ParseEventHandlerSubElements(System.String,System.Xml.XmlElement,Spring.Objects.Factory.Xml.ParserContext)">
             <summary>
             Parse event handler subelements of the given object element.
+            </summary>
+        </member>
+        <member name="M:Spring.Objects.Factory.Xml.ObjectsNamespaceParser.ParseMetaElements(System.Xml.XmlElement,Spring.Objects.ObjectMetadataAttributeAccessor)">
+            <summary>
+            Parse the meta upplied meta attributes if the given object element
+            </summary>
+        </member>
+        <member name="M:Spring.Objects.Factory.Xml.ObjectsNamespaceParser.ParseQualifierElements(System.String,System.Xml.XmlElement,Spring.Objects.Factory.Xml.ParserContext,Spring.Objects.Factory.Support.AbstractObjectDefinition)">
+            <summary>
+            Parse qualifier sub-elements of the given bean element.
+            </summary>
+        </member>
+        <member name="M:Spring.Objects.Factory.Xml.ObjectsNamespaceParser.ParseQualifierElement(System.String,System.Xml.XmlElement,Spring.Objects.Factory.Xml.ParserContext,Spring.Objects.Factory.Support.AbstractObjectDefinition)">
+            <summary>
+            Parse a qualifier element.
             </summary>
         </member>
         <member name="M:Spring.Objects.Factory.Xml.ObjectsNamespaceParser.ParsePropertyElements(System.String,System.Xml.XmlElement,Spring.Objects.Factory.Xml.ParserContext)">
@@ -42122,6 +43220,35 @@
             Property to retrieve the array of property values.
             </summary>
         </member>
+        <member name="T:Spring.Objects.ObjectMetadataAttribute">
+            <summary>
+            Holder for a key-value style attribute that is part of a bean definition.
+            Keeps track of the definition source in addition to the key-value pair.
+            </summary>
+        </member>
+        <member name="M:Spring.Objects.ObjectMetadataAttribute.#ctor(System.String,System.Object)">
+            <summary>
+            Create a new AttributeValue instance.
+            </summary>
+            <param name="name">the name of the attribute (never <code>null</code>)</param>
+            <param name="value">the value of the attribute (possibly before type conversion)</param>
+        </member>
+        <member name="P:Spring.Objects.ObjectMetadataAttribute.Name">
+            <summary>
+            Return the name of the attribute.
+            </summary>
+        </member>
+        <member name="P:Spring.Objects.ObjectMetadataAttribute.Value">
+            <summary>
+            Return the value of the attribute.
+            </summary>
+        </member>
+        <member name="P:Spring.Objects.ObjectMetadataAttribute.Source">
+            <summary>
+            Set the configuration source <code>Object</code> for this metadata element.
+            <p>The exact type of the object will depend on the configuration mechanism used.</p>
+            </summary>
+        </member>
         <member name="T:Spring.Objects.ObjectWrapper">
             <summary>
             Default implementation of the <see cref="T:Spring.Objects.IObjectWrapper"/>
@@ -44938,6 +46065,29 @@
             </summary>
             <value>The name of the component.</value>
         </member>
+        <member name="T:Spring.Stereotype.ControllerAttribute">
+            <summary>
+            Indicates that an annotated class is a "Controller" (e.g. a MVC Controller).
+            </summary>
+            <remarks>
+            <para>
+            This attribute also serves as a specialization of the ComponentAttribute, allowing implementation
+            classes to be autodetected in future releases through assembly scanning.
+            </para>
+            </remarks>
+            <author>Thomas Trageser</author>
+        </member>
+        <member name="M:Spring.Stereotype.ControllerAttribute.#ctor">
+            <summary>
+            Initializes a new instance of the <see cref="T:Spring.Stereotype.ControllerAttribute"/> class.
+            </summary>
+        </member>
+        <member name="M:Spring.Stereotype.ControllerAttribute.#ctor(System.String)">
+            <summary>
+            Initializes a new instance of the <see cref="T:Spring.Stereotype.ControllerAttribute"/> class.
+            </summary>
+            <param name="name">The name.</param>
+        </member>
         <member name="T:Spring.Stereotype.RepositoryAttribute">
             <summary>
             Indicates that an annotated class is a "Repository" (or "DAO").
@@ -45866,6 +47016,21 @@
             <param name="type">The class to look for attributes on .</param>
             <param name="attributeType">Type of the attribibute to look for.</param>
             <returns>the attribute of the given type found, or <code>null</code></returns>
+        </member>
+        <member name="M:Spring.Util.AttributeUtils.GetAttributeProperties(System.Attribute)">
+            <summary>
+            Get all attribute properties with values for a specific attribute type
+            </summary>
+            <param name="attribute">attribute to check against</param>
+            <returns>collection of all properties with values</returns>
+        </member>
+        <member name="M:Spring.Util.AttributeUtils.GetDefaultValue(System.Attribute,System.String)">
+            <summary>
+            Get the default name value of an attribute and a specific property
+            </summary>
+            <param name="attribute">attribute from where to get the default value</param>
+            <param name="propertyName">property to get the default value</param>
+            <returns></returns>
         </member>
         <member name="T:Spring.Util.CollectionUtils">
             <summary>
@@ -47128,6 +48293,15 @@
             <returns>
             <see langword="true"/> if the given objects are equal.
             </returns>
+        </member>
+        <member name="M:Spring.Util.ObjectUtils.NullSafeHashCode(System.Object)">
+            <summary>
+            Return as hash code for the given object; typically the value of
+            <code>{@link Object#hashCode()}</code>. If the object is an array,
+            this method will delegate to any of the <code>nullSafeHashCode</code>
+            methods for arrays in this class. If the object is <code>null</code>,
+            this method returns 0.
+            </summary>
         </member>
         <member name="M:Spring.Util.ObjectUtils.EnumerateFirstElement(System.Collections.IEnumerator)">
             <summary>
